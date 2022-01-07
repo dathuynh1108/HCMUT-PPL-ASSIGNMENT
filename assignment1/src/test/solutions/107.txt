@@ -1,1 +1,1 @@
-Huynh,43,Thanh,43,Dat,43,<EOF>
+Huynh,Thanh,Dat,<EOF>

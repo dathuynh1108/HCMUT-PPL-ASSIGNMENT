@@ -159,6 +159,6 @@ class LexerSuite(unittest.TestCase):
         input = r"""
             TRUE True
         """
-        expect = r""""""
+        expect = r"""TRUE,True,<EOF>"""
         num = 120
         self.assertTrue(TestLexer.test(input,expect,num))

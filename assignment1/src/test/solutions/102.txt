@@ -1,1 +1,1 @@
-aBcDeF,43,<EOF>
+aBcDeF,<EOF>

@@ -1,1 +1,1 @@
-Comment,43,in,43,comment,43,<EOF>
+Comment,in,comment,<EOF>

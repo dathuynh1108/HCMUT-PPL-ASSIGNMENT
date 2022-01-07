@@ -1,1 +1,1 @@
-String,45,string,45,string     ,45,string\nstring,45,<EOF>
+String,string,string     ,string\nstring,<EOF>
