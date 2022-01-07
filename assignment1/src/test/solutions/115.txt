@@ -1,1 +1,1 @@
-Test escape sequence\b\f\r\n\t\'\\'",,<EOF>
+Test escape sequence\b\f\r\n\t\'\\'",45,,45,<EOF>

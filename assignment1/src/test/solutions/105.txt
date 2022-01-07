@@ -1,1 +1,1 @@
-$static_variable_123,normal_variable_123,$_,Error Token $
+$static_variable_123,43,normal_variable_123,43,$_,43,Error Token $

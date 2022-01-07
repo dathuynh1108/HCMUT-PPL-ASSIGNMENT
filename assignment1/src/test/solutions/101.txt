@@ -1,1 +1,1 @@
-abc,xyz,,,abc,xyz,<EOF>
+abc,43,xyz,43,,,39,abc,43,xyz,43,<EOF>
