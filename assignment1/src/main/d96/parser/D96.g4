@@ -23,9 +23,14 @@ fragment STRING_CHAR: ~([\b\t\n\f\r'"\\]) | ESCAPE_SEQUENCE | DOUBLE_QUOTE_CHAR;
 fragment ESCAPE_SEQUENCE: '\\' [btnfr'\\];
 fragment DOUBLE_QUOTE_CHAR: '\'"';
 fragment ILLEGAL_SEQUENCE: '\\' ~[btnfr'\\] | ~'\\' ;
+
+fragment SIGN: [+-];
+fragment FLOAT_INTEGER_PART: [0-9_]+;
+fragment FLOAT_DECIMAL_PART: . FLOAT_INTEGER_PART;
+fragment FLOAT_EXPONENT_PART: [eE] SIGN? FLOAT_INTEGER_PART;
 // LEXER:
 /********************** COMMENT ***********************/
-COMMENT: '##' .*? '##'-> skip;
+COMMENT: '##' .*? '##' -> skip;
 /********************* KEY WORDS **********************/
 BREAK: 'Break';
 CONTINUE: 'Continue';
@@ -103,6 +108,14 @@ WS : [ \t\r\n\f]+ -> skip ; // skip spaces, tabs, newlines
 /*********************** ERRORS *************************/
 UNTERMINATED_COMMENT: '##' ((~'#'~'#') | (.?)) EOF {
 	raise UNTERMINATED_COMMENT(self.text)
+};
+UNCLOSE_STRING: '"' STRING_CHAR* ( [\b\t\n\f\r"'\\] | EOF ) {
+    y = str(self.text)
+    possible = ['\b', '\t', '\n', '\f', '\r', '"', "'", '\\']
+    if y[-1] in possible:
+        raise UNCLOSE_STRING(y[1:-1])
+    else:
+        raise UNCLOSE_STRING(y[1:])
 };
 ILLEGAL_ESCAPE
     : '"' STRING_CHAR* ILLEGAL_SEQUENCE

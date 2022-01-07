@@ -1,7 +1,6 @@
 token literal names:
 null
 null
-null
 'Break'
 'Continue'
 'If'
@@ -10,6 +9,7 @@ null
 'Foreach'
 'True'
 'False'
+'class'
 'Array'
 'Int'
 'Float'
@@ -47,11 +47,15 @@ null
 null
 null
 null
+null
+null
+null
+null
+null
 
 token symbolic names:
 null
 COMMENT
-ID
 BREAK
 CONTINUE
 IF
@@ -60,6 +64,7 @@ ELSE
 FOREACH
 TRUE
 FALSE
+CLASS
 ARRAY
 INT
 FLOAT
@@ -92,10 +97,15 @@ COMMA
 SEMI
 LCB
 RCB
+ID
 INTEGER_LITERAL
 STRING_LITERAL
+BOOLEAN_LITERAL
+INDEXED_ARRAY
 WS
 UNTERMINATED_COMMENT
+UNCLOSE_STRING
+ILLEGAL_ESCAPE
 ERROR_TOKEN
 
 rule names:
@@ -104,4 +114,4 @@ class_declaration
 
 
 atn:
-[3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 49, 16, 4, 2, 9, 2, 4, 3, 9, 3, 3, 2, 6, 2, 8, 10, 2, 13, 2, 14, 2, 9, 3, 2, 3, 2, 3, 3, 3, 3, 3, 3, 2, 2, 4, 2, 4, 2, 2, 2, 14, 2, 7, 3, 2, 2, 2, 4, 13, 3, 2, 2, 2, 6, 8, 5, 4, 3, 2, 7, 6, 3, 2, 2, 2, 8, 9, 3, 2, 2, 2, 9, 7, 3, 2, 2, 2, 9, 10, 3, 2, 2, 2, 10, 11, 3, 2, 2, 2, 11, 12, 7, 2, 2, 3, 12, 3, 3, 2, 2, 2, 13, 14, 11, 2, 2, 2, 14, 5, 3, 2, 2, 2, 3, 9]
+[3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 54, 16, 4, 2, 9, 2, 4, 3, 9, 3, 3, 2, 6, 2, 8, 10, 2, 13, 2, 14, 2, 9, 3, 2, 3, 2, 3, 3, 3, 3, 3, 3, 2, 2, 4, 2, 4, 2, 2, 2, 14, 2, 7, 3, 2, 2, 2, 4, 13, 3, 2, 2, 2, 6, 8, 5, 4, 3, 2, 7, 6, 3, 2, 2, 2, 8, 9, 3, 2, 2, 2, 9, 7, 3, 2, 2, 2, 9, 10, 3, 2, 2, 2, 10, 11, 3, 2, 2, 2, 11, 12, 7, 2, 2, 3, 12, 3, 3, 2, 2, 2, 13, 14, 11, 2, 2, 2, 14, 5, 3, 2, 2, 2, 3, 9]

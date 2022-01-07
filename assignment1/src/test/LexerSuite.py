@@ -38,8 +38,8 @@ class LexerSuite(unittest.TestCase):
     #test comment
     def test_006_comment(self):
         input = """ 
-            ## Comment line 1
-            Comment line 2 ##
+            ##Comment line 1
+            Comment line 2##
             \r\n\t\f
             ## Hi ##
             abc, 123
@@ -155,10 +155,13 @@ class LexerSuite(unittest.TestCase):
         expect = r"""OK\',OK'",Illegal Escape In String: ILLEGAL_ESCAPE\""""
         num = 119
         self.assertTrue(TestLexer.test(input,expect,num))
-    def test_020(self):        
+    def test_020_string(self):        
         input = r"""
-            TRUE True
+            "abc"
+            "abc\'"
+            "abc'"
         """
-        expect = r"""TRUE,True,<EOF>"""
+        expect = "abc,abc\\',Unclosed String: abc'\""
+        print(expect)
         num = 120
         self.assertTrue(TestLexer.test(input,expect,num))

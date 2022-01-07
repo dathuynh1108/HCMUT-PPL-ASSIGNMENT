@@ -11,7 +11,7 @@ else:
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\65")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\66")
         buf.write("\20\4\2\t\2\4\3\t\3\3\2\6\2\b\n\2\r\2\16\2\t\3\2\3\2\3")
         buf.write("\3\3\3\3\3\2\2\4\2\4\2\2\2\16\2\7\3\2\2\2\4\r\3\2\2\2")
         buf.write("\6\b\5\4\3\2\7\6\3\2\2\2\b\t\3\2\2\2\t\7\3\2\2\2\t\n\3")
@@ -47,8 +47,8 @@ class D96Parser ( Parser ):
                       "GTE", "STRING_EQUAL", "STRING_ADD", "LP", "RP", "LSB", 
                       "RSB", "DOT", "COMMA", "SEMI", "LCB", "RCB", "ID", 
                       "INTEGER_LITERAL", "STRING_LITERAL", "BOOLEAN_LITERAL", 
-                      "INDEXED_ARRAY", "WS", "UNTERMINATED_COMMENT", "ILLEGAL_ESCAPE", 
-                      "ERROR_TOKEN" ]
+                      "INDEXED_ARRAY", "WS", "UNTERMINATED_COMMENT", "UNCLOSE_STRING", 
+                      "ILLEGAL_ESCAPE", "ERROR_TOKEN" ]
 
     RULE_program = 0
     RULE_class_declaration = 1
@@ -105,8 +105,9 @@ class D96Parser ( Parser ):
     INDEXED_ARRAY=47
     WS=48
     UNTERMINATED_COMMENT=49
-    ILLEGAL_ESCAPE=50
-    ERROR_TOKEN=51
+    UNCLOSE_STRING=50
+    ILLEGAL_ESCAPE=51
+    ERROR_TOKEN=52
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -162,7 +163,7 @@ class D96Parser ( Parser ):
                 self.state = 7 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.COMMENT) | (1 << D96Parser.BREAK) | (1 << D96Parser.CONTINUE) | (1 << D96Parser.IF) | (1 << D96Parser.ELSEIF) | (1 << D96Parser.ELSE) | (1 << D96Parser.FOREACH) | (1 << D96Parser.TRUE) | (1 << D96Parser.FALSE) | (1 << D96Parser.CLASS) | (1 << D96Parser.ARRAY) | (1 << D96Parser.INT) | (1 << D96Parser.FLOAT) | (1 << D96Parser.BOOLEAN) | (1 << D96Parser.STRING) | (1 << D96Parser.NULL) | (1 << D96Parser.ADD) | (1 << D96Parser.SUB) | (1 << D96Parser.MUL) | (1 << D96Parser.DIV) | (1 << D96Parser.MOD) | (1 << D96Parser.NOT) | (1 << D96Parser.AND) | (1 << D96Parser.OR) | (1 << D96Parser.EQUAL) | (1 << D96Parser.ASSIGN) | (1 << D96Parser.NOT_EQUAL) | (1 << D96Parser.LT) | (1 << D96Parser.LTE) | (1 << D96Parser.GT) | (1 << D96Parser.GTE) | (1 << D96Parser.STRING_EQUAL) | (1 << D96Parser.STRING_ADD) | (1 << D96Parser.LP) | (1 << D96Parser.RP) | (1 << D96Parser.LSB) | (1 << D96Parser.RSB) | (1 << D96Parser.DOT) | (1 << D96Parser.COMMA) | (1 << D96Parser.SEMI) | (1 << D96Parser.LCB) | (1 << D96Parser.RCB) | (1 << D96Parser.ID) | (1 << D96Parser.INTEGER_LITERAL) | (1 << D96Parser.STRING_LITERAL) | (1 << D96Parser.BOOLEAN_LITERAL) | (1 << D96Parser.INDEXED_ARRAY) | (1 << D96Parser.WS) | (1 << D96Parser.UNTERMINATED_COMMENT) | (1 << D96Parser.ILLEGAL_ESCAPE) | (1 << D96Parser.ERROR_TOKEN))) != 0)):
+                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.COMMENT) | (1 << D96Parser.BREAK) | (1 << D96Parser.CONTINUE) | (1 << D96Parser.IF) | (1 << D96Parser.ELSEIF) | (1 << D96Parser.ELSE) | (1 << D96Parser.FOREACH) | (1 << D96Parser.TRUE) | (1 << D96Parser.FALSE) | (1 << D96Parser.CLASS) | (1 << D96Parser.ARRAY) | (1 << D96Parser.INT) | (1 << D96Parser.FLOAT) | (1 << D96Parser.BOOLEAN) | (1 << D96Parser.STRING) | (1 << D96Parser.NULL) | (1 << D96Parser.ADD) | (1 << D96Parser.SUB) | (1 << D96Parser.MUL) | (1 << D96Parser.DIV) | (1 << D96Parser.MOD) | (1 << D96Parser.NOT) | (1 << D96Parser.AND) | (1 << D96Parser.OR) | (1 << D96Parser.EQUAL) | (1 << D96Parser.ASSIGN) | (1 << D96Parser.NOT_EQUAL) | (1 << D96Parser.LT) | (1 << D96Parser.LTE) | (1 << D96Parser.GT) | (1 << D96Parser.GTE) | (1 << D96Parser.STRING_EQUAL) | (1 << D96Parser.STRING_ADD) | (1 << D96Parser.LP) | (1 << D96Parser.RP) | (1 << D96Parser.LSB) | (1 << D96Parser.RSB) | (1 << D96Parser.DOT) | (1 << D96Parser.COMMA) | (1 << D96Parser.SEMI) | (1 << D96Parser.LCB) | (1 << D96Parser.RCB) | (1 << D96Parser.ID) | (1 << D96Parser.INTEGER_LITERAL) | (1 << D96Parser.STRING_LITERAL) | (1 << D96Parser.BOOLEAN_LITERAL) | (1 << D96Parser.INDEXED_ARRAY) | (1 << D96Parser.WS) | (1 << D96Parser.UNTERMINATED_COMMENT) | (1 << D96Parser.UNCLOSE_STRING) | (1 << D96Parser.ILLEGAL_ESCAPE) | (1 << D96Parser.ERROR_TOKEN))) != 0)):
                     break
 
             self.state = 9
