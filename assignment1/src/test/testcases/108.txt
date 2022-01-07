@@ -1,0 +1,7 @@
+
+            ## Comment is close ##
+            ## 
+            # Comment is closed
+            ## 
+            ##Comment is not closed
+        

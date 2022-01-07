@@ -1,0 +1,1 @@
+$static_variable_123 normal_variable_123 $_ $
