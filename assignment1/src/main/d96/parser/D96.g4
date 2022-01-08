@@ -14,8 +14,10 @@ program: class_declaration+ EOF;
 class_declaration : .;
 
 // FRAGMENT:
-fragment DEC_INTEGER_LITERAL: '0'| [1-9_][0-9_]* ;
+fragment COMMENT_CHAR: ~'#' | '#'~'#';
+
 fragment OCT_INTEGER_LITERAL: '0' [0-7_]+;
+fragment DEC_INTEGER_LITERAL:  [0-9_]+; // Prio Oct start with 0
 fragment BIN_INTEGER_LITERAL: '0'[bB] [0-1_]+;
 fragment HEX_INTEGER_LITERAL: '0'[xX] [0-9A-Fa-f_]+;
 
@@ -30,7 +32,7 @@ fragment FLOAT_DECIMAL_PART: . FLOAT_INTEGER_PART;
 fragment FLOAT_EXPONENT_PART: [eE] SIGN? FLOAT_INTEGER_PART;
 // LEXER:
 /********************** COMMENT ***********************/
-COMMENT: '##' .*? '##' -> skip;
+COMMENT: '##' COMMENT_CHAR* '##' -> skip;
 /********************* KEY WORDS **********************/
 BREAK: 'Break';
 CONTINUE: 'Continue';
@@ -106,8 +108,8 @@ WS : [ \t\r\n\f]+ -> skip ; // skip spaces, tabs, newlines
 
 
 /*********************** ERRORS *************************/
-UNTERMINATED_COMMENT: '##' ((~'#'~'#') | (.?)) EOF {
-	raise UNTERMINATED_COMMENT(self.text)
+UNTERMINATED_COMMENT: '##' COMMENT_CHAR* EOF {
+	raise UNTERMINATED_COMMENT()
 };
 UNCLOSE_STRING: '"' STRING_CHAR* ( [\b\t\n\f\r"'\\] | EOF ) {
     y = str(self.text)

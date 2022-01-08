@@ -66,11 +66,13 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_008_comment(self):
         input = """
-            ## Comment is close ##
+            ## This comment ok ##
             ## 
-            # Comment is closed
-            ## 
-            ##Comment is not closed
+            # Line 1
+            # Line 2
+            Line 3
+            ##
+            ## Unterminated Comment
         """
         expect = "Unterminated Comment"
         num = 108

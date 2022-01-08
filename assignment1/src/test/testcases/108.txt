@@ -1,7 +1,9 @@
 
-            ## Comment is close ##
+            ## This comment ok ##
             ## 
-            # Comment is closed
-            ## 
-            ##Comment is not closed
+            # Line 1
+            # Line 2
+            Line 3
+            ##
+            ## Unterminated Comment
         
