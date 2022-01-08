@@ -16,8 +16,8 @@ class_declaration : .;
 // FRAGMENT:
 fragment COMMENT_CHAR: ~'#' | '#'~'#';
 
+fragment DEC_INTEGER_LITERAL:  '0' | [1-9_][0-9_]*;
 fragment OCT_INTEGER_LITERAL: '0' [0-7_]+;
-fragment DEC_INTEGER_LITERAL:  [0-9_]+; // Prio Oct start with 0
 fragment BIN_INTEGER_LITERAL: '0'[bB] [0-1_]+;
 fragment HEX_INTEGER_LITERAL: '0'[xX] [0-9A-Fa-f_]+;
 
@@ -108,7 +108,10 @@ WS : [ \t\r\n\f]+ -> skip ; // skip spaces, tabs, newlines
 
 
 /*********************** ERRORS *************************/
-UNTERMINATED_COMMENT: '##' COMMENT_CHAR* EOF {
+// NOT(##) = NOT(#) OR # NOT(#)
+// 1. ## NOT(##) EOF
+// 2. ## NOT(#) #EOF ---- CASE # BEFORE EOF --> NOT(##) EOF CAN'T CATCH
+UNTERMINATED_COMMENT: (('##' COMMENT_CHAR* EOF) | ('##' ~'#'* '#' EOF))  {
 	raise UNTERMINATED_COMMENT()
 };
 UNCLOSE_STRING: '"' STRING_CHAR* ( [\b\t\n\f\r"'\\] | EOF ) {

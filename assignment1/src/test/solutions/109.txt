@@ -1,1 +1,1 @@
-Comment,in,comment,<EOF>
+Comment,in,comment,Unterminated Comment

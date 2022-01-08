@@ -72,8 +72,7 @@ class LexerSuite(unittest.TestCase):
             # Line 2
             Line 3
             ##
-            ## Unterminated Comment
-        """
+            ###"""
         expect = "Unterminated Comment"
         num = 108
         self.assertTrue(TestLexer.test(input,expect,num))
@@ -81,8 +80,9 @@ class LexerSuite(unittest.TestCase):
         # Reference on """ of python, it is not valid for nested """
         input = """
             #### Comment in comment ####
+            ## #Unterminated Comment
         """
-        expect = "Comment,in,comment,<EOF>"
+        expect = "Comment,in,comment,Unterminated Comment"
         num = 109
         self.assertTrue(TestLexer.test(input,expect,num))
     #test integers
