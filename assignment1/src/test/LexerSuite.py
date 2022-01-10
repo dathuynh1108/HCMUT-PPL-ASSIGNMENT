@@ -660,5 +660,17 @@ class LexerSuite(unittest.TestCase):
         expect = r"""(,),=,>,{,console,.,log,(,abc,),;,a,[,1,],;,var,a,,,b,,,c,;,*,this,.,a,;,this,-,>,a,;,int,*,a,=,new,int,;,class_name,::,a,;,var,a,:,Int,;,},<EOF>""" 
         num = 169
         self.assertTrue(TestLexer.test(input,expect,num))
-            
+    def test_070_type(self):
+        input = r"""
+            Int int Int_ 
+            Float float Float_ 
+            Boolean boolean Boolean_ 
+            String string String_
+            Array array Array_
+            class Class class_
+            Null null Null_
+        """
+        expect = r"""Int,int,Int_,Float,float,Float_,Boolean,boolean,Boolean_,String,string,String_,Array,array,Array_,class,Class,class_,Null,null,Null_,<EOF>""" 
+        num = 170
+        self.assertTrue(TestLexer.test(input,expect,num))
     
