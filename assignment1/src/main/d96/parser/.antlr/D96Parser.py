@@ -11,7 +11,7 @@ else:
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\66")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\67")
         buf.write("\20\4\2\t\2\4\3\t\3\3\2\6\2\b\n\2\r\2\16\2\t\3\2\3\2\3")
         buf.write("\3\3\3\3\3\2\2\4\2\4\2\2\2\16\2\7\3\2\2\2\4\r\3\2\2\2")
         buf.write("\6\b\5\4\3\2\7\6\3\2\2\2\b\t\3\2\2\2\t\7\3\2\2\2\t\n\3")
@@ -31,24 +31,25 @@ class D96Parser ( Parser ):
     sharedContextCache = PredictionContextCache()
 
     literalNames = [ "<INVALID>", "<INVALID>", "'Break'", "'Continue'", 
-                     "'If'", "'Elseif'", "'Else'", "'Foreach'", "'True'", 
-                     "'False'", "'class'", "'Array'", "'Int'", "'Float'", 
-                     "'Boolean'", "'String'", "'Null'", "'+'", "'-'", "'*'", 
-                     "'/'", "'%'", "'!'", "'&&'", "'||'", "'=='", "'='", 
-                     "'!='", "'<'", "'<='", "'>'", "'>='", "'==.'", "'+.'", 
-                     "'('", "')'", "'['", "']'", "'.'", "','", "';'", "'{'", 
-                     "'}'" ]
+                     "'If'", "'Elseif'", "'Else'", "'Foreach'", "'var'", 
+                     "'val'", "'class'", "'Array'", "'Int'", "'Float'", 
+                     "'Boolean'", "'String'", "'Null'", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "'+'", "'-'", 
+                     "'*'", "'/'", "'%'", "'!'", "'&&'", "'||'", "'=='", 
+                     "'='", "'!='", "'<'", "'<='", "'>'", "'>='", "'==.'", 
+                     "'+.'", "'('", "')'", "'['", "']'", "'.'", "','", "';'", 
+                     "':'", "'{'", "'}'" ]
 
     symbolicNames = [ "<INVALID>", "COMMENT", "BREAK", "CONTINUE", "IF", 
-                      "ELSEIF", "ELSE", "FOREACH", "TRUE", "FALSE", "CLASS", 
+                      "ELSEIF", "ELSE", "FOREACH", "VAR", "VAL", "CLASS", 
                       "ARRAY", "INT", "FLOAT", "BOOLEAN", "STRING", "NULL", 
-                      "ADD", "SUB", "MUL", "DIV", "MOD", "NOT", "AND", "OR", 
-                      "EQUAL", "ASSIGN", "NOT_EQUAL", "LT", "LTE", "GT", 
-                      "GTE", "STRING_EQUAL", "STRING_ADD", "LP", "RP", "LSB", 
-                      "RSB", "DOT", "COMMA", "SEMI", "LCB", "RCB", "ID", 
                       "INTEGER_LITERAL", "STRING_LITERAL", "BOOLEAN_LITERAL", 
-                      "INDEXED_ARRAY", "WS", "UNTERMINATED_COMMENT", "UNCLOSE_STRING", 
-                      "ILLEGAL_ESCAPE", "ERROR_TOKEN" ]
+                      "FLOAT_LITERAL", "ID", "ADD", "SUB", "MUL", "DIV", 
+                      "MOD", "NOT", "AND", "OR", "EQUAL", "ASSIGN", "NOT_EQUAL", 
+                      "LT", "LTE", "GT", "GTE", "STRING_EQUAL", "STRING_ADD", 
+                      "LP", "RP", "LSB", "RSB", "DOT", "COMMA", "SEMI", 
+                      "COLON", "LCB", "RCB", "WS", "UNTERMINATED_COMMENT", 
+                      "UNCLOSE_STRING", "ILLEGAL_ESCAPE", "ERROR_TOKEN" ]
 
     RULE_program = 0
     RULE_class_declaration = 1
@@ -63,8 +64,8 @@ class D96Parser ( Parser ):
     ELSEIF=5
     ELSE=6
     FOREACH=7
-    TRUE=8
-    FALSE=9
+    VAR=8
+    VAL=9
     CLASS=10
     ARRAY=11
     INT=12
@@ -72,42 +73,43 @@ class D96Parser ( Parser ):
     BOOLEAN=14
     STRING=15
     NULL=16
-    ADD=17
-    SUB=18
-    MUL=19
-    DIV=20
-    MOD=21
-    NOT=22
-    AND=23
-    OR=24
-    EQUAL=25
-    ASSIGN=26
-    NOT_EQUAL=27
-    LT=28
-    LTE=29
-    GT=30
-    GTE=31
-    STRING_EQUAL=32
-    STRING_ADD=33
-    LP=34
-    RP=35
-    LSB=36
-    RSB=37
-    DOT=38
-    COMMA=39
-    SEMI=40
-    LCB=41
-    RCB=42
-    ID=43
-    INTEGER_LITERAL=44
-    STRING_LITERAL=45
-    BOOLEAN_LITERAL=46
-    INDEXED_ARRAY=47
-    WS=48
-    UNTERMINATED_COMMENT=49
-    UNCLOSE_STRING=50
-    ILLEGAL_ESCAPE=51
-    ERROR_TOKEN=52
+    INTEGER_LITERAL=17
+    STRING_LITERAL=18
+    BOOLEAN_LITERAL=19
+    FLOAT_LITERAL=20
+    ID=21
+    ADD=22
+    SUB=23
+    MUL=24
+    DIV=25
+    MOD=26
+    NOT=27
+    AND=28
+    OR=29
+    EQUAL=30
+    ASSIGN=31
+    NOT_EQUAL=32
+    LT=33
+    LTE=34
+    GT=35
+    GTE=36
+    STRING_EQUAL=37
+    STRING_ADD=38
+    LP=39
+    RP=40
+    LSB=41
+    RSB=42
+    DOT=43
+    COMMA=44
+    SEMI=45
+    COLON=46
+    LCB=47
+    RCB=48
+    WS=49
+    UNTERMINATED_COMMENT=50
+    UNCLOSE_STRING=51
+    ILLEGAL_ESCAPE=52
+    ERROR_TOKEN=53
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -156,7 +158,7 @@ class D96Parser ( Parser ):
                 self.state = 7 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.COMMENT) | (1 << D96Parser.BREAK) | (1 << D96Parser.CONTINUE) | (1 << D96Parser.IF) | (1 << D96Parser.ELSEIF) | (1 << D96Parser.ELSE) | (1 << D96Parser.FOREACH) | (1 << D96Parser.TRUE) | (1 << D96Parser.FALSE) | (1 << D96Parser.CLASS) | (1 << D96Parser.ARRAY) | (1 << D96Parser.INT) | (1 << D96Parser.FLOAT) | (1 << D96Parser.BOOLEAN) | (1 << D96Parser.STRING) | (1 << D96Parser.NULL) | (1 << D96Parser.ADD) | (1 << D96Parser.SUB) | (1 << D96Parser.MUL) | (1 << D96Parser.DIV) | (1 << D96Parser.MOD) | (1 << D96Parser.NOT) | (1 << D96Parser.AND) | (1 << D96Parser.OR) | (1 << D96Parser.EQUAL) | (1 << D96Parser.ASSIGN) | (1 << D96Parser.NOT_EQUAL) | (1 << D96Parser.LT) | (1 << D96Parser.LTE) | (1 << D96Parser.GT) | (1 << D96Parser.GTE) | (1 << D96Parser.STRING_EQUAL) | (1 << D96Parser.STRING_ADD) | (1 << D96Parser.LP) | (1 << D96Parser.RP) | (1 << D96Parser.LSB) | (1 << D96Parser.RSB) | (1 << D96Parser.DOT) | (1 << D96Parser.COMMA) | (1 << D96Parser.SEMI) | (1 << D96Parser.LCB) | (1 << D96Parser.RCB) | (1 << D96Parser.ID) | (1 << D96Parser.INTEGER_LITERAL) | (1 << D96Parser.STRING_LITERAL) | (1 << D96Parser.BOOLEAN_LITERAL) | (1 << D96Parser.INDEXED_ARRAY) | (1 << D96Parser.WS) | (1 << D96Parser.UNTERMINATED_COMMENT) | (1 << D96Parser.UNCLOSE_STRING) | (1 << D96Parser.ILLEGAL_ESCAPE) | (1 << D96Parser.ERROR_TOKEN))) != 0)):
+                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.COMMENT) | (1 << D96Parser.BREAK) | (1 << D96Parser.CONTINUE) | (1 << D96Parser.IF) | (1 << D96Parser.ELSEIF) | (1 << D96Parser.ELSE) | (1 << D96Parser.FOREACH) | (1 << D96Parser.VAR) | (1 << D96Parser.VAL) | (1 << D96Parser.CLASS) | (1 << D96Parser.ARRAY) | (1 << D96Parser.INT) | (1 << D96Parser.FLOAT) | (1 << D96Parser.BOOLEAN) | (1 << D96Parser.STRING) | (1 << D96Parser.NULL) | (1 << D96Parser.INTEGER_LITERAL) | (1 << D96Parser.STRING_LITERAL) | (1 << D96Parser.BOOLEAN_LITERAL) | (1 << D96Parser.FLOAT_LITERAL) | (1 << D96Parser.ID) | (1 << D96Parser.ADD) | (1 << D96Parser.SUB) | (1 << D96Parser.MUL) | (1 << D96Parser.DIV) | (1 << D96Parser.MOD) | (1 << D96Parser.NOT) | (1 << D96Parser.AND) | (1 << D96Parser.OR) | (1 << D96Parser.EQUAL) | (1 << D96Parser.ASSIGN) | (1 << D96Parser.NOT_EQUAL) | (1 << D96Parser.LT) | (1 << D96Parser.LTE) | (1 << D96Parser.GT) | (1 << D96Parser.GTE) | (1 << D96Parser.STRING_EQUAL) | (1 << D96Parser.STRING_ADD) | (1 << D96Parser.LP) | (1 << D96Parser.RP) | (1 << D96Parser.LSB) | (1 << D96Parser.RSB) | (1 << D96Parser.DOT) | (1 << D96Parser.COMMA) | (1 << D96Parser.SEMI) | (1 << D96Parser.COLON) | (1 << D96Parser.LCB) | (1 << D96Parser.RCB) | (1 << D96Parser.WS) | (1 << D96Parser.UNTERMINATED_COMMENT) | (1 << D96Parser.UNCLOSE_STRING) | (1 << D96Parser.ILLEGAL_ESCAPE) | (1 << D96Parser.ERROR_TOKEN))) != 0)):
                     break
 
             self.state = 9

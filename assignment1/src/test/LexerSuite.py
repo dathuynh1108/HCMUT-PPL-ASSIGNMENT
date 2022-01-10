@@ -2,8 +2,8 @@ import unittest
 from TestUtils import TestLexer
 
 class LexerSuite(unittest.TestCase):
-    ### Test method is sorted --> Remember to name it with alphabet order to show right order of Text Test Runner
-    
+    ### Test method is sorted by alphabet before run 
+    # --> Name it with alphabet order to show right order of Text Test Runner
     # test identifiers 
     def test_001_id(self):
         input = "abc xyz,    abc xyz"
@@ -85,17 +85,18 @@ class LexerSuite(unittest.TestCase):
         expect = "Comment,in,comment,Unterminated Comment"
         num = 109
         self.assertTrue(TestLexer.test(input,expect,num))
+    
     #test integers
     def test_010_integer(self):
 
-        input = "1234, 123 ; 123 456"
-        expect = "1234,,,123,;,123,456,<EOF>"
+        input = "1234, 123 ; 123 456 0123 0x1234ffff 0X1234AAAA"
+        expect = "1234,,,123,;,123,456,0123,0x1234ffff,0X1234AAAA,<EOF>"
         num = 110
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_011_integer(self):
     
         input = "12345 12____3_45 0x0___0_1___2___3 012___3__45 0b00___111__00__11"
-        expect = "12345,12345,0x00123,012345,0b001110011,<EOF>"
+        expect = "12345,12345,0x0,___0_1___2___3,012,___3__45,0b00,___111__00__11,<EOF>"
         num = 111
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_012_integer(self):
@@ -106,17 +107,19 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_013_integer(self):
         # _INT is variable
-        # Note question 0_x123: 0_ x123 or 0 _x123
+        # Note question 0_x123: 0_ x123 or 0 _x123 --> can _ is the last char in INT
         input = "012345 0_12345 01_2345 0x12345 0x_12345 0_x12345 0b010101 0b_010101 0_b010101"
-        expect = "012345,012345,012345,0x12345,0x12345,0,x12345,0b010101,0b010101,0,b010101,<EOF>"
+        expect = "012345,0,_12345,01,_2345,0x12345,0,x_12345,0,_x12345,0b010101,0,b_010101,0,_b010101,<EOF>"
         num = 113
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_014_integer(self):
-            # _INT is variable
+        # _INT is variable
         input = "0XFFFF 0xffff 0XZZZZ 0xzzzz 0B1111 0b1111 0B2222 0b2222 09999 0"
         expect = "0XFFFF,0xffff,0,XZZZZ,0,xzzzz,0B1111,0b1111,0,B2222,0,b2222,0,9999,0,<EOF>"
         num = 114
         self.assertTrue(TestLexer.test(input,expect,num))    
+    
+    # test string
     def test_015_string(self):
         input = r"""
             "Test escape sequence\b\f\r\n\t\'\\'""    
@@ -164,6 +167,116 @@ class LexerSuite(unittest.TestCase):
             "abc'"
         """
         expect = "abc,abc\\',Unclosed String: abc'\""
-        print(expect)
         num = 120
         self.assertTrue(TestLexer.test(input,expect,num))
+    def test_021_string(self):
+        input = r"""
+            "Normal string"
+            ## "String in comment" ##
+            "## Comment in string ##"
+            "String""String"
+            "'"String in string'""
+            ""This is not a string in string""
+        """
+        expect = r"""Normal string,## Comment in string ##,String,String,'"String in string'",,This,is,not,a,string,in,string,,<EOF>"""
+        num = 121
+        self.assertTrue(TestLexer.test(input,expect,num))        
+    def test_022_string(self):        
+        input = r"""
+            "Int" "Float"
+            "a'"b'"c"
+            "!@#$%^&*()_-+=[]{}|/?><"
+        """
+        expect = r"""Int,Float,a'"b'"c,!@#$%^&*()_-+=[]{}|/?><,<EOF>"""
+        num = 122
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_023_string(self):
+        input = r"""
+            "Huynh Thanh Dat \t 1910110 \n 11 08 2001"
+            "abc\""
+        """
+        expect = r"""Huynh Thanh Dat \t 1910110 \n 11 08 2001,Illegal Escape In String: abc\""""
+        num = 123
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_024_string(self):
+        input = r"""
+            "a\bb\fc\rd\ne\tf\\"
+            "a\'b"
+            "a'b"
+        """
+        expect = r"""a\bb\fc\rd\ne\tf\\,a\'b,Illegal Escape In String: a'b"""
+        num = 124
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_025_string(self):
+        input = r"""
+            "{string}" 
+            "'"{string}'""
+            "(string)"
+            "[string]"
+            "`string`"
+            "" not_string ""
+        """
+        expect = r"""{string},'"{string}'",(string),[string],`string`,,not_string,,<EOF>"""
+        num = 125
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_026_string(self):
+        input = r"""
+            "Unclose string
+        """
+        expect = r"""Unclosed String: Unclose string"""
+        num = 126
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_027_string(self):
+        input = r"""
+            "Unclose string with escape sequence\n\t\r\f\b
+        """
+        expect = r"""Unclosed String: Unclose string with escape sequence\n\t\r\f\b"""
+        num = 127
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_028_string(self):
+        input = r"""
+            "String end with double quote'""
+            "Unclose string end with double quote'"
+        """
+        expect = """String end with double quote'",Unclosed String: Unclose string end with double quote'\""""
+        num = 128
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_029_string(self):
+        input = r"""
+            String s = "string"
+            String s2 = "string"
+            String s3 = "unclose string
+            next_line
+        """
+        expect = r"""String,s,=,string,String,s2,=,string,String,s3,=,Unclosed String: unclose string"""
+        num = 129
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_030_string(self):
+        input = r"""
+            "\\a"
+            "String"
+            " "
+            "?" "-" "#" "!" "@" "#" "$" "%" "^" "&" "*" "(" ")" "-" "_" "+" ";" ":" ";" "<" ">" "?"
+            "Mulitiple Characters"
+        """
+        expect = r"""\\a,String, ,?,-,#,!,@,#,$,%,^,&,*,(,),-,_,+,;,:,;,<,>,?,Mulitiple Characters,<EOF>"""
+        num = 130
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_031_string(self):
+        input = r"""
+            "Valid string"
+            'Invalid string'
+        """
+        expect = r"""Valid string,Error Token '"""
+        num = 131
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_032_string(self):
+        input = r"""
+            "Valid string"
+            "Invalid string'"
+        """
+        expect = """Valid string,Unclosed String: Invalid string'\""""
+        num = 132
+        self.assertTrue(TestLexer.test(input,expect,num))
+    
+    

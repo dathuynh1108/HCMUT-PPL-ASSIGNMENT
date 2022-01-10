@@ -1,0 +1,8 @@
+
+            "Normal string"
+            ## "String in comment" ##
+            "## Comment in string ##"
+            "String""String"
+            "'"String in string'""
+            ""This is not a string in string""
+        

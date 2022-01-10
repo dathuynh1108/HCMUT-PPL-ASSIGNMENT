@@ -1,0 +1,1 @@
+Normal string,## Comment in string ##,String,String,'"String in string'",,This,is,not,a,string,in,string,,<EOF>
