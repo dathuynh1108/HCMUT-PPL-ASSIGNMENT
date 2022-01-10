@@ -1,0 +1,1 @@
+var,$string_1,:,String,=,this is a string,;,var,$string_2,:,String,=,this is a string,;,<EOF>

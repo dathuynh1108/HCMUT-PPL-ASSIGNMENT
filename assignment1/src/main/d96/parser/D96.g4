@@ -88,13 +88,6 @@ FLOAT_LITERAL   : (
 
 
 
-/******************** IDENTIFIERS *********************/
-//_NUMBER is ID, not INTEGER_LITERAL
-ID: ('$')?[_a-zA-Z][_a-zA-Z0-9]*;
-
-
-
-
 
 
 /********************* OPERATORS **********************/
@@ -115,6 +108,7 @@ GT: '>';
 GTE: '>=';
 STRING_EQUAL: '==.';
 STRING_ADD: '+.';
+NEW: 'new';
 /******************** SEPARATORS **********************/
 LP: '(' ;
 RP: ')' ;
@@ -126,9 +120,15 @@ DOT: '.';
 COMMA: ',';
 SEMI: ';';
 COLON: ':';
+DOUBLE_COLON: '::';
 
 LCB: '{';
 RCB: '}';
+
+/******************** IDENTIFIERS *********************/
+//_NUMBER is ID, not INTEGER_LITERAL
+ID: [_a-zA-Z][_a-zA-Z0-9]*;
+DOLLAR_ID: ('$')?[_a-zA-Z][_a-zA-Z0-9]*;
 
 /*********************** SKIP *************************/
 WS : [ \t\r\n\f]+ -> skip ; // skip spaces, tabs, newlines

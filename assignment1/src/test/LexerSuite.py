@@ -278,5 +278,387 @@ class LexerSuite(unittest.TestCase):
         expect = """Valid string,Unclosed String: Invalid string'\""""
         num = 132
         self.assertTrue(TestLexer.test(input,expect,num))
+    def test_033_string(self):
+        input = r"""
+            "Valid string"
+            'Invalid string'
+        """
+        expect = r"""Valid string,Error Token '"""
+        num = 133
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_034_string(self):
+        input = r"""
+            "String with expression: 1+1*1/1%1*(1+1)"
+        """
+        expect = r"""String with expression: 1+1*1/1%1*(1+1),<EOF>"""
+        num = 134
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_035_string(self):
+        input = r"""
+            ## Test Comment ##
+            "String with expression: 1+1*1/1%1*(1+1)"
+            ## Test Comment ##
+        """
+        expect = r"""String with expression: 1+1*1/1%1*(1+1),<EOF>"""
+        num = 135
+        self.assertTrue(TestLexer.test(input,expect,num))     
+    def test_036_string(self):
+        input = r"""
+            "String in comment"
+            "## Comment in string ##"
+            "parentheses in string"
+            ("string in parentheses")
+        """
+        expect = r"""String in comment,## Comment in string ##,parentheses in string,(,string in parentheses,),<EOF>"""
+        num = 136
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_037_string(self):
+        input = r"""
+            ## test with syntax ##        
+            var $string_1: String = "this is a string";
+            var $string_2: String = "this is a string";
+        """
+        expect = r"""var,$string_1,:,String,=,this is a string,;,var,$string_2,:,String,=,this is a string,;,<EOF>"""
+        num = 137
+        self.assertTrue(TestLexer.test(input,expect,num))  
+    def test_038_string(self):
+        input = r"""
+            var $string_1: String = "abc"; ## Comment ##
+            string_1 = string_1 +. "def" +. "xyz";
+            var $string_2: String = "abcdefxyz";
+        """
+        expect = r"""var,$string_1,:,String,=,abc,;,string_1,=,string_1,+.,def,+.,xyz,;,var,$string_2,:,String,=,abcdefxyz,;,<EOF>"""
+        num = 138
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    # Test boolean
+    def test_039_boolean(self):
+        input = r"""
+            True TRUE False FALSE True_with_other_chars False_with_other_chars
+        """
+        expect = r"""True,TRUE,False,FALSE,True_with_other_chars,False_with_other_chars,<EOF>"""
+        num = 139
+        self.assertTrue(TestLexer.test(input,expect,num))   
+    # Test float
+    def test_040_float(self):
+        # 3 component
+        input = r"""
+            1.234 1.234e10 1.234e-10 1_234.567e10 1_234.567e-10 1_123.1_123e1_123 1.e1_123
+        """
+        expect = r"""1.234,1.234e10,1.234e-10,1234.567e10,1234.567e-10,1123.1123e1123,1.e1123,<EOF>"""
+        num = 140
+        self.assertTrue(TestLexer.test(input,expect,num))   
     
+    def test_041_float(self):
+        # Miss Exponent
+        input = r"""
+            1.1234 00001.1234 1.  000001. 1.1234 1_123.1_123 1___1___2___3.1___1___2___3 1_123.
+        """
+        expect = r"""1.1234,00001.1234,1.,000001.,1.1234,1123.1123,1123.1123,1123.,<EOF>"""
+        num = 141
+        self.assertTrue(TestLexer.test(input,expect,num))  
+    def test_042_float(self):
+        # Miss Decimal
+        input = r"""
+            123e123 123E123 123e-123 123E-123 00123e00123 00123E00123
+        """
+        expect = r"""123e123,123E123,123e-123,123E-123,00123e00123,00123E00123,<EOF>"""
+        num = 142
+        self.assertTrue(TestLexer.test(input,expect,num))  
+    def test_043_float(self):
+        # Miss Decimal
+        input = r"""
+            1_123e1_123 1_123E1_123 1_____123e1_______123 1____123E1______123
+        """
+        expect = r"""1123e1123,1123E1123,1123e1123,1123E1123,<EOF>"""
+        num = 143
+        self.assertTrue(TestLexer.test(input,expect,num))  
+    def test_044_float(self):
+        # Miss Integer
+        input = r"""
+            .123 .1_123 .123e123 .123E123 .1_123e1_123 .1___123e1___123 .1_123E1_123 .1___123E1___123 .e123 .e1_123
+        """
+        expect = r""".,123,.,1123,.123e123,.123E123,.1123e1123,.1123e1123,.1123E1123,.1123E1123,.e123,.e1123,<EOF>"""
+        num = 144
+        self.assertTrue(TestLexer.test(input,expect,num))  
+    def test_045_float(self):
+        input = r"""
+            123 123. 9.9999 0.9999 0. .0 0.0e10 
+        """
+        expect = r"""123,123.,9.9999,0.9999,0.,.,0,0.0e10,<EOF>"""
+        num = 145
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_046_float(self):
+        input = r"""
+            .123e1.123 .123e1.123e1
+        """
+        expect = r""".123e1,.,123,.123e1,.123e1,<EOF>"""
+        num = 146
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_047_float(self):
+        input = r"""
+            0x123.123 0x123.123e10 abc.123 abc.123e10
+        """
+        expect = r"""0x123,.,123,0x123,.123e10,abc,.,123,abc,.123e10,<EOF>"""
+        num = 147
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_048_float(self):
+        input = r"""
+            0x123.123 0x123.123e10 0b1111.111 0b11112.123
+        """
+        expect = r"""0x123,.,123,0x123,.123e10,0b1111,.,111,0b1111,2.123,<EOF>"""
+        num = 148
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_049_float(self):
+        input = r"""
+            var $float_1: Float = 1.123;
+            var $float_2: Float = 1.123e10;
+        """
+        expect = r"""var,$float_1,:,Float,=,1.123,;,var,$float_2,:,Float,=,1.123e10,;,<EOF>"""
+        num = 149
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_050_float(self):
+        input = r"""
+            0000000000.000000000 1_2_3_4.1_2_3_4e1_2_3_4 1_2_3_4.1_2_3_4e-1_2_3_4 
+        """
+        expect = r"""0000000000.000000000,1234.1234e1234,1234.1234e-1234,<EOF>"""
+        num = 150
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_051_float(self):
+        input = r"""
+            1e1 1e-1 1e+1 123.123e+123 123.123e-123
+        """
+        expect = r"""1e1,1e-1,1e+1,123.123e+123,123.123e-123,<EOF>"""
+        num = 151
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_052_float(self):
+        input = r"""
+            1_____2______3.1_____2_____3e1____23
+            1_____2______3.1_____2_____3e+1____23
+            1_____2______3.1_____2_____3e-1____23
+            1___2__3.1____2____3
+            1___2___3e1____2____3
+            1___2___3e+1____2____3
+            1___2___3e-1____2____3
+        """
+        expect = r"""123.123e123,123.123e+123,123.123e-123,123.123,123e123,123e+123,123e-123,<EOF>"""
+        num = 152
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_053_float(self):
+        input = r"""
+            123e+123 + 123e+123 - 123e-123
+        """
+        expect = r"""123e+123,+,123e+123,-,123e-123,<EOF>"""
+        num = 153
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_054_float(self):
+        input = r"""
+            +.123e1
+            + .123e1
+            ==.123e1
+            == .123e1
+        """
+        expect = r"""+.,123e1,+,.123e1,==.,123e1,==,.123e1,<EOF>"""
+        num = 154
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_055_float_with_others(self):
+        input = r"""
+            "1.1e+1+1+1e+1"
+            1.1 + 2.2 + 3.3
+            1.1e+1+1+1e+1
+            1.+1.1e+1+ .1e+1+ .0e-1 -.1
+            1.-123
+            +1.123e+1+1
+        """
+        expect = r"""1.1e+1+1+1e+1,1.1,+,2.2,+,3.3,1.1e+1,+,1,+,1e+1,1.,+,1.1e+1,+,.1e+1,+,.0e-1,-,.,1,1.,-,123,+,1.123e+1,+,1,<EOF>"""
+        num = 155
+        self.assertTrue(TestLexer.test(input,expect,num))    
+    def test_056_float(self):
+        input = r"""
+            var $float_1: Float = 1.1_234e1_234;
+            var $float_2: Float = .1_234e1_234;
+            var $float_3: Float = 1.1_234;
+            var $float_4: Float = 1.e10_000;
+            var $float_5: Float = 1e10_000;
+        """
+        expect = r"""var,$float_1,:,Float,=,1.1234e1234,;,var,$float_2,:,Float,=,.1234e1234,;,var,$float_3,:,Float,=,1.1234,;,var,$float_4,:,Float,=,1.e10000,;,var,$float_5,:,Float,=,1e10000,;,<EOF>"""
+        num = 156
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_057_float(self):
+        input = r"""
+            1.123
+            .1_123e1
+            .1_123e1_123
+            .e1_123
+            .e_1123
+            abc.e1_123
+            "".e1_123
+            ''.e1_123
+        """
+        expect = r"""1.123,.1123e1,.1123e1123,.e1123,.,e_1123,abc,.e1123,,.e1123,Error Token '"""
+        num = 157
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_058_float(self):
+        input = r"""
+            1.123e10 + 1.123e10
+            .123e10 + .123e10
+            1.123e+10 + 1.123e+10
+            1.123e-10 - 1.123e-10
+            1.123e+10 * 1.123e-10
+            1.123e+10 / 1.123e-10
+            1.123e+10 % 1.123e-10
+        """
+        expect = r"""1.123e10,+,1.123e10,.123e10,+,.123e10,1.123e+10,+,1.123e+10,1.123e-10,-,1.123e-10,1.123e+10,*,1.123e-10,1.123e+10,/,1.123e-10,1.123e+10,%,1.123e-10,<EOF>"""
+        num = 158
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_059_float(self):
+        input = r"""
+            1.1e+1+1
+            .e+1+1
+            1.1e++1+1
+            .e++1+1
+            1.1e-1-1
+            .e-1-1
+            1.1e-1--1
+            .e--1-1
+            1.1e*1
+            1.1e/1
+            1.1e+.1
+            .1e1.1e1
+            1.123.123
+            1.123.123e10
+        """
+        expect = r"""1.1e+1,+,1,.e+1,+,1,1.1,e,+,+,1,+,1,.,e,+,+,1,+,1,1.1e-1,-,1,.e-1,-,1,1.1e-1,-,-,1,.,e,-,-,1,-,1,1.1,e,*,1,1.1,e,/,1,1.1,e,+.,1,.1e1,.1e1,1.123,.,123,1.123,.123e10,<EOF>"""
+        num = 159
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_060_operator(self):
+        input = r"""
+            + - * / % ! && || == = != < <= > >= ==. +.
+        """
+        expect = r"""+,-,*,/,%,!,&&,||,==,=,!=,<,<=,>,>=,==.,+.,<EOF>"""
+        num = 160
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_061_operator_string(self):
+        input = r"""
+            ==.
+            +.
+            == .
+            + .
+            "string"+."string"
+            "string"==."string"
+        """
+        expect = r"""==.,+.,==,.,+,.,string,+.,string,string,==.,string,<EOF>"""
+        num = 161
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_062_operator_float(self):
+        input = r"""
+            1e+1+1e+1
+            1e-1-1e-1
+            .e-1-.e-1
+            .e+1+.e+1
+        """
+        expect = r"""1e+1,+,1e+1,1e-1,-,1e-1,.e-1,-,.e-1,.e+1,+.,e,+,1,<EOF>"""
+        num = 162
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_063_operator(self):
+        input = r"""
+            x = (a+b)*c-d||(a-b)/c &&(a-b)%d==!1
+            x!=y
+            x>y+1
+            x>=y+100
+            x<y*2/3+1
+            x<=y
+            x**y
+            ++x
+            --x
+            x^y
+        """
+        expect = r"""x,=,(,a,+,b,),*,c,-,d,||,(,a,-,b,),/,c,&&,(,a,-,b,),%,d,==,!,1,x,!=,y,x,>,y,+,1,x,>=,y,+,100,x,<,y,*,2,/,3,+,1,x,<=,y,x,*,*,y,+,+,x,-,-,x,x,Error Token ^"""
+        num = 163
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_064_operator_with_others(self):
+        input = r"""
+            "!a+b-c*d/x%y&&z||1!=1==1"
+            ##!a+b-c*d/x%y&&z||1!=1==1##
+            !a+b-c*d/x%y&&z||1!=1==1
+            "a>100>=1<=10<100"
+            ##a>100>=1<=10<100##
+            a>100>=1<=10<100
+        """
+        expect = r"""!a+b-c*d/x%y&&z||1!=1==1,!,a,+,b,-,c,*,d,/,x,%,y,&&,z,||,1,!=,1,==,1,a>100>=1<=10<100,a,>,100,>=,1,<=,10,<,100,<EOF>"""
+        num = 164
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_065_seperator(self):
+        input = r"""
+            ()[]{}.,;:
+        """
+        expect = r"""(,),[,],{,},.,,,;,:,<EOF>"""
+        num = 165
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_066_seperator(self):
+        input = r"""
+            [](x,y) {
+                var a,b;
+                x[0] == a == y[0] == b;
+            }
+        """
+        expect = r"""[,],(,x,,,y,),{,var,a,,,b,;,x,[,0,],==,a,==,y,[,0,],==,b,;,},<EOF>"""
+        num = 166
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_067_seperator(self):
+        input = r"""
+            int main() {
+                int a,b,c = 0;
+                cin >> a >> b >> c;
+                cout << "Huynh Thanh Dat";
+                int a[100];
+                {
+                    a[1] = a[1] + a[2];
+                    a[1] == a[3];
+                }
+            }
+        """
+        expect = r"""int,main,(,),{,int,a,,,b,,,c,=,0,;,cin,>,>,a,>,>,b,>,>,c,;,cout,<,<,Huynh Thanh Dat,;,int,a,[,100,],;,{,a,[,1,],=,a,[,1,],+,a,[,2,],;,a,[,1,],==,a,[,3,],;,},},<EOF>"""
+        num = 167
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_068_seperator_operator(self):
+        input = r"""
+                ##  
+                x=array[(a+b)-c*d] >=1>0<=10<100;
+                {
+                    a**b
+                    a%b
+                    a$b
+                    x=a==1?b:c;
+                }
+                ##
+
+                x=array[(a+b)-c*d] >=1>0<=10<100;
+                {
+                    a**b
+                    a%b
+                    a$b
+                    x=a==1?b:c;
+                }
+        """
+        expect = r"""x,=,array,[,(,a,+,b,),-,c,*,d,],>=,1,>,0,<=,10,<,100,;,{,a,*,*,b,a,%,b,a,$b,x,=,a,==,1,Error Token ?""" 
+        num = 168
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_069_seperator(self):
+        input = r"""
+            ()=>{
+                console.log("abc");
+                a[1];
+                var a,b,c;
+                *this.a;
+                this->a;    
+                int* a = new int;
+                class_name::a;
+                var a:Int;
+            }
+            
+        """
+        expect = r"""(,),=,>,{,console,.,log,(,abc,),;,a,[,1,],;,var,a,,,b,,,c,;,*,this,.,a,;,this,-,>,a,;,int,*,a,=,new,int,;,class_name,::,a,;,var,a,:,Int,;,},<EOF>""" 
+        num = 169
+        self.assertTrue(TestLexer.test(input,expect,num))
+            
     

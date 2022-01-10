@@ -1,0 +1,1 @@
+var,$float_1,:,Float,=,1.123,;,var,$float_2,:,Float,=,1.123e10,;,<EOF>

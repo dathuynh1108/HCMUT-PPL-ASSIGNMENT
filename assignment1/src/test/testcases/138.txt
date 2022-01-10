@@ -1,0 +1,5 @@
+
+            var $string_1: String = "abc"; ## Comment ##
+            string_1 = string_1 +. "def" +. "xyz";
+            var $string_2: String = "abcdefxyz";
+        

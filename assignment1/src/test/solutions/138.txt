@@ -1,0 +1,1 @@
+var,$string_1,:,String,=,abc,;,string_1,=,string_1,+.,def,+.,xyz,;,var,$string_2,:,String,=,abcdefxyz,;,<EOF>
