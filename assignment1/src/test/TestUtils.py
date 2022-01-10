@@ -3,7 +3,7 @@ from antlr4 import *
 from antlr4.error.ErrorListener import ConsoleErrorListener,ErrorListener
 from antlr4.tree.Tree import INVALID_INTERVAL
 
-from main.d96.parser.lexererr import ERROR_TOKEN, ILLEGAL_ESCAPE, UNCLOSE_STRING, UNTERMINATED_COMMENT
+from main.d96.parser.lexererr import ErrorToken, IllegalEscape, UncloseString, UnterminatedComment
 if not './main/d96/parser/' in sys.path:
     sys.path.append('./main/d96/parser/')
 if os.path.isdir('../target/main/d96/parser') and not '../target/main/d96/parser/' in sys.path:
@@ -48,7 +48,7 @@ class TestLexer:
         lexer = Lexer(inputfile)
         try:
             TestLexer.printLexeme(dest,lexer)
-        except (ERROR_TOKEN,UNCLOSE_STRING,ILLEGAL_ESCAPE, UNTERMINATED_COMMENT) as err:
+        except (ErrorToken, UncloseString, IllegalEscape, UnterminatedComment) as err:
             dest.write(err.message)
         finally:
             dest.close() 

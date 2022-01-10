@@ -11,14 +11,77 @@ options {
 }
 // ----------------------------------  PARSER  -------------------------------------------
 // program structure
-program: class_declaration+ EOF;
-class_declaration : .;
+program: class_declaration* EOF;
+
+class_declaration : CLASS ID (COLON ID)? LCB class_body RCB;
+class_body: (attribute_declaration | method_declaration)*;
+
+attribute_declaration: (VAR | VAL) (ID | DOLLAR_ID)(COMMA (ID | DOLLAR_ID))* COLON type_name initialization? SEMI;
+
+type_name: normal_type | array_type; 
+normal_type: INT | FLOAT | STRING | BOOLEAN;
+array_type: ARRAY LSB normal_type COMMA  RSB;
+initialization: 'Chua lam';
+
+method_declaration: (ID | DOLLAR_ID) LP parameter_list RP block_statement;
+constructor_declaration: CONSTRUCTOR LP parameter_list RP block_statement;
+destructor_declaration: DESTRUCTOR LP RP block_statement;
+
+parameter_list: (parameter_declaration)*;
+parameter_declaration: (ID)(COMMA ID)* COLON type_name;
+
+block_statement: LCB statement* RCB;
+statement   : variable_and_const_declaration
+            | assign_statement
+            | if_statement
+            | foreach_statement
+            //| while_statement           
+            | break_statement
+            | continue_statement
+            | return_statement  
+            | method_invocation_statement  
+            ;
+
+
+
+variable_and_const_declaration: (VAR | VAL) ID (COMMA ID)* COLON type_name initialization? SEMI;
+assign_statement: left_hand_side EQUAL expression SEMI;
+left_hand_side: ID | DOLLAR_ID | index_expression;
+
+if_statement: IF LP expression RP block_statement // 1 if
+            | IF LP expression RP block_statement else_statement // 1 if 1 else
+            | IF LP expression RP block_statement elseif_statement+ // 1 if multi elseif
+            | IF LP expression RP block_statement elseif_statement+ else_statement // 1 if multi elseif 1 elseif
+            ;
+elseif_statement: ELSEIF LP expression RP block_statement;
+else_statement: ELSE block_statement;
+
+foreach_statement: FOR LP (ID | DOLLAR_ID) IN expression DOUBLE_DOT expression (BY expression)? RP block_statement;
+break_statement: BREAK SEMI;
+continue_statement: CONTINUE SEMI;
+return_statement: RETURN expression SEMI | RETURN SEMI;
+method_invocation_statement: 'Chua lam';
+
+
+expression: 'Chua lam';
+index_expression: 'Chua lam';
+
+
+
+array_literal: 'Chua lam';
+normal_literal: 'Chua lam';
+
+
+
+
+
+
 // ----------------------------------  LEXER  -------------------------------------------
 /********************** FRAGMENT ***********************/
 fragment COMMENT_CHAR: ~'#' | '#'~'#';
 
-// [1-9](_*[0-9])* | '0'
-fragment DEC_INTEGER_LITERAL:  '0' | [1-9][0-9_]*;
+// [1-9]('_'*[0-9])* | '0'
+fragment DEC_INTEGER_LITERAL:  [1-9]('_'*[0-9])* | '0';
 fragment OCT_INTEGER_LITERAL: '0' [0-7]+;
 fragment BIN_INTEGER_LITERAL: '0'[bB] [0-1]+;
 fragment HEX_INTEGER_LITERAL: '0'[xX] [0-9A-Fa-f]+;
@@ -45,11 +108,17 @@ CONTINUE: 'Continue';
 IF: 'If';
 ELSEIF: 'Elseif';
 ELSE: 'Else';
-FOREACH: 'Foreach';
+FOR: 'For';
 fragment TRUE: 'True';
 fragment FALSE: 'False';
 VAR: 'var';
 VAL: 'val';
+SELF: 'self';
+RETURN: 'return';
+IN: 'In';
+BY: 'By';
+CONSTRUCTOR: 'constructor';
+DESTRUCTOR: 'destructor';
 /********************* TYPES **********************/
 CLASS: 'class';
 ARRAY: 'Array';
@@ -58,7 +127,6 @@ FLOAT: 'Float';
 BOOLEAN: 'Boolean';
 STRING: 'String';
 NULL: 'Null';
-
 
 /********************* LITERALS ***********************/
 INTEGER_LITERAL : (
@@ -117,6 +185,7 @@ LSB: '[';
 RSB: ']';
 
 DOT: '.';
+DOUBLE_DOT: '..';
 COMMA: ',';
 SEMI: ';';
 COLON: ':';
@@ -128,7 +197,7 @@ RCB: '}';
 /******************** IDENTIFIERS *********************/
 //_NUMBER is ID, not INTEGER_LITERAL
 ID: [_a-zA-Z][_a-zA-Z0-9]*;
-DOLLAR_ID: ('$')?[_a-zA-Z][_a-zA-Z0-9]*;
+DOLLAR_ID: ('$')[_a-zA-Z][_a-zA-Z0-9]*;
 
 /*********************** SKIP *************************/
 WS : [ \t\r\n\f]+ -> skip ; // skip spaces, tabs, newlines
@@ -142,20 +211,20 @@ UNTERMINATED_COMMENT    : (
                         '##' COMMENT_CHAR* EOF
                         | '##' ~'#'* '#' EOF
 )  {
-	raise UNTERMINATED_COMMENT()
+	raise UnterminatedComment()
 };
 
 UNCLOSE_STRING: '"' STRING_CHAR* ( [\b\t\n\f\r"'\\] | EOF ) {
     y = str(self.text)
     possible = ['\b', '\t', '\n', '\f', '\r', '"', "'", '\\']
     if y[-1] in possible:
-        raise UNCLOSE_STRING(y[1:-1])
+        raise UncloseString(y[1:-1])
     else:
-        raise UNCLOSE_STRING(y[1:])
+        raise UncloseString(y[1:])
 }; 
 ILLEGAL_ESCAPE: '"' STRING_CHAR* ILLEGAL_SEQUENCE {
-    raise ILLEGAL_ESCAPE(self.text[1:])
+    raise IllegalEscape(self.text[1:])
 };
 ERROR_TOKEN: . {
-    raise ERROR_TOKEN(self.text)
+    raise ErrorToken(self.text)
 };

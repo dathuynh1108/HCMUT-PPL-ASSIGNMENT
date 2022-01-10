@@ -102,7 +102,7 @@ class LexerSuite(unittest.TestCase):
     def test_012_integer(self):
         # _INT is variable
         input = "1_2_3_4_5 1_____2 ______1 1_______"
-        expect = "12345,12,______1,1,<EOF>"
+        expect = "12345,12,______1,1,_______,<EOF>"
         num = 112
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_013_integer(self):
@@ -673,4 +673,72 @@ class LexerSuite(unittest.TestCase):
         expect = r"""Int,int,Int_,Float,float,Float_,Boolean,boolean,Boolean_,String,string,String_,Array,array,Array_,class,Class,class_,Null,null,Null_,<EOF>""" 
         num = 170
         self.assertTrue(TestLexer.test(input,expect,num))
+    def test_071_keyword(self):
+        input = r"""
+            Break Continue If Elseif Else For var val self return In By constructor destructor
+        """
+        expect = r"""Break,Continue,If,Elseif,Else,For,var,val,self,return,In,By,constructor,destructor,<EOF>""" 
+        num = 171
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_072_keyword(self):
+        input = r"""
+            Break Continue If Elseif Else For var val self return In By constructor destructor
+            "Break" "Continue" "If" "Elseif" "Else" "For" "var" "val" "self" "return" "In" "By" "constructor" "destructor"
+        """
+        expect = r"""Break,Continue,If,Elseif,Else,For,var,val,self,return,In,By,constructor,destructor,Break,Continue,If,Elseif,Else,For,var,val,self,return,In,By,constructor,destructor,<EOF>""" 
+        num = 172
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_073_keyword_complex(self):
+        input = r"""
+            ## Break Continue If Elseif Else For var val self return In By constructor destructor ##
+            constructor() {
+                If (1==1) {
+                    var a: Array[Int,100];
+                    val b: Array[Int,100];
+                    For (i In 1..101 By 1)
+                        If (a[i] == 1) return self.text;
+                        Elseif (a[i] == 2) continue;
+                        Else (a[i] == 3) break;
+                }
+            }
+            destructor() {
+                return;
+            }
+        """
+        expect = r"""constructor,(,),{,If,(,1,==,1,),{,var,a,:,Array,[,Int,,,100,],;,val,b,:,Array,[,Int,,,100,],;,For,(,i,In,1.,.,101,By,1,),If,(,a,[,i,],==,1,),return,self,.,text,;,Elseif,(,a,[,i,],==,2,),continue,;,Else,(,a,[,i,],==,3,),break,;,},},destructor,(,),{,return,;,},<EOF>""" 
+        num = 173
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_074_integer(self):
+        input = r"""
+            1_234 1_____2_____3_____4_____5  1__234_
+            0123 0_123 01_23
+            0x123 0_x123 0x_123 0x1_23
+            0b111 0_b111 0b_111 0b1_11
+        """
+        expect = r"""1234,12345,1234,_,0123,0,_123,01,_23,0x123,0,_x123,0,x_123,0x1,_23,0b111,0,_b111,0,b_111,0b1,_11,<EOF>""" 
+        num = 174
+        self.assertTrue(TestLexer.test(input,expect,num))
+    def test_075_integer(self):
+        input = r"""
+            ____1234
+            1____234
+            1234____
+
+            0xabcdef
+            0XaBcDeF
+            0b111111
+            0B111111
+            0x0
+            0X0
+            0b0
+            0B0
+
+            0xzxcvbb
+            0b222222
+            09999999
+        """
+        expect = r"""____1234,1234,1234,____,0xabcdef,0XaBcDeF,0b111111,0B111111,0x0,0X0,0b0,0B0,0,xzxcvbb,0,b222222,0,9999999,<EOF>""" 
+        num = 175
+        self.assertTrue(TestLexer.test(input,expect,num))
+    
     

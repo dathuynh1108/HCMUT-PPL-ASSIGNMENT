@@ -1,0 +1,1 @@
+constructor,(,),{,If,(,1,==,1,),{,var,a,:,Array,[,Int,,,100,],;,val,b,:,Array,[,Int,,,100,],;,For,(,i,In,1.,.,101,By,1,),If,(,a,[,i,],==,1,),return,self,.,text,;,Elseif,(,a,[,i,],==,2,),continue,;,Else,(,a,[,i,],==,3,),break,;,},},destructor,(,),{,return,;,},<EOF>

@@ -1,18 +1,18 @@
 from abc import ABC
 class LexerError(ABC,Exception):
 	pass
-class ERROR_TOKEN(LexerError):
+class ErrorToken(LexerError):
     def __init__(self,s):
         self.message = "Error Token "+ s
 
-class UNCLOSE_STRING(LexerError):
+class UncloseString(LexerError):
     def __init__(self,s):
         self.message = "Unclosed String: "+ s
 
-class ILLEGAL_ESCAPE(LexerError):
+class IllegalEscape(LexerError):
     def __init__(self,s):
         self.message = "Illegal Escape In String: "+ s
-class UNTERMINATED_COMMENT(LexerError):
+class UnterminatedComment(LexerError):
     def __init__(self):
         self.message = "Unterminated Comment"
 
