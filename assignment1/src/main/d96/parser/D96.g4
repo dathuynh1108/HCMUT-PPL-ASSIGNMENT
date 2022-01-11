@@ -13,7 +13,9 @@ options {
 // program structure
 program: class_declaration* EOF;
 
-class_declaration : CLASS ID (COLON ID)? LCB class_body RCB;
+class_declaration : CLASS class_name (COLON class_name)? LCB class_body RCB;
+class_name: ID; // ALERT! NOT COMPLETE
+class_type: ID;
 class_body: (attribute_declaration | method_declaration)*;
 
 attribute_declaration: (VAR | VAL) (ID | DOLLAR_ID)(COMMA (ID | DOLLAR_ID))* COLON type_name initialization? SEMI;
@@ -28,7 +30,7 @@ parameter_declaration: (ID)(COMMA ID)* COLON type_name;
 type_name: primitive_type | array_type; 
 primitive_type: INTEGER | FLOAT | STRING | BOOLEAN;
 array_type: ARRAY LSB (primitive_type | array_type) COMMA INTEGER_LITERAL RSB;
-class_name: ID; // ALERT! NOT COMPLETE
+
 
 initialization: 'Chua lam';
 

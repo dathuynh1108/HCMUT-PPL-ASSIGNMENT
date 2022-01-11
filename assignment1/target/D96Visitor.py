@@ -19,6 +19,16 @@ class D96Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by D96Parser#class_name.
+    def visitClass_name(self, ctx:D96Parser.Class_nameContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by D96Parser#class_type.
+    def visitClass_type(self, ctx:D96Parser.Class_typeContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by D96Parser#class_body.
     def visitClass_body(self, ctx:D96Parser.Class_bodyContext):
         return self.visitChildren(ctx)
@@ -66,11 +76,6 @@ class D96Visitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by D96Parser#array_type.
     def visitArray_type(self, ctx:D96Parser.Array_typeContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by D96Parser#class_name.
-    def visitClass_name(self, ctx:D96Parser.Class_nameContext):
         return self.visitChildren(ctx)
 
 
