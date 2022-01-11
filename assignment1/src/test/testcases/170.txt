@@ -4,6 +4,6 @@
             Boolean boolean Boolean_ 
             String string String_
             Array array Array_
-            class Class class_
+            Class Class Class_
             Null null Null_
         

@@ -30,8 +30,8 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test(input,expect,num))
     
     def test_005_id(self):
-        input = "$static_variable_123 normal_variable_123 $_ $"
-        expect = "$static_variable_123,normal_variable_123,$_,Error Token $"
+        input = "$static_Variable_123 normal_Variable_123 $_ $"
+        expect = "$static_Variable_123,normal_Variable_123,$_,Error Token $"
         num = 105
         self.assertTrue(TestLexer.test(input,expect,num))
     
@@ -77,8 +77,9 @@ class LexerSuite(unittest.TestCase):
         num = 108
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_009_comment(self):
-        # Reference on """ of python, it is not valid for nested """
+        # Reference on """ of python, it is not Valid for nested """
         input = """
+            ## Not support comment in comment ##
             #### Comment in comment ####
             ## #Unterminated Comment
         """
@@ -100,20 +101,20 @@ class LexerSuite(unittest.TestCase):
         num = 111
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_012_integer(self):
-        # _INT is variable
+        # _INT is Variable
         input = "1_2_3_4_5 1_____2 ______1 1_______"
         expect = "12345,12,______1,1,_______,<EOF>"
         num = 112
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_013_integer(self):
-        # _INT is variable
+        # _INT is Variable
         # Note question 0_x123: 0_ x123 or 0 _x123 --> can _ is the last char in INT
         input = "012345 0_12345 01_2345 0x12345 0x_12345 0_x12345 0b010101 0b_010101 0_b010101"
         expect = "012345,0,_12345,01,_2345,0x12345,0,x_12345,0,_x12345,0b010101,0,b_010101,0,_b010101,<EOF>"
         num = 113
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_014_integer(self):
-        # _INT is variable
+        # _INT is Variable
         input = "0XFFFF 0xffff 0XZZZZ 0xzzzz 0B1111 0b1111 0B2222 0b2222 09999 0"
         expect = "0XFFFF,0xffff,0,XZZZZ,0,xzzzz,0B1111,0b1111,0,B2222,0,b2222,0,9999,0,<EOF>"
         num = 114
@@ -257,9 +258,9 @@ class LexerSuite(unittest.TestCase):
             "String"
             " "
             "?" "-" "#" "!" "@" "#" "$" "%" "^" "&" "*" "(" ")" "-" "_" "+" ";" ":" ";" "<" ">" "?"
-            "Mulitiple Characters"
+            "Mulitiple Characters with expression: (1+2*3)*(3-1)"
         """
-        expect = r"""\\a,String, ,?,-,#,!,@,#,$,%,^,&,*,(,),-,_,+,;,:,;,<,>,?,Mulitiple Characters,<EOF>"""
+        expect = r"""\\a,String, ,?,-,#,!,@,#,$,%,^,&,*,(,),-,_,+,;,:,;,<,>,?,Mulitiple Characters with expression: (1+2*3)*(3-1),<EOF>"""
         num = 130
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_031_string(self):
@@ -273,61 +274,76 @@ class LexerSuite(unittest.TestCase):
     def test_032_string(self):
         input = r"""
             "Valid string"
+            "'"Valid string'" Cristiano Ronaldo"
             "Invalid string'"
         """
-        expect = """Valid string,Unclosed String: Invalid string'\""""
+        expect = """Valid string,\'\"Valid string\'\" Cristiano Ronaldo,Unclosed String: Invalid string'\""""
         num = 132
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_033_string(self):
         input = r"""
             "Valid string"
-            'Invalid string'
+            "Huynh Thanh Dat \'\t\n\f\b\r\f\\'" 11082001"
+            "Invalid string''
         """
-        expect = r"""Valid string,Error Token '"""
+        expect = r"""Valid string,Huynh Thanh Dat \'\t\n\f\b\r\f\\'" 11082001,Illegal Escape In String: Invalid string''"""
         num = 133
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_034_string(self):
         input = r"""
             "String with expression: 1+1*1/1%1*(1+1)"
+            Expression: 1+1*1/1%1*(1+1)
         """
-        expect = r"""String with expression: 1+1*1/1%1*(1+1),<EOF>"""
+        expect = r"""String with expression: 1+1*1/1%1*(1+1),Expression,:,1,+,1,*,1,/,1,%,1,*,(,1,+,1,),<EOF>"""
         num = 134
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_035_string(self):
         input = r"""
             ## Test Comment ##
             "String with expression: 1+1*1/1%1*(1+1)"
+            "Class Program : Object {Var $x: Int = 1;Method(n:Int){Return n;}}"
+            ##"String with expression: 1+1*1/1%1*(1+1)"##
             ## Test Comment ##
         """
-        expect = r"""String with expression: 1+1*1/1%1*(1+1),<EOF>"""
+        expect = r"""String with expression: 1+1*1/1%1*(1+1),Class Program : Object {Var $x: Int = 1;Method(n:Int){Return n;}},<EOF>"""
         num = 135
         self.assertTrue(TestLexer.test(input,expect,num))     
     def test_036_string(self):
         input = r"""
-            "String in comment"
+            ##"String in comment"##
             "## Comment in string ##"
-            "parentheses in string"
+            "{braces in string}"
+            {"string in braces"}
+            "[square brackets in string]"
+            ["string in square brackets"]
+            "(parentheses in string)"
             ("string in parentheses")
+            "/* C comment in string */"
+            /* "string in C comment" */
+            "<<abc>>"
+            <<"abc">>
         """
-        expect = r"""String in comment,## Comment in string ##,parentheses in string,(,string in parentheses,),<EOF>"""
+        expect = r"""## Comment in string ##,{braces in string},{,string in braces,},[square brackets in string],[,string in square brackets,],(parentheses in string),(,string in parentheses,),/* C comment in string */,/,*,string in C comment,*,/,<<abc>>,<,<,abc,>,>,<EOF>"""
         num = 136
         self.assertTrue(TestLexer.test(input,expect,num)) 
     def test_037_string(self):
         input = r"""
             ## test with syntax ##        
-            var $string_1: String = "this is a string";
-            var $string_2: String = "this is a string";
+            Var $string_1: String = "this is a string";
+            Var $string_2: String = "this is a string";
         """
-        expect = r"""var,$string_1,:,String,=,this is a string,;,var,$string_2,:,String,=,this is a string,;,<EOF>"""
+        expect = r"""Var,$string_1,:,String,=,this is a string,;,Var,$string_2,:,String,=,this is a string,;,<EOF>"""
         num = 137
         self.assertTrue(TestLexer.test(input,expect,num))  
     def test_038_string(self):
         input = r"""
-            var $string_1: String = "abc"; ## Comment ##
+            Var $string_1: String = "abc"; ## Comment ##
             string_1 = string_1 +. "def" +. "xyz";
-            var $string_2: String = "abcdefxyz";
+            Var $string_2: String = "abcdefxyz";
+            "Some code in string"
+            "Var i: Int; Foreach (i In 1 .. 100 By 1) {If (i==i) {Break;} Elseif(i==i+1) {Continue;} Else {Return;}}"
         """
-        expect = r"""var,$string_1,:,String,=,abc,;,string_1,=,string_1,+.,def,+.,xyz,;,var,$string_2,:,String,=,abcdefxyz,;,<EOF>"""
+        expect = r"""Var,$string_1,:,String,=,abc,;,string_1,=,string_1,+.,def,+.,xyz,;,Var,$string_2,:,String,=,abcdefxyz,;,Some code in string,Var i: Int; Foreach (i In 1 .. 100 By 1) {If (i==i) {Break;} Elseif(i==i+1) {Continue;} Else {Return;}},<EOF>"""
         num = 138
         self.assertTrue(TestLexer.test(input,expect,num)) 
     # Test boolean
@@ -410,10 +426,10 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_049_float(self):
         input = r"""
-            var $float_1: Float = 1.123;
-            var $float_2: Float = 1.123e10;
+            Var $float_1: Float = 1.123;
+            Var $float_2: Float = 1.123e10;
         """
-        expect = r"""var,$float_1,:,Float,=,1.123,;,var,$float_2,:,Float,=,1.123e10,;,<EOF>"""
+        expect = r"""Var,$float_1,:,Float,=,1.123,;,Var,$float_2,:,Float,=,1.123e10,;,<EOF>"""
         num = 149
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_050_float(self):
@@ -474,13 +490,13 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test(input,expect,num))    
     def test_056_float(self):
         input = r"""
-            var $float_1: Float = 1.1_234e1_234;
-            var $float_2: Float = .1_234e1_234;
-            var $float_3: Float = 1.1_234;
-            var $float_4: Float = 1.e10_000;
-            var $float_5: Float = 1e10_000;
+            Var $float_1: Float = 1.1_234e1_234;
+            Var $float_2: Float = .1_234e1_234;
+            Var $float_3: Float = 1.1_234;
+            Var $float_4: Float = 1.e10_000;
+            Var $float_5: Float = 1e10_000;
         """
-        expect = r"""var,$float_1,:,Float,=,1.1234e1234,;,var,$float_2,:,Float,=,.1234e1234,;,var,$float_3,:,Float,=,1.1234,;,var,$float_4,:,Float,=,1.e10000,;,var,$float_5,:,Float,=,1e10000,;,<EOF>"""
+        expect = r"""Var,$float_1,:,Float,=,1.1234e1234,;,Var,$float_2,:,Float,=,.1234e1234,;,Var,$float_3,:,Float,=,1.1234,;,Var,$float_4,:,Float,=,1.e10000,;,Var,$float_5,:,Float,=,1e10000,;,<EOF>"""
         num = 156
         self.assertTrue(TestLexer.test(input,expect,num)) 
     def test_057_float(self):
@@ -590,22 +606,35 @@ class LexerSuite(unittest.TestCase):
     def test_065_seperator(self):
         input = r"""
             ()[]{}.,;:
+            @staticmethod
         """
-        expect = r"""(,),[,],{,},.,,,;,:,<EOF>"""
+        expect = r"""(,),[,],{,},.,,,;,:,Error Token @"""
         num = 165
         self.assertTrue(TestLexer.test(input,expect,num)) 
     def test_066_seperator(self):
         input = r"""
             [](x,y) {
-                var a,b;
+                Var a,b:Int;
                 x[0] == a == y[0] == b;
+                a.b + Self.b;
+                Some_class::$a;
+                Some_class::$method();
+                
             }
         """
-        expect = r"""[,],(,x,,,y,),{,var,a,,,b,;,x,[,0,],==,a,==,y,[,0,],==,b,;,},<EOF>"""
+        expect = r"""[,],(,x,,,y,),{,Var,a,,,b,:,Int,;,x,[,0,],==,a,==,y,[,0,],==,b,;,a,.,b,+,Self,.,b,;,Some_class,::,$a,;,Some_class,::,$method,(,),;,},<EOF>"""
         num = 166
         self.assertTrue(TestLexer.test(input,expect,num)) 
     def test_067_seperator(self):
         input = r"""
+            class JSON {
+                static int variable = 0;
+                public:
+                    unordered_map<type_1, type_2> data;
+                    Pointer method(x) {
+                        Return Null;
+                    }
+            };
             int main() {
                 int a,b,c = 0;
                 cin >> a >> b >> c;
@@ -615,9 +644,11 @@ class LexerSuite(unittest.TestCase):
                     a[1] = a[1] + a[2];
                     a[1] == a[3];
                 }
+                ++JSON::variable;
+                JSON::method();
             }
         """
-        expect = r"""int,main,(,),{,int,a,,,b,,,c,=,0,;,cin,>,>,a,>,>,b,>,>,c,;,cout,<,<,Huynh Thanh Dat,;,int,a,[,100,],;,{,a,[,1,],=,a,[,1,],+,a,[,2,],;,a,[,1,],==,a,[,3,],;,},},<EOF>"""
+        expect = r"""class,JSON,{,static,int,variable,=,0,;,public,:,unordered_map,<,type_1,,,type_2,>,data,;,Pointer,method,(,x,),{,Return,Null,;,},},;,int,main,(,),{,int,a,,,b,,,c,=,0,;,cin,>,>,a,>,>,b,>,>,c,;,cout,<,<,Huynh Thanh Dat,;,int,a,[,100,],;,{,a,[,1,],=,a,[,1,],+,a,[,2,],;,a,[,1,],==,a,[,3,],;,},+,+,JSON,::,variable,;,JSON,::,method,(,),;,},<EOF>"""
         num = 167
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_068_seperator_operator(self):
@@ -648,16 +679,16 @@ class LexerSuite(unittest.TestCase):
             ()=>{
                 console.log("abc");
                 a[1];
-                var a,b,c;
+                Var a,b,c;
                 *this.a;
                 this->a;    
                 int* a = new int;
-                class_name::a;
-                var a:Int;
+                Class_name::a;
+                Var a:Int;
             }
             
         """
-        expect = r"""(,),=,>,{,console,.,log,(,abc,),;,a,[,1,],;,var,a,,,b,,,c,;,*,this,.,a,;,this,-,>,a,;,int,*,a,=,new,int,;,class_name,::,a,;,var,a,:,Int,;,},<EOF>""" 
+        expect = r"""(,),=,>,{,console,.,log,(,abc,),;,a,[,1,],;,Var,a,,,b,,,c,;,*,this,.,a,;,this,-,>,a,;,int,*,a,=,new,int,;,Class_name,::,a,;,Var,a,:,Int,;,},<EOF>""" 
         num = 169
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_070_type(self):
@@ -667,45 +698,48 @@ class LexerSuite(unittest.TestCase):
             Boolean boolean Boolean_ 
             String string String_
             Array array Array_
-            class Class class_
+            Class Class Class_
             Null null Null_
         """
-        expect = r"""Int,int,Int_,Float,float,Float_,Boolean,boolean,Boolean_,String,string,String_,Array,array,Array_,class,Class,class_,Null,null,Null_,<EOF>""" 
+        expect = r"""Int,int,Int_,Float,float,Float_,Boolean,boolean,Boolean_,String,string,String_,Array,array,Array_,Class,Class,Class_,Null,null,Null_,<EOF>""" 
         num = 170
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_071_keyword(self):
         input = r"""
-            Break Continue If Elseif Else For var val self return In By constructor destructor
+            Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New
         """
-        expect = r"""Break,Continue,If,Elseif,Else,For,var,val,self,return,In,By,constructor,destructor,<EOF>""" 
+        expect = r"""Break,Continue,If,Elseif,Else,Foreach,True,False,Array,In,Int,Float,Boolean,String,Return,Null,Class,Val,Var,Constructor,Destructor,New,<EOF>""" 
         num = 171
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_072_keyword(self):
         input = r"""
-            Break Continue If Elseif Else For var val self return In By constructor destructor
-            "Break" "Continue" "If" "Elseif" "Else" "For" "var" "val" "self" "return" "In" "By" "constructor" "destructor"
+            Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New
+            "Break" "Continue" "If" "Elseif" "Else" "Foreach" "True" "False" "Array" "In" "Int" "Float" "Boolean" "String" "Return" "Null" "Class" "Val" "Var" "Constructor" "Destructor" "New"
+            "Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New"
+            ## Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New ##
+            (Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New)
         """
-        expect = r"""Break,Continue,If,Elseif,Else,For,var,val,self,return,In,By,constructor,destructor,Break,Continue,If,Elseif,Else,For,var,val,self,return,In,By,constructor,destructor,<EOF>""" 
+        expect = r"""Break,Continue,If,Elseif,Else,Foreach,True,False,Array,In,Int,Float,Boolean,String,Return,Null,Class,Val,Var,Constructor,Destructor,New,Break,Continue,If,Elseif,Else,Foreach,True,False,Array,In,Int,Float,Boolean,String,Return,Null,Class,Val,Var,Constructor,Destructor,New,Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New,(,Break,Continue,If,Elseif,Else,Foreach,True,False,Array,In,Int,Float,Boolean,String,Return,Null,Class,Val,Var,Constructor,Destructor,New,),<EOF>""" 
         num = 172
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_073_keyword_complex(self):
         input = r"""
-            ## Break Continue If Elseif Else For var val self return In By constructor destructor ##
-            constructor() {
+            ## Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New ##
+            Constructor() {
                 If (1==1) {
-                    var a: Array[Int,100];
-                    val b: Array[Int,100];
-                    For (i In 1..101 By 1)
-                        If (a[i] == 1) return self.text;
-                        Elseif (a[i] == 2) continue;
-                        Else (a[i] == 3) break;
+                    Var a: Array[Int,100];
+                    Val b: Array[Int,100];
+                    Foreach (i In 1..101 By 1)
+                        If (a[i] == 1) Return Self.text;
+                        Elseif (a[i] == 2) Continue;
+                        Else (a[i] == 3) Break;
                 }
             }
-            destructor() {
-                return;
+            Destructor() {
+                Return;
             }
         """
-        expect = r"""constructor,(,),{,If,(,1,==,1,),{,var,a,:,Array,[,Int,,,100,],;,val,b,:,Array,[,Int,,,100,],;,For,(,i,In,1.,.,101,By,1,),If,(,a,[,i,],==,1,),return,self,.,text,;,Elseif,(,a,[,i,],==,2,),continue,;,Else,(,a,[,i,],==,3,),break,;,},},destructor,(,),{,return,;,},<EOF>""" 
+        expect = r"""Constructor,(,),{,If,(,1,==,1,),{,Var,a,:,Array,[,Int,,,100,],;,Val,b,:,Array,[,Int,,,100,],;,Foreach,(,i,In,1.,.,101,By,1,),If,(,a,[,i,],==,1,),Return,Self,.,text,;,Elseif,(,a,[,i,],==,2,),Continue,;,Else,(,a,[,i,],==,3,),Break,;,},},Destructor,(,),{,Return,;,},<EOF>""" 
         num = 173
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_074_integer(self):
@@ -740,5 +774,259 @@ class LexerSuite(unittest.TestCase):
         expect = r"""____1234,1234,1234,____,0xabcdef,0XaBcDeF,0b111111,0B111111,0x0,0X0,0b0,0B0,0,xzxcvbb,0,b222222,0,9999999,<EOF>""" 
         num = 175
         self.assertTrue(TestLexer.test(input,expect,num))
+    def test_076_general(self):
+        input = r"""
+            ## Multi line comment 
+            # Line 1
+            # Line 2
+            # Line 3
+            End comment ##
+            Class Program : Object {
+                Var x, $y: Int;
+                $static_method(a: Int) {
+                    If ($a > 1) {
+                        Return $a;
+                    } Elseif ($a < 1) {
+                        Return $a + 1;
+                    }
+                }
+            }
+        """
+        expect = r"""Class,Program,:,Object,{,Var,x,,,$y,:,Int,;,$static_method,(,a,:,Int,),{,If,(,$a,>,1,),{,Return,$a,;,},Elseif,(,$a,<,1,),{,Return,$a,+,1,;,},},},<EOF>""" 
+        num = 176
+        self.assertTrue(TestLexer.test(input,expect,num))
+        
+    def test_077_general(self):
+        input = r"""
+            ## Multi line comment 
+            # Line 1
+            # Line 2
+            # Line 3
+            End comment ##
+            Class Program : Object {
+                Var $string: String = "This is a string";
+                print_console(n: Int) {
+                    Var i: Int;
+                    Foreach (i In 1 .. 100 By 1) {
+                        print($string);
+                    }
+                }
+            }
+        """
+        expect = r"""Class,Program,:,Object,{,Var,$string,:,String,=,This is a string,;,print_console,(,n,:,Int,),{,Var,i,:,Int,;,Foreach,(,i,In,1,..,100,By,1,),{,print,(,$string,),;,},},},<EOF>""" 
+        num = 177
+        self.assertTrue(TestLexer.test(input,expect,num))  
+    
+    def test_078_range(self):
+        input = r"""
+            1..100      ## 1. is float ##
+            1 .. 100
+            a..b
+            (1)..100
+            1...100
+            1...100.
+        """
+        expect = r"""1.,.,100,1,..,100,a,..,b,(,1,),..,100,1.,..,100,1.,..,100.,<EOF>""" 
+        num = 178
+        self.assertTrue(TestLexer.test(input,expect,num))      
+    def test_079_special_case(self):
+        input = r"""
+            ## Unclose or Illegal ??, need do print \n? ##
+            "abcde\
+            ""
+        """
+        expect = """Illegal Escape In String: abcde\\\n""" 
+        num = 179
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_080_special_case(self):
+        input = r"""
+            ## Unclose or Illegal ?? ##
+            "abcde'"
+        """
+        expect = """Unclosed String: abcde\'\"""" 
+        num = 180
+        self.assertTrue(TestLexer.test(input,expect,num))     
+    def test_081_special_case(self):
+        input = r"""
+            ## Illegal at \ or \" 
+            # Most language take \" but it is an escape sequence
+            ##
+
+            "abcde\"
+        """
+        expect = """Illegal Escape In String: abcde\\\"""" 
+        num = 181
+        self.assertTrue(TestLexer.test(input,expect,num))     
+    def test_082_float_seperator(self):
+        input = r"""
+            1_234.
+            1234.
+            .1234
+            .1_234e1_234
+            .1e+1+1
+            .1e-1-1
+            *()*)%!++(+)&&||*();,[](){}%+-=====*/
+            &
+        """
+        expect = """1234.,1234.,.,1234,.1234e1234,.1e+1,+,1,.1e-1,-,1,*,(,),*,),%,!,+,+,(,+,),&&,||,*,(,),;,,,[,],(,),{,},%,+,-,==,==,=,*,/,Error Token &""" 
+        num = 182
+        self.assertTrue(TestLexer.test(input,expect,num))     
+    def test_083_brain_fuck_language(self):
+        input = r"""
+            ## Print hello world :) ##
+            ++++++++++[>+++++++>++++++++++>+++>+<<<<-]
+            ++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>. 
+        """
+        expect = """+,+,+,+,+,+,+,+,+,+,[,>,+,+,+,+,+,+,+,>,+,+,+,+,+,+,+,+,+,+,>,+,+,+,>,+,<,<,<,<,-,],+,+.,>,+.,+,+,+,+,+,+,+.,.,+,+,+.,>,+,+.,<,<,+,+,+,+,+,+,+,+,+,+,+,+,+,+,+.,>,.,+,+,+.,-,-,-,-,-,-,.,-,-,-,-,-,-,-,-,.,>,+.,>,.,<EOF>""" 
+        num = 183
+        self.assertTrue(TestLexer.test(input,expect,num))  
+    def test_084_integer_decimal(self):
+        input = r"""
+            ## 
+                =================================
+                |                               |
+                |         COMMENT HERE          |  
+                |                               |
+                =================================
+            ##
+            0 _0 0_ __0 0__ 
+            123456 123_456 123_____456 123456_ 123456__ _123456 __123456
+            -123456 -123_456 -123___456 -_123456 -__123456 -123456_ -123456__
+            +123456 +123_456 +123___456 +_123456 +__123456 +123456_ +123456__
+            123ffff
+            1230xfff
+            1230b111
+            1230123
+        """
+        expect = """0,_0,0,_,__0,0,__,123456,123456,123456,123456,_,123456,__,_123456,__123456,-,123456,-,123456,-,123456,-,_123456,-,__123456,-,123456,_,-,123456,__,+,123456,+,123456,+,123456,+,_123456,+,__123456,+,123456,_,+,123456,__,123,ffff,1230,xfff,1230,b111,1230123,<EOF>""" 
+        num = 184
+        self.assertTrue(TestLexer.test(input,expect,num))  
+    def test_085_integer_decimal(self):
+        input = r"""
+            +123456+123456 +123_456+123_456
+            -123456-123456 -123_456-123_456
+            123456*123456 123___456*123___456
+            123456/123456 123___456/123___456
+            123456%123456 123___456%123___456
+            123456!=123456 123___456!=123___456
+            123456==123456 123___456==123___456
+            123456>123456 123___456>=123___456
+            123456<123456 123___456<=123___456
+        """
+        expect = """+,123456,+,123456,+,123456,+,123456,-,123456,-,123456,-,123456,-,123456,123456,*,123456,123456,*,123456,123456,/,123456,123456,/,123456,123456,%,123456,123456,%,123456,123456,!=,123456,123456,!=,123456,123456,==,123456,123456,==,123456,123456,>,123456,123456,>=,123456,123456,<,123456,123456,<=,123456,<EOF>""" 
+        num = 185
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_086_integer_oct(self):
+        input = r"""
+            00 01234 01_234 01___234 _01234 01234_
+            07777
+            08888
+            0ffff
+            00xffff
+            00b1111
+        """
+        expect = """00,01234,01,_234,01,___234,_01234,01234,_,07777,0,8888,0,ffff,00,xffff,00,b1111,<EOF>""" 
+        num = 186
+        self.assertTrue(TestLexer.test(input,expect,num))   
+    def test_086_integer_oct(self):
+        input = r"""
+            -01234-01234
+            +01234+01234
+            01234*01234
+            01234/01234
+            01234%01234
+            01234!=01234
+            01234==01234
+            01234>01234
+            01234>=01234
+            01234<01234
+            01234<=01234
+        """
+        expect = """-,01234,-,01234,+,01234,+,01234,01234,*,01234,01234,/,01234,01234,%,01234,01234,!=,01234,01234,==,01234,01234,>,01234,01234,>=,01234,01234,<,01234,01234,<=,01234,<EOF>""" 
+        num = 186
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_087_integer_bin(self):
+        input = r"""
+            0b00000 0b11111 0b01010101
+            -0b00000 -0b11111 -0b01010101
+            +0b00000 +0b11111 +0b01010101
+            0B00000 0B11111 -0B1010101
+            0b
+            0B
+            0b123456789
+            0b011111111
+            0b111111112
+            0b111111110000002
+            0b0xfffffff
+            0b11110xffff
+            0b101020xfff 
+            12340b11111
+            12340b11112
+            0xffff0b1111
+            0xffff0abcdef
+        """
+        expect = """0b00000,0b11111,0b01010101,-,0b00000,-,0b11111,-,0b01010101,+,0b00000,+,0b11111,+,0b01010101,0B00000,0B11111,-,0B1010101,0,b,0,B,0b1,23456789,0b011111111,0b11111111,2,0b11111111000000,2,0b0,xfffffff,0b11110,xffff,0b1010,20,xfff,12340,b11111,12340,b11112,0xffff0b1111,0xffff0abcdef,<EOF>""" 
+        num = 187
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_088_integer_bin(self):
+        input = r"""
+            +0b10101010+0b10101010
+            -0b10101010-0b10101010
+            +0b10101010*0b10101010
+            -0b10101010/0b10101010
+            +0b10101010%0b10101010
+            -0b10101010!=0b10101010
+            +0b10101010==0b10101010
+            -0b10101010>0b10101010
+            +0b10101010>=0b10101010
+            -0b10101010<0b10101010
+            +0b10101010<=0b10101010
+        """
+        expect = """+,0b10101010,+,0b10101010,-,0b10101010,-,0b10101010,+,0b10101010,*,0b10101010,-,0b10101010,/,0b10101010,+,0b10101010,%,0b10101010,-,0b10101010,!=,0b10101010,+,0b10101010,==,0b10101010,-,0b10101010,>,0b10101010,+,0b10101010,>=,0b10101010,-,0b10101010,<,0b10101010,+,0b10101010,<=,0b10101010,<EOF>""" 
+        num = 188
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_089_integer_hex(self):
+        input = r"""
+            0x123456789abcdef -0x123456789abcdef +0x123456789abcdef
+            0X123456789ABCDEF -0X123456789ABCDEF +0X123456789ABCDEF
+            0X123456789aBcDeF -0X123456789aBcDeF +0X123456789aBcDeF
+            0x9999ffff
+            0x09999ffff
+            0x0b1111111
+            0x0b2222222
+            0x11110b111
+            0x11110b222
+            0x
+            0X
+            0b0xffff
+            0b0x0000   
+            0b10100xffff
+            0b101020xfff         
+        """
+        expect = """0x123456789abcdef,-,0x123456789abcdef,+,0x123456789abcdef,0X123456789ABCDEF,-,0X123456789ABCDEF,+,0X123456789ABCDEF,0X123456789aBcDeF,-,0X123456789aBcDeF,+,0X123456789aBcDeF,0x9999ffff,0x09999ffff,0x0b1111111,0x0b2222222,0x11110b111,0x11110b222,0,x,0,X,0b0,xffff,0b0,x0000,0b10100,xffff,0b1010,20,xfff,<EOF>""" 
+        num = 189
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_090_integer_hex(self):
+        input = r"""
+            +0x123456789abcdef+0x123456789abcdef
+            -0x123456789abcdef-0x123456789abcdef
+            +0x123456789abcdef*0x123456789abcdef
+            -0x123456789abcdef/0x123456789abcdef
+            +0x123456789abcdef%0x123456789abcdef
+            -0x123456789abcdef!=0x123456789abcdef
+            +0x123456789abcdef==0x123456789abcdef
+            -0x123456789abcdef>0x123456789abcdef
+            +0x123456789abcdef>=0x123456789abcdef
+            -0x123456789abcdef<0x123456789abcdef
+            +0x123456789abcdef<=0x123456789abcdef
+            
+            0x123456789abcdef+123456789  
+            0x123456789abcdef+123___456___789  
+            0x123456789abcdef+0123456789abcdef 
+            0x123456789abcdef+0b1111111              
+        """
+        expect = """+,0x123456789abcdef,+,0x123456789abcdef,-,0x123456789abcdef,-,0x123456789abcdef,+,0x123456789abcdef,*,0x123456789abcdef,-,0x123456789abcdef,/,0x123456789abcdef,+,0x123456789abcdef,%,0x123456789abcdef,-,0x123456789abcdef,!=,0x123456789abcdef,+,0x123456789abcdef,==,0x123456789abcdef,-,0x123456789abcdef,>,0x123456789abcdef,+,0x123456789abcdef,>=,0x123456789abcdef,-,0x123456789abcdef,<,0x123456789abcdef,+,0x123456789abcdef,<=,0x123456789abcdef,0x123456789abcdef,+,123456789,0x123456789abcdef,+,123456789,0x123456789abcdef,+,01234567,89,abcdef,0x123456789abcdef,+,0b1111111,<EOF>""" 
+        num = 190
+        self.assertTrue(TestLexer.test(input,expect,num)) 
     
     

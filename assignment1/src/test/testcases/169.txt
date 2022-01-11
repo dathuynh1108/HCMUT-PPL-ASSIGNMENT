@@ -2,12 +2,12 @@
             ()=>{
                 console.log("abc");
                 a[1];
-                var a,b,c;
+                Var a,b,c;
                 *this.a;
                 this->a;    
                 int* a = new int;
-                class_name::a;
-                var a:Int;
+                Class_name::a;
+                Var a:Int;
             }
             
         

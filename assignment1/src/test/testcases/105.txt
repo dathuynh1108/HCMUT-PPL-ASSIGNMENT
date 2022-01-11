@@ -1,1 +1,1 @@
-$static_variable_123 normal_variable_123 $_ $
+$static_Variable_123 normal_Variable_123 $_ $

@@ -1,0 +1,1 @@
+Class,Program,:,Object,{,Var,$string,:,String,=,This is a string,;,print_console,(,n,:,Int,),{,Var,i,:,Int,;,Foreach,(,i,In,1,..,100,By,1,),{,print,(,$string,),;,},},},<EOF>

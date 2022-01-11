@@ -1,7 +1,7 @@
 
-            var $float_1: Float = 1.1_234e1_234;
-            var $float_2: Float = .1_234e1_234;
-            var $float_3: Float = 1.1_234;
-            var $float_4: Float = 1.e10_000;
-            var $float_5: Float = 1e10_000;
+            Var $float_1: Float = 1.1_234e1_234;
+            Var $float_2: Float = .1_234e1_234;
+            Var $float_3: Float = 1.1_234;
+            Var $float_4: Float = 1.e10_000;
+            Var $float_5: Float = 1e10_000;
         

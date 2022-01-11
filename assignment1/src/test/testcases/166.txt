@@ -1,6 +1,10 @@
 
             [](x,y) {
-                var a,b;
+                Var a,b:Int;
                 x[0] == a == y[0] == b;
+                a.b + Self.b;
+                Some_class::$a;
+                Some_class::$method();
+                
             }
         

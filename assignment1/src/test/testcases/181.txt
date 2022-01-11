@@ -1,0 +1,7 @@
+
+            ## Illegal at \ or \" 
+            # Most language take \" but it is an escape sequence
+            ##
+
+            "abcde\"
+        

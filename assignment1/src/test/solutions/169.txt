@@ -1,1 +1,1 @@
-(,),=,>,{,console,.,log,(,abc,),;,a,[,1,],;,var,a,,,b,,,c,;,*,this,.,a,;,this,-,>,a,;,int,*,a,=,new,int,;,class_name,::,a,;,var,a,:,Int,;,},<EOF>
+(,),=,>,{,console,.,log,(,abc,),;,a,[,1,],;,Var,a,,,b,,,c,;,*,this,.,a,;,this,-,>,a,;,int,*,a,=,new,int,;,Class_name,::,a,;,Var,a,:,Int,;,},<EOF>

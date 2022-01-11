@@ -1,0 +1,17 @@
+
+            0x123456789abcdef -0x123456789abcdef +0x123456789abcdef
+            0X123456789ABCDEF -0X123456789ABCDEF +0X123456789ABCDEF
+            0X123456789aBcDeF -0X123456789aBcDeF +0X123456789aBcDeF
+            0x9999ffff
+            0x09999ffff
+            0x0b1111111
+            0x0b2222222
+            0x11110b111
+            0x11110b222
+            0x
+            0X
+            0b0xffff
+            0b0x0000   
+            0b10100xffff
+            0b101020xfff         
+        

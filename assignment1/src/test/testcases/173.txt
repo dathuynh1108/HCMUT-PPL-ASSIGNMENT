@@ -1,16 +1,16 @@
 
-            ## Break Continue If Elseif Else For var val self return In By constructor destructor ##
-            constructor() {
+            ## Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New ##
+            Constructor() {
                 If (1==1) {
-                    var a: Array[Int,100];
-                    val b: Array[Int,100];
-                    For (i In 1..101 By 1)
-                        If (a[i] == 1) return self.text;
-                        Elseif (a[i] == 2) continue;
-                        Else (a[i] == 3) break;
+                    Var a: Array[Int,100];
+                    Val b: Array[Int,100];
+                    Foreach (i In 1..101 By 1)
+                        If (a[i] == 1) Return Self.text;
+                        Elseif (a[i] == 2) Continue;
+                        Else (a[i] == 3) Break;
                 }
             }
-            destructor() {
-                return;
+            Destructor() {
+                Return;
             }
         

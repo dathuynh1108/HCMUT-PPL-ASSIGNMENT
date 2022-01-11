@@ -4,9 +4,17 @@ from TestUtils import TestParser
 class ParserSuite(unittest.TestCase):
     def test_simple_program(self):
         """Simple program: int main() {} """
-        input = """int main() {}"""
-        expect = "successful"
-        self.assertTrue(TestParser.test(input,expect,201))
+        input = r"""
+        class Program {
+            var x: Int;
+            var $y: Float;
+            main(fuck: Int) {
+                var x: Int;
+            }
+        }"""
+        expect = r"successful"
+        num = 201;
+        self.assertTrue(TestParser.test(input,expect,num))
 
     def test_more_complex_program(self):
         """More complex program"""

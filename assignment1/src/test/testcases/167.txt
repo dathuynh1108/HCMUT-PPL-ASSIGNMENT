@@ -1,4 +1,12 @@
 
+            class JSON {
+                static int variable = 0;
+                public:
+                    unordered_map<type_1, type_2> data;
+                    Pointer method(x) {
+                        Return Null;
+                    }
+            };
             int main() {
                 int a,b,c = 0;
                 cin >> a >> b >> c;
@@ -8,5 +16,7 @@
                     a[1] = a[1] + a[2];
                     a[1] == a[3];
                 }
+                ++JSON::variable;
+                JSON::method();
             }
         

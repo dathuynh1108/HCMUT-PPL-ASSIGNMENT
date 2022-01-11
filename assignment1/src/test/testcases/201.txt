@@ -1,1 +1,8 @@
-int main() {}
+
+        class Program {
+            var x: Int;
+            var $y: Float;
+            main(fuck: Int) {
+                var x: Int;
+            }
+        }

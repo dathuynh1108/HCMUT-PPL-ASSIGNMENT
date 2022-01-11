@@ -1,3 +1,3 @@
 
-            Break Continue If Elseif Else For var val self return In By constructor destructor
+            Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New
         
