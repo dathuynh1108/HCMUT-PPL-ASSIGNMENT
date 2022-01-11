@@ -310,6 +310,9 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test(input,expect,num))     
     def test_036_string(self):
         input = r"""
+            "String"
+            "'" String in string '""
+            "String'"String in string '"String in string in string'"'""
             ##"String in comment"##
             "## Comment in string ##"
             "{braces in string}"
@@ -323,7 +326,7 @@ class LexerSuite(unittest.TestCase):
             "<<abc>>"
             <<"abc">>
         """
-        expect = r"""## Comment in string ##,{braces in string},{,string in braces,},[square brackets in string],[,string in square brackets,],(parentheses in string),(,string in parentheses,),/* C comment in string */,/,*,string in C comment,*,/,<<abc>>,<,<,abc,>,>,<EOF>"""
+        expect = r"""String,'" String in string '",String'"String in string '"String in string in string'"'",## Comment in string ##,{braces in string},{,string in braces,},[square brackets in string],[,string in square brackets,],(parentheses in string),(,string in parentheses,),/* C comment in string */,/,*,string in C comment,*,/,<<abc>>,<,<,abc,>,>,<EOF>"""
         num = 136
         self.assertTrue(TestLexer.test(input,expect,num)) 
     def test_037_string(self):
@@ -1074,22 +1077,46 @@ class LexerSuite(unittest.TestCase):
                 Var i: Int;
                 Foreach(i In 1 .. 100 by 1) {
                     Var circle: Circle;
-                    if (i % 3 == 0) {
+                    If (i % 3 == 0) {
                         circle = New Circle("Blue", 10.10);
                         console.log(circle.area());
                     }
-                    elseif (i % 3 == 1) {
-                        break;
+                    Elseif (i % 3 == 1) {
+                        Break;
                     }
-                    else {
-                        continue;
+                    Else {
+                        Continue;
                     }
                 }
+                i= +123456+123456 
+                i= +123_456+123_456;
+                i= -123456-123456 
+                i= -123_456-123_456;
+                i= 123456*123456 
+                i= 123___456*123___456;
+                i= 123456/123456 
+                i= 123___456/123___456;
+                i= 123456%123456 
+                i= 123___456%123___456;
+                i= 123456!=123456 
+                i= 123___456!=123___456;
+                i= 123456==123456 
+                i= 123___456==123___456;
+                i= 123456>123456 
+                i= 123___456>=123___456;
+                i= 123456<123456 
+                i= 123___456<=123___456;
             }
         }            
         """
-        expect = """Class,Shape,{,Var,color,:,String,;,area,(,),{,},;,to_string,(,),{,},;,Constructor,(,color,:,String,),{,Console,.,log,(,Shape constructor called,),;,Self,.,color,=,color,;,},Destructor,(,),{,Console,.,log,(,Destroy shape,),;,},get_color,(,),{,return,color,;,},},Class,Circle,:,Shape,{,Var,radius,:,Float,;,Constructor,(,color,:,String,,,radius,:,Float,),{,Shape,::,constructor,(,color,),;,Console,.,log,(,Circle constructor called,),;,Self,.,radius,=,radius,;,},area,(,),{,Return,Math,.,PI,*,Math,.,pow,(,radius,,,2,),;,},to_string,(,),{,Return,Circle color is ,+,Shape,::,getColor,(,),+.,and area is : ,+,area,(,),;,},},Class,Program,{,main,(,args,:,Array,[,String,,,100,],),{,Var,circle,:,Circle,;,Var,string,:,String,;,circle,=,New,Circle,(,Red,,,2.2,),;,string,=,circle,.,to_string,(,),;,console,.,log,(,circle,.,get_color,(,),),;,Var,i,:,Int,;,Foreach,(,i,In,1,..,100,by,1,),{,Var,circle,:,Circle,;,if,(,i,%,3,==,0,),{,circle,=,New,Circle,(,Blue,,,10.10,),;,console,.,log,(,circle,.,area,(,),),;,},elseif,(,i,%,3,==,1,),{,break,;,},else,{,continue,;,},},},},<EOF>""" 
+        expect = """Class,Shape,{,Var,color,:,String,;,area,(,),{,},;,to_string,(,),{,},;,Constructor,(,color,:,String,),{,Console,.,log,(,Shape constructor called,),;,Self,.,color,=,color,;,},Destructor,(,),{,Console,.,log,(,Destroy shape,),;,},get_color,(,),{,return,color,;,},},Class,Circle,:,Shape,{,Var,radius,:,Float,;,Constructor,(,color,:,String,,,radius,:,Float,),{,Shape,::,constructor,(,color,),;,Console,.,log,(,Circle constructor called,),;,Self,.,radius,=,radius,;,},area,(,),{,Return,Math,.,PI,*,Math,.,pow,(,radius,,,2,),;,},to_string,(,),{,Return,Circle color is ,+,Shape,::,getColor,(,),+.,and area is : ,+,area,(,),;,},},Class,Program,{,main,(,args,:,Array,[,String,,,100,],),{,Var,circle,:,Circle,;,Var,string,:,String,;,circle,=,New,Circle,(,Red,,,2.2,),;,string,=,circle,.,to_string,(,),;,console,.,log,(,circle,.,get_color,(,),),;,Var,i,:,Int,;,Foreach,(,i,In,1,..,100,by,1,),{,Var,circle,:,Circle,;,If,(,i,%,3,==,0,),{,circle,=,New,Circle,(,Blue,,,10.10,),;,console,.,log,(,circle,.,area,(,),),;,},Elseif,(,i,%,3,==,1,),{,Break,;,},Else,{,Continue,;,},},i,=,+,123456,+,123456,i,=,+,123456,+,123456,;,i,=,-,123456,-,123456,i,=,-,123456,-,123456,;,i,=,123456,*,123456,i,=,123456,*,123456,;,i,=,123456,/,123456,i,=,123456,/,123456,;,i,=,123456,%,123456,i,=,123456,%,123456,;,i,=,123456,!=,123456,i,=,123456,!=,123456,;,i,=,123456,==,123456,i,=,123456,==,123456,;,i,=,123456,>,123456,i,=,123456,>=,123456,;,i,=,123456,<,123456,i,=,123456,<=,123456,;,},},<EOF>""" 
         num = 191
         self.assertTrue(TestLexer.test(input,expect,num)) 
+    def test_092_string(self):
+        input = """ "This is a complex string with '"quote'" and has comment ##abcd##" """
+        expect = """This is a complex string with '"quote'" and has comment ##abcd##,<EOF>"""
+        num = 192
+        self.assertTrue(TestLexer.test(input,expect,num)) 
+
     
     

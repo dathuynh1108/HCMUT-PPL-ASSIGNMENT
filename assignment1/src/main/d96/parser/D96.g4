@@ -51,8 +51,13 @@ statement   : variable_and_const_declaration
 
 
 variable_and_const_declaration: (VAR | VAL) ID (COMMA ID)* COLON type_name initialization? SEMI;
-assign_statement: left_hand_side EQUAL expression SEMI;
-left_hand_side: ID | DOLLAR_ID | index_expression;
+assign_statement: left_hand_side ASSIGN expression SEMI;
+left_hand_side  : ID 
+                | DOLLAR_ID 
+                | index_expression
+                | instance_attribute_access
+                | static_attribute_access
+                ;
 
 if_statement: IF LP expression RP block_statement // 1 if
             | IF LP expression RP block_statement else_statement // 1 if 1 else
@@ -66,7 +71,7 @@ foreach_statement: FOREACH LP (ID | DOLLAR_ID) IN expression DOUBLE_DOT expressi
 break_statement: BREAK SEMI;
 continue_statement: CONTINUE SEMI;
 return_statement: RETURN expression SEMI | RETURN SEMI;
-method_invocation_statement: instance_method_invocation | static_method_invocation;
+method_invocation_statement: (instance_method_invocation | static_method_invocation) SEMI;
 
 instance_attribute_access: expression DOT ID;
 static_attribute_access: class_name DOUBLE_COLON DOLLAR_ID;
@@ -76,7 +81,9 @@ list_of_expressions: expression (COMMA expression)*;
 
 
 expression: 'Chua lam';
-index_expression: 'Chua lam';
+index_expression    : (ID | DOLLAR_ID) LSB expression RSB
+                    | method_invocation_statement
+                    ;
 
 
 literal: array_literal | primitive_literal;

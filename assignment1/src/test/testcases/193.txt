@@ -1,0 +1,1 @@
+/* C comment in string */

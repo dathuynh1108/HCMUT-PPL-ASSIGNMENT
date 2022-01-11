@@ -1,1 +1,1 @@
-Normal string,## Comment in string ##,String,String,'"String in string'",,This,is,not,a,string,in,string,,<EOF>
+12345.,0.3e-1,0.001e+2,12.0e45,12.0e-12,<EOF>
