@@ -15,8 +15,7 @@ program: class_declaration* EOF;
 
 class_declaration : CLASS class_name (COLON class_name)? LCB class_body RCB;
 class_name: ID; // ALERT! NOT COMPLETE
-class_type: ID;
-class_body: (attribute_declaration | method_declaration)*;
+class_body: (attribute_declaration | method_declaration | constructor_declaration | destructor_declaration)*;
 
 attribute_declaration: (VAR | VAL) (ID | DOLLAR_ID)(COMMA (ID | DOLLAR_ID))* COLON type_name initialization? SEMI;
 
@@ -24,18 +23,30 @@ method_declaration: (ID | DOLLAR_ID) LP list_of_parameters? RP block_statement;
 constructor_declaration: CONSTRUCTOR LP list_of_parameters? RP block_statement;
 destructor_declaration: DESTRUCTOR LP RP block_statement;
 
-list_of_parameters: (parameter_declaration)+;
+list_of_parameters: parameter_declaration(SEMI parameter_declaration)*;
 parameter_declaration: (ID)(COMMA ID)* COLON type_name;
 
-type_name: primitive_type | array_type; 
+
+literal: array_literal | primitive_literal;
+
+primitive_literal: INTEGER_LITERAL | FLOAT_LITERAL | STRING_LITERAL | BOOLEAN_LITERAL;
+array_literal: indexed_array | multi_demensional_array;
+
+indexed_array: ARRAY LP list_of_expressions? RP;
+
+multi_demensional_array: ARRAY LP array_literal_list? RP;
+array_literal_list  : array_literal (COMMA array_literal)*; 
+
+
+type_name: primitive_type | array_type | class_type;  // can it has class type
 primitive_type: INTEGER | FLOAT | STRING | BOOLEAN;
 array_type: ARRAY LSB (primitive_type | array_type) COMMA INTEGER_LITERAL RSB;
-
+class_type: ID;
 
 initialization: 'Chua lam';
 
 
-
+/***************************** STATEMENT ******************************/
 block_statement: LCB statement* RCB;
 statement   : variable_and_const_declaration
             | assign_statement
@@ -51,10 +62,11 @@ statement   : variable_and_const_declaration
 
 
 variable_and_const_declaration: (VAR | VAL) ID (COMMA ID)* COLON type_name initialization? SEMI;
+
 assign_statement: left_hand_side ASSIGN expression SEMI;
 left_hand_side  : ID 
                 | DOLLAR_ID 
-                | index_expression
+                | element_expression
                 | instance_attribute_access
                 | static_attribute_access
                 ;
@@ -73,36 +85,81 @@ continue_statement: CONTINUE SEMI;
 return_statement: RETURN expression SEMI | RETURN SEMI;
 method_invocation_statement: (instance_method_invocation | static_method_invocation) SEMI;
 
+
+/***************************** EXPRESSION ******************************/
+/*
+    Tách expression từ dưới lên --> string op đầu tiên
+    New expression(a+b)
+*/
+expression  :   string_expression;
+string_expression   :   relation_expression STRING_ADD relation_expression
+                    |   relation_expression STRING_EQUAL relation_expression
+                    |   relation_expression
+                    ;
+relation_expression :   logical_expression EQUAL logical_expression
+                    |   logical_expression NOT_EQUAL logical_expression
+                    |   logical_expression LT logical_expression
+                    |   logical_expression LTE logical_expression
+                    |   logical_expression GT logical_expression
+                    |   logical_expression GTE logical_expression
+                    |   logical_expression
+                    ;
+
+logical_expression  :   logical_expression AND adding_expression  
+                    |   logical_expression OR adding_expression 
+                    |   adding_expression
+                    ;
+
+adding_expression   :   adding_expression ADD multiplying_expression
+                    |   adding_expression SUB multiplying_expression
+                    |   multiplying_expression
+                    ;
+
+multiplying_expression  :   multiplying_expression MUL negative_expression
+                        |   multiplying_expression DIV negative_expression
+                        |   multiplying_expression MOD negative_expression
+                        |   negative_expression
+                        ;
+
+negative_expression :   NOT negative_expression
+                    |   sign_expression
+                    ;
+
+sign_expression     :   SUB sign_expression
+                    |   index_expression
+                    ;
+index_expression:   'Chưa biết làm :)';
+element_expression: expression index_operator;
+index_operator  :   LSB expression RSB
+                |   LSB expression RSB index_operator
+                ;
+
+operand :   DOLLAR_ID
+        |   ID
+        |   literal
+        |   LP expression RP
+        ; // Chưa xong
+
+
+
+
+
+member_access_expression    :   instance_attribute_access
+                            |   static_attribute_access
+                            |   instance_method_invocation
+                            |   static_method_invocation
+                            ;
 instance_attribute_access: expression DOT ID;
 static_attribute_access: class_name DOUBLE_COLON DOLLAR_ID;
 instance_method_invocation: expression DOT ID LP list_of_expressions? RP;
 static_method_invocation: class_name DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP;
+
+object_creation_expression: NEW ID LP list_of_expressions RP;
+
+
+
+
 list_of_expressions: expression (COMMA expression)*;
-
-
-expression: 'Chua lam';
-index_expression    : (ID | DOLLAR_ID) LSB expression RSB
-                    | method_invocation_statement
-                    ;
-
-
-literal: array_literal | primitive_literal;
-primitive_literal: INTEGER_LITERAL | FLOAT_LITERAL | STRING_LITERAL | BOOLEAN_LITERAL;
-array_literal: indexed_array | multi_demensional_array;
-
-indexed_array: ARRAY LP primitive_literal_list? RP;
-primitive_literal_list  : INTEGER_LITERAL (COMMA INTEGER_LITERAL)*
-                        | FLOAT_LITERAL (COMMA FLOAT_LITERAL)*
-                        | STRING_LITERAL (COMMA STRING_LITERAL)*
-                        | BOOLEAN_LITERAL (COMMA STRING_LITERAL)* 
-                        ; // SEPERATE BECAUSE IF: (primitive_literal)* CAN BE [INT, FLOAT,...]
-multi_demensional_array: ARRAY LP array_literal_list? RP;
-array_literal_list  : indexed_array (COMMA indexed_array)*
-                    | multi_demensional_array (COMMA multi_demensional_array)*
-                    ; // ALERT: MULTI DEMONSINAL ARRAY HAVE PROBLEM WITH SAME TYPE CONSTRAIN
-
-
-
 
 
 
