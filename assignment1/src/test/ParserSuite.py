@@ -6,7 +6,8 @@ class ParserSuite(unittest.TestCase):
         """Simple program: int main() {} """
         input = r"""
         Class Program {
-            Var x: Int = 1,2,3,4;
+            Var x,y,z,r,t: Int = 1,2,x,y,z;
+            Var x,y : Int = 1,2;
         }"""
         expect = r"successful"
         num = 201;

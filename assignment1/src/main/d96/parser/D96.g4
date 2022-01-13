@@ -17,7 +17,14 @@ class_declaration : CLASS class_name (COLON class_name)? LCB class_body RCB;
 class_name: ID; // NOT COMPLETE
 class_body: (attribute_declaration | method_declaration | constructor_declaration | destructor_declaration)*;
 
-attribute_declaration: (VAR | VAL) (ID | DOLLAR_ID)(COMMA (ID | DOLLAR_ID))* COLON type_name initialization? SEMI;
+attribute_declaration locals [number_attribute = 0]: (VAR | VAL) (ID | DOLLAR_ID) {$attribute_declaration::number_attribute+=1} (COMMA (ID | DOLLAR_ID){$attribute_declaration::number_attribute+=1})* COLON type_name attribute_initialization;
+
+attribute_initialization    :   ASSIGN attribute_initialization_list 
+                            |   SEMI
+                            ;
+attribute_initialization_list   :   expression {$attribute_declaration::number_attribute -= 1}  // first expression
+                                    ({$attribute_declaration::number_attribute > 0}? COMMA expression {$attribute_declaration::number_attribute -= 1})*   // loop until number_var == 0 or not match
+                                    ({$attribute_declaration::number_attribute == 0}? SEMI); // check number_var == 0
 
 method_declaration: (ID | DOLLAR_ID) LP list_of_parameters? RP block_statement;
 constructor_declaration: CONSTRUCTOR LP list_of_parameters? RP block_statement;
@@ -43,7 +50,7 @@ primitive_type: INTEGER | FLOAT | STRING | BOOLEAN;
 array_type: ARRAY LSB (primitive_type | array_type) COMMA INTEGER_LITERAL RSB;
 class_type: ID;
 
-initialization: '=' list_of_expressions;
+
 
 
 /***************************** STATEMENT ******************************/
@@ -60,9 +67,14 @@ statement   : variable_and_const_declaration
             ;
 
 
+variable_and_const_declaration locals [number_variable = 0]: (VAR | VAL) ID {$variable_and_const_declaration::number_variable+=1} (COMMA (ID | DOLLAR_ID){$variable_and_const_declaration::number_variable+=1})* COLON type_name variable_initialization;
 
-variable_and_const_declaration: (VAR | VAL) ID (COMMA ID)* COLON type_name initialization? SEMI;
-
+variable_initialization :   ASSIGN variable_initialization_list 
+                        |   SEMI;
+variable_initialization_list    :   expression {$variable_and_const_declaration::number_variable -= 1} 
+                                    ({$variable_and_const_declaration::number_variable > 0}? COMMA expression {$variable_and_const_declaration::number_variable -= 1})*  
+                                    ({$variable_and_const_declaration::number_variable == 0}? SEMI)
+                    ;
 assign_statement: left_hand_side ASSIGN expression SEMI;
 
 left_hand_side  : ID 
