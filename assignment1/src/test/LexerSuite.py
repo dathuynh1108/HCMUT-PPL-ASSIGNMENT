@@ -1150,9 +1150,11 @@ class LexerSuite(unittest.TestCase):
     def test_096_string_with_valid_escape(self):
         # \t is ok
         input = """
-            "xyz\t"
+            "xyz\t\b\f'""
+            "abc\t\t\t\t"
+			"abc\r\n"
         """
-        expect = """xyz\t,<EOF>"""
+        expect = """xyz\t\b\f'",abc\t\t\t\t,Unclosed String: abc"""
         num = 196
         self.assertTrue(TestLexer.test(input, expect, num))
     def test_097_multi_dimensional_array(self):
@@ -1206,11 +1208,11 @@ class LexerSuite(unittest.TestCase):
         num = 199
         expect = "!,a,&&,-,b,||,c,a,Error Token &"
         self.assertTrue(TestLexer.test(input, expect, num))
-    def test_099_operator(self):
+    def test_100_operator(self):
         # Case forget one # before EOF
         input = r"""
             
-        ###"""
-        num = 199
-        expect = "!,a,&&,-,b,||,c,a,Error Token &"
+        """
+        num = 200
+        expect = "<EOF>"
         self.assertTrue(TestLexer.test(input, expect, num))
