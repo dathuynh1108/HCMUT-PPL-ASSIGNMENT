@@ -1117,6 +1117,53 @@ class LexerSuite(unittest.TestCase):
         expect = """This is a complex string with '"quote'" and has comment ##abcd##,<EOF>"""
         num = 192
         self.assertTrue(TestLexer.test(input,expect,num)) 
-
+    def test_093_float_int(self):
+        input = r"""
+            123 310_596______32424 34234_________________3243243 3_4_5___5546___565465_1407_____43423
+            0b111101 0B000000000011111111 0b111111111111111110000000000000000
+            0123 002344 0003432434234 00000000000000003123123213 02313123200000000000000
+            0x0000000000000000001abcdf 0Xabcdef99999999999900000000000
+            123_______________________
+            0_1_2_3_4_5.0_1_2_3_4_5e-0_1_2_3_4_5
+            0_1_2_3_4_5.0_1_2_3_4_5e-0_1_2_3_4_5_
+            0x123_456
+            0b1111_1111
+            01_234
+        """
+        expect = "123,31059632424,342343243243,3455546565465140743423,0b111101,0B000000000011111111,0b111111111111111110000000000000000,0123,002344,0003432434234,00000000000000003123123213,02313123200000000000000,0x0000000000000000001abcdf,0Xabcdef99999999999900000000000,123,_______________________,012345.012345e-012345,012345.012345e-012345,_,0x123,_456,0b1111,_1111,01,_234,<EOF>"
+        num = 193
+        self.assertTrue(TestLexer.test(input,expect,num))  
+    def test_094(self):
+        input = r"""
+            "First string is valid"
+            "Second string is unvalid' "
+        """
+        expect = r"""First string is valid,Illegal Escape In String: Second string is unvalid' """
+        num = 194
+        self.assertTrue(TestLexer.test(input, expect, num))  
+    def test_095_string_escape(self):
+        input = r""" "abcd\" """
+        expect = r"""Illegal Escape In String: abcd\""""
+        num = 195
+        self.assertTrue(TestLexer.test(input, expect, num))
     
-    
+    def test_096_string_with_tab(self):
+        # \t is ok
+        input = """ "xyz'"              
+        """
+        expect = """Unclosed String: xyz'"              """
+        num = 196
+        self.assertTrue(TestLexer.test(input, expect, num))
+    def test_097_multi_dimensional_array(self):
+        input = r"""
+            Array (
+                Array("Volvo", "22", "18"),
+                Array("Saab", "5", "2"),
+                Array("Land Rover", "17", "15")
+                Array("Huynh Thanh Dat", "11/08/2001", "1910110")
+                Array("")
+            )
+        """
+        num = 197
+        expect = "Array,(,Array,(,Volvo,,,22,,,18,),,,Array,(,Saab,,,5,,,2,),,,Array,(,Land Rover,,,17,,,15,),Array,(,Huynh Thanh Dat,,,11/08/2001,,,1910110,),Array,(,,),),<EOF>"
+        self.assertTrue(TestLexer.test(input, expect, 197))

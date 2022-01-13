@@ -11,10 +11,10 @@ options {
 }
 // ----------------------------------  PARSER  -------------------------------------------
 // program structure
-program: class_declaration* EOF;
+program: class_declaration* EOF; // can be empty file?
 
 class_declaration : CLASS class_name (COLON class_name)? LCB class_body RCB;
-class_name: ID; // ALERT! NOT COMPLETE
+class_name: ID; // NOT COMPLETE
 class_body: (attribute_declaration | method_declaration | constructor_declaration | destructor_declaration)*;
 
 attribute_declaration: (VAR | VAL) (ID | DOLLAR_ID)(COMMA (ID | DOLLAR_ID))* COLON type_name initialization? SEMI;
@@ -43,7 +43,7 @@ primitive_type: INTEGER | FLOAT | STRING | BOOLEAN;
 array_type: ARRAY LSB (primitive_type | array_type) COMMA INTEGER_LITERAL RSB;
 class_type: ID;
 
-initialization: 'Chua lam';
+initialization: '=' list_of_expressions;
 
 
 /***************************** STATEMENT ******************************/
@@ -64,11 +64,11 @@ statement   : variable_and_const_declaration
 variable_and_const_declaration: (VAR | VAL) ID (COMMA ID)* COLON type_name initialization? SEMI;
 
 assign_statement: left_hand_side ASSIGN expression SEMI;
+
 left_hand_side  : ID 
                 | DOLLAR_ID 
-                | element_expression
-                | instance_attribute_access
-                | static_attribute_access
+                | index_expression
+                | member_access_expression
                 ;
 
 if_statement: IF LP expression RP block_statement // 1 if
@@ -83,13 +83,15 @@ foreach_statement: FOREACH LP (ID | DOLLAR_ID) IN expression DOUBLE_DOT expressi
 break_statement: BREAK SEMI;
 continue_statement: CONTINUE SEMI;
 return_statement: RETURN expression SEMI | RETURN SEMI;
-method_invocation_statement: (instance_method_invocation | static_method_invocation) SEMI;
+method_invocation_statement: member_access_expression SEMI;
+                            //(instance_method_invocation | static_method_invocation) SEMI;
 
 
 /***************************** EXPRESSION ******************************/
 /*
-    Tách expression từ dưới lên --> string op đầu tiên
-    New expression(a+b)
+    Tách expression từ dưới lên --> string op đầu tiên vì ví dụ
+    a + b * c:  parse * trước sẽ thành a + b, *, c --> sai
+                parse + trước sẽ thành a, +, b*c --> ok
 */
 expression  :   string_expression;
 string_expression   :   relation_expression STRING_ADD relation_expression
@@ -127,34 +129,46 @@ negative_expression :   NOT negative_expression
 
 sign_expression     :   SUB sign_expression
                     |   index_expression
+                    |   member_access_expression
+                    |   operand
                     ;
-index_expression:   'Chưa biết làm :)';
+// Khúc dưới này chưa xong
+index_expression    :   index_expression LSB expression RSB
+                    |   member_access_expression LSB expression RSB // a.b[i][j], a.b()[i][j]
+                    |   ID LSB expression RSB
+                    |   DOLLAR_ID LSB expression RSB
+                    ;
+/* 
 element_expression: expression index_operator;
 index_operator  :   LSB expression RSB
                 |   LSB expression RSB index_operator
                 ;
-
-operand :   DOLLAR_ID
+*/
+member_access_expression    :   member_access_expression DOT ID
+                            |   member_access_expression DOT ID LP list_of_expressions? RP
+                            |   ID DOUBLE_COLON DOLLAR_ID                     
+                            |   ID DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP
+                        //  |   operand // operand có literal, có cần tách ra hay không
+                            |   (ID | SELF) DOT ID
+                            |   (ID | SELF) DOT ID LP list_of_expressions? RP
+                            |   self_method_call
+                            ;
+self_method_call    :   (ID | DOLLAR_ID) LP list_of_expressions? RP;
+object_creation_expression: NEW ID LP list_of_expressions? RP;
+operand :   object_creation_expression
+        |   DOLLAR_ID
         |   ID
         |   literal
+        |   SELF
         |   LP expression RP
         ; // Chưa xong
-
-
-
-
-
-member_access_expression    :   instance_attribute_access
-                            |   static_attribute_access
-                            |   instance_method_invocation
-                            |   static_method_invocation
-                            ;
+/*
 instance_attribute_access: expression DOT ID;
 static_attribute_access: class_name DOUBLE_COLON DOLLAR_ID;
 instance_method_invocation: expression DOT ID LP list_of_expressions? RP;
 static_method_invocation: class_name DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP;
+*/
 
-object_creation_expression: NEW ID LP list_of_expressions RP;
 
 
 
@@ -175,7 +189,7 @@ fragment OCT_INTEGER_LITERAL: '0' [0-7]+;
 fragment BIN_INTEGER_LITERAL: '0'[bB] [0-1]+;
 fragment HEX_INTEGER_LITERAL: '0'[xX] [0-9A-Fa-f]+;
 
-fragment STRING_CHAR    : ~([\b\t\n\f\r'"\\]) 
+fragment STRING_CHAR    : ~([\r\n'"\\]) 
                         | ESCAPE_SEQUENCE 
                         | DOUBLE_QUOTE_CHAR;
 fragment ESCAPE_SEQUENCE: '\\' [btnfr'\\];
@@ -185,7 +199,7 @@ fragment ILLEGAL_SEQUENCE   : '\\' ~[btnfr'\\]
                             //| ~'\\' // \ + invalid or ' + invalid or \ 
                             ;
 fragment SIGN: [+-];
-fragment FLOAT_INTEGER_PART: [0-9][0-9_]*; // Only decimal base --> 0 at first is dec
+fragment FLOAT_INTEGER_PART: [0-9]('_'*[0-9])*; // Only decimal base --> 0 at first is dec
 fragment FLOAT_DECIMAL_PART: '.' FLOAT_INTEGER_PART?;
 fragment FLOAT_EXPONENT_PART: [eE] SIGN? FLOAT_INTEGER_PART;
 
