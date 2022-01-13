@@ -1147,11 +1147,12 @@ class LexerSuite(unittest.TestCase):
         num = 195
         self.assertTrue(TestLexer.test(input, expect, num))
     
-    def test_096_string_with_tab(self):
+    def test_096_string_with_valid_escape(self):
         # \t is ok
-        input = """ "xyz'"              
+        input = """
+            "xyz\t"
         """
-        expect = """Unclosed String: xyz'"              """
+        expect = """xyz\t,<EOF>"""
         num = 196
         self.assertTrue(TestLexer.test(input, expect, num))
     def test_097_multi_dimensional_array(self):
@@ -1167,3 +1168,49 @@ class LexerSuite(unittest.TestCase):
         num = 197
         expect = "Array,(,Array,(,Volvo,,,22,,,18,),,,Array,(,Saab,,,5,,,2,),,,Array,(,Land Rover,,,17,,,15,),Array,(,Huynh Thanh Dat,,,11/08/2001,,,1910110,),Array,(,,),),<EOF>"
         self.assertTrue(TestLexer.test(input, expect, 197))
+    def test_098_comment_dangerous_case(self):
+        # Case forget one # before EOF
+        input = r"""
+            ## This comment is true
+                # Line 1
+                # Line 2
+                # Line 3
+                # Array (
+                    Array("Volvo", "22", "18"),
+                    Array("Saab", "5", "2"),
+                    Array("Land Rover", "17", "15")
+                    Array("Huynh Thanh Dat", "11/08/2001", "1910110")
+                    Array("")
+                )
+                # Some code:
+                Var circle: Circle;
+                Var string: String;
+                circle = New Circle("Red", 2.2);
+                string = circle.to_string();
+                console.log(circle.get_color());
+                Var i: Int;
+                # Some keyword
+                Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New
+            ##
+            ####
+        ###"""
+        num = 198
+        expect = "Unterminated Comment"
+        self.assertTrue(TestLexer.test(input, expect, num))
+    def test_099_operator(self):
+        # Case forget one # before EOF
+        input = r"""
+            !a&&-b||c
+            a & b
+        ###"""
+        num = 199
+        expect = "!,a,&&,-,b,||,c,a,Error Token &"
+        self.assertTrue(TestLexer.test(input, expect, num))
+    def test_099_operator(self):
+        # Case forget one # before EOF
+        input = r"""
+            
+        ###"""
+        num = 199
+        expect = "!,a,&&,-,b,||,c,a,Error Token &"
+        self.assertTrue(TestLexer.test(input, expect, num))
