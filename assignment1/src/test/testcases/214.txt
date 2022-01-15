@@ -1,0 +1,8 @@
+
+            Class Program {
+                Var $x: Int = 1;
+                main() {
+                    Var $a;
+                }
+            }
+        

@@ -1,0 +1,8 @@
+
+            Class Program {
+                main() {
+                    Var a: Int;
+                    a = b.$method();
+                }
+            }
+        

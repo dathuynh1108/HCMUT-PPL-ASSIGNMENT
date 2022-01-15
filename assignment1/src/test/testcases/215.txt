@@ -1,0 +1,9 @@
+
+            Class Program {
+                Var $x: Int = 1;
+                main() {
+                    Var a, b: Int = 1, 2;
+                    Var s_1, s_2: String = "string 1", "string 2";
+                }
+            }
+        

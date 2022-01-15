@@ -1,0 +1,7 @@
+
+            Class Program {
+                $method_1() {}
+                $method_2(x: Int; y: String) {}
+                main() {}
+            }
+        

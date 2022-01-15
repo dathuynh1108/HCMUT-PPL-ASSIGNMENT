@@ -1,0 +1,9 @@
+
+            Class Program {
+                main() {
+                    Var s: String;
+                    s = "abc" +. "abc";
+                    s = "abc" ==. "abc";
+                }
+            }
+        

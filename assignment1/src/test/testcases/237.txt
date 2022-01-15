@@ -1,0 +1,7 @@
+
+            Class Program {
+                main() {
+                    s = "abc" ==. "abc" ==. "abc" ==. "abc";
+                }
+            }
+        

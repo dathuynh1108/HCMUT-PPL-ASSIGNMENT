@@ -11,7 +11,7 @@ else:
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3A")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3@")
         buf.write("\u025b\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
         buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23\t\23")
@@ -326,8 +326,8 @@ class D96Parser ( Parser ):
                       "LT", "LTE", "GT", "GTE", "STRING_EQUAL", "STRING_ADD", 
                       "LP", "RP", "LSB", "RSB", "DOT", "DOUBLE_DOT", "COMMA", 
                       "SEMI", "COLON", "DOUBLE_COLON", "LCB", "RCB", "ID", 
-                      "DOLLAR_ID", "WS", "UNTERMINATED_COMMENT", "UNCLOSE_STRING", 
-                      "ILLEGAL_ESCAPE", "ERROR_TOKEN" ]
+                      "DOLLAR_ID", "WS", "UNCLOSE_STRING", "ILLEGAL_ESCAPE", 
+                      "ERROR_TOKEN" ]
 
     RULE_program = 0
     RULE_class_declaration = 1
@@ -460,10 +460,9 @@ class D96Parser ( Parser ):
     ID=57
     DOLLAR_ID=58
     WS=59
-    UNTERMINATED_COMMENT=60
-    UNCLOSE_STRING=61
-    ILLEGAL_ESCAPE=62
-    ERROR_TOKEN=63
+    UNCLOSE_STRING=60
+    ILLEGAL_ESCAPE=61
+    ERROR_TOKEN=62
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)

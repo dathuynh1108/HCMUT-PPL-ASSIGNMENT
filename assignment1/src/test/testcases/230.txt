@@ -1,0 +1,14 @@
+
+            Class Program {
+                main() {
+                    Var a: Int;
+                    a = class_variable.attribute;
+                    a = class_variable.attribute.attrubute;
+                    a = class_name::$attribute;
+                    a = class_name::$attribute.attribute;
+                    a = class_variable.method(a,b,c);
+                    a = class_variable.attribute.method(a,b,c);
+                    a = class_name::$method(abc);
+                }
+            }
+        

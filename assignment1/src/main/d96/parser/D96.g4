@@ -146,7 +146,7 @@ sign_expression     :   SUB sign_expression
                     ;
 // Khúc dưới này chưa xong
 index_expression    :   index_expression LSB expression RSB
-                    |   member_access_expression LSB expression RSB // a.b[i][j], a.b()[i][j]
+                    |   member_access_expression LSB expression RSB // a.b[i][j], a.b()[i][j] --> member access sẽ được tính trước
                     |   ID LSB expression RSB
                     |   DOLLAR_ID LSB expression RSB
                     ;
@@ -163,7 +163,7 @@ member_access_expression    :   member_access_expression DOT ID
                         //  |   operand // operand có literal, có cần tách ra hay không
                             |   (ID | SELF) DOT ID
                             |   (ID | SELF) DOT ID LP list_of_expressions? RP
-                            |   self_method_call
+                            |   self_method_call // without self.
                             ;
 self_method_call    :   (ID | DOLLAR_ID) LP list_of_expressions? RP;
 object_creation_expression: NEW ID LP list_of_expressions? RP;
@@ -193,10 +193,10 @@ list_of_expressions: expression (COMMA expression)*;
 
 // ----------------------------------  LEXER  -------------------------------------------
 /********************** FRAGMENT ***********************/
-fragment COMMENT_CHAR: ~'#' | '#'~'#';
+//fragment COMMENT_CHAR: ~'#' | '#'~'#';
 
-// [1-9]('_'*[0-9])* | '0'
-fragment DEC_INTEGER_LITERAL:  [1-9]('_'*[0-9])* | '0';
+// [1-9]('_'*[0-9])* | '0': dấu _ không được ở đầu hay ở cuối
+fragment DEC_INTEGER_LITERAL:  [1-9]('_'?[0-9])* | '0';
 fragment OCT_INTEGER_LITERAL: '0' [0-7]+;
 fragment BIN_INTEGER_LITERAL: '0'[bB] [0-1]+;
 fragment HEX_INTEGER_LITERAL: '0'[xX] [0-9A-Fa-f]+;
@@ -211,12 +211,12 @@ fragment ILLEGAL_SEQUENCE   : '\\' ~[btnfr'\\]
                             //| ~'\\' // \ + invalid or ' + invalid or \ 
                             ;
 fragment SIGN: [+-];
-fragment FLOAT_INTEGER_PART: [0-9]('_'*[0-9])*; // Only decimal base --> 0 at first is dec
-fragment FLOAT_DECIMAL_PART: '.' FLOAT_INTEGER_PART?;
-fragment FLOAT_EXPONENT_PART: [eE] SIGN? FLOAT_INTEGER_PART;
+fragment FLOAT_INTEGER_PART: [0-9]('_'?[0-9])*; // Only decimal base --> 0 at first is dec
+fragment FLOAT_DECIMAL_PART: '.' [0-9]*;
+fragment FLOAT_EXPONENT_PART: [eE] SIGN? [0-9]+;
 
 /********************** COMMENT ***********************/
-COMMENT: '##' COMMENT_CHAR* '##' -> skip;
+COMMENT: '##' .*? '##' -> skip;
 /********************* KEY WORDS **********************/
 BREAK: 'Break';
 CONTINUE: 'Continue';
@@ -322,13 +322,13 @@ WS : [ \t\r\n\f]+ -> skip ; // skip spaces, tabs, newlines
 // NOT(##) = NOT(#) OR # NOT(#)
 // 1. ## NOT(##) EOF
 // 2. ## NOT(#) #EOF ---- CASE # BEFORE EOF --> NOT(##) EOF CAN'T CATCH
-UNTERMINATED_COMMENT    : (
+/*UNTERMINATED_COMMENT    : (
                         '##' COMMENT_CHAR* EOF
                         | '##' ~'#'* '#' EOF
 )  {
 	raise UnterminatedComment()
 };
-
+*/
 /*UNCLOSE_STRING: '"' STRING_CHAR* ( [\b\t\n\f\r"'\\] | EOF ) {
     y = str(self.text)
     possible = ['\b', '\t', '\n', '\f', '\r', '"', "'", '\\']

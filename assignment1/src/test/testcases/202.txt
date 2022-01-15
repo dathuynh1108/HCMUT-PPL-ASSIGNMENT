@@ -1,3 +1,6 @@
-int main () {
-            putIntLn(4);
-        }
+
+            Class Person {}
+            Class Student : Person {}
+            Class Teacher : Person {}
+            Class Program {}
+        
