@@ -9,11 +9,13 @@
             0b011111111
             0b111111112
             0b111111110000002
-            0b0xfffffff
-            0b11110xffff
-            0b101020xfff 
+            0b0xFFFF
+            0b11110xFFFF
+            0b101020xFFF 
             12340b11111
             12340b11112
+            0xFFFF0b1111
             0xffff0b1111
-            0xffff0abcdef
+            0xFFFF0ABCDEF
+            0xffff0ABCDEF
         

@@ -4,6 +4,10 @@
                     Var s: String;
                     s = "abc" +. "abc";
                     s = "abc" ==. "abc";
+
+                    ## Fail type but ok in parser ##
+                    s = "abc" + "abc";
+                    s = "abc" == "abc";
                 }
             }
         

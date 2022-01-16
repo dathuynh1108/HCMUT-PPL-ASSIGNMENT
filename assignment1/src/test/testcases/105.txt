@@ -1,1 +1,8 @@
-$static_Variable_123 normal_Variable_123 $_ $
+
+            normal_Variable_123 
+            $static_Variable_123 
+            $_ 
+            $123_Static_start_with_digit
+            $123
+            $
+        

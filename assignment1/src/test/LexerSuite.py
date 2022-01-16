@@ -24,14 +24,21 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test(input,expect,num))
     
     def test_004_id(self):
-        input = "id1 id&&1 -id1 _ __ _id1 _id_1"
-        expect = "id1,id,&&,1,-,id1,_,__,_id1,_id_1,<EOF>"
+        input = "id1 id&&1 id||1 -id1 _ __ _id1 _id_1 1_id"
+        expect = "id1,id,&&,1,id,||,1,-,id1,_,__,_id1,_id_1,1,_id,<EOF>"
         num = 104
         self.assertTrue(TestLexer.test(input,expect,num))
     
     def test_005_id(self):
-        input = "$static_Variable_123 normal_Variable_123 $_ $"
-        expect = "$static_Variable_123,normal_Variable_123,$_,Error Token $"
+        input = """
+            normal_Variable_123 
+            $static_Variable_123 
+            $_ 
+            $123_Static_start_with_digit
+            $123
+            $
+        """
+        expect = "normal_Variable_123,$static_Variable_123,$_,$123_Static_start_with_digit,$123,Error Token $"
         num = 105
         self.assertTrue(TestLexer.test(input,expect,num))
     
@@ -90,8 +97,8 @@ class LexerSuite(unittest.TestCase):
     #test integers
     def test_010_integer(self):
 
-        input = "1234, 123 ; 123 456 0123 0x1234ffff 0X1234AAAA"
-        expect = "1234,,,123,;,123,456,0123,0x1234ffff,0X1234AAAA,<EOF>"
+        input = "1234, 123 ; 123 456 0123 0x1234FFFF 0X1234AAAA"
+        expect = "1234,,,123,;,123,456,0123,0x1234FFFF,0X1234AAAA,<EOF>"
         num = 110
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_011_integer(self):
@@ -115,8 +122,8 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_014_integer(self):
         # _INT is Variable
-        input = "0XFFFF 0xffff 0XZZZZ 0xzzzz 0B1111 0b1111 0B2222 0b2222 09999 0"
-        expect = "0XFFFF,0xffff,0,XZZZZ,0,xzzzz,0B1111,0b1111,0,B2222,0,b2222,0,9999,0,<EOF>"
+        input = "0xFFFF 0XFFFF 0xffff 0XFFFF 0XZZZZ 0xzzzz 0B1111 0b1111 0B2222 0b2222 09999 0"
+        expect = "0xFFFF,0XFFFF,0,xffff,0XFFFF,0,XZZZZ,0,xzzzz,0B1111,0b1111,0,B2222,0,b2222,0,9999,0,<EOF>"
         num = 114
         self.assertTrue(TestLexer.test(input,expect,num))    
     
@@ -766,7 +773,8 @@ class LexerSuite(unittest.TestCase):
             1_234
             1234_
 
-            0xabcdef
+            0xABCDEF
+            0XABCDEF
             0XaBcDeF
             0b111111
             0B111111
@@ -775,11 +783,11 @@ class LexerSuite(unittest.TestCase):
             0b0
             0B0
 
-            0xzxcvbb
+            0xZXCVBN
             0b222222
             09999999
         """
-        expect = r"""_1234,1234,1234,_,0xabcdef,0XaBcDeF,0b111111,0B111111,0x0,0X0,0b0,0B0,0,xzxcvbb,0,b222222,0,9999999,<EOF>""" 
+        expect = r"""_1234,1234,1234,_,0xABCDEF,0XABCDEF,0,XaBcDeF,0b111111,0B111111,0x0,0X0,0b0,0B0,0,xZXCVBN,0,b222222,0,9999999,<EOF>""" 
         num = 175
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_076_general(self):
@@ -967,15 +975,17 @@ class LexerSuite(unittest.TestCase):
             0b011111111
             0b111111112
             0b111111110000002
-            0b0xfffffff
-            0b11110xffff
-            0b101020xfff 
+            0b0xFFFF
+            0b11110xFFFF
+            0b101020xFFF 
             12340b11111
             12340b11112
+            0xFFFF0b1111
             0xffff0b1111
-            0xffff0abcdef
+            0xFFFF0ABCDEF
+            0xffff0ABCDEF
         """
-        expect = """0b00000,0b11111,0b01010101,-,0b00000,-,0b11111,-,0b01010101,+,0b00000,+,0b11111,+,0b01010101,0B00000,0B11111,-,0B1010101,0,b,0,B,0b1,23456789,0b011111111,0b11111111,2,0b11111111000000,2,0b0,xfffffff,0b11110,xffff,0b1010,20,xfff,12340,b11111,12340,b11112,0xffff0b1111,0xffff0abcdef,<EOF>""" 
+        expect = """0b00000,0b11111,0b01010101,-,0b00000,-,0b11111,-,0b01010101,+,0b00000,+,0b11111,+,0b01010101,0B00000,0B11111,-,0B1010101,0,b,0,B,0b1,23456789,0b011111111,0b11111111,2,0b11111111000000,2,0b0,xFFFF,0b11110,xFFFF,0b1010,20,xFFF,12340,b11111,12340,b11112,0xFFFF0,b1111,0,xffff0b1111,0xFFFF0ABCDEF,0,xffff0ABCDEF,<EOF>""" 
         num = 187
         self.assertTrue(TestLexer.test(input,expect,num)) 
     def test_088_integer_bin(self):
@@ -999,25 +1009,68 @@ class LexerSuite(unittest.TestCase):
         input = r"""
             0x123456789abcdef -0x123456789abcdef +0x123456789abcdef
             0X123456789ABCDEF -0X123456789ABCDEF +0X123456789ABCDEF
+            0x123456789ABCDEF -0x123456789ABCDEF +0x123456789ABCDEF
             0X123456789aBcDeF -0X123456789aBcDeF +0X123456789aBcDeF
-            0x9999ffff
-            0x09999ffff
+            0x9999FFFFF
+            0x09999FFFF
             0x0b1111111
+            0x0B1111111
             0x0b2222222
+            0x0B2222222
             0x11110b111
+            0x11110B111
             0x11110b222
+            0x11110B222
             0x
             0X
-            0b0xffff
+            0b0xFFFF
             0b0x0000   
-            0b10100xffff
-            0b101020xfff         
+            0b10100xFFFF
+            0b101020xFFFF         
         """
-        expect = """0x123456789abcdef,-,0x123456789abcdef,+,0x123456789abcdef,0X123456789ABCDEF,-,0X123456789ABCDEF,+,0X123456789ABCDEF,0X123456789aBcDeF,-,0X123456789aBcDeF,+,0X123456789aBcDeF,0x9999ffff,0x09999ffff,0x0b1111111,0x0b2222222,0x11110b111,0x11110b222,0,x,0,X,0b0,xffff,0b0,x0000,0b10100,xffff,0b1010,20,xfff,<EOF>""" 
+        expect = """0x123456789,abcdef,-,0x123456789,abcdef,+,0x123456789,abcdef,0X123456789ABCDEF,-,0X123456789ABCDEF,+,0X123456789ABCDEF,0x123456789ABCDEF,-,0x123456789ABCDEF,+,0x123456789ABCDEF,0X123456789,aBcDeF,-,0X123456789,aBcDeF,+,0X123456789,aBcDeF,0x9999FFFFF,0x09999FFFF,0x0,b1111111,0x0B1111111,0x0,b2222222,0x0B2222222,0x11110,b111,0x11110B111,0x11110,b222,0x11110B222,0,x,0,X,0b0,xFFFF,0b0,x0000,0b10100,xFFFF,0b1010,20,xFFFF,<EOF>""" 
         num = 189
         self.assertTrue(TestLexer.test(input,expect,num)) 
     def test_090_integer_hex(self):
         input = r"""
+            +0X123456789ABCDEF+0X123456789ABCDEF
+            -0X123456789ABCDEF-0X123456789ABCDEF
+            +0X123456789ABCDEF*0X123456789ABCDEF
+            -0X123456789ABCDEF/0X123456789ABCDEF
+            +0X123456789ABCDEF%0X123456789ABCDEF
+            -0X123456789ABCDEF!=0X123456789ABCDEF
+            +0X123456789ABCDEF==0X123456789ABCDEF
+            -0X123456789ABCDEF>0X123456789ABCDEF
+            +0X123456789ABCDEF>=0X123456789ABCDEF
+            -0X123456789ABCDEF<0X123456789ABCDEF
+            +0X123456789ABCDEF<=0X123456789ABCDEF
+            
+            0X123456789ABCDEF+123456789  
+            0X123456789ABCDEF+123_456_789
+            0X123456789ABCDEF+123__456__789   
+            0X123456789ABCDEF+0123456789ABCDEF 
+            0X123456789ABCDEF+0B1111111  
+
+            +0x123456789ABCDEF+0x123456789ABCDEF
+            -0x123456789ABCDEF-0x123456789ABCDEF
+            +0x123456789ABCDEF*0x123456789ABCDEF
+            -0x123456789ABCDEF/0x123456789ABCDEF
+            +0x123456789ABCDEF%0x123456789ABCDEF
+            -0x123456789ABCDEF!=0x123456789ABCDEF
+            +0x123456789ABCDEF==0x123456789ABCDEF
+            -0x123456789ABCDEF>0x123456789ABCDEF
+            +0x123456789ABCDEF>=0x123456789ABCDEF
+            -0x123456789ABCDEF<0x123456789ABCDEF
+            +0x123456789ABCDEF<=0x123456789ABCDEF
+            
+            0x123456789ABCDEF+123456789  
+            0x123456789ABCDEF+123_456_789
+            0x123456789ABCDEF+123__456__789   
+            0x123456789ABCDEF+0123456789ABCDEF 
+            0x123456789ABCDEF+0B1111111  
+
+
+
             +0x123456789abcdef+0x123456789abcdef
             -0x123456789abcdef-0x123456789abcdef
             +0x123456789abcdef*0x123456789abcdef
@@ -1036,7 +1089,7 @@ class LexerSuite(unittest.TestCase):
             0x123456789abcdef+0123456789abcdef 
             0x123456789abcdef+0b1111111              
         """
-        expect = """+,0x123456789abcdef,+,0x123456789abcdef,-,0x123456789abcdef,-,0x123456789abcdef,+,0x123456789abcdef,*,0x123456789abcdef,-,0x123456789abcdef,/,0x123456789abcdef,+,0x123456789abcdef,%,0x123456789abcdef,-,0x123456789abcdef,!=,0x123456789abcdef,+,0x123456789abcdef,==,0x123456789abcdef,-,0x123456789abcdef,>,0x123456789abcdef,+,0x123456789abcdef,>=,0x123456789abcdef,-,0x123456789abcdef,<,0x123456789abcdef,+,0x123456789abcdef,<=,0x123456789abcdef,0x123456789abcdef,+,123456789,0x123456789abcdef,+,123456789,0x123456789abcdef,+,123,__456__789,0x123456789abcdef,+,01234567,89,abcdef,0x123456789abcdef,+,0b1111111,<EOF>""" 
+        expect = """+,0X123456789ABCDEF,+,0X123456789ABCDEF,-,0X123456789ABCDEF,-,0X123456789ABCDEF,+,0X123456789ABCDEF,*,0X123456789ABCDEF,-,0X123456789ABCDEF,/,0X123456789ABCDEF,+,0X123456789ABCDEF,%,0X123456789ABCDEF,-,0X123456789ABCDEF,!=,0X123456789ABCDEF,+,0X123456789ABCDEF,==,0X123456789ABCDEF,-,0X123456789ABCDEF,>,0X123456789ABCDEF,+,0X123456789ABCDEF,>=,0X123456789ABCDEF,-,0X123456789ABCDEF,<,0X123456789ABCDEF,+,0X123456789ABCDEF,<=,0X123456789ABCDEF,0X123456789ABCDEF,+,123456789,0X123456789ABCDEF,+,123456789,0X123456789ABCDEF,+,123,__456__789,0X123456789ABCDEF,+,01234567,89,ABCDEF,0X123456789ABCDEF,+,0B1111111,+,0x123456789ABCDEF,+,0x123456789ABCDEF,-,0x123456789ABCDEF,-,0x123456789ABCDEF,+,0x123456789ABCDEF,*,0x123456789ABCDEF,-,0x123456789ABCDEF,/,0x123456789ABCDEF,+,0x123456789ABCDEF,%,0x123456789ABCDEF,-,0x123456789ABCDEF,!=,0x123456789ABCDEF,+,0x123456789ABCDEF,==,0x123456789ABCDEF,-,0x123456789ABCDEF,>,0x123456789ABCDEF,+,0x123456789ABCDEF,>=,0x123456789ABCDEF,-,0x123456789ABCDEF,<,0x123456789ABCDEF,+,0x123456789ABCDEF,<=,0x123456789ABCDEF,0x123456789ABCDEF,+,123456789,0x123456789ABCDEF,+,123456789,0x123456789ABCDEF,+,123,__456__789,0x123456789ABCDEF,+,01234567,89,ABCDEF,0x123456789ABCDEF,+,0B1111111,+,0x123456789,abcdef,+,0x123456789,abcdef,-,0x123456789,abcdef,-,0x123456789,abcdef,+,0x123456789,abcdef,*,0x123456789,abcdef,-,0x123456789,abcdef,/,0x123456789,abcdef,+,0x123456789,abcdef,%,0x123456789,abcdef,-,0x123456789,abcdef,!=,0x123456789,abcdef,+,0x123456789,abcdef,==,0x123456789,abcdef,-,0x123456789,abcdef,>,0x123456789,abcdef,+,0x123456789,abcdef,>=,0x123456789,abcdef,-,0x123456789,abcdef,<,0x123456789,abcdef,+,0x123456789,abcdef,<=,0x123456789,abcdef,0x123456789,abcdef,+,123456789,0x123456789,abcdef,+,123456789,0x123456789,abcdef,+,123,__456__789,0x123456789,abcdef,+,01234567,89,abcdef,0x123456789,abcdef,+,0b1111111,<EOF>""" 
         num = 190
         self.assertTrue(TestLexer.test(input,expect,num)) 
     def test_091_complex(self):
@@ -1131,16 +1184,20 @@ class LexerSuite(unittest.TestCase):
             123 310__596__32424 34234__3243243 3__4__5__5546__565465__1407__43423
             0b111101 0B000000000011111111 0b111111111111111110000000000000000
             0123 002344 0003432434234 00000000000000003123123213 02313123200000000000000
+            0x0000000000000000001ABCDF 0XABCDEF99999999999900000000000
             0x0000000000000000001abcdf 0Xabcdef99999999999900000000000
             123_
             0_1_2_3_4_5.012345e-012345
+            0_1_2_3_4_5.012345e-0_1_2_3_4_5
+            0_1_2_3_4_5.0_1_2_3_4_5e-012345
             0_1_2_3_4_5.0_1_2_3_4_5e-0_1_2_3_4_5
+            0_1_2_3_4_5.012345e-012345_
             0_1_2_3_4_5.0_1_2_3_4_5e-0_1_2_3_4_5_
             0x123_456
             0b1111_1111
             01_234
         """
-        expect = "123,31059632424,342343243243,3455546565465140743423,123,310,__596__32424,34234,__3243243,3,__4__5__5546__565465__1407__43423,0b111101,0B000000000011111111,0b111111111111111110000000000000000,0123,002344,0003432434234,00000000000000003123123213,02313123200000000000000,0x0000000000000000001abcdf,0Xabcdef99999999999900000000000,123,_,012345.012345e-012345,012345.0,_1_2_3_4_5e,-,0,_1_2_3_4_5,012345.0,_1_2_3_4_5e,-,0,_1_2_3_4_5_,0x123,_456,0b1111,_1111,01,_234,<EOF>"
+        expect = "123,31059632424,342343243243,3455546565465140743423,123,310,__596__32424,34234,__3243243,3,__4__5__5546__565465__1407__43423,0b111101,0B000000000011111111,0b111111111111111110000000000000000,0123,002344,0003432434234,00000000000000003123123213,02313123200000000000000,0x0000000000000000001ABCDF,0XABCDEF99999999999900000000000,0x0000000000000000001,abcdf,0,Xabcdef99999999999900000000000,123,_,012345.012345e-012345,012345.012345e-0,_1_2_3_4_5,012345.0,_1_2_3_4_5e,-,012345,012345.0,_1_2_3_4_5e,-,0,_1_2_3_4_5,012345.012345e-012345,_,012345.0,_1_2_3_4_5e,-,0,_1_2_3_4_5_,0x123,_456,0b1111,_1111,01,_234,<EOF>"
         num = 193
         self.assertTrue(TestLexer.test(input,expect,num))  
     def test_094(self):
@@ -1219,9 +1276,9 @@ class LexerSuite(unittest.TestCase):
         expect = "!,a,&&,-,b,||,c,a,Error Token &"
         self.assertTrue(TestLexer.test(input, expect, num))
     def test_100_illegal_escape(self):
-        input = """
-            "abc\\n"
-            "abc\\h"
+        input = r"""
+            "abc\n"
+            "abc\h"
         """
         num = 200
         expect = r"abc\n,Illegal Escape In String: abc\h"

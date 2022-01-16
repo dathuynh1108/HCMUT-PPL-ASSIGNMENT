@@ -353,13 +353,37 @@ class ParserSuite(unittest.TestCase):
             Class Program {
                 main() {
                     Var a: Int;
+                    ## Multi attribute ##
                     a = class_variable.attribute;
                     a = class_variable.attribute.attrubute;
+                    a = class_variable.attribute.attrubute.attribute;
+                   
+                    ## Multi static and instance ##
                     a = class_name::$attribute;
                     a = class_name::$attribute.attribute;
+                    a = class_name::$attribute.attribute.attribute;
+                    
+                    ## Multi method ##
                     a = class_variable.method(a,b,c);
+                    a = class_variable.method(a,b,c).method(a,b,c);
+                    a = class_variable.method(a,b,c).method(a,b,c).method(a,b,c);
+                    
+                    ## Hybrid ##
                     a = class_variable.attribute.method(a,b,c);
-                    a = class_name::$method(abc);
+                    a = class_variable.attribute.method(a,b,c).method(a,b,c);
+                    
+                    a = class_variable.attribute.attribute.method(a,b,c);
+                    a = class_variable.attribute.attribute.method(a,b,c).method(a,b,c);
+
+                    a = class_variable.method(a,b,c).attribute;
+                    a = class_variable.method(a,b,c).method(a,b,c).attribute;
+                    a = class_variable.method(a,b,c).method(a,b,c).attribute.attribute;
+                    a = class_variable.method(a,b,c).method(a,b,c).attribute.attribute.method(a,b,c);
+
+                    a = class_name::$method(abc).method(a,b,c);
+                    a = class_name::$method(abc).method(a,b,c).method(a,b,c);
+                    a = class_name::$method(abc).method(a,b,c).method(a,b,c).attribute;
+                    a = class_name::$method(abc).method(a,b,c).method(a,b,c).attribute.attribute;
                 }
             }
         """
@@ -378,7 +402,7 @@ class ParserSuite(unittest.TestCase):
         expect = r"Error on line 5 col 27: variable"
         num = 231
         self.assertTrue(TestParser.test(input,expect,num))    
-    def test_032_incorrect_access_static(self): 
+    def test_032_incorrect_access_static_method(self): 
         input = r"""
             Class Program {
                 main() {
@@ -402,7 +426,7 @@ class ParserSuite(unittest.TestCase):
         expect = r"Error on line 5 col 26: $attribute"
         num = 233
         self.assertTrue(TestParser.test(input,expect,num))    
-    def test_034_incorrect_access_instance(self): 
+    def test_034_incorrect_access_instance_method(self): 
         input = r"""
             Class Program {
                 main() {
@@ -421,6 +445,10 @@ class ParserSuite(unittest.TestCase):
                     Var s: String;
                     s = "abc" +. "abc";
                     s = "abc" ==. "abc";
+
+                    ## Fail type but ok in parser ##
+                    s = "abc" + "abc";
+                    s = "abc" == "abc";
                 }
             }
         """
@@ -449,4 +477,44 @@ class ParserSuite(unittest.TestCase):
         expect = r"Error on line 4 col 40: ==."
         num = 237
         self.assertTrue(TestParser.test(input,expect,num))  
-          
+    
+    def test_038_operator_associativity(self): 
+        input = r"""
+            Class Program {
+                main() {
+                    a = 1||2||3||4||5||6;
+                    a = 1&&2&&3&&4&&5&&6; 
+                    a = 1+2+3+4+5+6;
+                    a = 1-2-3-4-5-6;
+                    a = 1*2*3*4*5*6;
+                    a = 1/2/3/4/5/6;
+                    a = 1%2%3%4%5%6;
+                    a = !!!!!!!!1;
+                    a = --------1;
+                    a = b[1][1][1][1+2+3][variable];
+                    a = b[b[b[b[1]]]];
+                    a = a.b.c.d.e.f;
+                    a = a::$b.c.d.e.f;
+                    a = a.b.c.method().method().a.b.method().method();
+                    a = a::$b().method().a.method().a.method();
+                    a = New a(New a(New a()));
+                }
+            }
+        """
+        expect = r"successful"
+        num = 238
+        self.assertTrue(TestParser.test(input,expect,num)) 
+    def test_039_operator_precedence(self): 
+        input = r"""
+            Class Program {
+                main() {
+                    a = New class_name(New class_name(a[i][j][z][a.b.method().method() + !!!!----1+2-3*4/5%6||7&&8], a[1+2-3*4/5%6||7&&8], "string 1" +. "string 2", "string 1" ==. "string 2", New class(1+2-3*4/5%6||7&&8)));
+                }
+            }
+        """
+        expect = r"successful"
+        num = 239
+        self.assertTrue(TestParser.test(input,expect,num)) 
+    
+    
+    

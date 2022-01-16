@@ -199,7 +199,7 @@ list_of_expressions: expression (COMMA expression)*;
 fragment DEC_INTEGER_LITERAL:  [1-9]('_'?[0-9])* | '0';
 fragment OCT_INTEGER_LITERAL: '0' [0-7]+;
 fragment BIN_INTEGER_LITERAL: '0'[bB] [0-1]+;
-fragment HEX_INTEGER_LITERAL: '0'[xX] [0-9A-Fa-f]+;
+fragment HEX_INTEGER_LITERAL: '0'[xX] [0-9A-F]+;
 
 fragment STRING_CHAR    : ~([\r\n'"\\]) 
                         | ESCAPE_SEQUENCE 
@@ -312,7 +312,7 @@ RCB: '}';
 /******************** IDENTIFIERS *********************/
 //_NUMBER is ID, not INTEGER_LITERAL
 ID: [_a-zA-Z][_a-zA-Z0-9]*;
-DOLLAR_ID: ('$')[_a-zA-Z][_a-zA-Z0-9]*;
+DOLLAR_ID: ('$')[_a-zA-Z0-9]+;
 
 /*********************** SKIP *************************/
 WS : [ \t\r\n\f]+ -> skip ; // skip spaces, tabs, newlines

@@ -3,7 +3,8 @@
             1_234
             1234_
 
-            0xabcdef
+            0xABCDEF
+            0XABCDEF
             0XaBcDeF
             0b111111
             0B111111
@@ -12,7 +13,7 @@
             0b0
             0B0
 
-            0xzxcvbb
+            0xZXCVBN
             0b222222
             09999999
         
