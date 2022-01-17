@@ -1,9 +1,6 @@
 
-            Int int Int_ 
-            Float float Float_ 
-            Boolean boolean Boolean_ 
-            String string String_
-            Array array Array_
-            Class Class Class_
-            Null null Null_
+            "First string is valid"
+            "I don\'t know what tests to write"
+            "But this string is not"
+            "I don't know what tests to write"
         

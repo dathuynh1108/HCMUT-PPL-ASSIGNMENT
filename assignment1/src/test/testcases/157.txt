@@ -1,13 +1,3 @@
 
-            1.123
-            .1123e1
-            .1_123e1
-            .123e123
-            .1_123e1_123
-            .e123
-            .e1_123
-            .e_1123
-            abc.e1123
-            "".e1123
-            ''.e1123
+            "Nhan" "Nhan '"NhanVo'" '"VoNhan'" VoNhanNguyen" "ThienNhan" "" "'"Nhan'""
         

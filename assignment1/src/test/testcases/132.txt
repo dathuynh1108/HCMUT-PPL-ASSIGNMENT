@@ -1,5 +1,1 @@
-
-            "Valid string"
-            "'"Valid string'" Cristiano Ronaldo"
-            "Invalid string'"
-        
+1_234_678 1_000_000_123_6978

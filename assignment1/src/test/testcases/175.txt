@@ -1,19 +1,15 @@
 
-            _1234
-            1_234
-            1234_
+            string calculate(long long int n)
+            {
+                auto memo = std::vector<std::string>(n + 1);
+                memo[0] = "0";
+                memo[1] = "1";
+                for(long long int i = 2; i <= n; ++i)
+                {
+                    if(i%2 == 0) memo[i] = memo[i/2] + "0" + memo[i/2];
+                    else memo[i] = memo[i/2] + "1" + memo[i/2];
+                }
 
-            0xABCDEF
-            0XABCDEF
-            0XaBcDeF
-            0b111111
-            0B111111
-            0x0
-            0X0
-            0b0
-            0B0
-
-            0xZXCVBN
-            0b222222
-            09999999
+                return memo[n];
+            }
         

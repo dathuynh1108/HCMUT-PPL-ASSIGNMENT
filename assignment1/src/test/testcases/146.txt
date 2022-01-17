@@ -1,3 +1,1 @@
-
-            .123e1.123 .123e1.123e1
-        
+ ##"This is a string in a block of comment"## 

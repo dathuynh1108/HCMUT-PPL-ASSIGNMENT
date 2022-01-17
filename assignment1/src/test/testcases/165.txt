@@ -1,4 +1,11 @@
 
-            ()[]{}.,;:
-            @staticmethod
+            Iterator(FragmentLinkedList<T> *pList = 0, bool begin = true);
+            Iterator(int fragmentIndex, FragmentLinkedList<T> *pList = 0,  bool begin = true);
+            Iterator &operator=(const Iterator &iterator);
+            T &operator*();
+            bool operator!=(const Iterator &iterator);
+            void remove();
+            void set(const T& element);
+            Iterator &operator++();
+            Iterator operator++(int);
         

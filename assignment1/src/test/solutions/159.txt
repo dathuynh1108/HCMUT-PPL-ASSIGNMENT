@@ -1,1 +1,1 @@
-1.1e+1,+,1,.e+1,+,1,1.1,e,+,+,1,+,1,.,e,+,+,1,+,1,1.1e-1,-,1,.e-1,-,1,1.1e-1,-,-,1,.,e,-,-,1,-,1,1.1,e,*,1,1.1,e,/,1,1.1,e,+.,1,.1e1,.1e1,1.123,.,123,1.123,.123e10,<EOF>
+Class,Shape,{,Val,$numOfShape,:,Int,=,0,;,Val,immutableAttribute,:,Int,=,0,;,Var,length,,,width,:,Int,;,$getNumOfShape,(,),{,return,$numOfShape,;,},},Class,Rectangle,:,Shape,{,getArea,(,),{,return,Self,.,length,*,Self,.,width,;,},},Class,Program,{,main,(,),{,Out,.,printInt,(,Shape,::,$numOfShape,),;,},},<EOF>

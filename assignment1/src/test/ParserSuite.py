@@ -515,6 +515,150 @@ class ParserSuite(unittest.TestCase):
         expect = r"successful"
         num = 239
         self.assertTrue(TestParser.test(input,expect,num)) 
-    
-    
-    
+    def test_040_operator_precedence(self): 
+        input = r"""
+            Class Program {
+                main() {
+                    a = a.b[1];
+                    a = a[1].b;
+                }
+            }
+        """
+        expect = r"Error on line 5 col 28: ."
+        num = 240
+        self.assertTrue(TestParser.test(input,expect,num)) 
+    def test_041_relation_expression(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = 1==2;
+                    a = 1 != 2;
+                    a = 1 > 2;
+                    a = 1 >= 2;
+                    a = 1 < 2;
+                    a = 1 <= 2;
+                }
+            }
+        """
+        expect = r"successful"
+        num = 241
+        self.assertTrue(TestParser.test(input,expect,num)) 
+    def test_042_relation_expression_associativity(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = 1==2 == 3;
+                }
+            }
+        """
+        expect = r"Error on line 4 col 29: =="
+        num = 242
+        self.assertTrue(TestParser.test(input,expect,num)) 
+    def test_043_logical_expression(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = 1 && 2;
+                    a = 1 || 2;
+                }
+            }
+        """
+        expect = r"successful"
+        num = 243
+        self.assertTrue(TestParser.test(input,expect,num)) 
+    def test_044_logical_expression_associativity(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = 1 && 2 && 3 && 4 && 5;
+                    a = 1 || 2 || 3 || 4 || 5;
+                }
+            }
+        """
+        expect = r"successful"
+        num = 244
+        self.assertTrue(TestParser.test(input,expect,num)) 
+    def test_045_add_expresion(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = 1 + 2;
+                    a = 1 - 2;
+                }
+            }
+        """
+        expect = r"successful"
+        num = 245
+        self.assertTrue(TestParser.test(input,expect,num)) 
+    def test_046_add_expresion_associativity(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = 1 + 2 + 3 + 4 + 5 - 6 - 7 - 8;
+                    a = 1 - 2 - 3 - 4 - 5 + 6 + 7 + 8;
+                }
+            }
+        """
+        expect = r"successful"
+        num = 246
+        self.assertTrue(TestParser.test(input,expect,num)) 
+    def test_047_mul_expresion(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = 1 * 2;
+                    a = 1 / 2;
+                    a = 1 % 2;
+                }
+            }
+        """
+        expect = r"successful"
+        num = 247
+        self.assertTrue(TestParser.test(input,expect,num)) 
+    def test_048_mul_expresion_associativity(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = 1 * 2 * 3 * 4 / 5 / 6 / 7 % 8 % 9 % 10;
+                    a = 1 / 2 / 3 / 4 * 5 * 6 * 7 % 8 % 9 % 10;
+                    a = 1 % 2 % 4 % 5 / 5 / 6 / 7 * 8 * 9 * 10;
+                }
+            }
+        """
+        expect = r"successful"
+        num = 248
+        self.assertTrue(TestParser.test(input,expect,num)) 
+    def test_049_sign_not_expresion(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = -1;
+                    a = !1;
+                    a = -1 - 1;
+                    a = !1 - 1;
+                    a = -1 - 1 - 1 --1;
+                    a = -1 + !1;
+                }
+            }
+        """
+        expect = r"successful"
+        num = 249
+        self.assertTrue(TestParser.test(input,expect,num)) 
+    def test_050_sign_not_expresion_associativity(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = ----------------------1;
+                    a = !!!!!!!!!!!!!!!!!!!!!!1;
+                    a = ----------------------1 - 1 - -----------------1;
+                    a = !!!!!!!!!!!!!!!!!!!!!1 - 1 && !!!!!!!!!!!!!1;
+                    a = -(1+2+3+4);
+                    a = !(1+2+3+4);
+                    a = --------------(1+2+3+4);
+                    a = !!!!!!!!!!!!!!(1+2+3+4);
+                }
+            }
+        """
+        expect = r"successful"
+        num = 250
+        self.assertTrue(TestParser.test(input,expect,num)) 

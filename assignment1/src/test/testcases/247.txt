@@ -1,0 +1,9 @@
+
+            Class Program {
+                main() {
+                    a = 1 * 2;
+                    a = 1 / 2;
+                    a = 1 % 2;
+                }
+            }
+        

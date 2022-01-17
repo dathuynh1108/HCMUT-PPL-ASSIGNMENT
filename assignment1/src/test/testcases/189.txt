@@ -1,22 +1,3 @@
 
-            0x123456789abcdef -0x123456789abcdef +0x123456789abcdef
-            0X123456789ABCDEF -0X123456789ABCDEF +0X123456789ABCDEF
-            0x123456789ABCDEF -0x123456789ABCDEF +0x123456789ABCDEF
-            0X123456789aBcDeF -0X123456789aBcDeF +0X123456789aBcDeF
-            0x9999FFFFF
-            0x09999FFFF
-            0x0b1111111
-            0x0B1111111
-            0x0b2222222
-            0x0B2222222
-            0x11110b111
-            0x11110B111
-            0x11110b222
-            0x11110B222
-            0x
-            0X
-            0b0xFFFF
-            0b0x0000   
-            0b10100xFFFF
-            0b101020xFFFF         
-        
+                    "nhanvo  "
+                

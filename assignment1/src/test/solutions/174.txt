@@ -1,1 +1,1 @@
-1234,12345,1234,_,0123,0,_123,01,_23,0x123,0,_x123,0,x_123,0x1,_23,0b111,0,_b111,0,b_111,0b1,_11,<EOF>
+str1,=,Can you give me some testcases,str2,=,No!,Error Token '

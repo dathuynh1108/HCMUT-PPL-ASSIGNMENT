@@ -1,1 +1,1 @@
-First string is valid,Illegal Escape In String: Second string is unvalid' 
+Some invalid words: @ ? ` ~ | ^ /,<EOF>

@@ -1,5 +1,1 @@
-
-            ## test with syntax ##        
-            Var $string_1: String = "this is a string";
-            Var $string_2: String = "this is a string";
-        
++ - * / % == != > >= < <= =

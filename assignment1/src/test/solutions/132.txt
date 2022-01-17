@@ -1,1 +1,1 @@
-Valid string,'"Valid string'" Cristiano Ronaldo,Unclosed String: Invalid string'"
+1234678,10000001236978,<EOF>

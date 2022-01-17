@@ -1,0 +1,8 @@
+
+            Class Program {
+                main() {
+                    a = a.b[1];
+                    a = a[1].b;
+                }
+            }
+        

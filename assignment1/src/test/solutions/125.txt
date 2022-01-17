@@ -1,1 +1,1 @@
-{string},'"{string}'",(string),[string],`string`,,not_string,,<EOF>
+TruE,FalSE,<EOF>

@@ -17,7 +17,11 @@ class_declaration : CLASS class_name (COLON class_name)? LCB class_body RCB;
 class_name: ID; // NOT COMPLETE
 class_body: (attribute_declaration | method_declaration | constructor_declaration | destructor_declaration)*;
 
-attribute_declaration locals [number_attribute = 0]: (VAR | VAL) (ID | DOLLAR_ID) {$attribute_declaration::number_attribute+=1} (COMMA (ID | DOLLAR_ID){$attribute_declaration::number_attribute+=1})* COLON type_name attribute_initialization;
+attribute_declaration 
+    locals [number_attribute = 0]: 
+    (VAR | VAL) (ID | DOLLAR_ID) {$attribute_declaration::number_attribute+=1} 
+    (COMMA (ID | DOLLAR_ID) {$attribute_declaration::number_attribute+=1})* 
+    COLON type_name attribute_initialization;
 
 attribute_initialization    :   ASSIGN attribute_initialization_list 
                             |   SEMI
@@ -67,7 +71,11 @@ statement   : variable_and_const_declaration
             ;
 
 
-variable_and_const_declaration locals [number_variable = 0]: (VAR | VAL) ID {$variable_and_const_declaration::number_variable+=1} (COMMA (ID | DOLLAR_ID){$variable_and_const_declaration::number_variable+=1})* COLON type_name variable_initialization;
+variable_and_const_declaration 
+    locals [number_variable = 0]: 
+    (VAR | VAL) ID {$variable_and_const_declaration::number_variable+=1} 
+    (COMMA (ID | DOLLAR_ID){$variable_and_const_declaration::number_variable+=1})* 
+    COLON type_name variable_initialization;
 
 variable_initialization :   ASSIGN variable_initialization_list 
                         |   SEMI;
@@ -163,7 +171,7 @@ member_access_expression    :   member_access_expression DOT ID
                         //  |   operand // operand có literal, có cần tách ra hay không
                             |   (ID | SELF) DOT ID
                             |   (ID | SELF) DOT ID LP list_of_expressions? RP
-                            |   self_method_call // without self.
+                            |   self_method_call // without self. or id.
                             ;
 self_method_call    :   (ID | DOLLAR_ID) LP list_of_expressions? RP;
 object_creation_expression: NEW ID LP list_of_expressions? RP;

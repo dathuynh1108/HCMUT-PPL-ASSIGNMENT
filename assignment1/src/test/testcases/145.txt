@@ -1,3 +1,1 @@
-
-            123 123. 9.9999 0.9999 0. .0 0.0e10 
-        
+ "This is a complex string with '"quote'" and has comment ##abcd##" 

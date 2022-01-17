@@ -1,7 +1,4 @@
 
-            Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New
-            "Break" "Continue" "If" "Elseif" "Else" "Foreach" "True" "False" "Array" "In" "Int" "Float" "Boolean" "String" "Return" "Null" "Class" "Val" "Var" "Constructor" "Destructor" "New"
-            "Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New"
-            ## Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New ##
-            (Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New)
+            ##String has tabs --> still valid##
+            "nhanvo     x                       ldpv"
         
