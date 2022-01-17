@@ -12,7 +12,7 @@ else:
 def serializedATN():
     with StringIO() as buf:
         buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3@")
-        buf.write("\u025b\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
+        buf.write("\u0238\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
         buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23\t\23")
         buf.write("\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31")
@@ -49,47 +49,46 @@ def serializedATN():
         buf.write("\5\37\u0168\n\37\3 \3 \3 \3 \3 \3 \3!\3!\3!\3\"\3\"\3")
         buf.write("\"\3\"\3\"\3\"\3\"\3\"\3\"\5\"\u017c\n\"\3\"\3\"\3\"\3")
         buf.write("#\3#\3#\3$\3$\3$\3%\3%\3%\3%\3%\3%\5%\u018d\n%\3&\3&\3")
-        buf.write("&\3\'\3\'\3(\3(\3(\3(\3(\3(\3(\3(\3(\5(\u019d\n(\3)\3")
-        buf.write(")\3)\3)\3)\3)\3)\3)\3)\3)\3)\3)\3)\3)\3)\3)\3)\3)\3)\3")
-        buf.write(")\3)\3)\3)\3)\3)\5)\u01b8\n)\3*\3*\3*\3*\3*\3*\3*\3*\3")
-        buf.write("*\7*\u01c3\n*\f*\16*\u01c6\13*\3+\3+\3+\3+\3+\3+\3+\3")
-        buf.write("+\3+\7+\u01d1\n+\f+\16+\u01d4\13+\3,\3,\3,\3,\3,\3,\3")
-        buf.write(",\3,\3,\3,\3,\3,\7,\u01e2\n,\f,\16,\u01e5\13,\3-\3-\3")
-        buf.write("-\5-\u01ea\n-\3.\3.\3.\3.\3.\5.\u01f1\n.\3/\3/\3/\3/\3")
-        buf.write("/\3/\3/\3/\3/\3/\3/\3/\3/\3/\3/\3/\5/\u0203\n/\3/\3/\3")
-        buf.write("/\3/\3/\7/\u020a\n/\f/\16/\u020d\13/\3\60\3\60\3\60\3")
-        buf.write("\60\3\60\3\60\3\60\3\60\3\60\5\60\u0218\n\60\3\60\3\60")
-        buf.write("\3\60\3\60\3\60\3\60\3\60\3\60\3\60\5\60\u0223\n\60\3")
-        buf.write("\60\3\60\5\60\u0227\n\60\3\60\3\60\3\60\3\60\3\60\3\60")
-        buf.write("\3\60\3\60\5\60\u0231\n\60\3\60\7\60\u0234\n\60\f\60\16")
-        buf.write("\60\u0237\13\60\3\61\3\61\3\61\5\61\u023c\n\61\3\61\3")
-        buf.write("\61\3\62\3\62\3\62\3\62\5\62\u0244\n\62\3\62\3\62\3\63")
-        buf.write("\3\63\3\63\3\63\3\63\3\63\3\63\3\63\3\63\5\63\u0251\n")
-        buf.write("\63\3\64\3\64\3\64\7\64\u0256\n\64\f\64\16\64\u0259\13")
-        buf.write("\64\3\64\2\7RTV\\^\65\2\4\6\b\n\f\16\20\22\24\26\30\32")
-        buf.write("\34\36 \"$&(*,.\60\62\64\668:<>@BDFHJLNPRTVXZ\\^`bdf\2")
-        buf.write("\7\3\2\n\13\3\2;<\3\2\32\35\3\2\26\31\4\2\f\f;;\2\u0278")
-        buf.write("\2k\3\2\2\2\4p\3\2\2\2\6z\3\2\2\2\b\u0082\3\2\2\2\n\u0085")
-        buf.write("\3\2\2\2\f\u0097\3\2\2\2\16\u0099\3\2\2\2\20\u00a8\3\2")
-        buf.write("\2\2\22\u00b0\3\2\2\2\24\u00b8\3\2\2\2\26\u00bd\3\2\2")
-        buf.write("\2\30\u00c5\3\2\2\2\32\u00d2\3\2\2\2\34\u00d4\3\2\2\2")
-        buf.write("\36\u00d8\3\2\2\2 \u00da\3\2\2\2\"\u00e1\3\2\2\2$\u00e8")
-        buf.write("\3\2\2\2&\u00f3\3\2\2\2(\u00f5\3\2\2\2*\u00f7\3\2\2\2")
-        buf.write(",\u0101\3\2\2\2.\u0103\3\2\2\2\60\u0114\3\2\2\2\62\u0116")
-        buf.write("\3\2\2\2\64\u0128\3\2\2\2\66\u012a\3\2\2\28\u0139\3\2")
-        buf.write("\2\2:\u0142\3\2\2\2<\u0167\3\2\2\2>\u0169\3\2\2\2@\u016f")
-        buf.write("\3\2\2\2B\u0172\3\2\2\2D\u0180\3\2\2\2F\u0183\3\2\2\2")
-        buf.write("H\u018c\3\2\2\2J\u018e\3\2\2\2L\u0191\3\2\2\2N\u019c\3")
-        buf.write("\2\2\2P\u01b7\3\2\2\2R\u01b9\3\2\2\2T\u01c7\3\2\2\2V\u01d5")
-        buf.write("\3\2\2\2X\u01e9\3\2\2\2Z\u01f0\3\2\2\2\\\u0202\3\2\2\2")
-        buf.write("^\u0226\3\2\2\2`\u0238\3\2\2\2b\u023f\3\2\2\2d\u0250\3")
-        buf.write("\2\2\2f\u0252\3\2\2\2hj\5\4\3\2ih\3\2\2\2jm\3\2\2\2ki")
-        buf.write("\3\2\2\2kl\3\2\2\2ln\3\2\2\2mk\3\2\2\2no\7\2\2\3o\3\3")
-        buf.write("\2\2\2pq\7\24\2\2qt\5\6\4\2rs\7\67\2\2su\5\6\4\2tr\3\2")
-        buf.write("\2\2tu\3\2\2\2uv\3\2\2\2vw\79\2\2wx\5\b\5\2xy\7:\2\2y")
-        buf.write("\5\3\2\2\2z{\7;\2\2{\7\3\2\2\2|\u0081\5\n\6\2}\u0081\5")
-        buf.write("\20\t\2~\u0081\5\22\n\2\177\u0081\5\24\13\2\u0080|\3\2")
-        buf.write("\2\2\u0080}\3\2\2\2\u0080~\3\2\2\2\u0080\177\3\2\2\2\u0081")
+        buf.write("&\3\'\3\'\3(\3(\3(\3(\3(\5(\u0199\n(\3)\3)\3)\3)\3)\5")
+        buf.write(")\u01a0\n)\3*\3*\3*\3*\3*\3*\7*\u01a8\n*\f*\16*\u01ab")
+        buf.write("\13*\3+\3+\3+\3+\3+\3+\7+\u01b3\n+\f+\16+\u01b6\13+\3")
+        buf.write(",\3,\3,\3,\3,\3,\7,\u01be\n,\f,\16,\u01c1\13,\3-\3-\3")
+        buf.write("-\5-\u01c6\n-\3.\3.\3.\3.\3.\5.\u01cd\n.\3/\3/\3/\3/\3")
+        buf.write("/\3/\3/\3/\3/\3/\3/\3/\3/\3/\3/\3/\5/\u01df\n/\3/\3/\3")
+        buf.write("/\3/\3/\7/\u01e6\n/\f/\16/\u01e9\13/\3\60\3\60\3\60\3")
+        buf.write("\60\3\60\3\60\3\60\3\60\3\60\5\60\u01f4\n\60\3\60\3\60")
+        buf.write("\3\60\3\60\3\60\3\60\3\60\3\60\3\60\5\60\u01ff\n\60\3")
+        buf.write("\60\3\60\5\60\u0203\n\60\3\60\3\60\3\60\3\60\3\60\3\60")
+        buf.write("\3\60\3\60\5\60\u020d\n\60\3\60\7\60\u0210\n\60\f\60\16")
+        buf.write("\60\u0213\13\60\3\61\3\61\3\61\5\61\u0218\n\61\3\61\3")
+        buf.write("\61\3\62\3\62\3\62\3\62\5\62\u0220\n\62\3\62\3\62\3\63")
+        buf.write("\3\63\3\63\3\63\3\63\3\63\3\63\3\63\3\63\3\63\5\63\u022e")
+        buf.write("\n\63\3\64\3\64\3\64\7\64\u0233\n\64\f\64\16\64\u0236")
+        buf.write("\13\64\3\64\2\7RTV\\^\65\2\4\6\b\n\f\16\20\22\24\26\30")
+        buf.write("\32\34\36 \"$&(*,.\60\62\64\668:<>@BDFHJLNPRTVXZ\\^`b")
+        buf.write("df\2\f\3\2\n\13\3\2;<\3\2\32\35\3\2\26\31\3\2-.\4\2&&")
+        buf.write("(,\3\2$%\3\2\36\37\3\2 \"\4\2\f\f;;\2\u024c\2k\3\2\2\2")
+        buf.write("\4p\3\2\2\2\6z\3\2\2\2\b\u0082\3\2\2\2\n\u0085\3\2\2\2")
+        buf.write("\f\u0097\3\2\2\2\16\u0099\3\2\2\2\20\u00a8\3\2\2\2\22")
+        buf.write("\u00b0\3\2\2\2\24\u00b8\3\2\2\2\26\u00bd\3\2\2\2\30\u00c5")
+        buf.write("\3\2\2\2\32\u00d2\3\2\2\2\34\u00d4\3\2\2\2\36\u00d8\3")
+        buf.write("\2\2\2 \u00da\3\2\2\2\"\u00e1\3\2\2\2$\u00e8\3\2\2\2&")
+        buf.write("\u00f3\3\2\2\2(\u00f5\3\2\2\2*\u00f7\3\2\2\2,\u0101\3")
+        buf.write("\2\2\2.\u0103\3\2\2\2\60\u0114\3\2\2\2\62\u0116\3\2\2")
+        buf.write("\2\64\u0128\3\2\2\2\66\u012a\3\2\2\28\u0139\3\2\2\2:\u0142")
+        buf.write("\3\2\2\2<\u0167\3\2\2\2>\u0169\3\2\2\2@\u016f\3\2\2\2")
+        buf.write("B\u0172\3\2\2\2D\u0180\3\2\2\2F\u0183\3\2\2\2H\u018c\3")
+        buf.write("\2\2\2J\u018e\3\2\2\2L\u0191\3\2\2\2N\u0198\3\2\2\2P\u019f")
+        buf.write("\3\2\2\2R\u01a1\3\2\2\2T\u01ac\3\2\2\2V\u01b7\3\2\2\2")
+        buf.write("X\u01c5\3\2\2\2Z\u01cc\3\2\2\2\\\u01de\3\2\2\2^\u0202")
+        buf.write("\3\2\2\2`\u0214\3\2\2\2b\u021b\3\2\2\2d\u022d\3\2\2\2")
+        buf.write("f\u022f\3\2\2\2hj\5\4\3\2ih\3\2\2\2jm\3\2\2\2ki\3\2\2")
+        buf.write("\2kl\3\2\2\2ln\3\2\2\2mk\3\2\2\2no\7\2\2\3o\3\3\2\2\2")
+        buf.write("pq\7\24\2\2qt\5\6\4\2rs\7\67\2\2su\5\6\4\2tr\3\2\2\2t")
+        buf.write("u\3\2\2\2uv\3\2\2\2vw\79\2\2wx\5\b\5\2xy\7:\2\2y\5\3\2")
+        buf.write("\2\2z{\7;\2\2{\7\3\2\2\2|\u0081\5\n\6\2}\u0081\5\20\t")
+        buf.write("\2~\u0081\5\22\n\2\177\u0081\5\24\13\2\u0080|\3\2\2\2")
+        buf.write("\u0080}\3\2\2\2\u0080~\3\2\2\2\u0080\177\3\2\2\2\u0081")
         buf.write("\u0084\3\2\2\2\u0082\u0080\3\2\2\2\u0082\u0083\3\2\2\2")
         buf.write("\u0083\t\3\2\2\2\u0084\u0082\3\2\2\2\u0085\u0086\t\2\2")
         buf.write("\2\u0086\u0087\t\3\2\2\u0087\u008d\b\6\1\2\u0088\u0089")
@@ -202,96 +201,80 @@ def serializedATN():
         buf.write("\2\u018c\u0186\3\2\2\2\u018c\u018a\3\2\2\2\u018dI\3\2")
         buf.write("\2\2\u018e\u018f\5^\60\2\u018f\u0190\7\66\2\2\u0190K\3")
         buf.write("\2\2\2\u0191\u0192\5N(\2\u0192M\3\2\2\2\u0193\u0194\5")
-        buf.write("P)\2\u0194\u0195\7.\2\2\u0195\u0196\5P)\2\u0196\u019d")
-        buf.write("\3\2\2\2\u0197\u0198\5P)\2\u0198\u0199\7-\2\2\u0199\u019a")
-        buf.write("\5P)\2\u019a\u019d\3\2\2\2\u019b\u019d\5P)\2\u019c\u0193")
-        buf.write("\3\2\2\2\u019c\u0197\3\2\2\2\u019c\u019b\3\2\2\2\u019d")
-        buf.write("O\3\2\2\2\u019e\u019f\5R*\2\u019f\u01a0\7&\2\2\u01a0\u01a1")
-        buf.write("\5R*\2\u01a1\u01b8\3\2\2\2\u01a2\u01a3\5R*\2\u01a3\u01a4")
-        buf.write("\7(\2\2\u01a4\u01a5\5R*\2\u01a5\u01b8\3\2\2\2\u01a6\u01a7")
-        buf.write("\5R*\2\u01a7\u01a8\7)\2\2\u01a8\u01a9\5R*\2\u01a9\u01b8")
-        buf.write("\3\2\2\2\u01aa\u01ab\5R*\2\u01ab\u01ac\7*\2\2\u01ac\u01ad")
-        buf.write("\5R*\2\u01ad\u01b8\3\2\2\2\u01ae\u01af\5R*\2\u01af\u01b0")
-        buf.write("\7+\2\2\u01b0\u01b1\5R*\2\u01b1\u01b8\3\2\2\2\u01b2\u01b3")
-        buf.write("\5R*\2\u01b3\u01b4\7,\2\2\u01b4\u01b5\5R*\2\u01b5\u01b8")
-        buf.write("\3\2\2\2\u01b6\u01b8\5R*\2\u01b7\u019e\3\2\2\2\u01b7\u01a2")
-        buf.write("\3\2\2\2\u01b7\u01a6\3\2\2\2\u01b7\u01aa\3\2\2\2\u01b7")
-        buf.write("\u01ae\3\2\2\2\u01b7\u01b2\3\2\2\2\u01b7\u01b6\3\2\2\2")
-        buf.write("\u01b8Q\3\2\2\2\u01b9\u01ba\b*\1\2\u01ba\u01bb\5T+\2\u01bb")
-        buf.write("\u01c4\3\2\2\2\u01bc\u01bd\f\5\2\2\u01bd\u01be\7$\2\2")
-        buf.write("\u01be\u01c3\5T+\2\u01bf\u01c0\f\4\2\2\u01c0\u01c1\7%")
-        buf.write("\2\2\u01c1\u01c3\5T+\2\u01c2\u01bc\3\2\2\2\u01c2\u01bf")
-        buf.write("\3\2\2\2\u01c3\u01c6\3\2\2\2\u01c4\u01c2\3\2\2\2\u01c4")
-        buf.write("\u01c5\3\2\2\2\u01c5S\3\2\2\2\u01c6\u01c4\3\2\2\2\u01c7")
-        buf.write("\u01c8\b+\1\2\u01c8\u01c9\5V,\2\u01c9\u01d2\3\2\2\2\u01ca")
-        buf.write("\u01cb\f\5\2\2\u01cb\u01cc\7\36\2\2\u01cc\u01d1\5V,\2")
-        buf.write("\u01cd\u01ce\f\4\2\2\u01ce\u01cf\7\37\2\2\u01cf\u01d1")
-        buf.write("\5V,\2\u01d0\u01ca\3\2\2\2\u01d0\u01cd\3\2\2\2\u01d1\u01d4")
-        buf.write("\3\2\2\2\u01d2\u01d0\3\2\2\2\u01d2\u01d3\3\2\2\2\u01d3")
-        buf.write("U\3\2\2\2\u01d4\u01d2\3\2\2\2\u01d5\u01d6\b,\1\2\u01d6")
-        buf.write("\u01d7\5X-\2\u01d7\u01e3\3\2\2\2\u01d8\u01d9\f\6\2\2\u01d9")
-        buf.write("\u01da\7 \2\2\u01da\u01e2\5X-\2\u01db\u01dc\f\5\2\2\u01dc")
-        buf.write("\u01dd\7!\2\2\u01dd\u01e2\5X-\2\u01de\u01df\f\4\2\2\u01df")
-        buf.write("\u01e0\7\"\2\2\u01e0\u01e2\5X-\2\u01e1\u01d8\3\2\2\2\u01e1")
-        buf.write("\u01db\3\2\2\2\u01e1\u01de\3\2\2\2\u01e2\u01e5\3\2\2\2")
-        buf.write("\u01e3\u01e1\3\2\2\2\u01e3\u01e4\3\2\2\2\u01e4W\3\2\2")
-        buf.write("\2\u01e5\u01e3\3\2\2\2\u01e6\u01e7\7#\2\2\u01e7\u01ea")
-        buf.write("\5X-\2\u01e8\u01ea\5Z.\2\u01e9\u01e6\3\2\2\2\u01e9\u01e8")
-        buf.write("\3\2\2\2\u01eaY\3\2\2\2\u01eb\u01ec\7\37\2\2\u01ec\u01f1")
-        buf.write("\5Z.\2\u01ed\u01f1\5\\/\2\u01ee\u01f1\5^\60\2\u01ef\u01f1")
-        buf.write("\5d\63\2\u01f0\u01eb\3\2\2\2\u01f0\u01ed\3\2\2\2\u01f0")
-        buf.write("\u01ee\3\2\2\2\u01f0\u01ef\3\2\2\2\u01f1[\3\2\2\2\u01f2")
-        buf.write("\u01f3\b/\1\2\u01f3\u01f4\5^\60\2\u01f4\u01f5\7\61\2\2")
-        buf.write("\u01f5\u01f6\5L\'\2\u01f6\u01f7\7\62\2\2\u01f7\u0203\3")
-        buf.write("\2\2\2\u01f8\u01f9\7;\2\2\u01f9\u01fa\7\61\2\2\u01fa\u01fb")
-        buf.write("\5L\'\2\u01fb\u01fc\7\62\2\2\u01fc\u0203\3\2\2\2\u01fd")
-        buf.write("\u01fe\7<\2\2\u01fe\u01ff\7\61\2\2\u01ff\u0200\5L\'\2")
-        buf.write("\u0200\u0201\7\62\2\2\u0201\u0203\3\2\2\2\u0202\u01f2")
-        buf.write("\3\2\2\2\u0202\u01f8\3\2\2\2\u0202\u01fd\3\2\2\2\u0203")
-        buf.write("\u020b\3\2\2\2\u0204\u0205\f\6\2\2\u0205\u0206\7\61\2")
-        buf.write("\2\u0206\u0207\5L\'\2\u0207\u0208\7\62\2\2\u0208\u020a")
-        buf.write("\3\2\2\2\u0209\u0204\3\2\2\2\u020a\u020d\3\2\2\2\u020b")
-        buf.write("\u0209\3\2\2\2\u020b\u020c\3\2\2\2\u020c]\3\2\2\2\u020d")
-        buf.write("\u020b\3\2\2\2\u020e\u020f\b\60\1\2\u020f\u0210\7;\2\2")
-        buf.write("\u0210\u0211\78\2\2\u0211\u0227\7<\2\2\u0212\u0213\7;")
-        buf.write("\2\2\u0213\u0214\78\2\2\u0214\u0215\7<\2\2\u0215\u0217")
-        buf.write("\7/\2\2\u0216\u0218\5f\64\2\u0217\u0216\3\2\2\2\u0217")
-        buf.write("\u0218\3\2\2\2\u0218\u0219\3\2\2\2\u0219\u0227\7\60\2")
-        buf.write("\2\u021a\u021b\t\6\2\2\u021b\u021c\7\63\2\2\u021c\u0227")
-        buf.write("\7;\2\2\u021d\u021e\t\6\2\2\u021e\u021f\7\63\2\2\u021f")
-        buf.write("\u0220\7;\2\2\u0220\u0222\7/\2\2\u0221\u0223\5f\64\2\u0222")
-        buf.write("\u0221\3\2\2\2\u0222\u0223\3\2\2\2\u0223\u0224\3\2\2\2")
-        buf.write("\u0224\u0227\7\60\2\2\u0225\u0227\5`\61\2\u0226\u020e")
-        buf.write("\3\2\2\2\u0226\u0212\3\2\2\2\u0226\u021a\3\2\2\2\u0226")
-        buf.write("\u021d\3\2\2\2\u0226\u0225\3\2\2\2\u0227\u0235\3\2\2\2")
-        buf.write("\u0228\u0229\f\t\2\2\u0229\u022a\7\63\2\2\u022a\u0234")
-        buf.write("\7;\2\2\u022b\u022c\f\b\2\2\u022c\u022d\7\63\2\2\u022d")
-        buf.write("\u022e\7;\2\2\u022e\u0230\7/\2\2\u022f\u0231\5f\64\2\u0230")
-        buf.write("\u022f\3\2\2\2\u0230\u0231\3\2\2\2\u0231\u0232\3\2\2\2")
-        buf.write("\u0232\u0234\7\60\2\2\u0233\u0228\3\2\2\2\u0233\u022b")
-        buf.write("\3\2\2\2\u0234\u0237\3\2\2\2\u0235\u0233\3\2\2\2\u0235")
-        buf.write("\u0236\3\2\2\2\u0236_\3\2\2\2\u0237\u0235\3\2\2\2\u0238")
-        buf.write("\u0239\t\3\2\2\u0239\u023b\7/\2\2\u023a\u023c\5f\64\2")
-        buf.write("\u023b\u023a\3\2\2\2\u023b\u023c\3\2\2\2\u023c\u023d\3")
-        buf.write("\2\2\2\u023d\u023e\7\60\2\2\u023ea\3\2\2\2\u023f\u0240")
-        buf.write("\7\20\2\2\u0240\u0241\7;\2\2\u0241\u0243\7/\2\2\u0242")
-        buf.write("\u0244\5f\64\2\u0243\u0242\3\2\2\2\u0243\u0244\3\2\2\2")
-        buf.write("\u0244\u0245\3\2\2\2\u0245\u0246\7\60\2\2\u0246c\3\2\2")
-        buf.write("\2\u0247\u0251\5b\62\2\u0248\u0251\7<\2\2\u0249\u0251")
-        buf.write("\7;\2\2\u024a\u0251\5\32\16\2\u024b\u0251\7\f\2\2\u024c")
-        buf.write("\u024d\7/\2\2\u024d\u024e\5L\'\2\u024e\u024f\7\60\2\2")
-        buf.write("\u024f\u0251\3\2\2\2\u0250\u0247\3\2\2\2\u0250\u0248\3")
-        buf.write("\2\2\2\u0250\u0249\3\2\2\2\u0250\u024a\3\2\2\2\u0250\u024b")
-        buf.write("\3\2\2\2\u0250\u024c\3\2\2\2\u0251e\3\2\2\2\u0252\u0257")
-        buf.write("\5L\'\2\u0253\u0254\7\65\2\2\u0254\u0256\5L\'\2\u0255")
-        buf.write("\u0253\3\2\2\2\u0256\u0259\3\2\2\2\u0257\u0255\3\2\2\2")
-        buf.write("\u0257\u0258\3\2\2\2\u0258g\3\2\2\2\u0259\u0257\3\2\2")
-        buf.write("\2\65kt\u0080\u0082\u008d\u0097\u00a2\u00ab\u00b3\u00c2")
-        buf.write("\u00ca\u00d2\u00d8\u00dd\u00e4\u00ed\u00f3\u00fb\u0107")
-        buf.write("\u0114\u011e\u0128\u0133\u0142\u0159\u0163\u0167\u017b")
-        buf.write("\u018c\u019c\u01b7\u01c2\u01c4\u01d0\u01d2\u01e1\u01e3")
-        buf.write("\u01e9\u01f0\u0202\u020b\u0217\u0222\u0226\u0230\u0233")
-        buf.write("\u0235\u023b\u0243\u0250\u0257")
+        buf.write("P)\2\u0194\u0195\t\6\2\2\u0195\u0196\5P)\2\u0196\u0199")
+        buf.write("\3\2\2\2\u0197\u0199\5P)\2\u0198\u0193\3\2\2\2\u0198\u0197")
+        buf.write("\3\2\2\2\u0199O\3\2\2\2\u019a\u019b\5R*\2\u019b\u019c")
+        buf.write("\t\7\2\2\u019c\u019d\5R*\2\u019d\u01a0\3\2\2\2\u019e\u01a0")
+        buf.write("\5R*\2\u019f\u019a\3\2\2\2\u019f\u019e\3\2\2\2\u01a0Q")
+        buf.write("\3\2\2\2\u01a1\u01a2\b*\1\2\u01a2\u01a3\5T+\2\u01a3\u01a9")
+        buf.write("\3\2\2\2\u01a4\u01a5\f\4\2\2\u01a5\u01a6\t\b\2\2\u01a6")
+        buf.write("\u01a8\5T+\2\u01a7\u01a4\3\2\2\2\u01a8\u01ab\3\2\2\2\u01a9")
+        buf.write("\u01a7\3\2\2\2\u01a9\u01aa\3\2\2\2\u01aaS\3\2\2\2\u01ab")
+        buf.write("\u01a9\3\2\2\2\u01ac\u01ad\b+\1\2\u01ad\u01ae\5V,\2\u01ae")
+        buf.write("\u01b4\3\2\2\2\u01af\u01b0\f\4\2\2\u01b0\u01b1\t\t\2\2")
+        buf.write("\u01b1\u01b3\5V,\2\u01b2\u01af\3\2\2\2\u01b3\u01b6\3\2")
+        buf.write("\2\2\u01b4\u01b2\3\2\2\2\u01b4\u01b5\3\2\2\2\u01b5U\3")
+        buf.write("\2\2\2\u01b6\u01b4\3\2\2\2\u01b7\u01b8\b,\1\2\u01b8\u01b9")
+        buf.write("\5X-\2\u01b9\u01bf\3\2\2\2\u01ba\u01bb\f\4\2\2\u01bb\u01bc")
+        buf.write("\t\n\2\2\u01bc\u01be\5X-\2\u01bd\u01ba\3\2\2\2\u01be\u01c1")
+        buf.write("\3\2\2\2\u01bf\u01bd\3\2\2\2\u01bf\u01c0\3\2\2\2\u01c0")
+        buf.write("W\3\2\2\2\u01c1\u01bf\3\2\2\2\u01c2\u01c3\7#\2\2\u01c3")
+        buf.write("\u01c6\5X-\2\u01c4\u01c6\5Z.\2\u01c5\u01c2\3\2\2\2\u01c5")
+        buf.write("\u01c4\3\2\2\2\u01c6Y\3\2\2\2\u01c7\u01c8\7\37\2\2\u01c8")
+        buf.write("\u01cd\5Z.\2\u01c9\u01cd\5\\/\2\u01ca\u01cd\5^\60\2\u01cb")
+        buf.write("\u01cd\5d\63\2\u01cc\u01c7\3\2\2\2\u01cc\u01c9\3\2\2\2")
+        buf.write("\u01cc\u01ca\3\2\2\2\u01cc\u01cb\3\2\2\2\u01cd[\3\2\2")
+        buf.write("\2\u01ce\u01cf\b/\1\2\u01cf\u01d0\5^\60\2\u01d0\u01d1")
+        buf.write("\7\61\2\2\u01d1\u01d2\5L\'\2\u01d2\u01d3\7\62\2\2\u01d3")
+        buf.write("\u01df\3\2\2\2\u01d4\u01d5\7;\2\2\u01d5\u01d6\7\61\2\2")
+        buf.write("\u01d6\u01d7\5L\'\2\u01d7\u01d8\7\62\2\2\u01d8\u01df\3")
+        buf.write("\2\2\2\u01d9\u01da\7<\2\2\u01da\u01db\7\61\2\2\u01db\u01dc")
+        buf.write("\5L\'\2\u01dc\u01dd\7\62\2\2\u01dd\u01df\3\2\2\2\u01de")
+        buf.write("\u01ce\3\2\2\2\u01de\u01d4\3\2\2\2\u01de\u01d9\3\2\2\2")
+        buf.write("\u01df\u01e7\3\2\2\2\u01e0\u01e1\f\6\2\2\u01e1\u01e2\7")
+        buf.write("\61\2\2\u01e2\u01e3\5L\'\2\u01e3\u01e4\7\62\2\2\u01e4")
+        buf.write("\u01e6\3\2\2\2\u01e5\u01e0\3\2\2\2\u01e6\u01e9\3\2\2\2")
+        buf.write("\u01e7\u01e5\3\2\2\2\u01e7\u01e8\3\2\2\2\u01e8]\3\2\2")
+        buf.write("\2\u01e9\u01e7\3\2\2\2\u01ea\u01eb\b\60\1\2\u01eb\u01ec")
+        buf.write("\7;\2\2\u01ec\u01ed\78\2\2\u01ed\u0203\7<\2\2\u01ee\u01ef")
+        buf.write("\7;\2\2\u01ef\u01f0\78\2\2\u01f0\u01f1\7<\2\2\u01f1\u01f3")
+        buf.write("\7/\2\2\u01f2\u01f4\5f\64\2\u01f3\u01f2\3\2\2\2\u01f3")
+        buf.write("\u01f4\3\2\2\2\u01f4\u01f5\3\2\2\2\u01f5\u0203\7\60\2")
+        buf.write("\2\u01f6\u01f7\t\13\2\2\u01f7\u01f8\7\63\2\2\u01f8\u0203")
+        buf.write("\7;\2\2\u01f9\u01fa\t\13\2\2\u01fa\u01fb\7\63\2\2\u01fb")
+        buf.write("\u01fc\7;\2\2\u01fc\u01fe\7/\2\2\u01fd\u01ff\5f\64\2\u01fe")
+        buf.write("\u01fd\3\2\2\2\u01fe\u01ff\3\2\2\2\u01ff\u0200\3\2\2\2")
+        buf.write("\u0200\u0203\7\60\2\2\u0201\u0203\5`\61\2\u0202\u01ea")
+        buf.write("\3\2\2\2\u0202\u01ee\3\2\2\2\u0202\u01f6\3\2\2\2\u0202")
+        buf.write("\u01f9\3\2\2\2\u0202\u0201\3\2\2\2\u0203\u0211\3\2\2\2")
+        buf.write("\u0204\u0205\f\t\2\2\u0205\u0206\7\63\2\2\u0206\u0210")
+        buf.write("\7;\2\2\u0207\u0208\f\b\2\2\u0208\u0209\7\63\2\2\u0209")
+        buf.write("\u020a\7;\2\2\u020a\u020c\7/\2\2\u020b\u020d\5f\64\2\u020c")
+        buf.write("\u020b\3\2\2\2\u020c\u020d\3\2\2\2\u020d\u020e\3\2\2\2")
+        buf.write("\u020e\u0210\7\60\2\2\u020f\u0204\3\2\2\2\u020f\u0207")
+        buf.write("\3\2\2\2\u0210\u0213\3\2\2\2\u0211\u020f\3\2\2\2\u0211")
+        buf.write("\u0212\3\2\2\2\u0212_\3\2\2\2\u0213\u0211\3\2\2\2\u0214")
+        buf.write("\u0215\t\3\2\2\u0215\u0217\7/\2\2\u0216\u0218\5f\64\2")
+        buf.write("\u0217\u0216\3\2\2\2\u0217\u0218\3\2\2\2\u0218\u0219\3")
+        buf.write("\2\2\2\u0219\u021a\7\60\2\2\u021aa\3\2\2\2\u021b\u021c")
+        buf.write("\7\20\2\2\u021c\u021d\7;\2\2\u021d\u021f\7/\2\2\u021e")
+        buf.write("\u0220\5f\64\2\u021f\u021e\3\2\2\2\u021f\u0220\3\2\2\2")
+        buf.write("\u0220\u0221\3\2\2\2\u0221\u0222\7\60\2\2\u0222c\3\2\2")
+        buf.write("\2\u0223\u022e\5b\62\2\u0224\u022e\7<\2\2\u0225\u022e")
+        buf.write("\7;\2\2\u0226\u022e\7\f\2\2\u0227\u022e\5\32\16\2\u0228")
+        buf.write("\u022e\7\23\2\2\u0229\u022a\7/\2\2\u022a\u022b\5L\'\2")
+        buf.write("\u022b\u022c\7\60\2\2\u022c\u022e\3\2\2\2\u022d\u0223")
+        buf.write("\3\2\2\2\u022d\u0224\3\2\2\2\u022d\u0225\3\2\2\2\u022d")
+        buf.write("\u0226\3\2\2\2\u022d\u0227\3\2\2\2\u022d\u0228\3\2\2\2")
+        buf.write("\u022d\u0229\3\2\2\2\u022ee\3\2\2\2\u022f\u0234\5L\'\2")
+        buf.write("\u0230\u0231\7\65\2\2\u0231\u0233\5L\'\2\u0232\u0230\3")
+        buf.write("\2\2\2\u0233\u0236\3\2\2\2\u0234\u0232\3\2\2\2\u0234\u0235")
+        buf.write("\3\2\2\2\u0235g\3\2\2\2\u0236\u0234\3\2\2\2\62kt\u0080")
+        buf.write("\u0082\u008d\u0097\u00a2\u00ab\u00b3\u00c2\u00ca\u00d2")
+        buf.write("\u00d8\u00dd\u00e4\u00ed\u00f3\u00fb\u0107\u0114\u011e")
+        buf.write("\u0128\u0133\u0142\u0159\u0163\u0167\u017b\u018c\u0198")
+        buf.write("\u019f\u01a9\u01b4\u01bf\u01c5\u01cc\u01de\u01e7\u01f3")
+        buf.write("\u01fe\u0202\u020c\u020f\u0211\u0217\u021f\u022d\u0234")
         return buf.getvalue()
 
 
@@ -1423,7 +1406,7 @@ class D96Parser ( Parser ):
             self.state = 219
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.SELF) | (1 << D96Parser.NEW) | (1 << D96Parser.ARRAY) | (1 << D96Parser.INTEGER_LITERAL) | (1 << D96Parser.STRING_LITERAL) | (1 << D96Parser.BOOLEAN_LITERAL) | (1 << D96Parser.FLOAT_LITERAL) | (1 << D96Parser.SUB) | (1 << D96Parser.NOT) | (1 << D96Parser.LP) | (1 << D96Parser.ID) | (1 << D96Parser.DOLLAR_ID))) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.SELF) | (1 << D96Parser.NEW) | (1 << D96Parser.NULL) | (1 << D96Parser.ARRAY) | (1 << D96Parser.INTEGER_LITERAL) | (1 << D96Parser.STRING_LITERAL) | (1 << D96Parser.BOOLEAN_LITERAL) | (1 << D96Parser.FLOAT_LITERAL) | (1 << D96Parser.SUB) | (1 << D96Parser.NOT) | (1 << D96Parser.LP) | (1 << D96Parser.ID) | (1 << D96Parser.DOLLAR_ID))) != 0):
                 self.state = 218
                 self.list_of_expressions()
 
@@ -2828,8 +2811,9 @@ class D96Parser ( Parser ):
 
         localctx = D96Parser.String_expressionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 76, self.RULE_string_expression)
+        self._la = 0 # Token type
         try:
-            self.state = 410
+            self.state = 406
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,29,self._ctx)
             if la_ == 1:
@@ -2837,7 +2821,12 @@ class D96Parser ( Parser ):
                 self.state = 401
                 self.relation_expression()
                 self.state = 402
-                self.match(D96Parser.STRING_ADD)
+                _la = self._input.LA(1)
+                if not(_la==D96Parser.STRING_EQUAL or _la==D96Parser.STRING_ADD):
+                    self._errHandler.recoverInline(self)
+                else:
+                    self._errHandler.reportMatch(self)
+                    self.consume()
                 self.state = 403
                 self.relation_expression()
                 pass
@@ -2845,16 +2834,6 @@ class D96Parser ( Parser ):
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 405
-                self.relation_expression()
-                self.state = 406
-                self.match(D96Parser.STRING_EQUAL)
-                self.state = 407
-                self.relation_expression()
-                pass
-
-            elif la_ == 3:
-                self.enterOuterAlt(localctx, 3)
-                self.state = 409
                 self.relation_expression()
                 pass
 
@@ -2909,73 +2888,29 @@ class D96Parser ( Parser ):
 
         localctx = D96Parser.Relation_expressionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 78, self.RULE_relation_expression)
+        self._la = 0 # Token type
         try:
-            self.state = 437
+            self.state = 413
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,30,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 412
+                self.state = 408
                 self.logical_expression(0)
-                self.state = 413
-                self.match(D96Parser.EQUAL)
-                self.state = 414
+                self.state = 409
+                _la = self._input.LA(1)
+                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.EQUAL) | (1 << D96Parser.NOT_EQUAL) | (1 << D96Parser.LT) | (1 << D96Parser.LTE) | (1 << D96Parser.GT) | (1 << D96Parser.GTE))) != 0)):
+                    self._errHandler.recoverInline(self)
+                else:
+                    self._errHandler.reportMatch(self)
+                    self.consume()
+                self.state = 410
                 self.logical_expression(0)
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 416
-                self.logical_expression(0)
-                self.state = 417
-                self.match(D96Parser.NOT_EQUAL)
-                self.state = 418
-                self.logical_expression(0)
-                pass
-
-            elif la_ == 3:
-                self.enterOuterAlt(localctx, 3)
-                self.state = 420
-                self.logical_expression(0)
-                self.state = 421
-                self.match(D96Parser.LT)
-                self.state = 422
-                self.logical_expression(0)
-                pass
-
-            elif la_ == 4:
-                self.enterOuterAlt(localctx, 4)
-                self.state = 424
-                self.logical_expression(0)
-                self.state = 425
-                self.match(D96Parser.LTE)
-                self.state = 426
-                self.logical_expression(0)
-                pass
-
-            elif la_ == 5:
-                self.enterOuterAlt(localctx, 5)
-                self.state = 428
-                self.logical_expression(0)
-                self.state = 429
-                self.match(D96Parser.GT)
-                self.state = 430
-                self.logical_expression(0)
-                pass
-
-            elif la_ == 6:
-                self.enterOuterAlt(localctx, 6)
-                self.state = 432
-                self.logical_expression(0)
-                self.state = 433
-                self.match(D96Parser.GTE)
-                self.state = 434
-                self.logical_expression(0)
-                pass
-
-            elif la_ == 7:
-                self.enterOuterAlt(localctx, 7)
-                self.state = 436
+                self.state = 412
                 self.logical_expression(0)
                 pass
 
@@ -3021,52 +2956,38 @@ class D96Parser ( Parser ):
         _prevctx = localctx
         _startState = 80
         self.enterRecursionRule(localctx, 80, self.RULE_logical_expression, _p)
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 440
+            self.state = 416
             self.adding_expression(0)
             self._ctx.stop = self._input.LT(-1)
-            self.state = 450
+            self.state = 423
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,32,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,31,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1:
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    self.state = 448
-                    self._errHandler.sync(self)
-                    la_ = self._interp.adaptivePredict(self._input,31,self._ctx)
-                    if la_ == 1:
-                        localctx = D96Parser.Logical_expressionContext(self, _parentctx, _parentState)
-                        self.pushNewRecursionContext(localctx, _startState, self.RULE_logical_expression)
-                        self.state = 442
-                        if not self.precpred(self._ctx, 3):
-                            from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 3)")
-                        self.state = 443
-                        self.match(D96Parser.AND)
-                        self.state = 444
-                        self.adding_expression(0)
-                        pass
-
-                    elif la_ == 2:
-                        localctx = D96Parser.Logical_expressionContext(self, _parentctx, _parentState)
-                        self.pushNewRecursionContext(localctx, _startState, self.RULE_logical_expression)
-                        self.state = 445
-                        if not self.precpred(self._ctx, 2):
-                            from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
-                        self.state = 446
-                        self.match(D96Parser.OR)
-                        self.state = 447
-                        self.adding_expression(0)
-                        pass
-
-             
-                self.state = 452
+                    localctx = D96Parser.Logical_expressionContext(self, _parentctx, _parentState)
+                    self.pushNewRecursionContext(localctx, _startState, self.RULE_logical_expression)
+                    self.state = 418
+                    if not self.precpred(self._ctx, 2):
+                        from antlr4.error.Errors import FailedPredicateException
+                        raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
+                    self.state = 419
+                    _la = self._input.LA(1)
+                    if not(_la==D96Parser.AND or _la==D96Parser.OR):
+                        self._errHandler.recoverInline(self)
+                    else:
+                        self._errHandler.reportMatch(self)
+                        self.consume()
+                    self.state = 420
+                    self.adding_expression(0) 
+                self.state = 425
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,32,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,31,self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -3109,52 +3030,38 @@ class D96Parser ( Parser ):
         _prevctx = localctx
         _startState = 82
         self.enterRecursionRule(localctx, 82, self.RULE_adding_expression, _p)
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 454
+            self.state = 427
             self.multiplying_expression(0)
             self._ctx.stop = self._input.LT(-1)
-            self.state = 464
+            self.state = 434
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,34,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,32,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1:
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    self.state = 462
-                    self._errHandler.sync(self)
-                    la_ = self._interp.adaptivePredict(self._input,33,self._ctx)
-                    if la_ == 1:
-                        localctx = D96Parser.Adding_expressionContext(self, _parentctx, _parentState)
-                        self.pushNewRecursionContext(localctx, _startState, self.RULE_adding_expression)
-                        self.state = 456
-                        if not self.precpred(self._ctx, 3):
-                            from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 3)")
-                        self.state = 457
-                        self.match(D96Parser.ADD)
-                        self.state = 458
-                        self.multiplying_expression(0)
-                        pass
-
-                    elif la_ == 2:
-                        localctx = D96Parser.Adding_expressionContext(self, _parentctx, _parentState)
-                        self.pushNewRecursionContext(localctx, _startState, self.RULE_adding_expression)
-                        self.state = 459
-                        if not self.precpred(self._ctx, 2):
-                            from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
-                        self.state = 460
-                        self.match(D96Parser.SUB)
-                        self.state = 461
-                        self.multiplying_expression(0)
-                        pass
-
-             
-                self.state = 466
+                    localctx = D96Parser.Adding_expressionContext(self, _parentctx, _parentState)
+                    self.pushNewRecursionContext(localctx, _startState, self.RULE_adding_expression)
+                    self.state = 429
+                    if not self.precpred(self._ctx, 2):
+                        from antlr4.error.Errors import FailedPredicateException
+                        raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
+                    self.state = 430
+                    _la = self._input.LA(1)
+                    if not(_la==D96Parser.ADD or _la==D96Parser.SUB):
+                        self._errHandler.recoverInline(self)
+                    else:
+                        self._errHandler.reportMatch(self)
+                        self.consume()
+                    self.state = 431
+                    self.multiplying_expression(0) 
+                self.state = 436
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,34,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,32,self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -3200,65 +3107,38 @@ class D96Parser ( Parser ):
         _prevctx = localctx
         _startState = 84
         self.enterRecursionRule(localctx, 84, self.RULE_multiplying_expression, _p)
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 468
+            self.state = 438
             self.negative_expression()
             self._ctx.stop = self._input.LT(-1)
-            self.state = 481
+            self.state = 445
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,36,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,33,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1:
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    self.state = 479
-                    self._errHandler.sync(self)
-                    la_ = self._interp.adaptivePredict(self._input,35,self._ctx)
-                    if la_ == 1:
-                        localctx = D96Parser.Multiplying_expressionContext(self, _parentctx, _parentState)
-                        self.pushNewRecursionContext(localctx, _startState, self.RULE_multiplying_expression)
-                        self.state = 470
-                        if not self.precpred(self._ctx, 4):
-                            from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 4)")
-                        self.state = 471
-                        self.match(D96Parser.MUL)
-                        self.state = 472
-                        self.negative_expression()
-                        pass
-
-                    elif la_ == 2:
-                        localctx = D96Parser.Multiplying_expressionContext(self, _parentctx, _parentState)
-                        self.pushNewRecursionContext(localctx, _startState, self.RULE_multiplying_expression)
-                        self.state = 473
-                        if not self.precpred(self._ctx, 3):
-                            from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 3)")
-                        self.state = 474
-                        self.match(D96Parser.DIV)
-                        self.state = 475
-                        self.negative_expression()
-                        pass
-
-                    elif la_ == 3:
-                        localctx = D96Parser.Multiplying_expressionContext(self, _parentctx, _parentState)
-                        self.pushNewRecursionContext(localctx, _startState, self.RULE_multiplying_expression)
-                        self.state = 476
-                        if not self.precpred(self._ctx, 2):
-                            from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
-                        self.state = 477
-                        self.match(D96Parser.MOD)
-                        self.state = 478
-                        self.negative_expression()
-                        pass
-
-             
-                self.state = 483
+                    localctx = D96Parser.Multiplying_expressionContext(self, _parentctx, _parentState)
+                    self.pushNewRecursionContext(localctx, _startState, self.RULE_multiplying_expression)
+                    self.state = 440
+                    if not self.precpred(self._ctx, 2):
+                        from antlr4.error.Errors import FailedPredicateException
+                        raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
+                    self.state = 441
+                    _la = self._input.LA(1)
+                    if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.MUL) | (1 << D96Parser.DIV) | (1 << D96Parser.MOD))) != 0)):
+                        self._errHandler.recoverInline(self)
+                    else:
+                        self._errHandler.reportMatch(self)
+                        self.consume()
+                    self.state = 442
+                    self.negative_expression() 
+                self.state = 447
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,36,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,33,self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -3297,19 +3177,19 @@ class D96Parser ( Parser ):
         localctx = D96Parser.Negative_expressionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 86, self.RULE_negative_expression)
         try:
-            self.state = 487
+            self.state = 451
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [D96Parser.NOT]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 484
+                self.state = 448
                 self.match(D96Parser.NOT)
-                self.state = 485
+                self.state = 449
                 self.negative_expression()
                 pass
-            elif token in [D96Parser.SELF, D96Parser.NEW, D96Parser.ARRAY, D96Parser.INTEGER_LITERAL, D96Parser.STRING_LITERAL, D96Parser.BOOLEAN_LITERAL, D96Parser.FLOAT_LITERAL, D96Parser.SUB, D96Parser.LP, D96Parser.ID, D96Parser.DOLLAR_ID]:
+            elif token in [D96Parser.SELF, D96Parser.NEW, D96Parser.NULL, D96Parser.ARRAY, D96Parser.INTEGER_LITERAL, D96Parser.STRING_LITERAL, D96Parser.BOOLEAN_LITERAL, D96Parser.FLOAT_LITERAL, D96Parser.SUB, D96Parser.LP, D96Parser.ID, D96Parser.DOLLAR_ID]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 486
+                self.state = 450
                 self.sign_expression()
                 pass
             else:
@@ -3360,32 +3240,32 @@ class D96Parser ( Parser ):
         localctx = D96Parser.Sign_expressionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 88, self.RULE_sign_expression)
         try:
-            self.state = 494
+            self.state = 458
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,38,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,35,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 489
+                self.state = 453
                 self.match(D96Parser.SUB)
-                self.state = 490
+                self.state = 454
                 self.sign_expression()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 491
+                self.state = 455
                 self.index_expression(0)
                 pass
 
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 492
+                self.state = 456
                 self.member_access_expression(0)
                 pass
 
             elif la_ == 4:
                 self.enterOuterAlt(localctx, 4)
-                self.state = 493
+                self.state = 457
                 self.operand()
                 pass
 
@@ -3443,47 +3323,47 @@ class D96Parser ( Parser ):
         self.enterRecursionRule(localctx, 90, self.RULE_index_expression, _p)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 512
+            self.state = 476
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,39,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,36,self._ctx)
             if la_ == 1:
-                self.state = 497
+                self.state = 461
                 self.member_access_expression(0)
-                self.state = 498
+                self.state = 462
                 self.match(D96Parser.LSB)
-                self.state = 499
+                self.state = 463
                 self.expression()
-                self.state = 500
+                self.state = 464
                 self.match(D96Parser.RSB)
                 pass
 
             elif la_ == 2:
-                self.state = 502
+                self.state = 466
                 self.match(D96Parser.ID)
-                self.state = 503
+                self.state = 467
                 self.match(D96Parser.LSB)
-                self.state = 504
+                self.state = 468
                 self.expression()
-                self.state = 505
+                self.state = 469
                 self.match(D96Parser.RSB)
                 pass
 
             elif la_ == 3:
-                self.state = 507
+                self.state = 471
                 self.match(D96Parser.DOLLAR_ID)
-                self.state = 508
+                self.state = 472
                 self.match(D96Parser.LSB)
-                self.state = 509
+                self.state = 473
                 self.expression()
-                self.state = 510
+                self.state = 474
                 self.match(D96Parser.RSB)
                 pass
 
 
             self._ctx.stop = self._input.LT(-1)
-            self.state = 521
+            self.state = 485
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,40,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,37,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1:
                     if self._parseListeners is not None:
@@ -3491,19 +3371,19 @@ class D96Parser ( Parser ):
                     _prevctx = localctx
                     localctx = D96Parser.Index_expressionContext(self, _parentctx, _parentState)
                     self.pushNewRecursionContext(localctx, _startState, self.RULE_index_expression)
-                    self.state = 514
+                    self.state = 478
                     if not self.precpred(self._ctx, 4):
                         from antlr4.error.Errors import FailedPredicateException
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 4)")
-                    self.state = 515
+                    self.state = 479
                     self.match(D96Parser.LSB)
-                    self.state = 516
+                    self.state = 480
                     self.expression()
-                    self.state = 517
+                    self.state = 481
                     self.match(D96Parser.RSB) 
-                self.state = 523
+                self.state = 487
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,40,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,37,self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -3571,139 +3451,139 @@ class D96Parser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 548
+            self.state = 512
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,43,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,40,self._ctx)
             if la_ == 1:
-                self.state = 525
+                self.state = 489
                 self.match(D96Parser.ID)
-                self.state = 526
+                self.state = 490
                 self.match(D96Parser.DOUBLE_COLON)
-                self.state = 527
+                self.state = 491
                 self.match(D96Parser.DOLLAR_ID)
                 pass
 
             elif la_ == 2:
-                self.state = 528
+                self.state = 492
                 self.match(D96Parser.ID)
-                self.state = 529
+                self.state = 493
                 self.match(D96Parser.DOUBLE_COLON)
-                self.state = 530
+                self.state = 494
                 self.match(D96Parser.DOLLAR_ID)
-                self.state = 531
+                self.state = 495
                 self.match(D96Parser.LP)
-                self.state = 533
+                self.state = 497
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.SELF) | (1 << D96Parser.NEW) | (1 << D96Parser.ARRAY) | (1 << D96Parser.INTEGER_LITERAL) | (1 << D96Parser.STRING_LITERAL) | (1 << D96Parser.BOOLEAN_LITERAL) | (1 << D96Parser.FLOAT_LITERAL) | (1 << D96Parser.SUB) | (1 << D96Parser.NOT) | (1 << D96Parser.LP) | (1 << D96Parser.ID) | (1 << D96Parser.DOLLAR_ID))) != 0):
-                    self.state = 532
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.SELF) | (1 << D96Parser.NEW) | (1 << D96Parser.NULL) | (1 << D96Parser.ARRAY) | (1 << D96Parser.INTEGER_LITERAL) | (1 << D96Parser.STRING_LITERAL) | (1 << D96Parser.BOOLEAN_LITERAL) | (1 << D96Parser.FLOAT_LITERAL) | (1 << D96Parser.SUB) | (1 << D96Parser.NOT) | (1 << D96Parser.LP) | (1 << D96Parser.ID) | (1 << D96Parser.DOLLAR_ID))) != 0):
+                    self.state = 496
                     self.list_of_expressions()
 
 
-                self.state = 535
+                self.state = 499
                 self.match(D96Parser.RP)
                 pass
 
             elif la_ == 3:
-                self.state = 536
+                self.state = 500
                 _la = self._input.LA(1)
                 if not(_la==D96Parser.SELF or _la==D96Parser.ID):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
-                self.state = 537
+                self.state = 501
                 self.match(D96Parser.DOT)
-                self.state = 538
+                self.state = 502
                 self.match(D96Parser.ID)
                 pass
 
             elif la_ == 4:
-                self.state = 539
+                self.state = 503
                 _la = self._input.LA(1)
                 if not(_la==D96Parser.SELF or _la==D96Parser.ID):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
-                self.state = 540
+                self.state = 504
                 self.match(D96Parser.DOT)
-                self.state = 541
+                self.state = 505
                 self.match(D96Parser.ID)
-                self.state = 542
+                self.state = 506
                 self.match(D96Parser.LP)
-                self.state = 544
+                self.state = 508
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.SELF) | (1 << D96Parser.NEW) | (1 << D96Parser.ARRAY) | (1 << D96Parser.INTEGER_LITERAL) | (1 << D96Parser.STRING_LITERAL) | (1 << D96Parser.BOOLEAN_LITERAL) | (1 << D96Parser.FLOAT_LITERAL) | (1 << D96Parser.SUB) | (1 << D96Parser.NOT) | (1 << D96Parser.LP) | (1 << D96Parser.ID) | (1 << D96Parser.DOLLAR_ID))) != 0):
-                    self.state = 543
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.SELF) | (1 << D96Parser.NEW) | (1 << D96Parser.NULL) | (1 << D96Parser.ARRAY) | (1 << D96Parser.INTEGER_LITERAL) | (1 << D96Parser.STRING_LITERAL) | (1 << D96Parser.BOOLEAN_LITERAL) | (1 << D96Parser.FLOAT_LITERAL) | (1 << D96Parser.SUB) | (1 << D96Parser.NOT) | (1 << D96Parser.LP) | (1 << D96Parser.ID) | (1 << D96Parser.DOLLAR_ID))) != 0):
+                    self.state = 507
                     self.list_of_expressions()
 
 
-                self.state = 546
+                self.state = 510
                 self.match(D96Parser.RP)
                 pass
 
             elif la_ == 5:
-                self.state = 547
+                self.state = 511
                 self.self_method_call()
                 pass
 
 
             self._ctx.stop = self._input.LT(-1)
-            self.state = 563
+            self.state = 527
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,46,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,43,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1:
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    self.state = 561
+                    self.state = 525
                     self._errHandler.sync(self)
-                    la_ = self._interp.adaptivePredict(self._input,45,self._ctx)
+                    la_ = self._interp.adaptivePredict(self._input,42,self._ctx)
                     if la_ == 1:
                         localctx = D96Parser.Member_access_expressionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_member_access_expression)
-                        self.state = 550
+                        self.state = 514
                         if not self.precpred(self._ctx, 7):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 7)")
-                        self.state = 551
+                        self.state = 515
                         self.match(D96Parser.DOT)
-                        self.state = 552
+                        self.state = 516
                         self.match(D96Parser.ID)
                         pass
 
                     elif la_ == 2:
                         localctx = D96Parser.Member_access_expressionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_member_access_expression)
-                        self.state = 553
+                        self.state = 517
                         if not self.precpred(self._ctx, 6):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 6)")
-                        self.state = 554
+                        self.state = 518
                         self.match(D96Parser.DOT)
-                        self.state = 555
+                        self.state = 519
                         self.match(D96Parser.ID)
-                        self.state = 556
+                        self.state = 520
                         self.match(D96Parser.LP)
-                        self.state = 558
+                        self.state = 522
                         self._errHandler.sync(self)
                         _la = self._input.LA(1)
-                        if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.SELF) | (1 << D96Parser.NEW) | (1 << D96Parser.ARRAY) | (1 << D96Parser.INTEGER_LITERAL) | (1 << D96Parser.STRING_LITERAL) | (1 << D96Parser.BOOLEAN_LITERAL) | (1 << D96Parser.FLOAT_LITERAL) | (1 << D96Parser.SUB) | (1 << D96Parser.NOT) | (1 << D96Parser.LP) | (1 << D96Parser.ID) | (1 << D96Parser.DOLLAR_ID))) != 0):
-                            self.state = 557
+                        if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.SELF) | (1 << D96Parser.NEW) | (1 << D96Parser.NULL) | (1 << D96Parser.ARRAY) | (1 << D96Parser.INTEGER_LITERAL) | (1 << D96Parser.STRING_LITERAL) | (1 << D96Parser.BOOLEAN_LITERAL) | (1 << D96Parser.FLOAT_LITERAL) | (1 << D96Parser.SUB) | (1 << D96Parser.NOT) | (1 << D96Parser.LP) | (1 << D96Parser.ID) | (1 << D96Parser.DOLLAR_ID))) != 0):
+                            self.state = 521
                             self.list_of_expressions()
 
 
-                        self.state = 560
+                        self.state = 524
                         self.match(D96Parser.RP)
                         pass
 
              
-                self.state = 565
+                self.state = 529
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,46,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,43,self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -3749,24 +3629,24 @@ class D96Parser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 566
+            self.state = 530
             _la = self._input.LA(1)
             if not(_la==D96Parser.ID or _la==D96Parser.DOLLAR_ID):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
                 self.consume()
-            self.state = 567
+            self.state = 531
             self.match(D96Parser.LP)
-            self.state = 569
+            self.state = 533
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.SELF) | (1 << D96Parser.NEW) | (1 << D96Parser.ARRAY) | (1 << D96Parser.INTEGER_LITERAL) | (1 << D96Parser.STRING_LITERAL) | (1 << D96Parser.BOOLEAN_LITERAL) | (1 << D96Parser.FLOAT_LITERAL) | (1 << D96Parser.SUB) | (1 << D96Parser.NOT) | (1 << D96Parser.LP) | (1 << D96Parser.ID) | (1 << D96Parser.DOLLAR_ID))) != 0):
-                self.state = 568
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.SELF) | (1 << D96Parser.NEW) | (1 << D96Parser.NULL) | (1 << D96Parser.ARRAY) | (1 << D96Parser.INTEGER_LITERAL) | (1 << D96Parser.STRING_LITERAL) | (1 << D96Parser.BOOLEAN_LITERAL) | (1 << D96Parser.FLOAT_LITERAL) | (1 << D96Parser.SUB) | (1 << D96Parser.NOT) | (1 << D96Parser.LP) | (1 << D96Parser.ID) | (1 << D96Parser.DOLLAR_ID))) != 0):
+                self.state = 532
                 self.list_of_expressions()
 
 
-            self.state = 571
+            self.state = 535
             self.match(D96Parser.RP)
         except RecognitionException as re:
             localctx.exception = re
@@ -3812,21 +3692,21 @@ class D96Parser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 573
+            self.state = 537
             self.match(D96Parser.NEW)
-            self.state = 574
+            self.state = 538
             self.match(D96Parser.ID)
-            self.state = 575
+            self.state = 539
             self.match(D96Parser.LP)
-            self.state = 577
+            self.state = 541
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.SELF) | (1 << D96Parser.NEW) | (1 << D96Parser.ARRAY) | (1 << D96Parser.INTEGER_LITERAL) | (1 << D96Parser.STRING_LITERAL) | (1 << D96Parser.BOOLEAN_LITERAL) | (1 << D96Parser.FLOAT_LITERAL) | (1 << D96Parser.SUB) | (1 << D96Parser.NOT) | (1 << D96Parser.LP) | (1 << D96Parser.ID) | (1 << D96Parser.DOLLAR_ID))) != 0):
-                self.state = 576
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << D96Parser.SELF) | (1 << D96Parser.NEW) | (1 << D96Parser.NULL) | (1 << D96Parser.ARRAY) | (1 << D96Parser.INTEGER_LITERAL) | (1 << D96Parser.STRING_LITERAL) | (1 << D96Parser.BOOLEAN_LITERAL) | (1 << D96Parser.FLOAT_LITERAL) | (1 << D96Parser.SUB) | (1 << D96Parser.NOT) | (1 << D96Parser.LP) | (1 << D96Parser.ID) | (1 << D96Parser.DOLLAR_ID))) != 0):
+                self.state = 540
                 self.list_of_expressions()
 
 
-            self.state = 579
+            self.state = 543
             self.match(D96Parser.RP)
         except RecognitionException as re:
             localctx.exception = re
@@ -3853,12 +3733,15 @@ class D96Parser ( Parser ):
         def ID(self):
             return self.getToken(D96Parser.ID, 0)
 
+        def SELF(self):
+            return self.getToken(D96Parser.SELF, 0)
+
         def literal(self):
             return self.getTypedRuleContext(D96Parser.LiteralContext,0)
 
 
-        def SELF(self):
-            return self.getToken(D96Parser.SELF, 0)
+        def NULL(self):
+            return self.getToken(D96Parser.NULL, 0)
 
         def LP(self):
             return self.getToken(D96Parser.LP, 0)
@@ -3881,41 +3764,46 @@ class D96Parser ( Parser ):
         localctx = D96Parser.OperandContext(self, self._ctx, self.state)
         self.enterRule(localctx, 98, self.RULE_operand)
         try:
-            self.state = 590
+            self.state = 555
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [D96Parser.NEW]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 581
+                self.state = 545
                 self.object_creation_expression()
                 pass
             elif token in [D96Parser.DOLLAR_ID]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 582
+                self.state = 546
                 self.match(D96Parser.DOLLAR_ID)
                 pass
             elif token in [D96Parser.ID]:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 583
+                self.state = 547
                 self.match(D96Parser.ID)
                 pass
-            elif token in [D96Parser.ARRAY, D96Parser.INTEGER_LITERAL, D96Parser.STRING_LITERAL, D96Parser.BOOLEAN_LITERAL, D96Parser.FLOAT_LITERAL]:
-                self.enterOuterAlt(localctx, 4)
-                self.state = 584
-                self.literal()
-                pass
             elif token in [D96Parser.SELF]:
-                self.enterOuterAlt(localctx, 5)
-                self.state = 585
+                self.enterOuterAlt(localctx, 4)
+                self.state = 548
                 self.match(D96Parser.SELF)
                 pass
-            elif token in [D96Parser.LP]:
+            elif token in [D96Parser.ARRAY, D96Parser.INTEGER_LITERAL, D96Parser.STRING_LITERAL, D96Parser.BOOLEAN_LITERAL, D96Parser.FLOAT_LITERAL]:
+                self.enterOuterAlt(localctx, 5)
+                self.state = 549
+                self.literal()
+                pass
+            elif token in [D96Parser.NULL]:
                 self.enterOuterAlt(localctx, 6)
-                self.state = 586
+                self.state = 550
+                self.match(D96Parser.NULL)
+                pass
+            elif token in [D96Parser.LP]:
+                self.enterOuterAlt(localctx, 7)
+                self.state = 551
                 self.match(D96Parser.LP)
-                self.state = 587
+                self.state = 552
                 self.expression()
-                self.state = 588
+                self.state = 553
                 self.match(D96Parser.RP)
                 pass
             else:
@@ -3962,17 +3850,17 @@ class D96Parser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 592
+            self.state = 557
             self.expression()
-            self.state = 597
+            self.state = 562
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==D96Parser.COMMA:
-                self.state = 593
+                self.state = 558
                 self.match(D96Parser.COMMA)
-                self.state = 594
+                self.state = 559
                 self.expression()
-                self.state = 599
+                self.state = 564
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -4022,46 +3910,30 @@ class D96Parser ( Parser ):
 
     def logical_expression_sempred(self, localctx:Logical_expressionContext, predIndex:int):
             if predIndex == 4:
-                return self.precpred(self._ctx, 3)
-         
-
-            if predIndex == 5:
                 return self.precpred(self._ctx, 2)
          
 
     def adding_expression_sempred(self, localctx:Adding_expressionContext, predIndex:int):
-            if predIndex == 6:
-                return self.precpred(self._ctx, 3)
-         
-
-            if predIndex == 7:
+            if predIndex == 5:
                 return self.precpred(self._ctx, 2)
          
 
     def multiplying_expression_sempred(self, localctx:Multiplying_expressionContext, predIndex:int):
-            if predIndex == 8:
-                return self.precpred(self._ctx, 4)
-         
-
-            if predIndex == 9:
-                return self.precpred(self._ctx, 3)
-         
-
-            if predIndex == 10:
+            if predIndex == 6:
                 return self.precpred(self._ctx, 2)
          
 
     def index_expression_sempred(self, localctx:Index_expressionContext, predIndex:int):
-            if predIndex == 11:
+            if predIndex == 7:
                 return self.precpred(self._ctx, 4)
          
 
     def member_access_expression_sempred(self, localctx:Member_access_expressionContext, predIndex:int):
-            if predIndex == 12:
+            if predIndex == 8:
                 return self.precpred(self._ctx, 7)
          
 
-            if predIndex == 13:
+            if predIndex == 9:
                 return self.precpred(self._ctx, 6)
          
 
