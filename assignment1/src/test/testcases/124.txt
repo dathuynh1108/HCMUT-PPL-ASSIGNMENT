@@ -1,1 +1,5 @@
-True False
+
+            "a\bb\fc\rd\ne\tf\\"
+            "a\'b"
+            "a'b"
+        

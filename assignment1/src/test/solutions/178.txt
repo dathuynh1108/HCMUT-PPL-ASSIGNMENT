@@ -1,1 +1,1 @@
-Illegal Escape In String: This is another invalid ''
+1.,.,100,1,..,100,a,..,b,(,1,),..,100,1.,..,100,1.,..,100.,<EOF>

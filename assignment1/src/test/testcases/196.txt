@@ -1,5 +1,6 @@
 
-            "There are some escape seq here:  \b mid  \f mid 	 \t mid '"	insingle	'"again insingle of before'"	'"	  
-'""    
-            ""     
+            "xyz	'""
+            "abc				"
+			"abc
+"
         

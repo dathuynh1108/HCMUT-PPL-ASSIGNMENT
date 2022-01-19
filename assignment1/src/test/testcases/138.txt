@@ -1,1 +1,7 @@
-+. ==.
+
+            Var $string_1: String = "abc"; ## Comment ##
+            string_1 = string_1 +. "def" +. "xyz";
+            Var $string_2: String = "abcdefxyz";
+            "Some code in string"
+            "Var i: Int; Foreach (i In 1 .. 100 By 1) {If (i==i) {Break;} Elseif(i==i+1) {Continue;} Else {Return;}}"
+        

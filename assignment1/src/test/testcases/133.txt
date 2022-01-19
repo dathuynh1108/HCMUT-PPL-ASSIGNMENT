@@ -1,1 +1,5 @@
-1_234.567 4_567_798.1e-10 3_145.5e+10
+
+            "Valid string"
+            "Huynh Thanh Dat \'\t\n\f\b\r\f\\'" 11082001"
+            "Invalid string''
+        

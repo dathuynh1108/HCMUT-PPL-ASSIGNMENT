@@ -1,1 +1,4 @@
-1407 0310 0xabcdef 000310 7890 0xefff
+
+            "Valid string"
+            'Invalid string'
+        

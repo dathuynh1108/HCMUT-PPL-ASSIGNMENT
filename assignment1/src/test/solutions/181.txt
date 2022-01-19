@@ -1,1 +1,1 @@
-e12,e,-,12,e,+,12,EEE,-,10,0000000000000002.32423,<EOF>
+Illegal Escape In String: abcde\"

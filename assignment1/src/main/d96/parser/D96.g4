@@ -11,13 +11,13 @@ options {
 }
 // ----------------------------------  PARSER  -------------------------------------------
 // program structure
-program: class_declaration* EOF; // can be empty file?
+program: class_declaration* EOF; // Note: File rỗng được không??
 
 class_declaration : CLASS class_name (COLON class_name)? LCB class_body RCB;
-class_name: ID; // NOT COMPLETE
+class_name: ID;
 class_body: (attribute_declaration | method_declaration | constructor_declaration | destructor_declaration)*;
 
-attribute_declaration // Chưa xong
+attribute_declaration
     locals [number_attribute = 0]: 
     (VAR | VAL) (ID | DOLLAR_ID) {$attribute_declaration::number_attribute+=1} 
     (COMMA (ID | DOLLAR_ID) {$attribute_declaration::number_attribute+=1})* 
@@ -26,6 +26,7 @@ attribute_declaration // Chưa xong
 attribute_initialization    :   ASSIGN attribute_initialization_list 
                             |   SEMI
                             ;
+// Note: Bắt ở cuối hay ở giữa???
 attribute_initialization_list   :   expression {$attribute_declaration::number_attribute -= 1}  // first expression
                                     ({$attribute_declaration::number_attribute > 0}? COMMA expression {$attribute_declaration::number_attribute -= 1})*   // loop until number_var == 0 or not match
                                     ({$attribute_declaration::number_attribute == 0}? SEMI); // check number_var == 0
@@ -37,6 +38,10 @@ destructor_declaration: DESTRUCTOR LP RP block_statement;
 list_of_parameters: parameter_declaration(SEMI parameter_declaration)*;
 parameter_declaration: (ID)(COMMA ID)* COLON type_name;
 
+type_name: primitive_type | array_type | class_type;  // can it has class type
+primitive_type: INTEGER | FLOAT | STRING | BOOLEAN;
+array_type: ARRAY LSB (primitive_type | array_type) COMMA INTEGER_LITERAL RSB;
+class_type: ID;
 
 literal: array_literal | primitive_literal;
 
@@ -49,71 +54,14 @@ multi_demensional_array: ARRAY LP array_literal_list? RP;
 array_literal_list  : array_literal (COMMA array_literal)*; 
 
 
-type_name: primitive_type | array_type | class_type;  // can it has class type
-primitive_type: INTEGER | FLOAT | STRING | BOOLEAN;
-array_type: ARRAY LSB (primitive_type | array_type) COMMA INTEGER_LITERAL RSB;
-class_type: ID;
-
-
-
-
-/***************************** STATEMENT ******************************/
-block_statement: LCB statement* RCB;
-statement   : variable_and_const_declaration
-            | assign_statement
-            | if_statement
-            | foreach_statement
-            //| while_statement           
-            | break_statement
-            | continue_statement
-            | return_statement  
-            | method_invocation_statement  
-            ;
-
-
-variable_and_const_declaration 
-    locals [number_variable = 0]: 
-    (VAR | VAL) ID {$variable_and_const_declaration::number_variable+=1} 
-    (COMMA (ID | DOLLAR_ID){$variable_and_const_declaration::number_variable+=1})* 
-    COLON type_name variable_initialization;
-
-variable_initialization :   ASSIGN variable_initialization_list 
-                        |   SEMI;
-variable_initialization_list    :   expression {$variable_and_const_declaration::number_variable -= 1} 
-                                    ({$variable_and_const_declaration::number_variable > 0}? COMMA expression {$variable_and_const_declaration::number_variable -= 1})*  
-                                    ({$variable_and_const_declaration::number_variable == 0}? SEMI)
-                    ;
-assign_statement: left_hand_side ASSIGN expression SEMI;
-
-left_hand_side  : ID 
-                | DOLLAR_ID 
-                | index_expression
-                | member_access_expression
-                ;
-
-if_statement: IF LP expression RP block_statement // 1 if
-            | IF LP expression RP block_statement else_statement // 1 if 1 else
-            | IF LP expression RP block_statement elseif_statement+ // 1 if multi elseif
-            | IF LP expression RP block_statement elseif_statement+ else_statement // 1 if multi elseif 1 elseif
-            ;
-elseif_statement: ELSEIF LP expression RP block_statement;
-else_statement: ELSE block_statement;
-
-foreach_statement: FOREACH LP (ID | DOLLAR_ID) IN expression DOUBLE_DOT expression (BY expression)? RP block_statement;
-break_statement: BREAK SEMI;
-continue_statement: CONTINUE SEMI;
-return_statement: RETURN expression SEMI | RETURN SEMI;
-method_invocation_statement: member_access_expression SEMI;
-                            //(instance_method_invocation | static_method_invocation) SEMI;
-
-
 /***************************** EXPRESSION ******************************/
 /*
     Tách expression từ dưới lên --> string op đầu tiên vì ví dụ
     a + b * c:  parse * trước sẽ thành a + b, *, c --> sai
                 parse + trước sẽ thành a, +, b*c --> ok
 */
-expression  :   string_expression;
+expression          :   string_expression;
+
 string_expression   :   relation_expression (STRING_ADD | STRING_EQUAL) relation_expression
                     |   relation_expression
                     ;
@@ -147,12 +95,26 @@ index_expression    :   index_expression LSB expression RSB
                     |   member_access_expression LSB expression RSB // a.b[i][j], a.b()[i][j] --> member access sẽ được tính trước
                     |   ID LSB expression RSB
                     |   DOLLAR_ID LSB expression RSB
+                    |   object_creation_expression LSB expression RSB
+                    |   LP expression RP
                     ;
 /* 
-element_expression: expression index_operator;
-index_operator  :   LSB expression RSB
-                |   LSB expression RSB index_operator
-                ;
+index_expression    :   index_expression LSB expression RSB
+                    |   member_access_expression
+                    ;
+
+member_access_expression    :   member_access_expression DOT ID
+                            |   member_access_expression DOT ID LP list_of_expressions? RP
+                            |   ID DOUBLE_COLON DOLLAR_ID                     
+                            |   ID DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP
+                            |   self_method_call
+                            |   object_creation_expression
+                            ;
+
+object_creation_expression  :   NEW ID LP list_of_expressions? RP
+                            |   operand
+                            ;
+
 */
 member_access_expression    :   member_access_expression DOT ID
                             |   member_access_expression DOT ID LP list_of_expressions? RP
@@ -161,9 +123,12 @@ member_access_expression    :   member_access_expression DOT ID
                         //  |   operand // operand có literal, có cần tách ra hay không
                             |   (ID | SELF) DOT ID
                             |   (ID | SELF) DOT ID LP list_of_expressions? RP
-                            |   self_method_call // without self. or id.
+                            |   self_method_call
+                            |   object_creation_expression DOT ID
+                            |   object_creation_expression DOT ID LP list_of_expressions? RP
+                            |   LP  expression RP
                             ;
-self_method_call    :   (ID | DOLLAR_ID) LP list_of_expressions? RP;
+self_method_call    :   (ID | DOLLAR_ID) LP list_of_expressions? RP; 
 object_creation_expression: NEW ID LP list_of_expressions? RP;
 operand :   object_creation_expression
         |   DOLLAR_ID
@@ -176,16 +141,76 @@ operand :   object_creation_expression
 /*
 instance_attribute_access: expression DOT ID;
 static_attribute_access: class_name DOUBLE_COLON DOLLAR_ID;
-instance_method_invocation: expression DOT ID LP list_of_expressions? RP;
-static_method_invocation: class_name DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP;
 */
-
-
-
-
 
 list_of_expressions: expression (COMMA expression)*;
 
+
+
+
+
+
+
+
+
+/***************************** STATEMENT ******************************/
+block_statement: LCB statement* RCB;
+statement   : variable_and_const_declaration
+            | assign_statement 
+            | if_statement
+            | foreach_statement
+            //| while_statement           
+            | break_statement
+            | continue_statement
+            | return_statement  
+            | method_invocation_statement  
+            ;
+
+
+variable_and_const_declaration 
+    locals [number_variable = 0]: 
+    (VAR | VAL) ID {$variable_and_const_declaration::number_variable+=1} 
+    (COMMA (ID){$variable_and_const_declaration::number_variable+=1})* 
+    COLON type_name variable_initialization;
+
+variable_initialization :   ASSIGN variable_initialization_list 
+                        |   SEMI;
+
+variable_initialization_list    :   expression {$variable_and_const_declaration::number_variable -= 1} 
+                                    ({$variable_and_const_declaration::number_variable > 0}? COMMA expression {$variable_and_const_declaration::number_variable -= 1})*  
+                                    ({$variable_and_const_declaration::number_variable == 0}? SEMI)
+                                ;
+assign_statement: left_hand_side ASSIGN expression SEMI;
+
+left_hand_side  : ID 
+                | DOLLAR_ID 
+                | index_expression
+                | member_access_expression 
+                ;
+/* 
+if_statement: IF LP expression RP block_statement // 1 if
+            | IF LP expression RP block_statement else_statement // 1 if 1 else
+            | IF LP expression RP block_statement elseif_statement+ // 1 if multi elseif
+            | IF LP expression RP block_statement elseif_statement+ else_statement // 1 if multi elseif 1 elseif
+            ;
+*/
+if_statement        :   IF LP expression RP block_statement 
+                        elseif_statement* 
+                        else_statement?
+                    ;
+
+elseif_statement    :   ELSEIF LP expression RP block_statement;
+else_statement      :   ELSE block_statement;
+
+foreach_statement   :   FOREACH LP ID IN expression DOUBLE_DOT expression (BY expression)? RP block_statement;
+break_statement     :   BREAK SEMI;
+continue_statement  :   CONTINUE SEMI;
+return_statement    :   RETURN expression SEMI | RETURN SEMI;
+method_invocation_statement :   //(instance_method_invocation | static_method_invocation) SEMI;
+member_access_expression SEMI;
+                         
+instance_method_invocation  :   expression DOT ID LP list_of_expressions? RP;
+//static_method_invocation    :   class_name DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP;
 
 
 
@@ -196,11 +221,11 @@ list_of_expressions: expression (COMMA expression)*;
 
 // [1-9]('_'*[0-9])* | '0': dấu _ không được ở đầu hay ở cuối
 fragment DEC_INTEGER_LITERAL:  [1-9]('_'?[0-9])* | '0';
-fragment OCT_INTEGER_LITERAL: '0' [0-7]+;
-fragment BIN_INTEGER_LITERAL: '0'[bB] [0-1]+;
-fragment HEX_INTEGER_LITERAL: '0'[xX] [0-9A-F]+;
+fragment OCT_INTEGER_LITERAL: '0' [1-7]('_'?[0-7])* | '00';
+fragment BIN_INTEGER_LITERAL: '0'[bB][1]('_'?[0-1])* | '0b0' | '0B0';
+fragment HEX_INTEGER_LITERAL: '0'[xX] [1-9A-F]('_'?[0-9A-F])* | '0x0' | '0X0';
 
-fragment STRING_CHAR    : ~([\r\n'"\\]) 
+fragment STRING_CHAR    : ~([\b\f\t\r\n'"\\]) 
                         | ESCAPE_SEQUENCE 
                         | DOUBLE_QUOTE_CHAR;
 fragment ESCAPE_SEQUENCE: '\\' [btnfr'\\];

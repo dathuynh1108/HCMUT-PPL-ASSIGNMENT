@@ -1,1 +1,1 @@
-\\ \n   	 \b \f \t  ,<EOF>
+Illegal Escape In String: abcd\"

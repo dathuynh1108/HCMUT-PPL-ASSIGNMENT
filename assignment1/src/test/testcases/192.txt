@@ -1,3 +1,1 @@
-
-                    "nhanvo  "
-                
+ "This is a complex string with '"quote'" and has comment ##abcd##" 

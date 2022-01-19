@@ -1,1 +1,4 @@
-##Inside comment## var a = 12; val b = ~
+
+            Var $float_1: Float = 1.123;
+            Var $float_2: Float = 1.123e10;
+        

@@ -1,1 +1,1 @@
-abc,xyz,nhanvo,ldpv,a9000,b000000003,a_bcd_xyz____,a0________3343abcd___xyz,<EOF>
+abc,xyz,,,abc,xyz,<EOF>

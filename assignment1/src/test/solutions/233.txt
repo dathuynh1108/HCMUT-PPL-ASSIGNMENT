@@ -1,1 +1,1 @@
-Error on line 5 col 26: $attribute
+Error on line 4 col 25: .

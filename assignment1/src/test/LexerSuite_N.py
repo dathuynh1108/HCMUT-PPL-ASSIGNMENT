@@ -11,19 +11,49 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test(input,expect,101))
         
     def test_lower_upper_id(self):
-        input = "aCBbdc nHanVONguyen nh_AAAAn_vo_NNNguyen____"
-        expect = "aCBbdc,nHanVONguyen,nh_AAAAn_vo_NNNguyen____,<EOF>"
+        input = """aCBbdc nHanVONguyen nh_AAAAn_vo_NNNguyen____
+                    aAsVN3 _xyz_der vo123_nhanvo _1234345 vo________123
+                """
+        expect = "aCBbdc,nHanVONguyen,nh_AAAAn_vo_NNNguyen____,aAsVN3,_xyz_der,vo123_nhanvo,_1234345,vo________123,<EOF>"
         self.assertTrue(TestLexer.test(input,expect,102))
         
-    def test_mixed_id(self):
-        input = "aAsVN3 _xyz_der vo123_nhanvo _1234345 vo________123"
-        expect = "aAsVN3,_xyz_der,vo123_nhanvo,_1234345,vo________123,<EOF>"
+    def test_confused_integer_literals(self):
+        input = """000123
+                    0x010101 
+                    00345
+                    0678
+                    0
+                    0XA_B_C_DEF0919
+                    0X0123
+                    0X_0123
+                    0X0_123
+                    00
+                    0_X0123
+                    0_X123
+                    0_123
+                    0_0123
+                    0_0
+                    0x0
+                    0b0
+                    0x_0
+                    0b_0
+                """
+        expect = "00,0123,0x0,10101,00,345,067,8,0,0XABCDEF0919,0X0,123,0,X_0123,0X0,_123,00,0,_X0123,0,_X123,0,_123,0,_0123,0,_0,0x0,0b0,0,x_0,0,b_0,<EOF>"
         self.assertTrue(TestLexer.test(input,expect,103))
         
     def test_integer(self):
         input = "123a123 0 687 99aa9aaa"
         expect = "123,a123,0,687,99,aa9aaa,<EOF>"
         self.assertTrue(TestLexer.test(input,expect,104))
+        
+    # def test_confused_testcase_forum(self):
+    #     input = """
+    #               "abcd'xyz"
+    #                "abcd\'xyz"
+    #                "abcd\\'xyz"
+    #               ""
+    #     expect = "123,a123,0,687,99,aa9aaa,<EOF>"
+    #     self.assertTrue(TestLexer.test(input,expect,104))
         
     def test_block_comment(self):
         input = """##nhan 
@@ -157,7 +187,8 @@ class LexerSuite(unittest.TestCase):
         
     def test_int_oct_2(self):
         input = "00234"
-        expect = "00234,<EOF>"
+        # expect = "00234,<EOF>"
+        expect = "00,234,<EOF>"
         self.assertTrue(TestLexer.test(input, expect, 128))
     
     def test_int_decimal(self):
@@ -167,13 +198,15 @@ class LexerSuite(unittest.TestCase):
         
     def test_int_binary(self):
         input = "0b1100 0B0011111111 0b1010101 0B00110011"
-        expect = "0b1100,0B0011111111,0b1010101,0B00110011,<EOF>"
+        # expect = "0b1100,0B0011111111,0b1010101,0B00110011,<EOF>"
+        expect = "0b1100,0B0,011111111,0b1010101,0B0,0110011,<EOF>"
         self.assertTrue(TestLexer.test(input, expect, 130))
     
     def test_multiple_int_literal(self):
         input = "1407 0310 0xabcdef 000310 7890 0xefff"
         # expect = "1407,0310,0xabcdef,000310,7890,0xefff,<EOF>"
-        expect = "1407,0310,0,xabcdef,000310,7890,0,xefff,<EOF>"
+        # expect = "1407,0310,0,xabcdef,000310,7890,0,xefff,<EOF>"
+        expect = "1407,0310,0,xabcdef,00,0310,7890,0,xefff,<EOF>"
         self.assertTrue(TestLexer.test(input, expect, 131))
     
     def test_integer_with_underscore(self):
@@ -287,7 +320,6 @@ class LexerSuite(unittest.TestCase):
         input = r"""
                 int V = 6;
                 int visited = 0;
-
                 Graph g(V);
                 Adjacency* arr = new Adjacency(V);
                 int edge[][2] = {{0,1},{0,2},{1,3},{1,4},{2,4},{3,4},{3,5},{4,5}};
@@ -348,15 +380,12 @@ class LexerSuite(unittest.TestCase):
                 /* Give the data of the element at given index in the list. */
                 if (index > this->count - 1)
                     index = this->count - 1;
-
                 int count1 = 0;
                 Node* temp = head;
-
                 while (temp && count1 != index) {
                     temp = temp->next;
                     count1++;
                 }
-
                 return temp->data;
             }
         """
@@ -452,21 +481,16 @@ class LexerSuite(unittest.TestCase):
         ## has error token
         input = r"""
             void add(K key, V value) {
-
                 Entry* newEntry = new Entry(key, value);
                 typename SplayTree::Node* tempSlay = this->splay->addSplayForBKUTree(newEntry);
-
                 if (tempSlay == nullptr) {  //same key
                     delete tempSlay;
                     tempSlay = nullptr;
                     throw "Duplicate key";
                 }
-
                 typename AVLTree::Node* tempAVL = this->avl->addAVLForBKUTree(newEntry);
-
                 tempSlay->corr = tempAVL;
                 tempAVL->corr = tempSlay;
-
                 if ((int)keys.size() == this->maxNumOfKeys) {
                     keys.pop();
                     vectorKeys.erase(vectorKeys.begin() + 0);
@@ -487,7 +511,8 @@ class LexerSuite(unittest.TestCase):
         """
         # expect = "123,31059632424,342343243243,3455546565465140743423,0b111101,0B000000000011111111,0b111111111111111110000000000000000,0123,002344,0003432434234,00000000000000003123123213,02313123200000000000000,0x0000000000000000001abcdf,0Xabcdef99999999999900000000000,<EOF>"
         # expect = "123,310596,______32424,34234,_________________3243243,345,___5546___565465_1407_____43423,0b111101,0B000000000011111111,0b111111111111111110000000000000000,0123,002344,0003432434234,00000000000000003123123213,02313123200000000000000,0x0000000000000000001abcdf,0Xabcdef99999999999900000000000,<EOF>"
-        expect = "123,310596,______32424,34234,_________________3243243,345,___5546___565465_1407_____43423,0b111101,0B000000000011111111,0b111111111111111110000000000000000,0123,002344,0003432434234,00000000000000003123123213,02313123200000000000000,0x0000000000000000001,abcdf,0,Xabcdef99999999999900000000000,<EOF>"
+        # expect = "123,310596,______32424,34234,_________________3243243,345,___5546___565465_1407_____43423,0b111101,0B000000000011111111,0b111111111111111110000000000000000,0123,002344,0003432434234,00000000000000003123123213,02313123200000000000000,0x0000000000000000001,abcdf,0,Xabcdef99999999999900000000000,<EOF>"
+        expect = "123,310596,______32424,34234,_________________3243243,345,___5546___565465_1407_____43423,0b111101,0B0,00,00,00,00,011111111,0b111111111111111110000000000000000,0123,00,2344,00,03432434234,00,00,00,00,00,00,00,00,3123123213,02313123200000000000000,0x0,00,00,00,00,00,00,00,00,01,abcdf,0,Xabcdef99999999999900000000000,<EOF>"
         self.assertTrue(TestLexer.test(input, expect, 167))
     
     def test_string_operators_2(self):
@@ -596,7 +621,6 @@ class LexerSuite(unittest.TestCase):
                     if(i%2 == 0) memo[i] = memo[i/2] + "0" + memo[i/2];
                     else memo[i] = memo[i/2] + "1" + memo[i/2];
                 }
-
                 return memo[n];
             }
         """
@@ -633,7 +657,8 @@ class LexerSuite(unittest.TestCase):
                     123_abcd 000_xyz 000234_123xyz
                 """
         # expect = """123,abcd,000,_xyz,000234,_123xyz,<EOF>"""
-        expect = """123,_abcd,000,_xyz,000234,_123xyz,<EOF>"""
+        # expect = """123,_abcd,000,_xyz,000234,_123xyz,<EOF>"""
+        expect = """123,_abcd,00,0,_xyz,00,0234123,xyz,<EOF>"""
         self.assertTrue(TestLexer.test(input, expect, 180))
         
     def test_some_invalid_float(self):
@@ -680,7 +705,6 @@ class LexerSuite(unittest.TestCase):
                     int Dijkstra(int** graph, int src, int dst) {
                         // TODO: return the length of shortest path from src to dst.
                         int n = 6;
-
                         list<myPair> *li = new list<myPair>[n];
                         
                         
@@ -694,43 +718,34 @@ class LexerSuite(unittest.TestCase):
                             }
                             //cout << endl;
                         }
-
                         vector<int> distance (n, 999999999);
                         priority_queue<myPair, vector<myPair>, greater<myPair>> q;
                         
                         q.push(make_pair(0, src));
                         distance[src] = 0;
-
                         while (!q.empty()) {
                             int u = q.top().second;
                             q.pop();
-
                             for (auto x = li[u].begin(); x != li[u].end(); x++) {
                                 int weight = x->first;
                                 int des = x->second;
-
                                 if (distance[u] + weight < distance[des]) {
                                     distance[des] = distance[u] + weight;
                                     q.push(make_pair(distance[des], des));
                                 }
                             }
                         }
-
                         /*for (int i = 0; i < 6; i++) {
-
                             cout << i << ": ";
                             for (auto x = li[i].begin(); x != li[i].end(); x++) {
                                 cout << x->second << "  ";
                             }   
                             cout << endl;
                         }*/
-
                         int result = 0;
-
                         for (int i = 0; i < 9; i++) {
                             if (i == dst)   result = distance[i];
                         }
-
                         
                         return result;
                     }
@@ -831,7 +846,6 @@ class LexerSuite(unittest.TestCase):
                             Break;
                         return $numOfShape;
                     }
-
                     Constructor() {}
                     
                     Destructor() {}
@@ -861,7 +875,8 @@ class LexerSuite(unittest.TestCase):
                     0b00001111 0B000111 0b111110101011 0B101010101 0b01010101
                 """
         # expect = "0,123,_123456,31074,_,14070310,12345678,_,_1_234_5678,000234,0x123abcdef,0Xabcdef,0xABCD99999,0XABCD912432,0x000123,0X000000abcdef,0xfffff000000,0,xpefd9999,0000456,0067,896,07,865,0,88888,0b00001111,0B000111,0b111110101011,0B101010101,0b01010101,<EOF>"
-        expect = "0,123,_123456,31074,_,14070310,12345678,_,_1_234_5678,000234,0x123,abcdef,0,Xabcdef,0xABCD99999,0XABCD912432,0x000123,0X000000,abcdef,0,xfffff000000,0,xpefd9999,0000456,0067,896,07,865,0,88888,0b00001111,0B000111,0b111110101011,0B101010101,0b01010101,<EOF>"
+        # expect = "0,123,_123456,31074,_,14070310,12345678,_,_1_234_5678,000234,0x123,abcdef,0,Xabcdef,0xABCD99999,0XABCD912432,0x000123,0X000000,abcdef,0,xfffff000000,0,xpefd9999,0000456,0067,896,07,865,0,88888,0b00001111,0B000111,0b111110101011,0B101010101,0b01010101,<EOF>"
+        expect = "0,123,_123456,31074,_,14070310,12345678,_,_1_234_5678,00,0234,0x123,abcdef,0,Xabcdef,0xABCD99999,0XABCD912432,0x0,00,123,0X0,00,00,0,abcdef,0,xfffff000000,0,xpefd9999,00,00,456,00,67896,07,865,0,88888,0b0,00,01111,0B0,00,111,0b111110101011,0B101010101,0b0,1010101,<EOF>"
         self.assertTrue(TestLexer.test(input, expect, 199))
         
     def test_some_combo_float_literals(self):
@@ -876,5 +891,6 @@ class LexerSuite(unittest.TestCase):
                     7.3_456_567e+10_234_678 000_000_123_000.E+000_000_111       
                 """
         # expect = "0.2,0.03,0.00004,0.10000000000,0.100002,7.3,7.0000003,7.30000000000,100.00000000000000,0.2e10,0.0003e-10,0.300000E-10,0.40000e+10,7.33000e-10,8.4E+10,.,234,.,0000003,.,3000000,.e10,.e-10,.e+10,e,+,10,e,-,10,12e10,45e+10,6e+00000001,0000023e-10,230000E+10,.e-10000000,.e+00000001,.e000000002,.e30000000,12346756.234342234,12346756.234342234,__,__1_234_6756,.,234342234,__,.,e_10,.e-10000000,.E+1111111,_,7.3456567e+10234678,000000123000.E+000000111,<EOF>"
-        expect = "0.2,0.03,0.00004,0.10000000000,0.100002,7.3,7.0000003,7.30000000000,100.00000000000000,0.2e10,0.0003e-10,0.300000E-10,0.40000e+10,7.33000e-10,8.4E+10,.,234,.,0000003,.,3000000,.e10,.e-10,.e+10,e,+,10,e,-,10,12e10,45e+10,6e+00000001,0000023e-10,230000E+10,.e-10000000,.e+00000001,.e000000002,.e30000000,12346756.234,_342_234,12346756.234,_342_234__,__1_234_6756,.,234342234,__,.,e_10,.e-10,_000_000,.E+111,_1111_,7.3,_456_567e,+,10234678,000000123000.E+000,_000_111,<EOF>"
+        # expect = "0.2,0.03,0.00004,0.10000000000,0.100002,7.3,7.0000003,7.30000000000,100.00000000000000,0.2e10,0.0003e-10,0.300000E-10,0.40000e+10,7.33000e-10,8.4E+10,.,234,.,0000003,.,3000000,.e10,.e-10,.e+10,e,+,10,e,-,10,12e10,45e+10,6e+00000001,0000023e-10,230000E+10,.e-10000000,.e+00000001,.e000000002,.e30000000,12346756.234,_342_234,12346756.234,_342_234__,__1_234_6756,.,234342234,__,.,e_10,.e-10,_000_000,.E+111,_1111_,7.3,_456_567e,+,10234678,000000123000.E+000,_000_111,<EOF>"
+        expect = "0.2,0.03,0.00004,0.10000000000,0.100002,7.3,7.0000003,7.30000000000,100.00000000000000,0.2e10,0.0003e-10,0.300000E-10,0.40000e+10,7.33000e-10,8.4E+10,.,234,.,00,00,00,3,.,3000000,.e10,.e-10,.e+10,e,+,10,e,-,10,12e10,45e+10,6e+00000001,0000023e-10,230000E+10,.e-10000000,.e+00000001,.e000000002,.e30000000,12346756.234,_342_234,12346756.234,_342_234__,__1_234_6756,.,234342234,__,.,e_10,.e-10,_000_000,.E+111,_1111_,7.3,_456_567e,+,10234678,000000123000.E+000,_000_111,<EOF>"
         self.assertTrue(TestLexer.test(input, expect, 200))

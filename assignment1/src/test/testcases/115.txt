@@ -1,1 +1,4 @@
- "This is a string containing tab \t" 
+
+            "Test escape sequence\b\f\r\n\t\'\\'""    
+            ""     
+        

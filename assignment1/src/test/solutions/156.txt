@@ -1,1 +1,1 @@
-There are some escape seq here: \b\r\f\t\n\'\\'",,<EOF>
+Var,$float_1,:,Float,=,1234.1234e1234,;,Var,$float_2,:,Float,=,123123.1234e-1234,;,Var,$float_3,:,Float,=,1234.1234,;,Var,$float_4,:,Float,=,1.e10000,;,Var,$float_5,:,Float,=,1e10000,;,Var,$float_6,:,Float,=,123.,;,<EOF>

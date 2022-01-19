@@ -104,7 +104,7 @@ class TestParser:
             dest.write(str(e))
         finally:
             dest.close()
-""""
+
 class TestAST:
     @staticmethod
     def test(input,expect,num):
@@ -196,5 +196,5 @@ class TestCodeGen():
             raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
         finally:
             f.close()
-"""            
+         
             

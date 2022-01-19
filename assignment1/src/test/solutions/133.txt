@@ -1,1 +1,1 @@
-1234.567,4567798.1e-10,3145.5e+10,<EOF>
+Valid string,Huynh Thanh Dat \'\t\n\f\b\r\f\\'" 11082001,Illegal Escape In String: Invalid string''

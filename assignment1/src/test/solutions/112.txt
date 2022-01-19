@@ -1,1 +1,1 @@
-Break,Continue,If,Elseif,Else,Foreach,True,False,Float,Boolean,String,Int,Null,Var,Val,Array,Self,Return,New,In,Class,Constructor,Destructor,By,<EOF>
+12345,12,_1,1,_,<EOF>

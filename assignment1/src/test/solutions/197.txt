@@ -1,1 +1,1 @@
-Class,ProgramCode,{,$numOfShape,=,100,;,Val,a,:,Array,[,Float,,,10,],;,Var,b,:,Array,[,String,,,10,],;,$getNumOfShape,(,),{,i,=,3,*,4,/,2,-,10,+,500,Foreach,(,i,In,1.,.,50,By,2,),print,(,Self,.,text,),;,Continue,;,Break,;,return,$numOfShape,;,},Constructor,(,),{,},Destructor,(,),{,},},<EOF>
+Array,(,1,,,2,,,3,,,4,,,5,),Array,(,string,,,string,,,string,),Array,(,True,,,False,,,True,),Array,(,Array,(,Volvo,,,22,,,18,),,,Array,(,Saab,,,5,,,2,),,,Array,(,Land Rover,,,17,,,15,),Array,(,Huynh Thanh Dat,,,11/08/2001,,,1910110,),Array,(,,),),<EOF>

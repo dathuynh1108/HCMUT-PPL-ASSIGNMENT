@@ -1,7 +1,3 @@
 
-            ##String not enter for newline##
-            "ldpv
-            nhanvo
-            "
-            
+            Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New
         

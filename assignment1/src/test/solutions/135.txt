@@ -1,1 +1,1 @@
-a,!=,b,a,&&,b,a,||,b,a,==,b,<EOF>
+String with expression: 1+1*1/1%1*(1+1),Class Program : Object {Var $x: Int = 1;Method(n:Int){Return n;}},<EOF>
