@@ -1,0 +1,44 @@
+
+            Class Some_class : Object {
+                Val a, $a: Array[Array[Array[Int, 1], 1], 1];
+                Var a: Array[Int, 1] = Array(1,2,3,4);
+                Method(a,b,c: Int; x,y,z: String; m,n,t: Array[Boolean, 1]; var_1, var_2: Array[Array[Float, 1], 1]) {
+                    Var a: Array[Array[Array[Int, 1], 1], 1];
+                    Var a: Array[Int, 1] = Array(1,2,3,4);
+                    If (a != Null) {
+                        Return a;
+                    }
+                    Elseif (Self.a == Null) {
+                        Return;
+                    }
+                    Else {
+                        Foreach ($i In $a .. a By $a) {
+                            If ($a + $i == Null) {
+                                Return Array(1,2,3,4);
+                            }
+                            Else {
+                                Return Array(Array(Array(1,2,3,4)));
+                            }
+                        } 
+                    }
+                    Break;
+                    Continue;
+                    Return;
+                }
+                Constructor() {
+
+                }
+            }
+            Class Program : Object {
+                main() {
+                    Some_class::$Method(a,b,Array(1,2,3,4));
+                    object.Method(Array(Array(1,2,4,5)));
+                    Some_class::$var = Array(Array(1,2,3,4));
+                    object.var = Array(Array(1,2,3,4));
+                    
+                    Var a,b,c: Int = 1,2,3;
+                    Var a,b,c: Int = 1,2,3,4; ## Not equal declaration ##
+                    Return;    
+                }
+            }
+        

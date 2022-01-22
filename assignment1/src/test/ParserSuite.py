@@ -3,15 +3,19 @@ from TestUtils import TestParser
 
 class ParserSuite(unittest.TestCase):
 
-    def test_033_incorrect_access_instance(self): 
+    def test_081_multi_demensional_array(self):
         input = r"""
             Class Program {
                 main() {
-                    a = b.$attribute;
+                    a = Array(
+                            Array(1,2,3),
+                            Array(1,2)
+                        );
                 }
             }
         """
-        expect = r"successful"
-        num = 233
-        self.assertTrue(TestParser.test(input,expect,num))    
+        expect = r"""successful"""
+        num = 281
+        self.assertTrue(TestParser.test(input,expect,num))  
+
 

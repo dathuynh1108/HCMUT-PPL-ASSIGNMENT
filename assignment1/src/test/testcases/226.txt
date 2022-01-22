@@ -1,11 +1,24 @@
 
             Class Program {
+                Var array: Array[Array[Array[Array[Int,1],1],1],1];
                 Var array: Array[Array[Array[Int, 5], 1], 1] = Array (
                     Array (
+                        Array (
+                            1, 2, 3, 4, 5
+                        ),
+                        Array (
+                            1, 2, 3, 4, 5
+                        )
+                    ),
+                    Array (
+                        Array (
+                            1, 2, 3, 4, 5
+                        ),
                         Array (
                             1, 2, 3, 4, 5
                         )
                     )
                 );
+                Var array: Array[Array[Array[Array[Int,1],0],1],1];
             }
         

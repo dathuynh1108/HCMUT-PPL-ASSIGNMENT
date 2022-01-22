@@ -1,1 +1,1 @@
-Valid string,'"Valid string'" Cristiano Ronaldo,Unclosed String: Invalid string'"
+Valid string,'"Valid string'" Cristiano Ronaldo,Invalid string',<EOF>

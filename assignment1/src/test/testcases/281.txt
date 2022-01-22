@@ -1,0 +1,10 @@
+
+            Class Program {
+                main() {
+                    a = Array(
+                            Array(1,2,3),
+                            Array(1,2)
+                        );
+                }
+            }
+        

@@ -11,12 +11,14 @@ options {
 }
 // ----------------------------------  PARSER  -------------------------------------------
 // program structure
-program: class_declaration* EOF; // Note: File rỗng được không??
+program: class_declaration+ EOF; // File không rỗng
 
+/***************************** CLASS ******************************/
 class_declaration : CLASS class_name (COLON class_name)? LCB class_body RCB;
 class_name: ID;
 class_body: (attribute_declaration | method_declaration | constructor_declaration | destructor_declaration)*;
 
+// Check số biến == số khởi tạo --> Dư: trả vị trí dấu , | Thiếu: trả vị trí dấu ;
 attribute_declaration
     locals [number_attribute = 0]: 
     (VAR | VAL) (ID | DOLLAR_ID) {$attribute_declaration::number_attribute+=1} 
@@ -26,40 +28,78 @@ attribute_declaration
 attribute_initialization    :   ASSIGN attribute_initialization_list 
                             |   SEMI
                             ;
-// Note: Bắt ở cuối hay ở giữa???
 attribute_initialization_list   :   expression {$attribute_declaration::number_attribute -= 1}  // first expression
                                     ({$attribute_declaration::number_attribute > 0}? COMMA expression {$attribute_declaration::number_attribute -= 1})*   // loop until number_var == 0 or not match
                                     ({$attribute_declaration::number_attribute == 0}? SEMI); // check number_var == 0
 
-method_declaration: (ID | DOLLAR_ID) LP list_of_parameters? RP block_statement;
-constructor_declaration: CONSTRUCTOR LP list_of_parameters? RP block_statement;
-destructor_declaration: DESTRUCTOR LP RP block_statement;
 
-list_of_parameters: parameter_declaration(SEMI parameter_declaration)*;
-parameter_declaration: (ID)(COMMA ID)* COLON type_name;
+method_declaration      :   (ID | DOLLAR_ID) LP list_of_parameters? RP block_statement;
+constructor_declaration :   CONSTRUCTOR LP list_of_parameters? RP block_statement;
+destructor_declaration  :   DESTRUCTOR LP RP block_statement;
 
-type_name: primitive_type | array_type | class_type;  // can it has class type
-primitive_type: INTEGER | FLOAT | STRING | BOOLEAN;
-array_type: ARRAY LSB (primitive_type | array_type) COMMA INTEGER_LITERAL RSB;
-class_type: ID;
+list_of_parameters      :   parameter_declaration(SEMI parameter_declaration)*;
+parameter_declaration   :   ID (COMMA ID)* COLON type_name;
 
-literal: array_literal | primitive_literal;
+/***************************** TYPE ******************************/
 
-primitive_literal: INTEGER_LITERAL | FLOAT_LITERAL | STRING_LITERAL | BOOLEAN_LITERAL;
-array_literal: indexed_array | multi_demensional_array;
+type_name       :   primitive_type | array_type | class_type;
+primitive_type  :   INTEGER | FLOAT | STRING | BOOLEAN;
+array_type      :   ARRAY LSB (primitive_type | array_type) COMMA INTEGER_LITERAL RSB;
+class_type      :   ID;
 
-indexed_array: ARRAY LP list_of_expressions? RP;
+/***************************** LITERAL AND ARRAY ******************************/
 
-multi_demensional_array: ARRAY LP array_literal_list? RP;
-array_literal_list  : array_literal (COMMA array_literal)*; 
+literal             :   array_literal | primitive_literal;
+primitive_literal   :   ZERO_INTEGER | INTEGER_LITERAL | FLOAT_LITERAL | STRING_LITERAL | BOOLEAN_LITERAL;
 
+array_literal       :   indexed_array[-1]
+                    |   multi_demensional_array[-1]
+                    ;
+/*
+ARRAY LITERAL
+CHECK SỐ PHẦN TỬ CÁC ARRAY CON PHẢI NHƯ NHAU
+*/
+indexed_array     
+    [parent_first_array_size = -1] returns [size = 0]  // -1 tức là không có array nào chứa nó
+    locals [list_size = 0]:
+    ARRAY LP 
+    (array_list_of_expressions[$parent_first_array_size] {$list_size = $array_list_of_expressions.size})? 
+    {($parent_first_array_size == -1) | ($list_size == $parent_first_array_size)}? RP {$size = $list_size};
+
+
+array_list_of_expressions
+    [parent_first_array_size = -1]
+    returns [size = 0]:
+    expression {$size += 1}
+    ({($parent_first_array_size == -1) | ($size < $parent_first_array_size)}? COMMA expression {$size += 1})*;
+                                      
+multi_demensional_array 
+    [parent_first_array_size = -1] returns [size = 0]
+    locals [list_size = 0]:  
+    ARRAY LP 
+    (array_literal_list[$parent_first_array_size]  {$list_size = $array_literal_list.size} )? 
+    {($parent_first_array_size == -1) | ($list_size == $parent_first_array_size)}? RP  {$size = $list_size};
+
+
+array_literal_list
+    [parent_first_array_size = -1] 
+    returns [size = 0]
+    locals [first_array_size]:
+    (indexed_array [-1]
+{
+$first_array_size = $indexed_array.size
+$size += 1
+} 
+    | multi_demensional_array[-1] 
+{
+$first_array_size = $multi_demensional_array.size
+$size += 1
+})
+    ({($parent_first_array_size == -1) | ($size < $parent_first_array_size)}? COMMA (indexed_array[$first_array_size] {$size += 1} | multi_demensional_array[$first_array_size] {$size += 1}))*
+	;
 
 /***************************** EXPRESSION ******************************/
-/*
-    Tách expression từ dưới lên --> string op đầu tiên vì ví dụ
-    a + b * c:  parse * trước sẽ thành a + b, *, c --> sai
-                parse + trước sẽ thành a, +, b*c --> ok
-*/
+list_of_expressions: expression (COMMA expression)*;
 expression          :   string_expression;
 
 string_expression   :   relation_expression (STRING_ADD | STRING_EQUAL) relation_expression
@@ -87,10 +127,35 @@ negative_expression :   NOT negative_expression
 
 sign_expression     :   SUB sign_expression
                     |   index_expression
-                    |   member_access_expression
-                    |   operand
                     ;
-// Khúc dưới này chưa xong
+
+index_expression    :   index_expression LSB expression RSB
+                    |   instance_access_expression
+                    ;
+instance_access_expression  :   instance_access_expression DOT ID
+                            |   instance_access_expression DOT ID LP list_of_expressions? RP
+                            |   self_method_call
+                            |   static_access_expression
+                            ;
+
+static_access_expression    :   ID DOUBLE_COLON DOLLAR_ID
+                            |   ID DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP
+                            |   object_creation_expression
+                            ;
+self_method_call            :   (ID | DOLLAR_ID) LP list_of_expressions? RP; 
+
+object_creation_expression  :   NEW ID LP list_of_expressions? RP
+                            |   operand
+                            ;
+
+operand :   DOLLAR_ID
+        |   ID
+        |   SELF
+        |   literal
+        |   NULL
+        |   LP expression RP
+        ;
+/* 
 index_expression    :   index_expression LSB expression RSB
                     |   member_access_expression LSB expression RSB // a.b[i][j], a.b()[i][j] --> member access sẽ được tính trước
                     |   ID LSB expression RSB
@@ -98,72 +163,36 @@ index_expression    :   index_expression LSB expression RSB
                     |   object_creation_expression LSB expression RSB
                     |   LP expression RP
                     ;
-/* 
-index_expression    :   index_expression LSB expression RSB
-                    |   member_access_expression
-                    ;
 
-member_access_expression    :   member_access_expression DOT ID
+member_access_expression    :   member_access_expression DOT ID 
                             |   member_access_expression DOT ID LP list_of_expressions? RP
-                            |   ID DOUBLE_COLON DOLLAR_ID                     
-                            |   ID DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP
-                            |   self_method_call
-                            |   object_creation_expression
-                            ;
-
-object_creation_expression  :   NEW ID LP list_of_expressions? RP
-                            |   operand
-                            ;
-
-*/
-member_access_expression    :   member_access_expression DOT ID
-                            |   member_access_expression DOT ID LP list_of_expressions? RP
-                            |   ID DOUBLE_COLON DOLLAR_ID                     
-                            |   ID DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP
-                        //  |   operand // operand có literal, có cần tách ra hay không
-                            |   (ID | SELF) DOT ID
-                            |   (ID | SELF) DOT ID LP list_of_expressions? RP
                             |   self_method_call
                             |   object_creation_expression DOT ID
                             |   object_creation_expression DOT ID LP list_of_expressions? RP
-                            |   LP  expression RP
+                            |   ID DOUBLE_COLON DOLLAR_ID                     
+                            |   ID DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP
+                            |   (ID | SELF | DOLLAR_ID) DOT ID
+                            |   (ID | SELF | DOLLAR_ID) DOT ID LP list_of_expressions? RP
+                            |   LP expression RP
                             ;
-self_method_call    :   (ID | DOLLAR_ID) LP list_of_expressions? RP; 
+
+
+
 object_creation_expression: NEW ID LP list_of_expressions? RP;
-operand :   object_creation_expression
-        |   DOLLAR_ID
-        |   ID
-        |   SELF
-        |   literal
-        |   NULL
-        |   LP expression RP
-        ; // Chưa xong
-/*
-instance_attribute_access: expression DOT ID;
-static_attribute_access: class_name DOUBLE_COLON DOLLAR_ID;
 */
-
-list_of_expressions: expression (COMMA expression)*;
-
-
-
-
-
-
-
 
 
 /***************************** STATEMENT ******************************/
 block_statement: LCB statement* RCB;
-statement   : variable_and_const_declaration
-            | assign_statement 
-            | if_statement
-            | foreach_statement
-            //| while_statement           
-            | break_statement
-            | continue_statement
-            | return_statement  
-            | method_invocation_statement  
+statement   :   variable_and_const_declaration
+            |   assign_statement 
+            |   if_statement
+            |   foreach_statement
+            //|     while_statement           
+            |   break_statement
+            |   continue_statement
+            |   return_statement  
+            |   method_invocation_statement  
             ;
 
 
@@ -171,10 +200,12 @@ variable_and_const_declaration
     locals [number_variable = 0]: 
     (VAR | VAL) ID {$variable_and_const_declaration::number_variable+=1} 
     (COMMA (ID){$variable_and_const_declaration::number_variable+=1})* 
-    COLON type_name variable_initialization;
+    COLON type_name variable_initialization
+    ;
 
 variable_initialization :   ASSIGN variable_initialization_list 
-                        |   SEMI;
+                        |   SEMI
+                        ;
 
 variable_initialization_list    :   expression {$variable_and_const_declaration::number_variable -= 1} 
                                     ({$variable_and_const_declaration::number_variable > 0}? COMMA expression {$variable_and_const_declaration::number_variable -= 1})*  
@@ -182,10 +213,11 @@ variable_initialization_list    :   expression {$variable_and_const_declaration:
                                 ;
 assign_statement: left_hand_side ASSIGN expression SEMI;
 
-left_hand_side  : ID 
-                | DOLLAR_ID 
-                | index_expression
-                | member_access_expression 
+left_hand_side  :   ID 
+                |   DOLLAR_ID 
+                |   index_expression
+                |   instance_access_expression
+                |   static_access_expression
                 ;
 /* 
 if_statement: IF LP expression RP block_statement // 1 if
@@ -202,15 +234,22 @@ if_statement        :   IF LP expression RP block_statement
 elseif_statement    :   ELSEIF LP expression RP block_statement;
 else_statement      :   ELSE block_statement;
 
-foreach_statement   :   FOREACH LP ID IN expression DOUBLE_DOT expression (BY expression)? RP block_statement;
+foreach_statement   :   FOREACH LP (ID | DOLLAR_ID) IN expression DOUBLE_DOT expression (BY expression)? RP block_statement;
 break_statement     :   BREAK SEMI;
 continue_statement  :   CONTINUE SEMI;
 return_statement    :   RETURN expression SEMI | RETURN SEMI;
 method_invocation_statement :   //(instance_method_invocation | static_method_invocation) SEMI;
-member_access_expression SEMI;
+                                (instance_access_expression | static_access_expression) SEMI;
                          
-instance_method_invocation  :   expression DOT ID LP list_of_expressions? RP;
-//static_method_invocation    :   class_name DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP;
+
+instance_method_invocation  :   pre_instance_method_invocation DOT ID LP list_of_expressions? RP;
+pre_instance_method_invocation  :   pre_instance_method_invocation DOT ID
+                                |   pre_instance_method_invocation DOT ID LP list_of_expressions? RP
+                                |   ID
+                                |   DOLLAR_ID
+                                |   SELF
+                                ;
+static_method_invocation    :   class_name DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP;
 
 
 
@@ -219,23 +258,24 @@ instance_method_invocation  :   expression DOT ID LP list_of_expressions? RP;
 /********************** FRAGMENT ***********************/
 //fragment COMMENT_CHAR: ~'#' | '#'~'#';
 
-// [1-9]('_'*[0-9])* | '0': dấu _ không được ở đầu hay ở cuối
-fragment DEC_INTEGER_LITERAL:  [1-9]('_'?[0-9])* | '0';
-fragment OCT_INTEGER_LITERAL: '0' [1-7]('_'?[0-7])* | '00';
-fragment BIN_INTEGER_LITERAL: '0'[bB][1]('_'?[0-1])* | '0b0' | '0B0';
-fragment HEX_INTEGER_LITERAL: '0'[xX] [1-9A-F]('_'?[0-9A-F])* | '0x0' | '0X0';
 
-fragment STRING_CHAR    : ~([\b\f\t\r\n'"\\]) 
+// Các trường hợp 0 0x0 0b0 00 sẽ được bắt riêng 1 token để check ràng buộc > 0
+fragment DEC_INTEGER_LITERAL:  [1-9]('_'?[0-9])*;
+fragment OCT_INTEGER_LITERAL: '0' [1-7]('_'?[0-7])*;
+fragment BIN_INTEGER_LITERAL: '0'[bB][1]('_'?[0-1])*;
+fragment HEX_INTEGER_LITERAL: '0'[xX] [1-9A-F]('_'?[0-9A-F])*;
+
+fragment STRING_CHAR    : ~([\r\n"\\]) 
                         | ESCAPE_SEQUENCE 
                         | DOUBLE_QUOTE_CHAR;
 fragment ESCAPE_SEQUENCE: '\\' [btnfr'\\];
 fragment DOUBLE_QUOTE_CHAR: '\'"';
-fragment ILLEGAL_SEQUENCE   : '\\' ~[btnfr'\\]  
-                            | '\'' ~["] 
-                            //| ~'\\' // \ + invalid or ' + invalid or \ 
+fragment ILLEGAL_SEQUENCE   :   '\\' ~[btnfr'\\]  
+                            |   '\'' ~["] 
+                            |   '\\' // Dấu \ đứng một mình
                             ;
 fragment SIGN: [+-];
-fragment FLOAT_INTEGER_PART: [0-9]('_'?[0-9])*; // Only decimal base --> 0 at first is dec
+fragment FLOAT_INTEGER_PART: [1-9]('_'?[0-9])* | '0';
 fragment FLOAT_DECIMAL_PART: '.' [0-9]*;
 fragment FLOAT_EXPONENT_PART: [eE] SIGN? [0-9]+;
 
@@ -248,7 +288,7 @@ IF: 'If';
 ELSEIF: 'Elseif';
 ELSE: 'Else';
 FOREACH: 'Foreach';
-fragment TRUE: 'True';
+fragment TRUE: 'True'; // Đem vào boolean literal
 fragment FALSE: 'False';
 VAR: 'Var';
 VAL: 'Val';
@@ -268,6 +308,7 @@ FLOAT: 'Float';
 BOOLEAN: 'Boolean';
 STRING: 'String';
 /********************* LITERALS ***********************/
+ZERO_INTEGER: '0' | '00' | '0b0' | '0B0' | '0x0' | '0X0'; // Tách 0 ra để những ràng buộc > 0 ở parser
 INTEGER_LITERAL : (
                 DEC_INTEGER_LITERAL 
                 | OCT_INTEGER_LITERAL 
@@ -278,7 +319,7 @@ INTEGER_LITERAL : (
 }; // remove _ character
 
 
-STRING_LITERAL: '"' STRING_CHAR* '"' {
+STRING_LITERAL: '"' (STRING_CHAR)* '"' {
 	self.text = self.text[1:-1]
 }; // remove open and close string
 BOOLEAN_LITERAL: TRUE | FALSE;
@@ -353,17 +394,12 @@ WS : [ \t\r\n\f]+ -> skip ; // skip spaces, tabs, newlines
 	raise UnterminatedComment()
 };
 */
-/*UNCLOSE_STRING: '"' STRING_CHAR* ( [\b\t\n\f\r"'\\] | EOF ) {
-    y = str(self.text)
-    possible = ['\b', '\t', '\n', '\f', '\r', '"', "'", '\\']
-    if y[-1] in possible:
-        raise UncloseString(y[1:-1])
-    else:
-        raise UncloseString(y[1:])
-}; */
+
 UNCLOSE_STRING: '"' STRING_CHAR* {
+    print(self.text)
     raise UncloseString(self.text[1:]);
 };
+
 ILLEGAL_ESCAPE: '"' STRING_CHAR* ILLEGAL_SEQUENCE {
     raise IllegalEscape(self.text[1:])
 };

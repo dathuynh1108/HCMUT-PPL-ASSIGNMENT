@@ -1,0 +1,69 @@
+
+            Class Some_class {         
+                    Constructor(int: Int; string: String) {}
+                    Constructor() {}
+                    Destructor() {}
+            }
+            Class Program {
+                main() {
+                    If (1>2) {
+                        Var a,b,c: Int = 1,2,3;
+                        If (a+b+c) {
+                            a = 1;
+                            b = a + b + c;
+                            c = 1;
+                        }
+                        Elseif(a+b+c == 100) {
+                            a = 1;
+                            b = a + b + c;
+                            c = 1;
+                        } 
+                        Elseif (1>2) {}
+                        Elseif (1>2) {}
+                        Else {
+                            a = 1;
+                            b = a + b + c;
+                            c = 1;
+                        }
+                    }
+                    Elseif(10>2) {
+                        Var x,y,z: String = "abc", "abc", "abc";
+                        If ("abc" ==. x) {
+                            x = "xyz";
+                        }
+                        Elseif (y +. "abc") {
+                            y = y +. "xyz";
+                        }
+                        Elseif (1>2) {
+                            a = 1;
+                            b = a + b + c;
+                            c = 1;}
+                        Elseif (1||2) {
+                            a = 1;
+                            b = a + b + c;
+                            c = 1;
+                        }
+                        Elseif (1&&2) {
+                            a = 1;
+                            b = a + b + c;
+                            c = 1;
+                        }
+                        Elseif (!1) {
+                            a = 1;
+                            b = a + b + c;
+                            c = 1;
+                        }
+                        Else {
+                            z = z ==. "xyz";
+                        }
+                    }
+                    Elseif (1>2) {}
+                    Elseif (1>2) {}
+                    Elseif (1>2) {}
+                    Elseif (1>2) {}
+                    Else {
+                        a = 1;
+                    }
+                }
+            }
+        
