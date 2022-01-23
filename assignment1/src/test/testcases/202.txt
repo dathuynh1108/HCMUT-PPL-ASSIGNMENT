@@ -1,6 +1,18 @@
 
-            Class Person {}
-            Class Student : Person {}
-            Class Teacher : Person {}
-            Class Program {}
+                Class Program {
+                    
+                    Val a: Int = 130703100310 + -255255255255;
+                    Val b: Int = -130703100310 - 255255255255;
+                    Var m: Int =-130703100310 / 255255255255;
+                    Var c: Int = 130703100310 % 255255255255;
+                    Var d: Float = -130703100310.213e-10 + -255255255255.3e+10;
+                    Var e: Float = 0.0000001e10 - -0.00000000000000008e-10;
+                    Var f: Float = 99999.10e30 / -123456789.10e-20;
         
+                    Constructor(a: Int; B: Float) {}
+                    
+                    Destructor() {}
+
+                    main() {}
+                }
+                

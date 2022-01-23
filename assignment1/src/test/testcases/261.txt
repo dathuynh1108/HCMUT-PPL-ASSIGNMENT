@@ -1,16 +1,29 @@
 
-            Class Some_class {         
-                    Constructor(int: Int; string: String) {}
-                    Constructor() {}
-                    Destructor() {}
-            }
-            Class Program {
-                main() {
-                    If (a>b){}
-                    Else{}
-                    Elseif(b>c){}
-
-
-                }
-            }
-        
+                    Class Program {
+                        Var $abc: Float = 12.0000;
+                        Var arr: Array[Int, 5] = Array (1, 2, 3, 4, 5);
+                        Var length: Int = 0;
+                        Val $width : Int = 0;
+                        
+                        Constructor(a, b, c, d: Int; x, y, z: String; arr: Array[Int, 3]) {
+                            Var a: Int;
+                            Return;
+                        }
+                        
+                        getLength() {
+                            Self.length = 12 - 5 + 5 / 7 * 6 - arr[1];
+                            Return Self.length;
+                        }
+                        
+                        $getWidth(a, b: Int; str: String) {
+                            $width = 12 - 5 + 5 / 7 * 6 - arr[4];
+                            Return $width;
+                        }
+                        
+                        main() {
+                            Var a: Int = getLength();   ## calling method inside class ##
+                            Var b: Int = $getWidth(a, b, "nhan");   ## calling method inside class ##
+                            Return a-b;
+                        }
+                    }
+                

@@ -1,5 +1,10 @@
 
-            Class Program {
-                Var array: Array[Int, 5];
-            }
-        
+                    Class Shape {
+                        main() {
+                            a = object.length;
+                            c = Shape::$width;
+                            d = obj.getLength("abcd", 12);
+                            f = Shape::$getWidth();
+                        }
+                    }
+                

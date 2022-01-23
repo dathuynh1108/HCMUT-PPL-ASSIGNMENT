@@ -1,54 +1,7 @@
-
-            Class Some_class {    
-                    Var $a, b: Int = 1, 2;
-                    Method(n: Int) {
-                        If (n == 1) {
-                            Return True;
-                        }
-                        Else {
-                            Return False;
-                        }
-                    }  
-                    $Method(n: Int) {
-                        If (n == 1) {
-                            Return True;
-                        }
-                        Else {
-                            Return False;
-                        }
-                    }    
-                    Constructor(int: Int; string: String) {
-                        $Method(1,2,3);
-                        Method(1,2,3);
-                        a = $Method(1,2,3);
-                        a = Method(1,2,3);
-                    }
-                    Constructor() {}
-                    Destructor() {}
-            }
-            Class Program {
-                add_100 (i:Int) {
-                    i = i + 100;
-                    Return i;
-                }
-                $sub_100(i:Int) {
-                    i = i - 100;
-                    Return i;
-                }
-                main() {
-                    Var some_class: Some_class = New Some_class(1, "abc");
-                    Foreach (i In Some_class::$Method(1+2-3*4/5%6) .. some_class.method(1+2+3) By 1) {
-                        Self.print(i);
-                        If (i > 1) {
-                            print(i);
-                        }
-                        Elseif (i < -1) {
-                            add_100(i);
-                        }
-                        Else {
-                            $sub_100(i);
+ 
+                    Class Program {
+                        main() {
+                            Var arr: Array[Int, 0x0];
                         }
                     }
-                }
-            }
-        
+                

@@ -1,3 +1,17 @@
 
-            class Program {}
-        
+                Class Program {
+                    
+                    Val str1: String = arr[1];
+                    Val str2: String = x[1][2];
+                    Val a: String = x[1][2][3];
+                    Var c: String =  x[1][2][3][4];
+                    Var c: String =  arr[arr[arr[1]]];
+                    Var c: String =  arr[arr[1]];
+
+                    Constructor(a: Int; B: Float) {}
+                    
+                    Destructor() {}
+
+                    main() {}
+                }
+                

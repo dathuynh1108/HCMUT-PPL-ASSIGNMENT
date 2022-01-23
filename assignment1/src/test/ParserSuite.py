@@ -7,15 +7,28 @@ class ParserSuite(unittest.TestCase):
         input = r"""
             Class Program {
                 main() {
-                    a = Array(
-                            Array(1,2,3),
-                            Array(1,2)
-                        );
+                    a();
+                    a.b();
+                    a.b.c();
+                    a.b.c.d();
+                    
+                    a.b().c();
+                    a.b.c().d();
+                    a.b().c().d();
+                    a().b().c().d();
+                    
+                    a::$b();
+                    a::$b.c();
+                    a::$b.c.d();
+
+                    a::$b.c().d();
+                    a::$b().c.d();
+                    a::$b().c().d();            
                 }
             }
         """
-        expect = r"""successful"""
-        num = 281
+        expect = r"successful"
+        num = 999
         self.assertTrue(TestParser.test(input,expect,num))  
 
 

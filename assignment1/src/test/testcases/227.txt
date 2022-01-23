@@ -1,10 +1,8 @@
 
-            Class Program {
-                Var $a, b: Int = 1, 2;
-                Var $x, y: String;
-                constructor() {}
-                constructor(x: Int; y: String){}
-                destructor() {}
-                main() {}
-            }
-        
+                    Class Shape {
+                        Val x, y: Int = 4;
+                        main() {
+                            
+                        }
+                    }
+                

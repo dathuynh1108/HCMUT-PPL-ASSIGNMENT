@@ -1,10 +1,12 @@
 
-            Class Program {
-                main() {
-                    a = Array(
-                            Array(1,2,3),
-                            Array(1,2)
-                        );
-                }
-            }
-        
+                    Class Program {
+                        Constructor(a, b, c, d: Int; x, y, z: String; arr: Array[Int, 3]) {
+                            Var a: Int;
+                        }
+                        
+                        main() {
+                            Shape::getLength();
+                            Shape::$getLength(a, b, "nhan", 1+2-3*4/5, arr[1]);
+                        }
+                    }
+                

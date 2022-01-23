@@ -104,16 +104,6 @@ class D96Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by D96Parser#indexed_array.
-    def visitIndexed_array(self, ctx:D96Parser.Indexed_arrayContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by D96Parser#array_list_of_expressions.
-    def visitArray_list_of_expressions(self, ctx:D96Parser.Array_list_of_expressionsContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by D96Parser#multi_demensional_array.
     def visitMulti_demensional_array(self, ctx:D96Parser.Multi_demensional_arrayContext):
         return self.visitChildren(ctx)
@@ -121,6 +111,11 @@ class D96Visitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by D96Parser#array_literal_list.
     def visitArray_literal_list(self, ctx:D96Parser.Array_literal_listContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by D96Parser#indexed_array.
+    def visitIndexed_array(self, ctx:D96Parser.Indexed_arrayContext):
         return self.visitChildren(ctx)
 
 
@@ -276,11 +271,6 @@ class D96Visitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by D96Parser#instance_method_invocation.
     def visitInstance_method_invocation(self, ctx:D96Parser.Instance_method_invocationContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by D96Parser#pre_instance_method_invocation.
-    def visitPre_instance_method_invocation(self, ctx:D96Parser.Pre_instance_method_invocationContext):
         return self.visitChildren(ctx)
 
 

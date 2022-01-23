@@ -52,13 +52,20 @@ class_type      :   ID;
 literal             :   array_literal | primitive_literal;
 primitive_literal   :   ZERO_INTEGER | INTEGER_LITERAL | FLOAT_LITERAL | STRING_LITERAL | BOOLEAN_LITERAL;
 
-array_literal       :   indexed_array[-1]
-                    |   multi_demensional_array[-1]
+array_literal       :   indexed_array
+                    |   multi_demensional_array
                     ;
+// Phải để trước index để multi dimensional sẽ match multi trước
+multi_demensional_array     :   ARRAY LP array_literal_list? RP; 
+array_literal_list          :   array_literal (COMMA array_literal)*; 
+indexed_array               :   ARRAY LP list_of_expressions? RP;
+
+
+
 /*
-ARRAY LITERAL
-CHECK SỐ PHẦN TỬ CÁC ARRAY CON PHẢI NHƯ NHAU
+ARRAY LITERAL CHECK SỐ PHẦN TỬ ARRAY
 */
+/*
 indexed_array     
     [parent_first_array_size = -1] returns [size = 0]  // -1 tức là không có array nào chứa nó
     locals [list_size = 0]:
@@ -97,6 +104,7 @@ $size += 1
 })
     ({($parent_first_array_size == -1) | ($size < $parent_first_array_size)}? COMMA (indexed_array[$first_array_size] {$size += 1} | multi_demensional_array[$first_array_size] {$size += 1}))*
 	;
+*/
 
 /***************************** EXPRESSION ******************************/
 list_of_expressions: expression (COMMA expression)*;
@@ -155,32 +163,6 @@ operand :   DOLLAR_ID
         |   NULL
         |   LP expression RP
         ;
-/* 
-index_expression    :   index_expression LSB expression RSB
-                    |   member_access_expression LSB expression RSB // a.b[i][j], a.b()[i][j] --> member access sẽ được tính trước
-                    |   ID LSB expression RSB
-                    |   DOLLAR_ID LSB expression RSB
-                    |   object_creation_expression LSB expression RSB
-                    |   LP expression RP
-                    ;
-
-member_access_expression    :   member_access_expression DOT ID 
-                            |   member_access_expression DOT ID LP list_of_expressions? RP
-                            |   self_method_call
-                            |   object_creation_expression DOT ID
-                            |   object_creation_expression DOT ID LP list_of_expressions? RP
-                            |   ID DOUBLE_COLON DOLLAR_ID                     
-                            |   ID DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP
-                            |   (ID | SELF | DOLLAR_ID) DOT ID
-                            |   (ID | SELF | DOLLAR_ID) DOT ID LP list_of_expressions? RP
-                            |   LP expression RP
-                            ;
-
-
-
-object_creation_expression: NEW ID LP list_of_expressions? RP;
-*/
-
 
 /***************************** STATEMENT ******************************/
 block_statement: LCB statement* RCB;
@@ -238,20 +220,13 @@ foreach_statement   :   FOREACH LP (ID | DOLLAR_ID) IN expression DOUBLE_DOT exp
 break_statement     :   BREAK SEMI;
 continue_statement  :   CONTINUE SEMI;
 return_statement    :   RETURN expression SEMI | RETURN SEMI;
-method_invocation_statement :   //(instance_method_invocation | static_method_invocation) SEMI;
-                                (instance_access_expression | static_access_expression) SEMI;
-                         
 
-instance_method_invocation  :   pre_instance_method_invocation DOT ID LP list_of_expressions? RP;
-pre_instance_method_invocation  :   pre_instance_method_invocation DOT ID
-                                |   pre_instance_method_invocation DOT ID LP list_of_expressions? RP
-                                |   ID
-                                |   DOLLAR_ID
-                                |   SELF
-                                ;
-static_method_invocation    :   class_name DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP;
+method_invocation_statement :   (instance_method_invocation | static_method_invocation) SEMI;
+                                //(instance_access_expression | static_access_expression) SEMI;
 
-
+instance_method_invocation      :   instance_access_expression DOT ID LP list_of_expressions? RP
+                                |   self_method_call;
+static_method_invocation        :   class_name DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP;
 
 
 // ----------------------------------  LEXER  -------------------------------------------
@@ -265,7 +240,7 @@ fragment OCT_INTEGER_LITERAL: '0' [1-7]('_'?[0-7])*;
 fragment BIN_INTEGER_LITERAL: '0'[bB][1]('_'?[0-1])*;
 fragment HEX_INTEGER_LITERAL: '0'[xX] [1-9A-F]('_'?[0-9A-F])*;
 
-fragment STRING_CHAR    : ~([\r\n"\\]) 
+fragment STRING_CHAR    : ~(["\r\n\\]) 
                         | ESCAPE_SEQUENCE 
                         | DOUBLE_QUOTE_CHAR;
 fragment ESCAPE_SEQUENCE: '\\' [btnfr'\\];

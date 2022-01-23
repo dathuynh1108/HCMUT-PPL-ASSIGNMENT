@@ -1,1 +1,23 @@
-   "string\    
+
+            Class Program {
+                main() {
+                    a();
+                    a.b();
+                    a.b.c();
+                    a.b.c.d();
+                    
+                    a.b().c();
+                    a.b.c().d();
+                    a.b().c().d();
+                    a().b().c().d();
+                    
+                    a::$b();
+                    a::$b.c();
+                    a::$b.c.d();
+
+                    a::$b.c().d();
+                    a::$b().c.d();
+                    a::$b().c().d();            
+                }
+            }
+        

@@ -1,8 +1,7 @@
 
-            Class Program {
-                main() {
-                    a = 1 && 2 && 3 && 4 && 5;
-                    a = 1 || 2 || 3 || 4 || 5;
-                }
-            }
-        
+                    Class Program {
+                        main() {
+                            Var x, y, z, m, n, p: Float = 3.4, 5.6;
+                        }
+                    }
+                
