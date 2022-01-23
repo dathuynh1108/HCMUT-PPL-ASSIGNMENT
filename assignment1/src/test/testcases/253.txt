@@ -1,19 +1,12 @@
 
-                    Class Program {
-                        Constructor(a, b, c, d: Int; x, y, z: String; arr: Array[Int, 3]) {
-                            Var a: Int;
-                        }
-                        
-                        main() {
-                            x = a.b;
-                            x = New X().b;
-                            x = (arr[1]).b;
-                            x = Shape::$obj.b;
-                            x = Shape::$obj.b;
-                            x = a.func(a, b, "xyz").b;
-                            x = a.func(a, b, "xyz").func2(a, b, "xyz").b;
-                            x = a.func(a, b, "xyz").func2(a, b, "xyz").func3(a, b, "xyz").b;
-                            x = Shape::$func(a, b, c).b;
-                        }
-                    }
-                
+            Class Some_class {         
+                    Constructor(int: Int; string: String) {}
+                    Constructor() {}
+                    Destructor() {}
+            }
+            Class Program {
+                main() {
+                    Var a: Array[Int, 0];
+                }
+            }
+        

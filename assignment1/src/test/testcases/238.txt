@@ -1,11 +1,22 @@
 
-                    Class Shape {
-                        $getLength() {
-                            Return $length;
-                        }
-                        
-                        $getShape(a, b, c, d: Int; str1, str2: String) {
-                            Return str1 + str2;
-                        }
-                    }
-                
+            Class Program {
+                main() {
+                    a = 1||2||3||4||5||6;
+                    a = 1&&2&&3&&4&&5&&6; 
+                    a = 1+2+3+4+5+6;
+                    a = 1-2-3-4-5-6;
+                    a = 1*2*3*4*5*6;
+                    a = 1/2/3/4/5/6;
+                    a = 1%2%3%4%5%6;
+                    a = !!!!!!!!1;
+                    a = --------1;
+                    a = b[1][1][1][1+2+3][variable];
+                    a = b[b[b[b[1]]]];
+                    a = a.b.c.d.e.f;
+                    a = a::$b.c.d.e.f;
+                    a = a.b.c.method().method().a.b.method().method();
+                    a = a::$b().method().a.method().a.method();
+                    a = New a(New a(New a()));
+                }
+            }
+        

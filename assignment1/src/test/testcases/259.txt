@@ -1,21 +1,14 @@
 
-                    Class Program {
-                        Constructor(a, b, c, d: Int; x, y, z: String; arr: Array[Int, 3]) {
-                            Var a: Int;
-                        }
-                        
-                        main() {
-                            Return Self.length * Self.width;
-                        }
-                        
-                        getArea() {
-                            r = Self.getR();
-                            area = pi * r * r;
-                            Return area;
-                        }
-                        
-                        getR() {
-                            Return Self.r;
-                        }
-                    }
-                
+            Class Some_class {         
+                    Constructor(int: Int; string: String) {}
+                    Constructor() {}
+                    Destructor() {}
+            }
+            Class Program {
+                main() {
+                   If () {}
+                   Elseif () {}
+                   Else {}
+                }
+            }
+        

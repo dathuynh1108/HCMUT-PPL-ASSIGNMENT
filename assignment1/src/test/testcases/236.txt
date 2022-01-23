@@ -1,5 +1,7 @@
 
-                    Class Shape {}
-                    Class Triangle : Shape {}
-                    Class Circle : Triangle {}
-                
+            Class Program {
+                main() {
+                    s = "abc" +. "abc" +. "abc";
+                }
+            }
+        

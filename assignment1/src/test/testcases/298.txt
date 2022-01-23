@@ -1,0 +1,11 @@
+
+            Class Program {
+                Var a,b,$c: Int = 1,2,3; ## Equal ##
+                Val a,b,$c: Int = 1,2,3; ## Equal ##
+                main() {
+                    Var a,b,c: Int = 1,2,3; ## Equal ##
+                    Val a,b,c: Int = 1,2,3; ## Equal ##
+                    Var a,b,c: Int = 1,2,4,5; ## Greater than variable ##
+                }
+            }
+        

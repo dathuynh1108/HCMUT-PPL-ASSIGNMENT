@@ -1,17 +1,19 @@
 
-                    Class Program {
-                        Constructor(a, b, c, d: Int; x, y, z: String; arr: Array[Int, 3]) {
-                            Var a: Int;
-                        }
-                    }
-                    
-                    Class Shape {
-                        Constructor() {
-                            Var x: String = "nhanvo" + "nguyenthien";
-                        }
-                    }
-                    
-                    Class Child : Program : Shape {
-                        
-                    }
-                
+            Class Some_class {         
+                    Constructor(int: Int; string: String) {}
+                    Constructor() {}
+                    Destructor() {}
+            }
+            Class Program {
+                main() {
+                    a = New Some_class();
+                    a = New Some_class(1,2);
+                    a = New Some_class(1+2-3*4/5%6||7&&8, a[1][1][1], a.a.a, a.method(), a::$a, a::$method());
+                    a = New Some_class(New Some_class(New Some_class(1,2,3)));
+                    a = New Some_class().fucking_attribute;
+                    a = New Some_class()[1][2][3];
+                    a = (New Some_class()).a.a.a;
+                    a = (New Some_class())[1][2][3];
+                }
+            }
+        

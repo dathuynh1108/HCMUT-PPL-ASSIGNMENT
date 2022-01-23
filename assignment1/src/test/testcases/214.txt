@@ -1,24 +1,8 @@
 
-                    Class NhanVo {
-                        
-                        Constructor(a, b, c, d: Int; d, e, f: NhanVo; m: Float; n: String) {
-                            Foreach (i In 1 .. 100 By 2) {
-                                If (!True && False) { Continue; } 
-                                Elseif (a == 5) { Break; }
-                                Elseif (b == 6) {  }
-                                Elseif (!False) {Continue;}
-                                Elseif (a < b) {##nothing##}
-                                Elseif ($xyz >= 3) {##nothing##}
-                                Elseif (ar[2] > 3) {##nothing##}
-                            }      
-                        }
-                        
-                        Destructor(a, b, c, d: Int; d, e, f: NhanVo; m: Float; n: String) {
-                            If (a == b) {
-                                If (c == d) {
-                                    ##nothing##
-                                }
-                            }
-                        }
-                    }
-                
+            Class Program {
+                Var $x: Int = 1;
+                main() {
+                    Var $a;
+                }
+            }
+        

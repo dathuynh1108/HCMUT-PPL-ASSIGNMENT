@@ -371,7 +371,6 @@ WS : [ \t\r\n\f]+ -> skip ; // skip spaces, tabs, newlines
 */
 
 UNCLOSE_STRING: '"' STRING_CHAR* {
-    print(self.text)
     raise UncloseString(self.text[1:]);
 };
 

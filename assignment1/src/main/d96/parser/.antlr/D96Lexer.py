@@ -436,7 +436,6 @@ class D96Lexer(Lexer):
     def UNCLOSE_STRING_action(self, localctx:RuleContext , actionIndex:int):
         if actionIndex == 3:
 
-                print(self.text)
                 raise UncloseString(self.text[1:]);
 
      

@@ -1,12 +1,7 @@
 
-                    Class Program {
-                        main() {
-                            Var x: Int;
-                            Var x: Int = 5;
-                            Var x, y: Int = 5, 6;
-                            Var x, y, z: Int = -5, ------------6, "nhanvo" + "vo" + "nguyen" + "thien";
-                            Var x, y, z: Int = 5, 6, New Shape(New Shape(New Shape(New Shape(New Shape(New Shape(12, 3))))));
-                            Var x: Array[Array[Int, 3], 3] = Array (Array(1,2,3), Array(4,5,6), Array(8,9,10));
-                        }
-                    }
-                
+            Class Program {
+                main() {
+                    a = 1==2 == 3;
+                }
+            }
+        

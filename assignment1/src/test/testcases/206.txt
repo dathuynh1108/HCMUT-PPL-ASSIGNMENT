@@ -1,27 +1,3 @@
 
-                Class Program {
-                    
-                    Val str1: String = arr[1];
-                    Val str2: String = x[1][2];
-                    Val a: String = x[1][2][3];
-                    Var c: String =  x[1][2][3][4];
-                    Var c: String =  arr[arr[arr[1]]];
-                    Var c: String =  arr[arr[1]];
-
-                    Constructor(a: Int; B: Float) {}
-                    
-                    Destructor() {}
-
-                    main() {
-                        a = 2;
-                        abc = 2+5;
-                        abc = (0b110101 && 0b1100100);
-                        abc = (0b010101 || 0b1100100);
-                        abc = "first string" + "second string";
-                        abc = arr[1][2];
-                        $abc = arr[arr[arr[1]]];
-                        arr[2] = arr[arr[arr[1]]];
-                        arr[arr[arr[arr[100]]]] = a.b;
-                    }
-                }
-                
+            Class Program {};
+        

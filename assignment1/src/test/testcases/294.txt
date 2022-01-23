@@ -1,0 +1,8 @@
+
+            Class Program {
+                Constructor() {}
+                Constructor(x: Int; y: String; a: Array[Array[Int,1],1]) {}
+                Destructor() {}
+                Destructor() {}
+            }
+        

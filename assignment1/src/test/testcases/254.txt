@@ -1,12 +1,13 @@
 
-                    Class Program {
-                        Constructor(a, b, c, d: Int; x, y, z: String; arr: Array[Int, 3]) {
-                            Var a: Int;
-                        }
-                        
-                        main() {
-                            x = Shape::$attr;
-                            x = Circle::$area;
-                        }
-                    }
-                
+            Class Some_class {         
+                    Constructor(int: Int; string: String) {}
+                    Constructor() {}
+                    Destructor() {}
+            }
+            Class Program {
+                main() {
+                    Var a: Array[Int, 1] = Array();
+                    b = Array();
+                }
+            }
+        

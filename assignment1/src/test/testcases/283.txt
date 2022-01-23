@@ -1,0 +1,11 @@
+
+            Class Program {
+                main() {
+                    Class_name::$a();
+                    $a();
+                    Self.a();
+                    a();
+                    a.b;
+                }
+            }
+        

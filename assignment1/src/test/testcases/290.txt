@@ -1,0 +1,9 @@
+
+            Class Program {
+                main() {
+                    a = Null.a;
+                    a = Null.null.a;
+                    a = Null.Null.a;
+                }
+            }
+        
