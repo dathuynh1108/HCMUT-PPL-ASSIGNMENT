@@ -140,14 +140,14 @@ sign_expression     :   SUB sign_expression
 index_expression    :   index_expression LSB expression RSB
                     |   instance_access_expression
                     ;
-instance_access_expression  :   instance_access_expression DOT ID
-                            |   instance_access_expression DOT ID LP list_of_expressions? RP
+instance_access_expression  :   instance_access_expression DOT ID LP list_of_expressions? RP
+                            |   instance_access_expression DOT ID
                             |   self_method_call
                             |   static_access_expression
                             ;
 
-static_access_expression    :   ID DOUBLE_COLON DOLLAR_ID
-                            |   ID DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP
+static_access_expression    :   ID DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP
+                            |   ID DOUBLE_COLON DOLLAR_ID 
                             |   object_creation_expression
                             ;
 self_method_call            :   (ID | DOLLAR_ID) LP list_of_expressions? RP; 
@@ -224,8 +224,13 @@ return_statement    :   RETURN expression SEMI | RETURN SEMI;
 method_invocation_statement :   (instance_method_invocation | static_method_invocation) SEMI;
                                 //(instance_access_expression | static_access_expression) SEMI;
 
-instance_method_invocation      :   instance_access_expression DOT ID LP list_of_expressions? RP
+instance_method_invocation      :   prefix_instance_method_invocation DOT ID LP list_of_expressions? RP
                                 |   self_method_call;
+prefix_instance_method_invocation   :   prefix_instance_method_invocation DOT ID LP list_of_expressions? RP
+                                    |   prefix_instance_method_invocation DOT ID 
+                                    |   static_access_expression
+                                    |   self_method_call
+                                    ;
 static_method_invocation        :   class_name DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP;
 
 

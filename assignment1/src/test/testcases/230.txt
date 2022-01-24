@@ -46,6 +46,15 @@
                     a = (0b0).a.a.a.a();
                     a = (1.234).a.a.a.a();
                     a = (123).a(123).a(123).a(123).a(123);
+
+                    a = New X().a;
+                    a = New X().a.a.a.a;
+                    a = New X().a.a.a.a.a();
+
+                    a = New X().a();
+                    a = New X().a().a.a.a();
+                    a = New X().a.a().a().a.a.a();
+                    a = New X().a().a().a().a().a();
                     
                 }
             }

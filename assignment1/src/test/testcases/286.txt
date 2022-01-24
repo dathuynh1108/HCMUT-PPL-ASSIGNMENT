@@ -29,8 +29,18 @@
                     a = "String"[New X().a];
                     a = Null;
                     a = Null.a;
+                    a = Null.a.a.a;
+                    a = Null.a.a.a();
+                    a = Null.a().a().a();
                     a = Null[1];
                     a = Array(Null);
+                    a = Null;
+                    
+                    Null.a();
+                    Null.a.a.a();
+                    Null.a();
+                    Null.a.a.a();
+                    Null.a().a().a();
                 }
             }
         

@@ -274,6 +274,11 @@ class D96Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by D96Parser#prefix_instance_method_invocation.
+    def visitPrefix_instance_method_invocation(self, ctx:D96Parser.Prefix_instance_method_invocationContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by D96Parser#static_method_invocation.
     def visitStatic_method_invocation(self, ctx:D96Parser.Static_method_invocationContext):
         return self.visitChildren(ctx)
