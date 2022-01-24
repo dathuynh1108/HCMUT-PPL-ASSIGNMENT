@@ -1,1 +1,1 @@
-String end with double quote'",Unclose string end with double quote',<EOF>
+String end with double quote'",Unclose string end with double quote',String',Unclosed String: String'" 

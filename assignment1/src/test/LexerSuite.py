@@ -176,7 +176,7 @@ class LexerSuite(unittest.TestCase):
             "Hello \' there"
             "Huynh Thanh Dat\"
         """
-        expect = r"abc,abc\',abc',Illegal Escape In String: Huynh Thanh Dat\""
+        expect = r"abc,abc\',abc',Hello \' there,Illegal Escape In String: Huynh Thanh Dat\""
         num = 120
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_021_string(self):
@@ -214,7 +214,7 @@ class LexerSuite(unittest.TestCase):
             "a\'b"
             "a'b"
         """
-        expect = r"""a\bb\fc\rd\ne\tf\\,a\'b,Illegal Escape In String: a'b"""
+        expect = r"""a\bb\fc\rd\ne\tf\\,a\'b,a'b,<EOF>"""
         num = 124
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_025_string(self):
@@ -247,8 +247,10 @@ class LexerSuite(unittest.TestCase):
         input = r"""
             "String end with double quote'""
             "Unclose string end with double quote'"
+            "String'"
+            "String'" 
         """
-        expect = """String end with double quote'",Unclosed String: Unclose string end with double quote'\""""
+        expect = """String end with double quote'",Unclose string end with double quote',String',Unclosed String: String'" """
         num = 128
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_029_string(self):
@@ -284,18 +286,19 @@ class LexerSuite(unittest.TestCase):
         input = r"""
             "Valid string"
             "'"Valid string'" Cristiano Ronaldo"
-            "Invalid string'"
+            "String end with double quote'"
+            "String end with double quote and space '" 
         """
-        expect = """Valid string,\'\"Valid string\'\" Cristiano Ronaldo,Unclosed String: Invalid string'\""""
+        expect = """Valid string,'"Valid string'" Cristiano Ronaldo,String end with double quote',Unclosed String: String end with double quote and space '" """
         num = 132
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_033_string(self):
         input = r"""
             "Valid string"
             "Huynh Thanh Dat \'\t\n\f\b\r\f\\'" 11082001"
-            "Invalid string''
+            "String''
         """
-        expect = r"""Valid string,Huynh Thanh Dat \'\t\n\f\b\r\f\\'" 11082001,Illegal Escape In String: Invalid string''"""
+        expect = r"""Valid string,Huynh Thanh Dat \'\t\n\f\b\r\f\\'" 11082001,Unclosed String: String''"""
         num = 133
         self.assertTrue(TestLexer.test(input,expect,num))
     def test_034_string(self):

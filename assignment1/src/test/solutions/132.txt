@@ -1,1 +1,1 @@
-Valid string,'"Valid string'" Cristiano Ronaldo,Invalid string',<EOF>
+Valid string,'"Valid string'" Cristiano Ronaldo,String end with double quote',Unclosed String: String end with double quote and space '" 

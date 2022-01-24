@@ -246,7 +246,7 @@ fragment STRING_CHAR    : ~(["\r\n\\])
 fragment ESCAPE_SEQUENCE: '\\' [btnfr'\\];
 fragment DOUBLE_QUOTE_CHAR: '\'"';
 fragment ILLEGAL_SEQUENCE   :   '\\' ~[btnfr'\\]  
-                            |   '\'' ~["] 
+                        //    |   '\'' ~["] 
                             |   '\\' // Dấu \ đứng một mình
                             ;
 fragment SIGN: [+-];
