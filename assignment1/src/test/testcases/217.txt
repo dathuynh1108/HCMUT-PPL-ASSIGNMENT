@@ -1,7 +1,6 @@
 
-                    Class Shape {
-                        Var a: Float = 45;
-                        Var b: Float = 45.67;
-                        Var c: Array[Int, 5] = Array(1, 2, 3, 4, 5);
-                    }
-                
+            Class Program {
+                Var $x: Int = 1
+                main() {}
+            }
+        

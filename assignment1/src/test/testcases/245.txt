@@ -1,10 +1,8 @@
 
-                    Class Program {
-                        Var $x: Int = 5;
-                        Var $y, $z: Float;
-                        
-                        main() {
-                            Var $a: Int;
-                        }
-                    }
-                
+            Class Program {
+                main() {
+                    a = 1 + 2;
+                    a = 1 - 2;
+                }
+            }
+        

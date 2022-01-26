@@ -1,10 +1,11 @@
- 
-                    Class Program {
-                        Var x: Array[Array[Int, 1], 1] = Array();
-                        Val $x, y, $z: String = "nhan", 1.000 + "nhan", ---True - !!!!!False;    
-                    
-                        main() {
-                            Var _X_YZ, _123_123_123: Int = 5; 
-                        }
-                    }
-                
+
+            Class Program {
+                Var a,b,$c: Int = 1,2,3; ## Equal ##
+                Val a,b,$c: Int = 1,2,3; ## Equal ##
+                main() {
+                    Var a,b,c: Int = 1,2,3; ## Equal ##
+                    Val a,b,c: Int = 1,2,3; ## Equal ##
+                    Var a,b,c: Int = 1,2,4,5; ## Greater than variable ##
+                }
+            }
+        

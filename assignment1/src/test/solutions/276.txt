@@ -1,1 +1,1 @@
-Error on line 13 col 48: $xyz
+Error on line 8 col 21: {

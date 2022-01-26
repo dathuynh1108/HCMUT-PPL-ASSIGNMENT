@@ -1,8 +1,13 @@
 
-                    Class Shape {
-                        Val x, y, $a: Int = 4, 6, 7, 9;
-                        main() {
-                            
-                        }
-                    }
-                
+            Class Number {
+                Var data: String = "1234"; 
+            }
+            Class Integer : Number{
+                Var data: Number;
+            }
+            Class Program {
+                main() {
+                    Var x: Integer;
+                }
+            }
+        

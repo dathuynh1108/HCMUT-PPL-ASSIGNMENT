@@ -1,11 +1,5 @@
 
-                    Class Shape {
-                        method2() {
-                            Var a: Int;
-                        }
-                        
-                        method1() {
-                            Var $a: Int;
-                        }
-                    }
-                
+            Class Program {
+                Var array: Array[Int, 6] = Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x));        
+            }
+        

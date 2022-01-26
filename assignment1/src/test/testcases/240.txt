@@ -1,18 +1,8 @@
 
-                    Class Shape {
-                        
-                    }
-                    
-                    Class Program {
-                        main() {
-                            a = New Shape();
-                            a = New Shape(a, "nhanvo", 12+5-12*23, 8/2);
-                            a = New Shape(New Shape(12, 3));
-                            a = New Shape(New Shape(New Shape(New Shape(New Shape(New Shape(12, 3))))));
-                            a = New Shape(arr[arr[arr[1]]][2]);
-                            a = New Shape(Shape.length, Shape.arr[arr[arr[2]]], obj.getLength(12, 3));
-                            a = (New Shape())[arr[1]];
-                            a = (New Shape()).a.a.a.a;
-                        }
-                    }
-                
+            Class Program {
+                main() {
+                    a = a.b[1];
+                    a = a[1].b;
+                }
+            }
+        

@@ -1,9 +1,10 @@
- 
-                    Class Program {
-                        Var x: Int = 5;
-                        
-                        main() {
-                            x = Self.$getLength();   
-                        }
-                    }
-                
+
+            Class Program {
+                main() {
+                    a.a();
+                    a::$a();
+
+                    a::a();
+                }
+            }
+        

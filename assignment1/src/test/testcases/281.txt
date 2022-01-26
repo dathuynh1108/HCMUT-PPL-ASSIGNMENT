@@ -1,28 +1,15 @@
- 
-                    Class Program {
-                        Var x: Array[Boolean, 1];
-                        Var x: Array[String, 1] = ____[True && False -45 + 2 / 2];
-                        Var x: Array[Float, 1] = _["nhan" - 12 + 4];
-                        Var x, $y: Array[Int, 1] = "Nhan", "Vo";
-                        
-                        main() {
-                            x = (123).func();
-                            x = (1_234_456_789).func().func();
-                            x = (1_234_456_789.10e-10000000).func();
-                            x = "string".func();
-                            x = Null.func();
-                            x = True.func();
-                            x = someID::$attribute.func();
-                            x = someID::$func(a,b,c,Null).func();
-                            x = Array(1,2,3,4,5,6).func();
-                            x = Array(Array(1,2,3), Array(4,5), Array("nhan", "vo", "nguyen")).func();
-                            x = Shape::$func(xyz).func();
-                            x = (0).func();
-                            x = (0b0).func();
-                            x = (0B0).func();
-                            x = (0x0).func();
-                            x = (0X0).func();
-                            x = (00).func();
-                        }
-                    }
-                
+
+            Class Program {
+                main() {
+                    a = Array(
+                        Array(1,2,3),
+                        Array(1,2),
+                        Array(Array(1,2,3), Array(1,2,3,4), Array(1,2,3,4,5)),
+                        Array(a[1], New X(), New X()[1], a==b, "String" ==. "String"),
+                        a[Array(1,2,3,4)],
+                        New X(),
+                        (1+2+3)
+                    );
+                }
+            }
+        

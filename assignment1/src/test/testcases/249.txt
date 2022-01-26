@@ -1,12 +1,12 @@
 
-                    Class Program {
-                        
-                        method(arr1, arr2: Array[Int, 5]; arr3: Array[Array[Int, 3], 3]) {
-                            Var newArr: Array[Float, 3] = Array (1.2, 4.3, 5.600);
-                        }
-                        
-                        main() {
-                            Var arr: Array[String, 0] = Array();
-                        }
-                    }
-                
+            Class Program {
+                main() {
+                    a = -1;
+                    a = !1;
+                    a = -1 - 1;
+                    a = !1 - 1;
+                    a = -1 - 1 - 1 --1;
+                    a = -1 + !1;
+                }
+            }
+        

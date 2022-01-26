@@ -1,22 +1,16 @@
- 
-                    Class Program {
-                        Var x: Int = 5;
-                        Var arr: Array[Float, 5];
-                        
-                        Constructor(x: Float; str: String) {
-                            Self.x = x;
-                            y = str;
-                        }
-                        
-                        Destructor() {
-                            Self.x = 0;
-                            y = "";
-                        }
-                        
-                        main() {
-                            Foreach (arr[i] In 1 .. 10) {
-                                out.print(i);
-                            }
-                        }
-                    }
-                
+
+            Class Program {
+                Constructor() {
+                    Return;
+                }
+                Constructor(x: Int; y: String; a: Array[Array[Int,1],1]) {
+                    Return a + x + y;
+                }
+                Destructor() {
+                    Console.log("End");
+                }
+                Destructor(x: Int) {
+                    Return x;
+                }
+            }
+        

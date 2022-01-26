@@ -1,10 +1,7 @@
- 
-                    Class Program {
-                        Var x: Array[Array[Int, 1], 1] = Array();
-                        Val $x, y, $z: String = "nhan", 1.000 + "nhan", ---True - !!!!!False;    
-                    
-                        main() {
-                            Var _X_YZ, _123_123_123: Int = 5, "nhan" +. 0.123123, x != 13; 
-                        }
-                    }
-                
+
+            Class Program {
+                main() {
+                    Self.method() = 1;
+                }
+            }
+        

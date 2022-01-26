@@ -1,17 +1,9 @@
 
-                Class Program {
-                    
-                    Val str1: String = "xyz";
-                    Val str2: String = "double xyz";
-                    Val a: String = str1 +. str2;
-                    Var c: String =  "Nhan Vo Nguyen Thien" +. str2;
-                    Var c: String =  str1 +. "Nhan Vo Nguyen Thien";
-                    Var c: String =  "Nhan Vo Nguyen Thien" +. "LDPV";
-
-                    Constructor(a: Int; B: Float) {}
-                    
-                    Destructor() {}
-
-                    main() {}
-                }
-                
+            Class Author {
+                Var user_name: String;
+            }
+            Class Program {
+                Val author: Author;
+                main() {}
+            }
+        

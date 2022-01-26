@@ -1,47 +1,12 @@
- 
-                    Class Shape {    
-                        Var $x, y: Float = 10.123, 10e00000;
-                        
-                        func1(x: Float; y: String) {
-                            If (x == 100) {
-                                Self.print("Nhan Vo" + y);
-                            }
-                            Elseif (x == 20+3423*4325) {
-                                Self.print("Nhan Vo Nguyen" + y);
-                            }
-                        }  
-                        
-                        $func2(x: Float) {
-                            If (x == 100) {
-                                Self.print("Nhan Vo" + y);
-                            }
-                            Else {
-                                Self.print("Nhan Vo Nguyen" + y);
-                            }
-                        }    
-                        
-                        Constructor(x: Float; str: String) {
-                            Self.x = x;
-                            y = str;
-                        }
-                        
-                        Destructor() {
-                            Self.x = 0;
-                            y = "";
-                        }
+
+            Class Program {
+                $Method() {
+                    Console.log(1);
+                    Console::$log(1);
+                    {
+                        # Another block in block
                     }
-                    
-                    Class Program {
-                        main() {
-                            Var obj: Shape = New Shape(1.35234e+1023123, "abc");
-                            Shape::$func2(1+2-3*4/5%6);
-                            Shape.func().func().func();
-                            Shape::$x.y.y.y.func();
-                            Shape::$func2().y.y.y.func();
-                            
-                            Foreach (i In Shape::$func2(1+2-3*4/5%6) .. obj.func(1+2+3) By 1) {
-                                Self.print(i*2-10+65);
-                            }
-                        }
-                    }
-                
+                }
+                Var x: Int = 1;
+            }
+        
