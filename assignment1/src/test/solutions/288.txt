@@ -1,1 +1,1 @@
-Error on line 7 col 22: $a
+Error on line 9 col 24: Class

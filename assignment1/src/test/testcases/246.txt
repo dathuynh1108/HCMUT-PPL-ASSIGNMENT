@@ -1,8 +1,10 @@
 
-            Class Program {
-                main() {
-                    a = 1 + 2 + 3 + 4 + 5 - 6 - 7 - 8;
-                    a = 1 - 2 - 3 - 4 - 5 + 6 + 7 + 8;
-                }
-            }
-        
+                    Class Program {
+                        Var $x: Int = 5;
+                        Var $y, $z: Float;
+                        
+                        main() {
+                            Var a Int = 5;
+                        }
+                    }
+                

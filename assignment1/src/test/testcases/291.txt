@@ -1,15 +1,24 @@
-
-            Class Program {
-                main() {
-                    a = New X();
-                    a = "String" || "String" && "String" * 0 / 0x0 % (a + a.a + Class_name::$a - a.a() - Class_name::$a());
-                    a[1] = "String" || "String" && "String" * 0 / 0x0 % (a + a.a + Class_name::$a- a.a() - Class_name::$a());
-                    a[1][1][1] = "String" || "String" && "String" * 0 / 0x0 % (a + a.a + Class_name::$a- a.a() - Class_name::$a());
-                    a[a[a[a[1]]]][a[a[a]]] = "String" || "String" && "String" * 0 / 0x0 % (a + a.a + Class_name::$a- a.a() - Class_name::$a());
-                    a.a = "String" || "String" && "String" * 0 / 0x0 % (a  + a.a + Class_name::$a- a.a() - Class_name::$a());
-                    a.a.a = "String" || "String" && "String" * 0 / 0x0 % (a  + a.a + Class_name::$a- a.a() - Class_name::$a());
-                    A::$a = "String" || "String" && "String" * 0 / 0x0 % (a  + a.a + Class_name::$a- a.a() - Class_name::$a());
-                    A::$a.a = "String" || "String" && "String" * 0 / 0x0 % (a  + a.a + Class_name::$a- a.a() - Class_name::$a());
-                }
-            }
-        
+ 
+                    Class Program {
+                        Var x: Int = 5;
+                        
+                        Constructor(x: Float; str: String) {
+                            Self.x = x;
+                            y = str;
+                        }
+                        
+                        Destructor() {
+                            Self.x = 0;
+                            y = "";
+                        }
+                        
+                        main() {
+                            a.method().method();
+                            x = 2 + Array(1,2);
+                            x = Num + "123";
+                            x = Array(1,2,3) + Array(Array(1,2,3), Array(4,5,6,7,8,9));
+                            x = 1 + Array(Array(Shape::$attribute,2,3), Array(obj.getLength(),5,Shape::$func(a,b,c,d),7,8,a.func()));
+                            a.method().method();
+                        }
+                    
+                

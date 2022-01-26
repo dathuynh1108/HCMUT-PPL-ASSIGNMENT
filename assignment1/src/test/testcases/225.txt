@@ -1,11 +1,9 @@
 
-            Class Program {
-                Var array: Array[Array[Array[Int, 5], 1], 1] = Array (
-                    Array (
-                        Array (
-                            1, 2, 3, 4, 5
-                        )
-                    )
-                );
-            }
-        
+                    Class Shape {
+                        Var arr: Array[Array[Int, 3], 3] = Array (
+                                                            Array (3,4,5),
+                                                            Array (6,7,8),
+                                                            Array (9,10,11)
+                                                                );
+                    }
+                

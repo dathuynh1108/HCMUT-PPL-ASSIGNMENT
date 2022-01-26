@@ -1,11 +1,14 @@
 
-            Class Program {
-                Var array: Array[Array[Int, 5], 5] = Array(
-                    Array(1,2,3,4,5),
-                    Array(1,2,3,4,5),
-                    Array(1,2,3,4,5),
-                    Array(1,2,3,4,5),
-                    Array(1,2,3,4,5)
-                );
-            }
-        
+                    Class Shape {
+                        Var a: Int;
+                        Notmain() {
+                            x = 4;
+                        }
+                    }
+                    
+                    class _program {
+                        main() {
+                            Val x: Float;
+                        }
+                    }
+                

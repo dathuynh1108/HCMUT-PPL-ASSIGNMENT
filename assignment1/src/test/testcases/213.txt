@@ -1,7 +1,35 @@
+Class Program {
 
-            Class Program {
-                $method_1() {}
-                $method_2(x: Int; y: String) {}
-                main() {}
-            }
-        
+                }
+                
+
+                    Class NhanVo {
+                        Constructor() {
+                            Foreach (x In 5+2 .. 100*3) {
+                                If (x == (3*2--3)) {
+                                    Return "Nhan Vo";   
+                                }
+                            }
+                        }
+                        
+                        Constructor(a, b, c, d: Int; d, e, f: NhanVo; m: Float; n: String) {
+                            Foreach (i In 1 .. 100 By 2) {
+                                If (!True && False) { Continue; } 
+                                Elseif (a == 5) { Break; }
+                                Elseif (b == 6) {  }
+                                Elseif (!False) {Continue;}
+                                Elseif (a < b) {##nothing##}
+                                Elseif (Shape::$xyz >= 3) {##nothing##}
+                                Elseif (ar[2] > 3) {##nothing##}
+                            }      
+                        }
+                        
+                        Destructor() {
+                            If (a == b) {
+                                If (c == d) {
+                                    ##nothing##
+                                }
+                            }
+                        }
+                    }
+                

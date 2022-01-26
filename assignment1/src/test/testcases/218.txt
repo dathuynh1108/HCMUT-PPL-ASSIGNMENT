@@ -1,8 +1,17 @@
 
-            Class Program {
-                Var $x: Int = 1;
-                main() {
-                    Var a: Int
-                }
-            }
-        
+                    Class Shape {
+                        main() {
+                            a = Array();
+                            Shape::$b = Array (
+                                    Array("Volvo", "22", "18"),
+                                    Array("Saab", "5", "2"),
+                                    Array("Land Rover", "17", "15")
+                                );
+                            arr[arr[arr[3+4]]] = Array (
+                                    Array("Volvo", "22", "18"),
+                                    Array("Saab", "5", "2"),
+                                    Array("Land Rover", "17", "15")
+                                );
+                        }
+                    }
+                

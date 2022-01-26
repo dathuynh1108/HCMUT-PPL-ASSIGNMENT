@@ -1,0 +1,7 @@
+ 
+                    Class Program {
+                        main() {
+                            Shape::$a() = 12;
+                        }
+                    }
+                

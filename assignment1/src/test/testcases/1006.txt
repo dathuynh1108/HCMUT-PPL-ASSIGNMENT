@@ -1,0 +1,7 @@
+ 
+                    Class Program {
+                        main() {
+                            a.a() = 12;
+                        }
+                    }
+                

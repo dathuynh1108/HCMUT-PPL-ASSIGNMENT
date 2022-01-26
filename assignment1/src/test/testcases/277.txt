@@ -1,38 +1,19 @@
-
-            Class Some_class {         
-                    Constructor(int: Int; string: String) {}
-                    Constructor() {
-                        Self.method(00);
-                        a.method(0x0, 0X0);
-                        b::$method(0b0, 0B0);
-                        Return 0 + 0x0 + 0X0 + 00 + 0b0 + 0B0;
-                    }
-                    Destructor() {
-                        Return;
-                    }
-            }
-            Class Program {
-                main() {
-                    Foreach (i In 100+a+b/c .. 100*a||b&&c By a[a[i]][j]) {
-                        If (True || False) {
-                            Continue;
+ 
+                    Class Program {
+                        Var arr: Array[Int, 3] = Array(1, "nhanvo", 12.00000e+10); 
+                        
+                        main() {
+                            Str = "No need same type in 1-dimensional array";
                         }
-                        If (True && False) {
-                            Break;
+                        
+                        Constructor(x: Float; str: String) {
+                            Self.x = x;
+                            y = str;
                         }
-                        Foreach (Class_name::$j In 1 .. 100) {
-                            Return;
+                        
+                        Destructor() {
+                            Self.x = 0;
+                            y = "";
                         }
                     }
-                    a = 1;
-                    Class_name::$a = 1;
-                    a[1] = 1;
-                    a[a[1]][a[a[1]]][a[a[1]]] = 1;
-                    Self.a = 1;
-                    Class_name::$a = 1;
-                    Class_name::$a.a.a.a = 1;
-                    Return;
-                }
-            }
-            a = 1;
-        
+                

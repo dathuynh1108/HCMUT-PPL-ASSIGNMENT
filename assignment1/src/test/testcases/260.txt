@@ -1,86 +1,19 @@
 
-            Class Some_class {         
-                    Constructor(int: Int; string: String) {}
-                    Constructor() {}
-                    Destructor() {
-                        If (a || b || c) {
-                        a = 1;
-                        b = a + b + c;
-                        c = 1;
+                    Class Program {
+                        Var $abc: Float = 12.0000;
+                        
+                        Constructor(a, b, c, d: Int; x, y, z: String; arr: Array[Int, 3]) {
+                            Var a: Int;
                         }
-
-                        If (a || b || c) {
-                            a = 1;
-                            b = a + b + c;
-                            c = 1;
+                        
+                        $getWidth(a, b: Int; c: Float) {
+                            Return (a-b)*c;
                         }
-                        Elseif (a && b && c) {
-                            If (a || b || c) {
-                                a = 1;
-                                b = a + b + c;
-                                c = 1;
-                            }
-                        }
-
-                        If (a || b || c) {
-                            a = 1;
-                            b = a + b + c;
-                            c = 1;
-                        }
-                        Else {
-                            If (True) {
-                                a = 1;
-                                b = a + b + c;
-                                c = 1;
-                            }
-                            If (False) {
-                                a = 1;
-                                b = a + b + c;
-                                c = 1;
-                            }
+                        
+                        main() {
+                            Self.garbage = Self.$abc;
+                            Self.w = Self.$getWidth();
+                            Return Self.$length * Self.$width;
                         }
                     }
-            }
-            Class Program {
-                main() {
-                    If (a || b || c) {
-                        a = 1;
-                        b = a + b + c;
-                        c = 1;
-                    }
-
-                    If (a || b || c) {
-                        a = 1;
-                        b = a + b + c;
-                        c = 1;
-                    }
-                    Elseif (a && b && c) {
-                        If (a || b || c) {
-                            a = 1;
-                            b = a + b + c;
-                            c = 1;
-                        }
-                    }
-
-                    If (a || b || c) {
-                        a = 1;
-                        b = a + b + c;
-                        c = 1;
-                    }
-                    Else {
-                        If (True) {
-                            a = 1;
-                            b = a + b + c;
-                            c = 1;
-                        }
-                        If (False) {
-                            a = 1;
-                            b = a + b + c;
-                            c = 1;
-                        }
-                    }
-
-
-                }
-            }
-        
+                

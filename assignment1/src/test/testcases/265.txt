@@ -1,30 +1,22 @@
-
-            Class Some_class {         
-                    Constructor(int: Int; string: String) {}
-                    Constructor() {}
-                    Destructor() {}
-            }
-            Class Program {
-                main() {
-                    Foreach (i In 100+a+b/c .. 100*a||b&&c By a[a[i]][j]) {
-                        If (True || False) {
-                            Return True;
+ 
+                    Class Program {
+                        Var arr: Array[Array[Int, 5], 5] = Array (
+                                                            Array(1,2,3,4,54),
+                                                            Array(1,2,3,4,55),
+                                                            Array(1,2,3,4,56),
+                                                            Array(1,2,3,4,57),
+                                                            Array(1,2,3,4,58)
+                                                                );
+                        main() {
+                            Var arr: Array[Array[Array[Int, 2], 1], 2] 
+                                = Array (
+                                    Array(
+                                        Array(1,2)
+                                    ),
+                                    Array (
+                                        Array(3,4)
+                                    )
+                                );
                         }
-                        Elseif (True > False) {
-                            Return False;
-                        }
-                        Elseif (True == False) {
-                            Break;
-                        }
-                        Elseif (True != False) {
-                            Continue;
-                        }
-                        Else {
-                            Return New Some_class(100+a+b/c%100*a||b&&c) + a[a[i]][j];
-                        }
-
                     }
-                    Return;
-                }
-            }
-        
+                

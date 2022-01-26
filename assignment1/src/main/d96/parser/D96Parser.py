@@ -972,7 +972,8 @@ class D96Parser ( Parser ):
                     self.match(D96Parser.COMMA)
                     self.state = 168
                     self.expression()
-                    self.getInvokingContext(4).number_attribute -= 1 
+                    self.getInvokingContext(4).number_attribute -= 1
+                    			 
                 self.state = 175
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,6,self._ctx)
@@ -3678,7 +3679,8 @@ class D96Parser ( Parser ):
                     self.match(D96Parser.COMMA)
                     self.state = 476
                     self.expression()
-                    self.getInvokingContext(42).number_variable -= 1 
+                    self.getInvokingContext(42).number_variable -= 1
+                    			 
                 self.state = 483
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,41,self._ctx)

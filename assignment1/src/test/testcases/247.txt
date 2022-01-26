@@ -1,9 +1,10 @@
 
-            Class Program {
-                main() {
-                    a = 1 * 2;
-                    a = 1 / 2;
-                    a = 1 % 2;
-                }
-            }
-        
+                    Class Program {
+                        Var x: Array[Int, 1000];
+                        Var x: Array[Int, 0];
+                        
+                        main() {
+                            
+                        }
+                    }
+                

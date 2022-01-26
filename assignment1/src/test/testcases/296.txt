@@ -1,8 +1,10 @@
-
-            Class Program {
-                main() {
-                    Var a: Int = 1;
-                    Var a: Int : 1;
-                }
-            }
-        
+ 
+                    Class Program {
+                        Var x: Array[Array[Int, 1], 1] = Array();
+                        Val $x, y, $z: String = "nhan", 1.000 + "nhan", ---True - !!!!!False;    
+                    
+                        main() {
+                            Shape::$a;
+                        }
+                    }
+                

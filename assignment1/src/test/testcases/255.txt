@@ -1,53 +1,12 @@
 
-            Class Some_class {         
-                    Constructor(int: Int; string: String) {}
-                    Constructor() {}
-                    Destructor() {}
-            }
-            Class Program {
-                main() {
-                    Var a: Array[Int, 1000] = Array(1,1,1,1,1);
-                    a = Array(1,1,1,1,1);
-                    a = 1;
-                    a = 012345;
-                    a = 0b1001;
-                    a = 0xFFFF;
-                    a = 0xFFFF + 0b1001 - 012345 * 1;
-                    Class_name::$a = 1;
-                    Class_name::$a = 012345;
-                    Class_name::$a = 0b1001;
-                    Class_name::$a = 0xFFFF;
-                    Class_name::$a = 0xFFFF + 0b1001 - 012345 * 1;
-                    
-                    some_var = 1 + 2 +3 || 5 && 6;
-                    some_var = True || (1 || 01 || 0b100010 || 0xFFFFF11);
-                    some_var = True && (1 && 01 && 0b100010 && 0xFFFFF11);
-                    
-                    Class_name::$some_var = 1 + 2 +3 || 5 && 6;
-                    Class_name::$some_var = True || (1 || 01 || 0b100010 || 0xFFFFF11);
-                    Class_name::$some_var = True && (1 && 01 && 0b100010 && 0xFFFFF11);
-
-                    arr[1] = arr[arr[arr[1]]];
-                    arr[1][1][1] = arr[arr[arr[1]]][1][1][1];
-                    arr[1][1][1] = New Some_class().a[1][2][3];
-                    arr[arr[arr[arr[1]]]] = a.b + New Some_class().a()[1][2][3];    
-
-                    Class_name::$arr[1] = arr[arr[arr[1]]];
-                    Class_name::$arr[1][1][1] = arr[arr[arr[1]]][1][1][1];
-                    Class_name::$arr[1][1][1] = New Some_class().a[1][2][3];
-                    Class_name::$arr[arr[arr[arr[1]]]] = a.b + New Some_class().a()[1][2][3]; 
-
-                    a.b.c = 1;
-                    a::$b = 1; 
-                    
-                    a[1] = 1;
-                    a[a[1]][a[a[1]]][a[a[1]]] = 1;
-                    Class_name::$a[Class_name::$a[1]][Class_name::$a[Class_name::$a[1]]][Class_name::$a[Class_name::$a[1]]] = 1;
-                    
-                    Self.a = 1;
-                    Class_name::$a = 1;
-                    Self.a.a.a.a.a = 1;
-                    Class_name::$a.a.a.a.a.a = 1;
-                }
-            }
-        
+                    Class Program {
+                        Constructor(a, b, c, d: Int; x, y, z: String; arr: Array[Int, 3]) {
+                            Var a: Int;
+                        }
+                        
+                        main() {
+                            ## no chaining calling ##
+                            x = Shape::$attr::$attr2;
+                        }
+                    }
+                

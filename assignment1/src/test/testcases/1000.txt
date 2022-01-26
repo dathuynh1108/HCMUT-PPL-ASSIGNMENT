@@ -1,0 +1,28 @@
+ 
+                    Class Program {
+                        main() {
+                            a = 12;
+                            a = "nhan" + 12;
+                            Shape::$a = 12;
+                            obj.a().a = 12;
+                            Shape::$a().a = 12;
+                            Shape::$a().a().a().a = 12;
+                            obj.a().a().a().a = 12;
+                            obj.a.a().a.a().a = 12;
+                            arr[1] = 12;
+                            a.b = 12;
+                            Shape::$a().arr[1] = 12;
+                            a.a().arr[1] = 12;
+                            (arr[1]).a().a = 12;
+                            arr[arr[arr[1]]] = 12;
+                            (arr[arr[arr[1]]]).a.a.a.a().a.a.a().a = 12;
+                            1[1] = 12;
+                            "nhan"[1] = 12;
+                            1.2e+10[1] = 12;
+                            (Shape::$a)[1] = 12;
+                            Shape::$a[1] = 12;
+                            a.a(x)[1] = 12;
+                            Shape::$a(x)[1] = 12;
+                        }
+                    }
+                

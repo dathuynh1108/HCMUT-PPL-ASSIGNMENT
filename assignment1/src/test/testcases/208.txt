@@ -1,6 +1,54 @@
 
-            Class Program {
-                Var x, y, z: Int;
-                Var a, b, c, d: Int = 1,2,3; ## Not equal initialization ##
-            }
-        
+                Class Program {
+                    
+                    Val str1: String = arr[1];
+
+                    Constructor(a: Int; B: Float) {}
+                    
+                    Destructor() {}
+
+                    main() {
+                        If (!True && False) { ##nothing## } 
+                        Else {
+                            If (!True && False && ( (a == 5) || (b == 6) ) ) {##nothing##}
+                        }
+                        
+                        If (!True && False) { ##nothing## } 
+                        Elseif (a == 5) {
+                            If (!True && False) { ##nothing## } 
+                            Elseif (a == 5) {##nothing##}
+                            Elseif (b == 6) {  }
+                            Elseif (!False) {##nothing##}
+                            Elseif (a < b) {##nothing##}
+                            Elseif (Shape::$xyz >= 3) {##nothing##}
+                            Elseif (ar[2] > 3) {##nothing##}    
+                        }
+                        Elseif (b == 6) {
+                            If (!True && False) { ##nothing## } 
+                            Elseif (a == 5) {##nothing##}
+                            Elseif (b == 6) {  }
+                            Elseif (!False) {##nothing##}
+                            Elseif (a < b) {##nothing##}
+                            Elseif (Shape::$xyz >= 3) {##nothing##}
+                            Elseif (ar[2] > 3) {##nothing##}    
+                        }
+                        Else {
+                            If (!True && False) { ##nothing## } 
+                            Elseif (a == 5) {##nothing##}
+                            Elseif (b == 6) { 
+                                If (!True && False) { ##nothing## } 
+                                Elseif (a == 5) {##nothing##}
+                                Elseif (b == 6) {  }
+                                Elseif (!False) {##nothing##}
+                                Elseif (a < b) {##nothing##}
+                                Elseif (Shape::$xyz >= 3) {##nothing##}
+                                Elseif (ar[2] > 3) {##nothing##}
+                            }
+                            Elseif (!False) {##nothing##}
+                            Elseif (a < b) {##nothing##}
+                            Elseif (Shape::$xyz >= 3) {##nothing##}
+                            Elseif (ar[2] > 3) {##nothing##}
+                        }
+                    }
+                }
+                
