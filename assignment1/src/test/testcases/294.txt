@@ -1,8 +1,17 @@
 
             Class Program {
-                Constructor() {}
-                Constructor(x: Int; y: String; a: Array[Array[Int,1],1]) {}
-                Destructor() {}
-                Destructor() {}
-            }
+                main() {
+                    a.b.c();
+                    a.b().c();
+                    
+                    Self.a();
+                    Self.a.a();
+                    
+                    Class_name::$a();
+                    Class_name::$a.a();
+                    Class_name::$a().a();
+                    
+                    a.b();
+                }
+            
         

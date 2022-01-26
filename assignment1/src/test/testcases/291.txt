@@ -2,14 +2,14 @@
             Class Program {
                 main() {
                     a = New X();
-                    a = "String" || "String" && "String" * 0 / 0x0 % (a + $a + a.a + Class_name::$a - a.a() - Class_name::$a());
-                    a[1] = "String" || "String" && "String" * 0 / 0x0 % (a + $a + a.a + Class_name::$a- a.a() - Class_name::$a());
-                    a[1][1][1] = "String" || "String" && "String" * 0 / 0x0 % (a + $a + a.a + Class_name::$a- a.a() - Class_name::$a());
-                    a[a[a[a[1]]]][a[a[a]]] = "String" || "String" && "String" * 0 / 0x0 % (a + $a + a.a + Class_name::$a- a.a() - Class_name::$a());
-                    a.a = "String" || "String" && "String" * 0 / 0x0 % (a + $a + a.a + Class_name::$a- a.a() - Class_name::$a());
-                    a.a.a = "String" || "String" && "String" * 0 / 0x0 % (a + $a + a.a + Class_name::$a- a.a() - Class_name::$a());
-                    A::$a = "String" || "String" && "String" * 0 / 0x0 % (a + $a + a.a + Class_name::$a- a.a() - Class_name::$a());
-                    A::$a.a = "String" || "String" && "String" * 0 / 0x0 % (a + $a + a.a + Class_name::$a- a.a() - Class_name::$a());
+                    a = "String" || "String" && "String" * 0 / 0x0 % (a + a.a + Class_name::$a - a.a() - Class_name::$a());
+                    a[1] = "String" || "String" && "String" * 0 / 0x0 % (a + a.a + Class_name::$a- a.a() - Class_name::$a());
+                    a[1][1][1] = "String" || "String" && "String" * 0 / 0x0 % (a + a.a + Class_name::$a- a.a() - Class_name::$a());
+                    a[a[a[a[1]]]][a[a[a]]] = "String" || "String" && "String" * 0 / 0x0 % (a + a.a + Class_name::$a- a.a() - Class_name::$a());
+                    a.a = "String" || "String" && "String" * 0 / 0x0 % (a  + a.a + Class_name::$a- a.a() - Class_name::$a());
+                    a.a.a = "String" || "String" && "String" * 0 / 0x0 % (a  + a.a + Class_name::$a- a.a() - Class_name::$a());
+                    A::$a = "String" || "String" && "String" * 0 / 0x0 % (a  + a.a + Class_name::$a- a.a() - Class_name::$a());
+                    A::$a.a = "String" || "String" && "String" * 0 / 0x0 % (a  + a.a + Class_name::$a- a.a() - Class_name::$a());
                 }
             }
         

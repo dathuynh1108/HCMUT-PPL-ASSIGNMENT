@@ -12,8 +12,8 @@
                         Return;
                     }
                     Else {
-                        Foreach ($i In $a .. a By $a) {
-                            If ($a + $i == Null) {
+                        Foreach (Class_name::$i In Class_name::$a .. a By Class_name::$a) {
+                            If (Class_name::$a + Class_name::$i == Null) {
                                 Return Array(1,2,3,4);
                             }
                             Else {

@@ -11,8 +11,7 @@
                     Program::$static = Null;
                     Program::$method();
                     variable = Null;
-                    method();
-                    $static = Null;
+                    Class_name::$static = Null;
                     ## Sequence of Self is illgegal ##
                     Self.Self.Self.a = Null;
                 }

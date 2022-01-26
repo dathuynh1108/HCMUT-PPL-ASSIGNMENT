@@ -3,7 +3,6 @@
                     Constructor(int: Int; string: String) {}
                     Constructor() {
                         Self.method(00);
-                        method(0);
                         a.method(0x0, 0X0);
                         b::$method(0b0, 0B0);
                         Return 0 + 0x0 + 0X0 + 00 + 0b0 + 0B0;
@@ -21,12 +20,12 @@
                         If (True && False) {
                             Break;
                         }
-                        Foreach ($j In 1 .. 100) {
+                        Foreach (Class_name::$j In 1 .. 100) {
                             Return;
                         }
                     }
                     a = 1;
-                    $a = 1;
+                    Class_name::$a = 1;
                     a[1] = 1;
                     a[a[1]][a[a[1]]][a[a[1]]] = 1;
                     Self.a = 1;

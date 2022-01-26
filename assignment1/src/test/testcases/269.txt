@@ -4,7 +4,7 @@
                 Val immutableAttribute: Int = 0;
                 Var length, width: Int;
                 $getNumOfShape() {
-                    Return $numOfShape;
+                    Return Shape::$numOfShape;
                 }
                 get_length() {
                     Return Self.legnth;
@@ -15,7 +15,7 @@
             }
             Class Rectangle: Shape {
                 getArea() {
-                    Return Self.length * self.width;
+                    Return Self.length * Self.width;
                 }
             }
             Class Program {

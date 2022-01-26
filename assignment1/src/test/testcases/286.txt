@@ -3,7 +3,7 @@
                 main() {
                     a = True && "String";
                     a = "String" + 1 +. "String";
-                    a = "String" || "String" && "String" * 0 / 0x0 % (a + $a + a.a + Class_name::$a);
+                    a = "String" || "String" && "String" * 0 / 0x0 % (a + a.a + Class_name::$a);
                     a = 0 + 0x0 + 0X0 + 0b0 + 0B0;
                     a = !1e123 - -True + !True / -----"String";
                     a = .123e123 > True;
@@ -17,7 +17,7 @@
                     a = 1[1[1[1[1[1[1[1[1[1]]]]]]]]];
                     a = 1[1[1[1]]][1[1[1]]][0x0 + 0X0 - 0XFF + 0b0 + 0B0 / 0B1111];
                     a = (1).b[1][1][1][1][1];
-                    a = (a+b+c).a.a.a[1[1[1[1[1[1]]]]]][1][a.b][Class_name::$a][a][$a];
+                    a = (a+b+c).a.a.a[1[1[1[1[1[1]]]]]][1][a.b][Class_name::$a][a][Class_name::$a];
                     a = New X()[1];
                     a = New X().a;
                     a = New X(New X(a[New X()])).a[1];

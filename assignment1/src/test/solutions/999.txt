@@ -1,1 +1,1 @@
-Error on line 4 col 39: ;
+String with single quote 'this is good',<EOF>

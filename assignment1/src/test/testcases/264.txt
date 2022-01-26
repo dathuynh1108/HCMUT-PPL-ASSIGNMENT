@@ -6,7 +6,7 @@
             }
             Class Program {
                 main() {
-                    Foreach($i In 1 .. 100 By 1) {}
+                    Foreach(Class_name::$i In 1 .. 100 By 1) {}
 
                 }
             }

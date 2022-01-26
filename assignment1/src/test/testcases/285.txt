@@ -2,7 +2,6 @@
             Class Program {
                 main() {
                     a = a.b[1];
-                    a = $a.b[1];
                     a = a.a.a.a.a.a[1];
                     a = Self.a[1];
                     a = Self.a.a.a.a.a[1];

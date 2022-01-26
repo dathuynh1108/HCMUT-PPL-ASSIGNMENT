@@ -34,7 +34,7 @@
   
                 to_string()
                 {
-                    Return "Circle color is " + Shape::$getColor() +. "and area is : " + area();
+                    Return "Circle color is " + Shape::$getColor() +. "and area is : " + Shape::$area();
                 }
             }
             Class Program {

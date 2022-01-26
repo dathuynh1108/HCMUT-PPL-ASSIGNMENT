@@ -18,10 +18,10 @@
                         }
                     }    
                     Constructor(int: Int; string: String) {
-                        $Method(1,2,3);
-                        Method(1,2,3);
-                        a = $Method(1,2,3);
-                        a = Method(1,2,3);
+                        Some_class::$Method(1,2,3);
+                        Self.Method(1,2,3);
+                        a = Some_class::$Method(1,2,3);
+                        a = Self.Method(1,2,3);
                     }
                     Constructor() {}
                     Destructor() {}
@@ -40,13 +40,13 @@
                     Foreach (i In Some_class::$Method(1+2-3*4/5%6) .. some_class.method(1+2+3) By 1) {
                         Self.print(i);
                         If (i > 1) {
-                            print(i);
+                            Self.print(i);
                         }
                         Elseif (i < -1) {
-                            add_100(i);
+                            Self.add_100(i);
                         }
                         Else {
-                            $sub_100(i);
+                            Some_class::$sub_100(i);
                         }
                     }
                 }

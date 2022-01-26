@@ -1,7 +1,1 @@
- 
-                    Class Program {
-                        main() {
-                            a.a().a.a();
-                        }
-                    
-                
+"String with single quote 'this is good'"

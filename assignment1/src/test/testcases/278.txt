@@ -7,7 +7,7 @@
                 Var x: Int = 1;
                 main() {
                     Self.variable = 1;
-                    Self.method() = 1;
+                    variable = 1;
                     Self::$variable = 1;
                 }
             }
