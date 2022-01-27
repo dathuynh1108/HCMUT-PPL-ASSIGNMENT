@@ -1,0 +1,17 @@
+ 
+                    Class Program {
+                        Var x, y, z: Int;
+                        Val x, $y: Float = 12.3, 4.5e10;
+                        Var x, y, z, m, n, p: Float = 1,2,3,4,5,6;
+                        Val x, $y: Int = 4, 5;
+                        main() {
+                            Var x, y, z: Int = 1, 2;        ## here ##
+                            Val x, y: Float = 12.3, 4.5e10;
+                            Var x, y, z, m, n, p: Float = 1,2,3,4,5,6;
+                            Val x, y: Int = 4, 5;
+                            Var arr: Array[Int, 5] = Array();
+                            Var arr1, arr2: Array[Int, 5] = Array(), Array();
+                            Var arr1, arr2, arr3: Array[Int, 5] = Array(), Array(), Array(Array(1));
+                        }
+                    }
+                

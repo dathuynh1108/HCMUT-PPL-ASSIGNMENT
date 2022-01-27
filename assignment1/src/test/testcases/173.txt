@@ -1,16 +1,23 @@
 
-            ## Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New ##
-            Constructor() {
-                If (1==1) {
-                    Var a: Array[Int,100];
-                    Val b: Array[Int,100];
-                    Foreach (i In 1..101 By 1)
-                        If (a[i] == 1) Return Self.text;
-                        Elseif (a[i] == 2) Continue;
-                        Else (a[i] == 3) Break;
+                template <class T>
+                void Sorting<T>::hybridQuickSort(T *start, T *end, int min_size)
+                {
+                    while (start < end) {
+                        if (end - start < min_size) {
+                            cout << "Insertion sort: ";printArray(start, end);  
+                            insertionSort(start, end);
+                            
+                            break;
+                        }
+                        else {
+                            cout << "Quick sort: ";printArray(start, end);
+                            T* pivot = Partition(start, end);
+                            
+                            hybridQuickSort(start, pivot, min_size);
+                            start = pivot + 1;
+                            hybridQuickSort(pivot + 1, end, min_size);
+                            end = pivot;
+                        }
+                    }
                 }
-            }
-            Destructor() {
-                Return;
-            }
-        
+                

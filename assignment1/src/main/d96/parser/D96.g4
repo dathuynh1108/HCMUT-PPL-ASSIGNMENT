@@ -1,4 +1,3 @@
-
 grammar D96;
 
 @lexer::header {
@@ -182,9 +181,7 @@ scalar_variable:
 	| ID;
 scalar_instance_access: instance_access_expression DOT ID;
 scalar_static_access: class_name DOUBLE_COLON DOLLAR_ID;
-scalar_index:
-	scalar_index LSB expression RSB
-	| instance_access_expression LSB expression RSB;
+scalar_index: index_expression LSB expression RSB;
 
 block_statement: LCB statement* RCB;
 statement:
@@ -270,7 +267,7 @@ fragment HEX_INTEGER_LITERAL:
 	'0' [xX] [1-9A-F]('_'? [0-9A-F])*;
 
 fragment STRING_CHAR:
-	~(["\r\n\\])
+	~([\b\t\f\r\n\\"])
 	| ESCAPE_SEQUENCE
 	| DOUBLE_QUOTE_CHAR;
 fragment ESCAPE_SEQUENCE: '\\' [btnfr'\\];
@@ -397,12 +394,20 @@ WS: [ \t\r\n\f]+ -> skip; // skip spaces, tabs, newlines
  UnterminatedComment()
  };
  */
+/* 
+ UNCLOSE_STRING:
+ '"' STRING_CHAR* {
+ raise UncloseString(self.text[1:]);
+ };
+ */
 
 UNCLOSE_STRING:
-	'"' STRING_CHAR* {
-    raise UncloseString(self.text[1:]);
+	'"' STRING_CHAR* ([\b\t\f\r\n\\"] | EOF) {
+	if self.text[-1] in ['\b', '\t', '\f', '\r', '\n', '\\', '"']:
+		raise UncloseString(self.text[1:-1])
+	else:
+		raise UncloseString(self.text[1:])
 };
-
 ILLEGAL_ESCAPE:
 	'"' STRING_CHAR* ILLEGAL_SEQUENCE {
     raise IllegalEscape(self.text[1:])

@@ -1,13 +1,49 @@
-
-            Class Some_class {         
-                    Constructor(int: Int; string: String) {}
-                    Constructor() {}
-                    Destructor() {}
-            }
-            Class Program {
-                main() {
-                    Foreach(Class_name::$i In 1 .. 100 By 1) {}
-
-                }
-            }
-        
+ 
+                    Class Program {
+                        Var arr: Array[Array[Int, 5], 5] = Array (
+                                                            Array(1,2,3,4,54),
+                                                            Array(1,2,3,4,55),
+                                                            Array(1,2,3,4,56),
+                                                            Array(1,2,3,4,57),
+                                                            Array(1,2,3,4,58)
+                                                                );
+                        main() {
+                            Var arr: Array[Array[Int, 5], 5] 
+                                = Array (
+                                    Array(1,2,3,4,54),
+                                    Array(1,2,3,4,55),
+                                    Array(1,2,3,4,56),
+                                    Array(1,2,3,4,57),
+                                    Array(1,2,3,4,58)
+                                ),
+                                Array (
+                                    Array(1,2,3,4,54),
+                                    Array(1,2,3,4,55),
+                                    Array(1,2,3,4,56),
+                                    Array(1,2,3,4,57),
+                                    Array(1,2,3,4,58)
+                                ),
+                                Array (
+                                    Array(1,2,3,4,54),
+                                    Array(1,2,3,4,55),
+                                    Array(1,2,3,4,56),
+                                    Array(1,2,3,4,57),
+                                    Array(1,2,3,4,58)
+                                ),
+                                Array (
+                                    Array(1,2,3,4,54),
+                                    Array(1,2,3,4,55),
+                                    Array(1,2,3,4,56),
+                                    Array(1,2,3,4,57),
+                                    Array(1,2,3,4,58)
+                                ),
+                                Array (
+                                    Array(1,2,3,4,54),
+                                    Array(1,2,3,4,55),
+                                    Array(1,2,3,4,56),
+                                    Array(1,2,3,4,57),
+                                    Array(1,2,3,4,58)
+                                );
+                        }
+                    }
+                

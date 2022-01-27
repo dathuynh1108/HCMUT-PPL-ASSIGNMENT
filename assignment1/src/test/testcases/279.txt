@@ -1,19 +1,35 @@
-
-            Class Program {
-                $Method() {
-                    Console.log(1);
-                    Console::$log(1);
-                }
-                Var x: Int = 1;
-                main() {
-                    Self.variable = Null;
-                    Self.method();
-                    Program::$static = Null;
-                    Program::$method();
-                    variable = Null;
-                    Class_name::$static = Null;
-                    ## Sequence of Self is illgegal ##
-                    Self.Self.Self.a = Null;
-                }
-            }
+ 
+                    Class Shape {
+                        main() {
+                            a = Array();
+                            Shape::$b = Array (
+                                    Array("Volvo", "22", "18"),
+                                    Array("Saab", "5", "2"),
+                                    Array("Land Rover", "17", "15")
+                                );
+                            arr[arr[arr[3+4]]] = Array (
+                                    Array("Volvo", "22", "18"),
+                                    Array("Saab", "5", "2"),
+                                    Array("Land Rover", "17", "15")
+                                );
+                        }
+                    }
         
+                    Class Program : Shape {
+                        Var obj: Shape = Null;
+                        
+                        Constructor() {
+                            Self.obj = New Shape(New Shape(a, b, c));
+                            Return Self.obj;
+                        }
+                        
+                        Destructor() {
+                            Self.obj = Null;
+                        }
+                        
+                        main() {
+                            Val x, y,  z: Int = Null, Null, Null;
+                            Var obj: Shape = New Shape(Null);
+                        }
+                    }
+                

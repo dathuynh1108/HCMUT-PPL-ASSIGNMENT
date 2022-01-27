@@ -1,6 +1,3 @@
 
-            "First string is valid"
-            "Second string is valid' "
-            "Third string is valid '" "
-            "This string is an unclosed string'" 
-        
+                    "Some invalid words: @ ? ` ~ | ^ /"
+                

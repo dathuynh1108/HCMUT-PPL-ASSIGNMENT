@@ -1,8 +1,8 @@
 import unittest
 from TestUtils import TestParser
 
-
 class ParserSuite(unittest.TestCase):
+
     def test_some_relational_expressions(self):
         input = """
                 Class Program {
@@ -50,8 +50,8 @@ class ParserSuite(unittest.TestCase):
                 }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 201))
-
+        self.assertTrue(TestParser.test(input,expect,201))
+    
     def test_some_arithmetic_expressions(self):
         input = """
                 Class Program {
@@ -72,8 +72,8 @@ class ParserSuite(unittest.TestCase):
                 }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 202))
-
+        self.assertTrue(TestParser.test(input,expect,202))
+        
     def test_some_boolean_expressions(self):
         input = """
                 Class Program {
@@ -98,8 +98,8 @@ class ParserSuite(unittest.TestCase):
                 }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 203))
-
+        self.assertTrue(TestParser.test(input,expect,203))
+        
     def test_string_expression(self):
         input = """
                 Class Program {
@@ -119,8 +119,8 @@ class ParserSuite(unittest.TestCase):
                 }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 204))
-
+        self.assertTrue(TestParser.test(input,expect,204))
+        
     def test_index_operator_expression(self):
         input = """
                 Class Program {
@@ -140,8 +140,8 @@ class ParserSuite(unittest.TestCase):
                 }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 205))
-
+        self.assertTrue(TestParser.test(input,expect,205))
+        
     def test_statement_assignment(self):
         input = """
                 Class Program {
@@ -171,8 +171,8 @@ class ParserSuite(unittest.TestCase):
                 }
                 """
         expect = "Error on line 19 col 34: 10101"
-        self.assertTrue(TestParser.test(input, expect, 206))
-
+        self.assertTrue(TestParser.test(input,expect,206))
+        
     def test_statement_if(self):
         input = """
                 Class Program {
@@ -203,8 +203,8 @@ class ParserSuite(unittest.TestCase):
                 }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 207))
-
+        self.assertTrue(TestParser.test(input,expect,207))
+        
     def test_statement_if_2(self):
         input = """
                 Class Program {
@@ -261,8 +261,8 @@ class ParserSuite(unittest.TestCase):
                 }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 208))
-
+        self.assertTrue(TestParser.test(input,expect,208))
+        
     def test_statement_for_in(self):
         input = """
                 Class Program {
@@ -299,8 +299,8 @@ class ParserSuite(unittest.TestCase):
                 }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 209))
-
+        self.assertTrue(TestParser.test(input,expect,209))
+        
     def test_statement_break(self):
         input = """
                 Class Program {
@@ -331,8 +331,8 @@ class ParserSuite(unittest.TestCase):
                 }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 210))
-
+        self.assertTrue(TestParser.test(input,expect,210))
+        
     def test_statement_continue(self):
         input = """
                 Class Program {
@@ -358,8 +358,8 @@ class ParserSuite(unittest.TestCase):
                 }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 211))
-
+        self.assertTrue(TestParser.test(input,expect,211))
+        
     def test_statement_return(self):
         input = """
                 Class Program {
@@ -391,8 +391,8 @@ class ParserSuite(unittest.TestCase):
                 }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 212))
-
+        self.assertTrue(TestParser.test(input,expect,212))
+        
     def test_some_class_declare(self):
         input = """Class Program {
 
@@ -430,8 +430,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 213))
-
+        self.assertTrue(TestParser.test(input,expect,213))
+        
     def test_some_class_declare_2(self):
         input = """
                     Class NhanVo {
@@ -458,8 +458,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 16 col 35: a"
-        self.assertTrue(TestParser.test(input, expect, 214))
-
+        self.assertTrue(TestParser.test(input,expect,214))
+        
     def test_some_class_declare_3(self):
         input = """
                     Class NhanVo {
@@ -498,8 +498,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 215))
-
+        self.assertTrue(TestParser.test(input,expect,215))
+        
     def test_some_class_declare_4(self):
         input = """
                     Class Shape {
@@ -509,8 +509,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 3 col 40: {"
-        self.assertTrue(TestParser.test(input, expect, 216))
-
+        self.assertTrue(TestParser.test(input,expect,216))
+        
     def test_some_array(self):
         input = """
                     Class Shape {
@@ -520,8 +520,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 217))
-
+        self.assertTrue(TestParser.test(input,expect,217))
+        
     def test_some_multidimensional_array(self):
         input = """
                     Class Shape {
@@ -541,8 +541,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 218))
-
+        self.assertTrue(TestParser.test(input,expect,218))
+        
     def test_some_member_access(self):
         input = """
                     Class Shape {
@@ -555,8 +555,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 219))
-
+        self.assertTrue(TestParser.test(input,expect,219))
+        
     def test_simple_progeam(self):
         input = """
                     Class Shape {
@@ -573,8 +573,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 220))
-
+        self.assertTrue(TestParser.test(input,expect,220))
+        
     def test_error_simple_program(self):
         input = """
                     Class Shape {
@@ -591,8 +591,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 9 col 20: class"
-        self.assertTrue(TestParser.test(input, expect, 221))
-
+        self.assertTrue(TestParser.test(input,expect,221))
+        
     def test_some_define_method(self):
         input = """
                     Class Shape {
@@ -601,8 +601,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 222))
-
+        self.assertTrue(TestParser.test(input,expect,222))
+        
     def test_some_error_declare_var(self):
         input = """
                     Class Shape {
@@ -616,8 +616,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 8 col 32: $a"
-        self.assertTrue(TestParser.test(input, expect, 223))
-
+        self.assertTrue(TestParser.test(input,expect,223))
+        
     def test_some_method_invoke(self):
         input = """
                     Class Shape {
@@ -631,8 +631,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 224))
-
+        self.assertTrue(TestParser.test(input,expect,224))
+        
     def test_multidimensional_array_declare(self):
         input = """
                     Class Shape {
@@ -644,8 +644,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 225))
-
+        self.assertTrue(TestParser.test(input,expect,225))
+        
     def test_error_keyword_Val(self):
         input = """
                     Class Shape {
@@ -655,8 +655,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 4 col 32: x"
-        self.assertTrue(TestParser.test(input, expect, 226))
-
+        self.assertTrue(TestParser.test(input,expect,226))
+        
     def test_unequal_vars_and_values(self):
         input = """
                     Class Shape {
@@ -667,8 +667,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 3 col 41: ;"
-        self.assertTrue(TestParser.test(input, expect, 227))
-
+        self.assertTrue(TestParser.test(input,expect,227))
+        
     def test_unequal_vars_and_values_2(self):
         input = """
                     Class Shape {
@@ -679,8 +679,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 3 col 51: ,"
-        self.assertTrue(TestParser.test(input, expect, 228))
-
+        self.assertTrue(TestParser.test(input,expect,228))
+        
     def test_unequal_vars_and_values_3(self):
         input = """
                     Class Shape {
@@ -691,8 +691,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 3 col 44: ;"
-        self.assertTrue(TestParser.test(input, expect, 229))
-
+        self.assertTrue(TestParser.test(input,expect,229))
+        
     def test_unequal_vars_and_values_4(self):
         input = """
                     Class Shape {
@@ -704,8 +704,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 4 col 68: ,"
-        self.assertTrue(TestParser.test(input, expect, 230))
-
+        self.assertTrue(TestParser.test(input,expect,230))
+        
     def test_unequal_vars_and_values_5(self):
         input = """
                     Class Shape {
@@ -717,8 +717,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 4 col 68: ,"
-        self.assertTrue(TestParser.test(input, expect, 231))
-
+        self.assertTrue(TestParser.test(input,expect,231))
+    
     def test_valid_attribute_declare(self):
         input = """
                     Class Shape {
@@ -730,8 +730,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 232))
-
+        self.assertTrue(TestParser.test(input,expect,232))
+        
     def test_valid_attribute_declare_2(self):
         input = """
                     Class Shape {
@@ -743,8 +743,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 233))
-
+        self.assertTrue(TestParser.test(input,expect,233))
+        
     def test_valid_attribute_declare_3(self):
         input = """
                     Class Shape {
@@ -755,8 +755,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 234))
-
+        self.assertTrue(TestParser.test(input,expect,234))
+        
     def test_valid_attribute_declare_4(self):
         input = """
                 Class Shape {
@@ -767,8 +767,8 @@ class ParserSuite(unittest.TestCase):
                 }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 235))
-
+        self.assertTrue(TestParser.test(input,expect,235))
+        
     def test_class_inhertance(self):
         input = """
                     Class Shape {}
@@ -776,8 +776,8 @@ class ParserSuite(unittest.TestCase):
                     Class Circle : Triangle {}
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 236))
-
+        self.assertTrue(TestParser.test(input,expect,236))
+        
     def test_method_declare(self):
         input = """
                     Class Shape {
@@ -791,8 +791,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 237))
-
+        self.assertTrue(TestParser.test(input,expect,237))
+        
     def test_static_method_declare(self):
         input = """
                     Class Shape {
@@ -806,8 +806,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 238))
-
+        self.assertTrue(TestParser.test(input,expect,238))
+        
     def test_wrong_declare_class(self):
         input = """
                     Class Shape {
@@ -820,8 +820,8 @@ class ParserSuite(unittest.TestCase):
                     };
                 """
         expect = "Error on line 9 col 21: ;"
-        self.assertTrue(TestParser.test(input, expect, 239))
-
+        self.assertTrue(TestParser.test(input,expect,239))
+        
     def test_some_object_creation(self):
         input = """
                     Class Shape {
@@ -842,8 +842,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 240))
-
+        self.assertTrue(TestParser.test(input,expect,240))
+        
     def test_unary_operator(self):
         input = """
                     Class Program {
@@ -862,8 +862,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 241))
-
+        self.assertTrue(TestParser.test(input,expect,241))
+        
     def test_variable_and_constant_declare(self):
         input = """
                     Class Program {
@@ -878,8 +878,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 242))
-
+        self.assertTrue(TestParser.test(input,expect,242))
+        
     def test_invalid_variable_and_constant_declare(self):
         input = """
                     Class Program {
@@ -889,8 +889,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 4 col 46: ,"
-        self.assertTrue(TestParser.test(input, expect, 243))
-
+        self.assertTrue(TestParser.test(input,expect,243))
+        
     def test_invalid_variable_and_constant_declare_1(self):
         input = """
                     Class Program {
@@ -900,8 +900,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 4 col 66: ;"
-        self.assertTrue(TestParser.test(input, expect, 244))
-
+        self.assertTrue(TestParser.test(input,expect,244))
+        
     def test_invalid_variable_and_constant_declare_2(self):
         input = """
                     Class Program {
@@ -914,8 +914,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 7 col 32: $a"
-        self.assertTrue(TestParser.test(input, expect, 245))
-
+        self.assertTrue(TestParser.test(input,expect,245))
+        
     def test_invalid_variable_and_constant_declare_3(self):
         input = """
                     Class Program {
@@ -928,8 +928,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 7 col 34: Int"
-        self.assertTrue(TestParser.test(input, expect, 246))
-
+        self.assertTrue(TestParser.test(input,expect,246))
+        
     def test_array_type_declare(self):
         input = """
                     Class Program {
@@ -942,8 +942,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 4 col 42: 0"
-        self.assertTrue(TestParser.test(input, expect, 247))
-
+        self.assertTrue(TestParser.test(input,expect,247))
+        
     def test_some_method_declaration(self):
         input = """
                     Class Program {
@@ -958,8 +958,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 248))
-
+        self.assertTrue(TestParser.test(input,expect,248))
+        
     def test_array_type_declare_2(self):
         input = """
                     Class Program {
@@ -974,15 +974,15 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 9 col 51: 0"
-        self.assertTrue(TestParser.test(input, expect, 249))
-
+        self.assertTrue(TestParser.test(input,expect,249))
+        
     def test_program_no_class(self):
         input = """
                 
                 """
         expect = "Error on line 3 col 16: <EOF>"
-        self.assertTrue(TestParser.test(input, expect, 250))
-
+        self.assertTrue(TestParser.test(input,expect,250))
+        
     def test_multidimensional_array(self):
         input = """
                     Class Program {
@@ -990,8 +990,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 251))
-
+        self.assertTrue(TestParser.test(input,expect,251))
+        
     def test_multiple_inheritance(self):
         input = """
                     Class Program {
@@ -1011,8 +1011,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 14 col 42: :"
-        self.assertTrue(TestParser.test(input, expect, 252))
-
+        self.assertTrue(TestParser.test(input,expect,252))
+        
     def test_instance_attribute_access(self):
         input = """
                     Class Program {
@@ -1034,8 +1034,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 253))
-
+        self.assertTrue(TestParser.test(input,expect,253))
+        
     def test_static_attribute_access(self):
         input = """
                     Class Program {
@@ -1050,8 +1050,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 254))
-
+        self.assertTrue(TestParser.test(input,expect,254))
+        
     def test_static_attribute_access_2(self):
         input = """
                     Class Program {
@@ -1066,8 +1066,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 9 col 44: ::"
-        self.assertTrue(TestParser.test(input, expect, 255))
-
+        self.assertTrue(TestParser.test(input,expect,255))
+        
     def test_instance_method_invocation(self):
         input = """
                     Class Program {
@@ -1093,8 +1093,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 256))
-
+        self.assertTrue(TestParser.test(input,expect,256))
+        
     def test_static_method_invocation(self):
         input = """
                     Class Program {
@@ -1109,8 +1109,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 257))
-
+        self.assertTrue(TestParser.test(input,expect,257))
+        
     def test_invalid_static_method_invocation(self):
         input = """
                     Class Program {
@@ -1125,8 +1125,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 8 col 35: getLength"
-        self.assertTrue(TestParser.test(input, expect, 258))
-
+        self.assertTrue(TestParser.test(input,expect,258))
+        
     def test_keyword_self(self):
         input = """
                     Class Program {
@@ -1150,8 +1150,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 259))
-
+        self.assertTrue(TestParser.test(input,expect,259))
+        
     def test_keyword_self_2(self):
         ## Self not used with static attribute and static method ???
         input = """
@@ -1174,8 +1174,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 14 col 48: $abc"
-        self.assertTrue(TestParser.test(input, expect, 260))
-
+        self.assertTrue(TestParser.test(input,expect,260))
+    
     def test_method_invocation_statement(self):
         ## Self not used with static attribute and static method ???
         input = """
@@ -1209,8 +1209,8 @@ class ParserSuite(unittest.TestCase):
                 """
         # expect = "successful"
         expect = "Error on line 20 col 35: $width"
-        self.assertTrue(TestParser.test(input, expect, 261))
-
+        self.assertTrue(TestParser.test(input,expect,261))
+        
     def test_method_invocation_statement_2(self):
         input = """
                     Class Program {
@@ -1255,8 +1255,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 262))
-
+        self.assertTrue(TestParser.test(input,expect,262))
+        
     def test_sample_program(self):
         input = """
                     Class Shape {
@@ -1282,8 +1282,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 263))
-
+        self.assertTrue(TestParser.test(input,expect,263))
+        
     def test_invalid_multidimensional_array(self):
         input = """ 
                     Class Program {
@@ -1335,8 +1335,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 18 col 33: ,"
-        self.assertTrue(TestParser.test(input, expect, 264))
-
+        self.assertTrue(TestParser.test(input,expect,264))
+        
     def test_multidimensional_array_more_than_two(self):
         input = """ 
                     Class Program {
@@ -1361,8 +1361,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 265))
-
+        self.assertTrue(TestParser.test(input,expect,265))
+        
     def test_size_of_array_type(self):
         input = """ 
                     Class Program {
@@ -1378,8 +1378,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 266))
-
+        self.assertTrue(TestParser.test(input,expect,266))
+        
     def test_invalid_size_of_array_type(self):
         input = """ 
                     Class Program {
@@ -1389,8 +1389,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 4 col 48: 0b0"
-        self.assertTrue(TestParser.test(input, expect, 267))
-
+        self.assertTrue(TestParser.test(input,expect,267))
+        
     def test_invalid_size_of_array_type_2(self):
         input = """ 
                     Class Program {
@@ -1400,8 +1400,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 4 col 48: 0x0"
-        self.assertTrue(TestParser.test(input, expect, 268))
-
+        self.assertTrue(TestParser.test(input,expect,268))
+        
     def test_invalid_size_of_array_type_3(self):
         input = """ 
                     Class Program {
@@ -1411,8 +1411,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 4 col 48: 00"
-        self.assertTrue(TestParser.test(input, expect, 269))
-
+        self.assertTrue(TestParser.test(input,expect,269))
+        
     def test_combo_member_access_expression(self):
         input = """ 
                     Class Program {
@@ -1448,8 +1448,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 270))
-
+        self.assertTrue(TestParser.test(input,expect,270))
+        
     def test_invalid_if_statement(self):
         input = """ 
                     Class Program {
@@ -1472,8 +1472,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 15 col 28: Elseif"
-        self.assertTrue(TestParser.test(input, expect, 271))
-
+        self.assertTrue(TestParser.test(input,expect,271))
+        
     def test_combo_statement(self):
         input = """ 
                     Class Program {
@@ -1517,8 +1517,8 @@ class ParserSuite(unittest.TestCase):
                 """
         # expect = "successful"
         expect = "Error on line 19 col 35: $length"
-        self.assertTrue(TestParser.test(input, expect, 272))
-
+        self.assertTrue(TestParser.test(input,expect,272))
+        
     def test_missed_data_type_declaration(self):
         input = """ 
                     Class Program {
@@ -1547,8 +1547,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 3 col 30: ="
-        self.assertTrue(TestParser.test(input, expect, 273))
-
+        self.assertTrue(TestParser.test(input,expect,273))
+        
     def test_array_empty_initialize(self):
         input = """ 
                     Class Program {
@@ -1561,8 +1561,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 274))
-
+        self.assertTrue(TestParser.test(input,expect,274))
+    
     def test_method_invocation_statement_3(self):
         input = """ 
                     Class Shape {    
@@ -1612,8 +1612,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 275))
-
+        self.assertTrue(TestParser.test(input,expect,275))
+        
     def test_static_ID_in_method_declare(self):
         input = """ 
                     Class Program {
@@ -1634,8 +1634,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 13 col 48: $xyz"
-        self.assertTrue(TestParser.test(input, expect, 276))
-
+        self.assertTrue(TestParser.test(input,expect,276))
+        
     def test_size_and_type_one_dimensional_array(self):
         input = """ 
                     Class Program {
@@ -1657,8 +1657,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 277))
-
+        self.assertTrue(TestParser.test(input,expect,277))
+        
     def test_size_and_type_multi_dimensional_array(self):
         input = """ 
                     Class Program {
@@ -1684,8 +1684,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 278))
-
+        self.assertTrue(TestParser.test(input,expect,278))
+        
     def test_null_keyword(self):
         input = """ 
                     Class Shape {
@@ -1723,8 +1723,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 279))
-
+        self.assertTrue(TestParser.test(input,expect,279))
+        
     def test_some_weird_index_expression(self):
         input = """ 
                     Class Program {
@@ -1754,8 +1754,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 280))
-
+        self.assertTrue(TestParser.test(input,expect,280))
+        
     def test_some_weird_dot_expression(self):
         input = """ 
                     Class Program {
@@ -1786,8 +1786,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 281))
-
+        self.assertTrue(TestParser.test(input,expect,281))
+        
     def test_invalid_return_statement(self):
         input = """ 
                     Class Program {
@@ -1823,8 +1823,8 @@ class ParserSuite(unittest.TestCase):
                 """
         # expect = "Error on line 29 col 35: $obj"
         expect = "Error on line 21 col 32: $func"
-        self.assertTrue(TestParser.test(input, expect, 282))
-
+        self.assertTrue(TestParser.test(input,expect,282))
+        
     def test_invalid_self_keyword(self):
         input = """ 
                     Class Program {
@@ -1838,8 +1838,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 8 col 37: Self"
-        self.assertTrue(TestParser.test(input, expect, 283))
-
+        self.assertTrue(TestParser.test(input,expect,283))
+        
     def test_some_weird_operand(self):
         input = """ 
                     Class Program {
@@ -1854,8 +1854,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 284))
-
+        self.assertTrue(TestParser.test(input,expect,284))
+        
     def test_some_weird_special_case(self):
         input = """ 
                     Class Program {
@@ -1868,8 +1868,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 7 col 36: ."
-        self.assertTrue(TestParser.test(input, expect, 285))
-
+        self.assertTrue(TestParser.test(input,expect,285))
+        
     def test_left_hand_side_assign_stmt(self):
         input = """ 
                     Class Program {
@@ -1907,8 +1907,8 @@ class ParserSuite(unittest.TestCase):
                 """
         # expect = "successful"
         expect = "Error on line 9 col 34: ="
-        self.assertTrue(TestParser.test(input, expect, 286))
-
+        self.assertTrue(TestParser.test(input,expect,286))
+        
     def test_declare_method_outside_class(self):
         input = """
                     method() {
@@ -1924,8 +1924,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 2 col 20: method"
-        self.assertTrue(TestParser.test(input, expect, 287))
-
+        self.assertTrue(TestParser.test(input,expect,287))
+        
     def test_declare_class_inside_class(self):
         input = """ 
                     Class Program {
@@ -1943,8 +1943,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 9 col 24: Class"
-        self.assertTrue(TestParser.test(input, expect, 288))
-
+        self.assertTrue(TestParser.test(input,expect,288))
+        
     def test_self_dot_static_function(self):
         input = """ 
                     Class Program {
@@ -1956,8 +1956,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 6 col 37: $getLength"
-        self.assertTrue(TestParser.test(input, expect, 289))
-
+        self.assertTrue(TestParser.test(input,expect,289))
+        
     def test_declare_method_inside_method(self):
         input = """ 
                     Class Program {
@@ -1976,8 +1976,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 11 col 39: {"
-        self.assertTrue(TestParser.test(input, expect, 290))
-
+        self.assertTrue(TestParser.test(input,expect,290))
+        
     def test_missed_close_bracket(self):
         input = """ 
                     Class Program {
@@ -2005,8 +2005,8 @@ class ParserSuite(unittest.TestCase):
                 """
         expect = "Error on line 24 col 16: <EOF>"
         # expect = "Error on line 16 col 36: ."
-        self.assertTrue(TestParser.test(input, expect, 291))
-
+        self.assertTrue(TestParser.test(input,expect,291))
+        
     def test_foreach_statement(self):
         input = """ 
                     Class Program {
@@ -2031,8 +2031,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 292))
-
+        self.assertTrue(TestParser.test(input,expect,292))
+        
     def test_params_in_destructor(self):
         input = """ 
                     Class Program {
@@ -2065,8 +2065,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 20 col 35: a"
-        self.assertTrue(TestParser.test(input, expect, 293))
-
+        self.assertTrue(TestParser.test(input,expect,293))
+        
     def test_some_weird_operand_2(self):
         input = """ 
                     Class Program {
@@ -2086,8 +2086,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 294))
-
+        self.assertTrue(TestParser.test(input,expect,294))
+        
     def test_some_weird_member_access(self):
         input = """ 
                     Class Program {
@@ -2102,8 +2102,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 9 col 45: Continue"
-        self.assertTrue(TestParser.test(input, expect, 295))
-
+        self.assertTrue(TestParser.test(input,expect,295))
+        
     def test_some_weird_member_access_2(self):
         input = """ 
                     Class Program {
@@ -2116,8 +2116,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 7 col 37: ;"
-        self.assertTrue(TestParser.test(input, expect, 296))
-
+        self.assertTrue(TestParser.test(input,expect,296))
+        
     def test_with_lexer(self):
         input = """ 
                     Class Program {
@@ -2131,8 +2131,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 297))
-
+        self.assertTrue(TestParser.test(input,expect,297))
+        
     def test_invalid_variable_declare(self):
         input = """ 
                     Class Program {
@@ -2145,8 +2145,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 7 col 60: ;"
-        self.assertTrue(TestParser.test(input, expect, 298))
-
+        self.assertTrue(TestParser.test(input,expect,298))
+        
     def test_invalid_variable_declare_2(self):
         input = """ 
                     Class Program {
@@ -2159,8 +2159,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 7 col 80: ,"
-        self.assertTrue(TestParser.test(input, expect, 299))
-
+        self.assertTrue(TestParser.test(input,expect,299))
+        
     def test_invalid_variable_declare_3(self):
         input = """ 
                     Class Program {
@@ -2173,8 +2173,9 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 7 col 53: $y"
-        self.assertTrue(TestParser.test(input, expect, 300))
-
+        self.assertTrue(TestParser.test(input,expect,300))
+        
+        
     def test_something(self):
         input = """ 
                     Class Program {
@@ -2238,8 +2239,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 888))
-
+        self.assertTrue(TestParser.test(input,expect,888))
+        
     def test_lhs_1(self):
         input = """ 
                     Class Program {
@@ -2270,8 +2271,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 1000))
-
+        self.assertTrue(TestParser.test(input,expect,1000))
+        
     def test_lhs_2(self):
         input = """ 
                     Class Program {
@@ -2281,8 +2282,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 4 col 28: $a"
-        self.assertTrue(TestParser.test(input, expect, 1001))
-
+        self.assertTrue(TestParser.test(input,expect,1001))
+        
     def test_lhs_3(self):
         input = """ 
                     Class Program {
@@ -2292,8 +2293,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 4 col 29: ("
-        self.assertTrue(TestParser.test(input, expect, 1002))
-
+        self.assertTrue(TestParser.test(input,expect,1002))
+        
     def test_lhs_4(self):
         input = """ 
                     Class Program {
@@ -2303,8 +2304,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 4 col 34: ="
-        self.assertTrue(TestParser.test(input, expect, 1003))
-
+        self.assertTrue(TestParser.test(input,expect,1003))
+        
     def test_lhs_5(self):
         input = """ 
                     Class Program {
@@ -2314,8 +2315,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 4 col 40: ="
-        self.assertTrue(TestParser.test(input, expect, 1004))
-
+        self.assertTrue(TestParser.test(input,expect,1004))
+        
     def test_lhs_6(self):
         input = """ 
                     Class Program {
@@ -2325,8 +2326,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 4 col 30: ="
-        self.assertTrue(TestParser.test(input, expect, 1005))
-
+        self.assertTrue(TestParser.test(input,expect,1005))
+        
     def test_lhs_7(self):
         input = """ 
                     Class Program {
@@ -2336,8 +2337,8 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 4 col 34: ="
-        self.assertTrue(TestParser.test(input, expect, 1006))
-
+        self.assertTrue(TestParser.test(input,expect,1006))
+        
     def test_lhs_8(self):
         input = """ 
                     Class Program {
@@ -2347,4 +2348,213 @@ class ParserSuite(unittest.TestCase):
                     }
                 """
         expect = "Error on line 4 col 51: ="
-        self.assertTrue(TestParser.test(input, expect, 1007))
+        self.assertTrue(TestParser.test(input,expect,1007))
+        
+    def test_foreach_1(self):
+        input = """ 
+                    Class Program {
+                        main() {
+                            Foreach (i in 1 .. 10) {
+                                ##nothing##
+                            }
+                        }
+                    }
+                """
+        expect = "Error on line 4 col 39: in"
+        self.assertTrue(TestParser.test(input,expect,1008))
+        
+    def test_foreach_2(self):
+        input = """ 
+                    Class Program {
+                        main() {
+                            
+                            Foreach (i In 1 .. 10) {
+                                ##nothing##
+                            }
+                            
+                            Foreach (Shape::$a In 1 .. 10) {
+                                ##nothing##
+                            }
+                            
+                            Foreach (a.func().x In 1 .. 10) {
+                                ##nothing##
+                            }
+                        }
+                    }
+                """
+        expect = "successful"
+        self.assertTrue(TestParser.test(input,expect,1009))
+    
+    def test_declare_1(self):
+        input = """ 
+                    Class Program {
+                        Var x, y, z: Int;
+                        Val x, $y: Float = 12.3, 4.5e10;
+                        Var x, y, z, m, n, p: Float = 1,2,3,4,5,6;
+                        Val x, $y: Int = 4, 5;
+                        main() {
+                            Var x, y, z: Int;
+                            Val x, y: Float = 12.3, 4.5e10;
+                            Var x, y, z, m, n, p: Float = 1,2,3,4,5,6;
+                            Val x, y: Int = 4, 5;
+                            Var arr: Array[Int, 5] = Array();
+                            Var arr1, arr2: Array[Int, 5] = Array(), Array();
+                            Var arr1, arr2, arr3: Array[Int, 5] = Array(), Array(), Array(Array(1));
+                        }
+                    }
+                """
+        expect = "successful"
+        self.assertTrue(TestParser.test(input,expect,1010))
+        
+    def test_declare_2(self):
+        ##số biến nhiều hơn số value ##
+        input = """ 
+                    Class Program {
+                        Var x, y, z: Int;
+                        Val x, $y: Float = 12.3, 4.5e10;
+                        Var x, y, z, m, n, p: Float = 1,2,3,4,5,6;
+                        Val x, $y, z: Int = 4, 5;   ## here ##
+                        main() {
+                            Var x, y, z: Int;
+                            Val x, y: Float = 12.3, 4.5e10;
+                            Var x, y, z, m, n, p: Float = 1,2,3,4,5,6;
+                            Val x, y: Int = 4, 5;
+                            Var arr: Array[Int, 5] = Array();
+                            Var arr1, arr2: Array[Int, 5] = Array(), Array();
+                            Var arr1, arr2, arr3: Array[Int, 5] = Array(), Array(), Array(Array(1));
+                        }
+                    }
+                """
+        expect = "Error on line 6 col 48: ;"
+        self.assertTrue(TestParser.test(input,expect,1011))
+        
+    def test_declare_3(self):
+        ##số biến ít hơn số value ##
+        input = """ 
+                    Class Program {
+                        Var x, y, z: Int;
+                        Val x, $y: Float = 12.3, 4.5e10;
+                        Var x, y, z, m, n, p: Float = 1,2,3,4,5,6;
+                        Val x, $y: Int = 4, 5, 6, 7, 8, 10;   ## here ##
+                        main() {
+                            Var x, y, z: Int;
+                            Val x, y: Float = 12.3, 4.5e10;
+                            Var x, y, z, m, n, p: Float = 1,2,3,4,5,6;
+                            Val x, y: Int = 4, 5;
+                            Var arr: Array[Int, 5] = Array();
+                            Var arr1, arr2: Array[Int, 5] = Array(), Array();
+                            Var arr1, arr2, arr3: Array[Int, 5] = Array(), Array(), Array(Array(1));
+                        }
+                    }
+                """
+        expect = "Error on line 6 col 45: ,"
+        self.assertTrue(TestParser.test(input,expect,1012))
+        
+    def test_declare_4(self):
+        ##số biến nhiều hơn hơn số value trong method ##
+        input = """ 
+                    Class Program {
+                        Var x, y, z: Int;
+                        Val x, $y: Float = 12.3, 4.5e10;
+                        Var x, y, z, m, n, p: Float = 1,2,3,4,5,6;
+                        Val x, $y: Int = 4, 5;
+                        main() {
+                            Var x, y, z: Int = 1, 2;        ## here ##
+                            Val x, y: Float = 12.3, 4.5e10;
+                            Var x, y, z, m, n, p: Float = 1,2,3,4,5,6;
+                            Val x, y: Int = 4, 5;
+                            Var arr: Array[Int, 5] = Array();
+                            Var arr1, arr2: Array[Int, 5] = Array(), Array();
+                            Var arr1, arr2, arr3: Array[Int, 5] = Array(), Array(), Array(Array(1));
+                        }
+                    }
+                """
+        expect = "Error on line 8 col 51: ;"
+        self.assertTrue(TestParser.test(input,expect,1013))
+        
+    def test_declare_5(self):
+        ##số biến ít hơn hơn số value trong method ##
+        input = """ 
+                    Class Program {
+                        Var x, y, z: Int;
+                        Val x, $y: Float = 12.3, 4.5e10;
+                        Var x, y, z, m, n, p: Float = 1,2,3,4,5,6;
+                        Val x, $y: Int = 4, 5;
+                        main() {
+                            Var x, y, z: Int = 1, 2, 3, 4, 5, 6, 7, 8;        ## here ##
+                            Val x, y: Float = 12.3, 4.5e10;
+                            Var x, y, z, m, n, p: Float = 1,2,3,4,5,6;
+                            Val x, y: Int = 4, 5;
+                            Var arr: Array[Int, 5] = Array();
+                            Var arr1, arr2: Array[Int, 5] = Array(), Array();
+                            Var arr1, arr2, arr3: Array[Int, 5] = Array(), Array(), Array(Array(1));
+                        }
+                    }
+                """
+        expect = "Error on line 8 col 54: ,"
+        self.assertTrue(TestParser.test(input,expect,1014))
+        
+    def test_declare_6(self):
+        ## combo ##
+        input = """ 
+                    Class Program {
+                        Var x, y, z: Int;
+                        Val x, $y: Float = 12.3, 4.5e10;
+                        Var x, y, z, m, n, p: Float = 1,2,3,4,5,6;
+                        Val x, $y: Int = 4, 5;
+                        Val arr1, arr2: Array[Boolean, 1] = Array(), Array(Array(Array(Array(Array()))));
+                        main() {
+                            Var x, y, z: Int = 1, 2, 3;    
+                            Val x, y: Float = 12.3, 4.5e10;
+                            Var x, y, z, m, n, p: Float = 1,2,3,4,5,6;
+                            Val x, y: Int = 4, 5;
+                            Var arr: Array[Int, 5] = Array();
+                            Var arr1, arr2: Array[Int, 5] = Array(), Array();
+                            Var arr1, arr2, arr3: Array[Int, 5] = Array(), Array(), Array(Array(1));
+                        }
+                    }
+                """
+        expect = "successful"
+        self.assertTrue(TestParser.test(input,expect,1015))
+    
+    def test_some_thing_very_confused_1(self):
+        input = """ 
+                    Class Program {
+                        Var x: Array[Array[Int, 1], 1] = Array();
+                        Val $x, y, $z: String = "nhan", 1.000 + "nhan", ---True - !!!!!False;    
+                    
+                        main() {
+                            x = Self::ins;
+                        }
+                    }
+                """
+        expect = "Error on line 7 col 36: ::"
+        self.assertTrue(TestParser.test(input,expect,1016))
+        
+    def test_some_thing_very_confused_2(self):
+        input = """ 
+                    Class Program {
+                        Var x: Array[Array[Int, 1], 1] = Array();
+                        Val $x, y, $z: String = "nhan", 1.000 + "nhan", ---True - !!!!!False;    
+                    
+                        main() {
+                            x = Self::$ins;
+                        }
+                    }
+                """
+        expect = "Error on line 7 col 36: ::"
+        self.assertTrue(TestParser.test(input,expect,1017))
+        
+    def test_some_thing_very_confused_3(self):
+        input = """ 
+                    Class Program {
+                        Var x: Array[Array[Int, 1], 1] = Array();
+                        Val $x, y, $z: String = "nhan", 1.000 + "nhan", ---True - !!!!!False;    
+                    
+                        main() {
+                            x = "1+2"::$a;
+                        }
+                    }
+                """
+        expect = "Error on line 7 col 37: ::"
+        self.assertTrue(TestParser.test(input,expect,1018))

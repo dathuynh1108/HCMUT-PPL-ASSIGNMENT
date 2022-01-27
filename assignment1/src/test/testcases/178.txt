@@ -1,8 +1,1 @@
-
-            1..100      ## 1. is float ##
-            1 .. 100
-            a..b
-            (1)..100
-            1...100
-            1...100.
-        
+ "This is another invalid ''" quote" 

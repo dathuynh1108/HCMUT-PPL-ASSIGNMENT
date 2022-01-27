@@ -1,3 +1,23 @@
 
-            ## Can program be empty ? ##
-        
+                Class Program {
+                    
+                    Val str1: String = arr[1];
+
+                    Constructor(a: Int; B: Float) {}
+                    
+                    Destructor() {}
+
+                    main() {
+                        Foreach (i In 1 .. 100 By 2) {
+                            If (!True && False) { Continue; } 
+                            Elseif (a == 5) { Break; }
+                            Elseif (b == 6) {  }
+                            Elseif (!False) {Continue;}
+                        }
+                        
+                        Foreach (x In 5+2 .. 100*3) {
+                            Continue;
+                        }
+                    }
+                }
+                

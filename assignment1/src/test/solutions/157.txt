@@ -1,1 +1,1 @@
-1.123,.1123e1,.,1123e1,.123e123,.,1123e1,_123,.e123,.e1,_123,.,e_1123,abc,.e1123,,.e1123,Error Token '
+Nhan,Nhan '"NhanVo'" '"VoNhan'" VoNhanNguyen,ThienNhan,,'"Nhan'",<EOF>

@@ -282,20 +282,50 @@ class ParserSuite(unittest.TestCase):
     def test_023_array_complex_initialization(self):
         input = r"""
             Class Program {
-                Var array: Array[Int, 6] = Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x));        
+                Var array: Array[Int, 6] = Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x));  
+                Var array: Array[Int, 6] = Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)), Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x));        
             }
         """
-        expect = r"successful"
+        expect = r"Error on line 4 col 99: ,"
         num = 223
         self.assertTrue(TestParser.test(input, expect, num))
 
     def test_024_array_complex_initialization(self):
         input = r"""
             Class Program {
-                Var array: Array[Int, 6] = Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x));        
+                Var array_1, array_2, array_3: Array[Array[Int,6], 6] = Array(
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x))
+                    ),
+                    Array(
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x))
+                    ),
+                    Array(
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x))
+                    );    
+                Var array_1, array_2, array_3, array_4: Array[Array[Int,6], 6] = Array(
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x))
+                    ),
+                    Array(
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x))
+                    ),
+                    Array(
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x))
+                    );       
             }
         """
-        expect = r"successful"
+        expect = r"Error on line 32 col 21: ;"
         num = 224
         self.assertTrue(TestParser.test(input, expect, num))
 
@@ -2158,11 +2188,11 @@ class ParserSuite(unittest.TestCase):
                 main() {
                     Var a,b,c: Int = 1,2,3; ## Equal ##
                     Val a,b,c: Int = 1,2,3; ## Equal ##
-                    Var a,b,c: Int = 1,2; ## Less than variable ##
+                    Var a,b,c,d,e,f: Int = 1,2; ## Less than variable ##
                 }
             }
         """
-        expect = r"Error on line 8 col 40: ;"
+        expect = r"Error on line 8 col 46: ;"
         num = 297
         self.assertTrue(TestParser.test(input, expect, num))
 
@@ -2175,7 +2205,7 @@ class ParserSuite(unittest.TestCase):
                 main() {
                     Var a,b,c: Int = 1,2,3; ## Equal ##
                     Val a,b,c: Int = 1,2,3; ## Equal ##
-                    Var a,b,c: Int = 1,2,4,5; ## Greater than variable ##
+                    Var a,b,c: Int = 1,2,4,5,6,7,8,9; ## Greater than variable ##
                 }
             }
         """

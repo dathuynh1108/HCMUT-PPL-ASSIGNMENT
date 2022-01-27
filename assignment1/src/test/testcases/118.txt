@@ -1,5 +1,1 @@
-
-            This is not string
-            "This is string\n\r\\"
-            "ILLEGAL_ESCAPE\z"
-        
+ "My name is Nhan. This name has two \'N\' characters" 

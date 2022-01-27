@@ -1,3 +1,6 @@
 
-            + - * / % ! && || == = != < <= > >= ==. +.
+            "this is valid string \n \t \b \f"
+            "
+            ""
+            "but here is an unclosed string \n \t \b \f
         

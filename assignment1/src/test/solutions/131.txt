@@ -1,1 +1,1 @@
-Valid string,Error Token '
+1407,0310,0,xabcdef,00,0310,7890,0,xefff,<EOF>

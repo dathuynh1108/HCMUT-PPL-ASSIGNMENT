@@ -1,8 +1,9 @@
 
-            Class Program {
-                main() {
-                    Var a: Int;
-                    a = b::method();
-                }
-            }
-        
+                    Class Shape {
+                        Var a, b: Float = 10.e10, 3.23;
+                        Val $x, $y, $z: String = "nhanvo", "xyz", "str1" + "str2";
+                        main() {
+                            a = b;
+                        }
+                    }
+                

@@ -1,17 +1,3 @@
 
-            ## Multi line comment 
-            # Line 1
-            # Line 2
-            # Line 3
-            End comment ##
-            Class Program : Object {
-                Var x, $y: Int;
-                $static_method(a: Int) {
-                    If ($a > 1) {
-                        Return $a;
-                    } Elseif ($a < 1) {
-                        Return $a + 1;
-                    }
-                }
-            }
+            "abcd	"
         

@@ -1,8 +1,8 @@
 
-            Class Program {
-                main() {
-                    Var a: Int;
-                    a = b.$method();
-                }
-            }
-        
+                    Class Shape {
+                        Var m: Array[Int, 5] = Array(1, 2, 3, 4, 5);
+                        main() {
+                            
+                        }
+                    }
+                

@@ -1,7 +1,1 @@
-
-            "abc"
-            "abc\'"
-            "abc'"
-            "Hello \' there"
-            "Huynh Thanh Dat\"
-        
+ "My name is\o" 

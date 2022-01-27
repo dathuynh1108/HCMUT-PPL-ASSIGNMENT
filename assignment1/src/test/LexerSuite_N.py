@@ -46,15 +46,6 @@ class LexerSuite(unittest.TestCase):
         expect = "123,a123,0,687,99,aa9aaa,<EOF>"
         self.assertTrue(TestLexer.test(input,expect,104))
         
-    # def test_confused_testcase_forum(self):
-    #     input = """
-    #               "abcd'xyz"
-    #                "abcd\'xyz"
-    #                "abcd\\'xyz"
-    #               ""
-    #     expect = "123,a123,0,687,99,aa9aaa,<EOF>"
-    #     self.assertTrue(TestLexer.test(input,expect,104))
-        
     def test_block_comment(self):
         input = """##nhan 
         vo
@@ -282,8 +273,61 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test(input, expect, 145))
     
     def test_string_in_comment(self):
-        input = """ ##"This is a string in a block of comment"## """
-        expect = """<EOF>"""
+        input = """
+                    Class Program {
+                    
+                    Val str1: String = arr[1];
+
+                    Constructor(a: Int; B: Float) {}
+                    
+                    Destructor() {}
+
+                    main() {
+                        If (!True && False) { ##nothing## } 
+                        Else {
+                            If (!True && False && ( (a == 5) || (b == 6) ) ) {##nothing##}
+                        }
+                        
+                        If (!True && False) { ##nothing## } 
+                        Elseif (a == 5) {
+                            If (!True && False) { ##nothing## } 
+                            Elseif (a == 5) {##nothing##}
+                            Elseif (b == 6) {  }
+                            Elseif (!False) {##nothing##}
+                            Elseif (a < b) {##nothing##}
+                            Elseif ($xyz >= 3) {##nothing##}
+                            Elseif (ar[2] > 3) {##nothing##}    
+                        }
+                        Elseif (b == 6) {
+                            If (!True && False) { ##nothing## } 
+                            Elseif (a == 5) {##nothing##}
+                            Elseif (b == 6) {  }
+                            Elseif (!False) {##nothing##}
+                            Elseif (a < b) {##nothing##}
+                            Elseif ($xyz >= 3) {##nothing##}
+                            Elseif (ar[2] > 3) {##nothing##}    
+                        }
+                        Else {
+                            If (!True && False) { ##nothing## } 
+                            Elseif (a == 5) {##nothing##}
+                            Elseif (b == 6) { 
+                                If (!True && False) { ##nothing## } 
+                                Elseif (a == 5) {##nothing##}
+                                Elseif (b == 6) {  }
+                                Elseif (!False) {##nothing##}
+                                Elseif (a < b) {##nothing##}
+                                Elseif ($xyz >= 3) {##nothing##}
+                                Elseif (ar[2] > 3) {##nothing##}
+                            }
+                            Elseif (!False) {##nothing##}
+                            Elseif (a < b) {##nothing##}
+                            Elseif ($xyz >= 3) {##nothing##}
+                            Elseif (ar[2] > 3) {##nothing##}
+                        }
+                    }
+                }
+                """
+        expect = """Class,Program,{,Val,str1,:,String,=,arr,[,1,],;,Constructor,(,a,:,Int,;,B,:,Float,),{,},Destructor,(,),{,},main,(,),{,If,(,!,True,&&,False,),{,},Else,{,If,(,!,True,&&,False,&&,(,(,a,==,5,),||,(,b,==,6,),),),{,},},If,(,!,True,&&,False,),{,},Elseif,(,a,==,5,),{,If,(,!,True,&&,False,),{,},Elseif,(,a,==,5,),{,},Elseif,(,b,==,6,),{,},Elseif,(,!,False,),{,},Elseif,(,a,<,b,),{,},Elseif,(,$xyz,>=,3,),{,},Elseif,(,ar,[,2,],>,3,),{,},},Elseif,(,b,==,6,),{,If,(,!,True,&&,False,),{,},Elseif,(,a,==,5,),{,},Elseif,(,b,==,6,),{,},Elseif,(,!,False,),{,},Elseif,(,a,<,b,),{,},Elseif,(,$xyz,>=,3,),{,},Elseif,(,ar,[,2,],>,3,),{,},},Else,{,If,(,!,True,&&,False,),{,},Elseif,(,a,==,5,),{,},Elseif,(,b,==,6,),{,If,(,!,True,&&,False,),{,},Elseif,(,a,==,5,),{,},Elseif,(,b,==,6,),{,},Elseif,(,!,False,),{,},Elseif,(,a,<,b,),{,},Elseif,(,$xyz,>=,3,),{,},Elseif,(,ar,[,2,],>,3,),{,},},Elseif,(,!,False,),{,},Elseif,(,a,<,b,),{,},Elseif,(,$xyz,>=,3,),{,},Elseif,(,ar,[,2,],>,3,),{,},},},},<EOF>"""
         self.assertTrue(TestLexer.test(input, expect, 146))
     
     def test_legal_and_illegal_escape(self):
@@ -310,16 +354,12 @@ class LexerSuite(unittest.TestCase):
         input = "12*(4+5) 36/7 8-2*(2+6) 300-200 400%3"
         expect = "12,*,(,4,+,5,),36,/,7,8,-,2,*,(,2,+,6,),300,-,200,400,%,3,<EOF>"
         self.assertTrue(TestLexer.test(input, expect, 151))
-        
-    # def test_comment_unterminated(self):
-    #     input = "##This is unterminated comment"
-    #     expect = "Unterminated Comment"
-    #     self.assertTrue(TestLexer.test(input, expect, 152))
     
     def test_sample_code_AVL_tree(self):
         input = r"""
                 int V = 6;
                 int visited = 0;
+
                 Graph g(V);
                 Adjacency* arr = new Adjacency(V);
                 int edge[][2] = {{0,1},{0,2},{1,3},{1,4},{2,4},{3,4},{3,5},{4,5}};
@@ -380,12 +420,15 @@ class LexerSuite(unittest.TestCase):
                 /* Give the data of the element at given index in the list. */
                 if (index > this->count - 1)
                     index = this->count - 1;
+
                 int count1 = 0;
                 Node* temp = head;
+
                 while (temp && count1 != index) {
                     temp = temp->next;
                     count1++;
                 }
+
                 return temp->data;
             }
         """
@@ -481,16 +524,21 @@ class LexerSuite(unittest.TestCase):
         ## has error token
         input = r"""
             void add(K key, V value) {
+
                 Entry* newEntry = new Entry(key, value);
                 typename SplayTree::Node* tempSlay = this->splay->addSplayForBKUTree(newEntry);
+
                 if (tempSlay == nullptr) {  //same key
                     delete tempSlay;
                     tempSlay = nullptr;
                     throw "Duplicate key";
                 }
+
                 typename AVLTree::Node* tempAVL = this->avl->addAVLForBKUTree(newEntry);
+
                 tempSlay->corr = tempAVL;
                 tempAVL->corr = tempSlay;
+
                 if ((int)keys.size() == this->maxNumOfKeys) {
                     keys.pop();
                     vectorKeys.erase(vectorKeys.begin() + 0);
@@ -509,9 +557,6 @@ class LexerSuite(unittest.TestCase):
             0123 002344 0003432434234 00000000000000003123123213 02313123200000000000000
             0x0000000000000000001abcdf 0Xabcdef99999999999900000000000
         """
-        # expect = "123,31059632424,342343243243,3455546565465140743423,0b111101,0B000000000011111111,0b111111111111111110000000000000000,0123,002344,0003432434234,00000000000000003123123213,02313123200000000000000,0x0000000000000000001abcdf,0Xabcdef99999999999900000000000,<EOF>"
-        # expect = "123,310596,______32424,34234,_________________3243243,345,___5546___565465_1407_____43423,0b111101,0B000000000011111111,0b111111111111111110000000000000000,0123,002344,0003432434234,00000000000000003123123213,02313123200000000000000,0x0000000000000000001abcdf,0Xabcdef99999999999900000000000,<EOF>"
-        # expect = "123,310596,______32424,34234,_________________3243243,345,___5546___565465_1407_____43423,0b111101,0B000000000011111111,0b111111111111111110000000000000000,0123,002344,0003432434234,00000000000000003123123213,02313123200000000000000,0x0000000000000000001,abcdf,0,Xabcdef99999999999900000000000,<EOF>"
         expect = "123,310596,______32424,34234,_________________3243243,345,___5546___565465_1407_____43423,0b111101,0B0,00,00,00,00,011111111,0b111111111111111110000000000000000,0123,00,2344,00,03432434234,00,00,00,00,00,00,00,00,3123123213,02313123200000000000000,0x0,00,00,00,00,00,00,00,00,01,abcdf,0,Xabcdef99999999999900000000000,<EOF>"
         self.assertTrue(TestLexer.test(input, expect, 167))
     
@@ -544,7 +589,8 @@ class LexerSuite(unittest.TestCase):
             "But this string is not"
             "I don't know what tests to write"
         """
-        expect = r"""First string is valid,I don\'t know what tests to write,But this string is not,Illegal Escape In String: I don't"""
+        # expect = r"""First string is valid,I don\'t know what tests to write,But this string is not,Illegal Escape In String: I don't"""
+        expect = r"""First string is valid,I don\'t know what tests to write,But this string is not,I don't know what tests to write,<EOF>"""
         self.assertTrue(TestLexer.test(input, expect, 170))
         
     def test_string_unclosed(self):
@@ -565,13 +611,6 @@ class LexerSuite(unittest.TestCase):
         """
         expect = "nhanvo     x                       ldpv,<EOF>"
         self.assertTrue(TestLexer.test(input, expect, 172))
-    
-    # def test_unterminated_comment(self):
-    #     input = r"""
-    #         ##this is a comment "this is a string inside comment#~#@#||||####
-    #     """
-    #     expect = "Unterminated Comment"
-    #     self.assertTrue(TestLexer.test(input, expect, 173))
     
     def test_sample_code_sorting(self):
         input = r"""
@@ -611,39 +650,116 @@ class LexerSuite(unittest.TestCase):
     
     def test_sample_code_memo(self):
         input = r"""
-            string calculate(long long int n)
-            {
-                auto memo = std::vector<std::string>(n + 1);
-                memo[0] = "0";
-                memo[1] = "1";
-                for(long long int i = 2; i <= n; ++i)
-                {
-                    if(i%2 == 0) memo[i] = memo[i/2] + "0" + memo[i/2];
-                    else memo[i] = memo[i/2] + "1" + memo[i/2];
+            Class Program {
+                    
+                Val My1stCons, My2ndCons: Int = 1 + 5, 2;
+                Var $x, $y, z : Int = 0, 0, 0;
+                
+                Constructor(a: Int; B: Float) {
+                    $x = 10;
+                    $y = 1000;
+                    My1stCons = 5 + 2;
+                    My2ndCons = (0b1101010 && 0b1101110);
                 }
-                return memo[n];
+                
+                Destructor() {
+                    $x = 0;
+                    $y = 0;
+                    My1stCons = 0;
+                    My2ndCons = 0;
+                }
+                
+                test() {
+                    If (-5 == 5) {##nothing##}
+                    If (5 != 4) {##nothing##}
+                    If (5 > 4) {##nothing##}
+                    If (3 < 4) {##nothing##}
+                    If (5 >= 4) {##nothing##}
+                    If (3 <= 4) {##nothing##}
+                    If (a == 5) {##nothing##}
+                    If (a < 5) {##nothing##}
+                    If (a > 5) {##nothing##}
+                    If (a <= 5) {##nothing##}
+                    If (a >= 5) {##nothing##}
+                    If (a == xyz) {##nothing##}
+                    If (a != $xyz) {##nothing##}
+                    If (a > nhanvo) {##nothing##}
+                    If (a < ldpv) {##nothing##}
+                    If (a >= abc) {##nothing##}
+                    If (a <= abc) {##nothing##}
+                }
+                
+                main() {
+                    
+                }
+            }
+            
+            Class Program {
+                    
+                Val a: Int = 130703100310 + -255255255255;
+                Val b: Int = -130703100310 - 255255255255;
+                Var m: Int =-130703100310 / 255255255255;
+                Var c: Int = 130703100310 % 255255255255;
+                Var d: Float = -130703100310.213e-10 + -255255255255.3e+10;
+                Var e: Float = 0.0000001e10 - -0.00000000000000008e-10;
+                Var f: Float = 99999.10e30 / -123456789.10e-20;
+    
+                Constructor(a: Int; B: Float) {}
+                
+                Destructor() {}
+
+                main() {}
+            }
+            
+            Class Program {
+                    
+                Val str1: String = arr[1];
+                Val str2: String = x[1][2];
+                Val a: String = x[1][2][3];
+                Var c: String =  x[1][2][3][4];
+                Var c: String =  arr[arr[arr[1]]];
+                Var c: String =  arr[arr[1]];
+
+                Constructor(a: Int; B: Float) {}
+                
+                Destructor() {}
+
+                main() {
+                    a = 2;
+                    abc = 2+5;
+                    abc = (0b110101 && 0b1100100);
+                    abc = (0b010101 || 0b1100100);
+                    abc = "first string" + "second string";
+                    abc = arr[1][2];
+                    $abc = arr[arr[arr[1]]];
+                    arr[2] = arr[arr[arr[1]]];
+                    arr[arr[arr[arr[100]]]] = a.b;
+                }
             }
         """
-        expect = """string,calculate,(,long,long,int,n,),{,auto,memo,=,std,::,vector,<,std,::,string,>,(,n,+,1,),;,memo,[,0,],=,0,;,memo,[,1,],=,1,;,for,(,long,long,int,i,=,2,;,i,<=,n,;,+,+,i,),{,if,(,i,%,2,==,0,),memo,[,i,],=,memo,[,i,/,2,],+,0,+,memo,[,i,/,2,],;,else,memo,[,i,],=,memo,[,i,/,2,],+,1,+,memo,[,i,/,2,],;,},return,memo,[,n,],;,},<EOF>"""
+        expect = "Class,Program,{,Val,My1stCons,,,My2ndCons,:,Int,=,1,+,5,,,2,;,Var,$x,,,$y,,,z,:,Int,=,0,,,0,,,0,;,Constructor,(,a,:,Int,;,B,:,Float,),{,$x,=,10,;,$y,=,1000,;,My1stCons,=,5,+,2,;,My2ndCons,=,(,0b1101010,&&,0b1101110,),;,},Destructor,(,),{,$x,=,0,;,$y,=,0,;,My1stCons,=,0,;,My2ndCons,=,0,;,},test,(,),{,If,(,-,5,==,5,),{,},If,(,5,!=,4,),{,},If,(,5,>,4,),{,},If,(,3,<,4,),{,},If,(,5,>=,4,),{,},If,(,3,<=,4,),{,},If,(,a,==,5,),{,},If,(,a,<,5,),{,},If,(,a,>,5,),{,},If,(,a,<=,5,),{,},If,(,a,>=,5,),{,},If,(,a,==,xyz,),{,},If,(,a,!=,$xyz,),{,},If,(,a,>,nhanvo,),{,},If,(,a,<,ldpv,),{,},If,(,a,>=,abc,),{,},If,(,a,<=,abc,),{,},},main,(,),{,},},Class,Program,{,Val,a,:,Int,=,130703100310,+,-,255255255255,;,Val,b,:,Int,=,-,130703100310,-,255255255255,;,Var,m,:,Int,=,-,130703100310,/,255255255255,;,Var,c,:,Int,=,130703100310,%,255255255255,;,Var,d,:,Float,=,-,130703100310.213e-10,+,-,255255255255.3e+10,;,Var,e,:,Float,=,0.0000001e10,-,-,0.00000000000000008e-10,;,Var,f,:,Float,=,99999.10e30,/,-,123456789.10e-20,;,Constructor,(,a,:,Int,;,B,:,Float,),{,},Destructor,(,),{,},main,(,),{,},},Class,Program,{,Val,str1,:,String,=,arr,[,1,],;,Val,str2,:,String,=,x,[,1,],[,2,],;,Val,a,:,String,=,x,[,1,],[,2,],[,3,],;,Var,c,:,String,=,x,[,1,],[,2,],[,3,],[,4,],;,Var,c,:,String,=,arr,[,arr,[,arr,[,1,],],],;,Var,c,:,String,=,arr,[,arr,[,1,],],;,Constructor,(,a,:,Int,;,B,:,Float,),{,},Destructor,(,),{,},main,(,),{,a,=,2,;,abc,=,2,+,5,;,abc,=,(,0b110101,&&,0b1100100,),;,abc,=,(,0b0,10101,||,0b1100100,),;,abc,=,first string,+,second string,;,abc,=,arr,[,1,],[,2,],;,$abc,=,arr,[,arr,[,arr,[,1,],],],;,arr,[,2,],=,arr,[,arr,[,arr,[,1,],],],;,arr,[,arr,[,arr,[,arr,[,100,],],],],=,a,.,b,;,},},<EOF>"
         self.assertTrue(TestLexer.test(input, expect, 175))
         
     def test_string_with_some_tabs(self):
         input = """
             "abcd\t"
         """
-        expect = """abcd\t,<EOF>"""
+        # expect = """abcd\t,<EOF>"""
+        expect = """Unclosed String: abcd"""
         self.assertTrue(TestLexer.test(input, expect, 176))
         
     def test_string_with_some_escape(self):
         input = """
             "abc\b\f\t\t\t"
         """
-        expect = """abc\b\f\t\t\t,<EOF>"""
+        # expect = """abc\b\f\t\t\t,<EOF>"""
+        expect = """Unclosed String: abc"""
         self.assertTrue(TestLexer.test(input, expect, 177))
     
     def test_invalid_escape_quote(self):
         input = """ "This is another invalid ''" quote" """
-        expect = """Illegal Escape In String: This is another invalid ''"""
+        # expect = """Illegal Escape In String: This is another invalid ''"""
+        expect = """This is another invalid ''" quote,<EOF>"""
         self.assertTrue(TestLexer.test(input, expect, 178))
         
     def test_invalid_keywords(self):
@@ -656,8 +772,6 @@ class LexerSuite(unittest.TestCase):
         input = r"""
                     123_abcd 000_xyz 000234_123xyz
                 """
-        # expect = """123,abcd,000,_xyz,000234,_123xyz,<EOF>"""
-        # expect = """123,_abcd,000,_xyz,000234,_123xyz,<EOF>"""
         expect = """123,_abcd,00,0,_xyz,00,0234123,xyz,<EOF>"""
         self.assertTrue(TestLexer.test(input, expect, 180))
         
@@ -665,16 +779,15 @@ class LexerSuite(unittest.TestCase):
         input = r"""
                     e12 e-12 e+12 EEE-10 0000000000000002.32423
                 """
-        # expect = """e12,e,-,12,e,+,12,EEE,-,10,0000000000000002,.32423,<EOF>"""
-        expect = """e12,e,-,12,e,+,12,EEE,-,10,0000000000000002.32423,<EOF>"""
+        expect = """e12,e,-,12,e,+,12,EEE,-,10,00,00,00,00,00,00,00,02,.,32423,<EOF>"""
         self.assertTrue(TestLexer.test(input, expect, 181))
         
     def test_some_confused_escape(self):
         input = """
                     "The first string \'"confused\'""
-                    "The second string illegal \'n"
+                    "The second string is or not illegal \'n"
                 """
-        expect = """The first string '"confused'",Illegal Escape In String: The second string illegal 'n"""
+        expect = """The first string '"confused'",The second string is or not illegal 'n,<EOF>"""
         self.assertTrue(TestLexer.test(input, expect, 182))
         
     def test_some_confused_escape_2(self):
@@ -705,6 +818,7 @@ class LexerSuite(unittest.TestCase):
                     int Dijkstra(int** graph, int src, int dst) {
                         // TODO: return the length of shortest path from src to dst.
                         int n = 6;
+
                         list<myPair> *li = new list<myPair>[n];
                         
                         
@@ -718,34 +832,43 @@ class LexerSuite(unittest.TestCase):
                             }
                             //cout << endl;
                         }
+
                         vector<int> distance (n, 999999999);
                         priority_queue<myPair, vector<myPair>, greater<myPair>> q;
                         
                         q.push(make_pair(0, src));
                         distance[src] = 0;
+
                         while (!q.empty()) {
                             int u = q.top().second;
                             q.pop();
+
                             for (auto x = li[u].begin(); x != li[u].end(); x++) {
                                 int weight = x->first;
                                 int des = x->second;
+
                                 if (distance[u] + weight < distance[des]) {
                                     distance[des] = distance[u] + weight;
                                     q.push(make_pair(distance[des], des));
                                 }
                             }
                         }
+
                         /*for (int i = 0; i < 6; i++) {
+
                             cout << i << ": ";
                             for (auto x = li[i].begin(); x != li[i].end(); x++) {
                                 cout << x->second << "  ";
                             }   
                             cout << endl;
                         }*/
+
                         int result = 0;
+
                         for (int i = 0; i < 9; i++) {
                             if (i == dst)   result = distance[i];
                         }
+
                         
                         return result;
                     }
@@ -785,21 +908,24 @@ class LexerSuite(unittest.TestCase):
         input = """
                     "nhanvo \f "
                 """
-        expect = "nhanvo \f ,<EOF>"
+        # expect = "nhanvo \f ,<EOF>"
+        expect = "Unclosed String: nhanvo "
         self.assertTrue(TestLexer.test(input, expect, 190))
         
     def test_some_unclosed_5(self):
         input = """
                     "nhanvo \t "
                 """
-        expect = "nhanvo \t ,<EOF>"
+        # expect = "nhanvo \t ,<EOF>"
+        expect = "Unclosed String: nhanvo "
         self.assertTrue(TestLexer.test(input, expect, 191))
         
     def test_some_unclosed_6(self):
         input = """
                     "nhanvo \b "
                 """
-        expect = "nhanvo \b ,<EOF>"
+        # expect = "nhanvo \b ,<EOF>"
+        expect = "Unclosed String: nhanvo "
         self.assertTrue(TestLexer.test(input, expect, 192))
         
     def test_keywords_in_string(self):
@@ -817,10 +943,10 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test(input, expect, 194))
         
     def test_escape(self):
-        input = """
+        input = r"""
                     "\\\\ \\n \b \f \t \\b \\f \\t \f \f"
                 """
-        expect = """\\\\ \\n \b \f \t \\b \\f \\t \f \f,<EOF>"""
+        expect = r"""\\\\ \\n \b \f \t \\b \\f \\t \f \f,<EOF>"""
         self.assertTrue(TestLexer.test(input, expect, 195))
     
     def test_unclosed_mixed(self):
@@ -828,7 +954,8 @@ class LexerSuite(unittest.TestCase):
             "There are some escape seq here: \b \\b mid \f \\f mid \t \\t mid '"\tinsingle\t'"again insingle of before'"\t'"\f\t \b \n'""    
             ""     
         """
-        expect = """Unclosed String: There are some escape seq here: \b \\b mid \f \\f mid \t \\t mid '"\tinsingle\t'"again insingle of before'"\t'"\f\t \b """
+        # expect = """Unclosed String: There are some escape seq here: \b \\b mid \f \\f mid \t \\t mid '"\tinsingle\t'"again insingle of before'"\t'"\f\t \b """
+        expect = """Unclosed String: There are some escape seq here: """
         self.assertTrue(TestLexer.test(input, expect, 196))
         
     def test_code_keywords(self):
@@ -846,6 +973,7 @@ class LexerSuite(unittest.TestCase):
                             Break;
                         return $numOfShape;
                     }
+
                     Constructor() {}
                     
                     Destructor() {}
@@ -873,9 +1001,7 @@ class LexerSuite(unittest.TestCase):
                     0x000123 0X000000abcdef 0xfffff000000 0xpefd9999
                     0000456 0067896 07865 088888
                     0b00001111 0B000111 0b111110101011 0B101010101 0b01010101
-                """
-        # expect = "0,123,_123456,31074,_,14070310,12345678,_,_1_234_5678,000234,0x123abcdef,0Xabcdef,0xABCD99999,0XABCD912432,0x000123,0X000000abcdef,0xfffff000000,0,xpefd9999,0000456,0067,896,07,865,0,88888,0b00001111,0B000111,0b111110101011,0B101010101,0b01010101,<EOF>"
-        # expect = "0,123,_123456,31074,_,14070310,12345678,_,_1_234_5678,000234,0x123,abcdef,0,Xabcdef,0xABCD99999,0XABCD912432,0x000123,0X000000,abcdef,0,xfffff000000,0,xpefd9999,0000456,0067,896,07,865,0,88888,0b00001111,0B000111,0b111110101011,0B101010101,0b01010101,<EOF>"
+                """      
         expect = "0,123,_123456,31074,_,14070310,12345678,_,_1_234_5678,00,0234,0x123,abcdef,0,Xabcdef,0xABCD99999,0XABCD912432,0x0,00,123,0X0,00,00,0,abcdef,0,xfffff000000,0,xpefd9999,00,00,456,00,67896,07,865,0,88888,0b0,00,01111,0B0,00,111,0b111110101011,0B101010101,0b0,1010101,<EOF>"
         self.assertTrue(TestLexer.test(input, expect, 199))
         
@@ -888,9 +1014,161 @@ class LexerSuite(unittest.TestCase):
                     .e-10000000 .e+00000001 .e000000002 .e30000000
                     1_234_6756.234_342_234 1_234_6756.234_342_234__ __1_234_6756.234_342_234__
                     .e_10 .e-10_000_000 .E+111_1111_
-                    7.3_456_567e+10_234_678 000_000_123_000.E+000_000_111       
+                    7.3_456_567e+10_234_678 000_000_123_000.E+000_000_111
+                    ## new ##
+                    00002.345
+                    2.e00000000
+                    12.0000000
+                    12.00002
+                    2.e000012
+                    0.00232e+002   
+                    0.0
+                    0.0000000e0000000
+                    0.0000000000
                 """
-        # expect = "0.2,0.03,0.00004,0.10000000000,0.100002,7.3,7.0000003,7.30000000000,100.00000000000000,0.2e10,0.0003e-10,0.300000E-10,0.40000e+10,7.33000e-10,8.4E+10,.,234,.,0000003,.,3000000,.e10,.e-10,.e+10,e,+,10,e,-,10,12e10,45e+10,6e+00000001,0000023e-10,230000E+10,.e-10000000,.e+00000001,.e000000002,.e30000000,12346756.234342234,12346756.234342234,__,__1_234_6756,.,234342234,__,.,e_10,.e-10000000,.E+1111111,_,7.3456567e+10234678,000000123000.E+000000111,<EOF>"
-        # expect = "0.2,0.03,0.00004,0.10000000000,0.100002,7.3,7.0000003,7.30000000000,100.00000000000000,0.2e10,0.0003e-10,0.300000E-10,0.40000e+10,7.33000e-10,8.4E+10,.,234,.,0000003,.,3000000,.e10,.e-10,.e+10,e,+,10,e,-,10,12e10,45e+10,6e+00000001,0000023e-10,230000E+10,.e-10000000,.e+00000001,.e000000002,.e30000000,12346756.234,_342_234,12346756.234,_342_234__,__1_234_6756,.,234342234,__,.,e_10,.e-10,_000_000,.E+111,_1111_,7.3,_456_567e,+,10234678,000000123000.E+000,_000_111,<EOF>"
-        expect = "0.2,0.03,0.00004,0.10000000000,0.100002,7.3,7.0000003,7.30000000000,100.00000000000000,0.2e10,0.0003e-10,0.300000E-10,0.40000e+10,7.33000e-10,8.4E+10,.,234,.,00,00,00,3,.,3000000,.e10,.e-10,.e+10,e,+,10,e,-,10,12e10,45e+10,6e+00000001,0000023e-10,230000E+10,.e-10000000,.e+00000001,.e000000002,.e30000000,12346756.234,_342_234,12346756.234,_342_234__,__1_234_6756,.,234342234,__,.,e_10,.e-10,_000_000,.E+111,_1111_,7.3,_456_567e,+,10234678,000000123000.E+000,_000_111,<EOF>"
+        expect = "0.2,0.03,0.00004,0.10000000000,0.100002,7.3,7.0000003,7.30000000000,100.00000000000000,0.2e10,0.0003e-10,0.300000E-10,0.40000e+10,7.33000e-10,8.4E+10,.,234,.,00,00,00,3,.,3000000,.e10,.e-10,.e+10,e,+,10,e,-,10,12e10,45e+10,6e+00000001,00,00,023,e,-,10,230000E+10,.e-10000000,.e+00000001,.e000000002,.e30000000,12346756.234,_342_234,12346756.234,_342_234__,__1_234_6756,.,234342234,__,.,e_10,.e-10,_000_000,.E+111,_1111_,7.3,_456_567e,+,10234678,00,0,_000_123_000,.E+000,_000_111,00,00,2.345,2.e00000000,12.0000000,12.00002,2.e000012,0.00232e+002,0.0,0.0000000e0000000,0.0000000000,<EOF>"
         self.assertTrue(TestLexer.test(input, expect, 200))
+        
+        
+    def test_some_thing_confused_1(self):
+        input = """"nhan\nsdnjas" """
+        expect = "Unclosed String: nhan"
+        self.assertTrue(TestLexer.test(input, expect, 1201))
+        
+    def test_some_thing_confused_2(self):
+        input = """"nhan\rsdnjas" """
+        expect = "Unclosed String: nhan"
+        self.assertTrue(TestLexer.test(input, expect, 1202))
+        
+    def test_some_thing_confused_3(self):
+        input = """"nhan \\n sdnjas" """
+        expect = "nhan \\n sdnjas,<EOF>"
+        self.assertTrue(TestLexer.test(input, expect, 1203))
+        
+    def test_some_thing_confused_4(self):
+        input = """"nhan \\r sdnjas" """
+        expect = "nhan \\r sdnjas,<EOF>"
+        self.assertTrue(TestLexer.test(input, expect, 1204))
+        
+    def test_some_thing_confused_5(self):
+        input = """"nhan \b \f \t sdnjas" """
+        expect = "Unclosed String: nhan "
+        self.assertTrue(TestLexer.test(input, expect, 1205))
+        
+    def test_some_thing_confused_6(self):
+        input = """"nhan" abc" """
+        expect = "nhan,abc,Unclosed String:  "
+        self.assertTrue(TestLexer.test(input, expect, 1206))
+        
+    def test_some_thing_confused_7(self):
+        input = """"nhan ' abc" """
+        expect = "nhan ' abc,<EOF>"
+        self.assertTrue(TestLexer.test(input, expect, 1207))
+        
+    def test_some_thing_confused_8(self):
+        input = """"nhan '" abc" """
+        expect = "nhan '\" abc,<EOF>"
+        self.assertTrue(TestLexer.test(input, expect, 1208))
+        
+    def test_some_thing_confused_9(self):
+        input = """"nhan '"abc'" abc" """
+        expect = "nhan '\"abc'\" abc,<EOF>"
+        self.assertTrue(TestLexer.test(input, expect, 1209))
+        
+    def test_some_thing_confused_10(self):
+        input = """"nhan'\""""
+        # expect = "nhan',<EOF>"  ## code cũ
+        expect = "Unclosed String: nhan'"  ## code MC
+        self.assertTrue(TestLexer.test(input, expect, 1210))
+        
+    def test_some_thing_confused_11(self):
+        input = """"nhan'\" """
+        expect = "Unclosed String: nhan'\" "
+        self.assertTrue(TestLexer.test(input, expect, 1211))
+        
+    def test_some_thing_confused_12(self):
+        input = """"nhan's handsome\""""
+        expect = "nhan's handsome,<EOF>"
+        self.assertTrue(TestLexer.test(input, expect, 1212))
+        
+    def test_some_thing_confused_13(self):
+        input = """"nhan's handsome" """
+        expect = "nhan's handsome,<EOF>"
+        self.assertTrue(TestLexer.test(input, expect, 1213))
+        
+    def test_some_thing_confused_14(self):
+        input = """ "nhan
+        vo" """
+        expect = "Unclosed String: nhan"
+        self.assertTrue(TestLexer.test(input, expect, 1214))
+    
+    def test_some_thing_confused_15(self):
+        input = """ "nhan\ybc" """
+        expect = "Illegal Escape In String: nhan\y"
+        self.assertTrue(TestLexer.test(input, expect, 1215))
+        
+    def test_some_thing_confused_16(self):
+        input = """ "nhan\\ybc" """
+        expect = "Illegal Escape In String: nhan\\y"
+        self.assertTrue(TestLexer.test(input, expect, 1216))
+        
+    def test_some_thing_confused_17(self):
+        input = """ "nhan\b\t\f \\b\\t\\f ''"" """
+        # expect = "nhan\b\t\f \\b\\t\\f ''\",<EOF>"
+        expect = "Unclosed String: nhan"
+        self.assertTrue(TestLexer.test(input, expect, 1217))
+        
+    def test_some_thing_confused_18(self):
+        input = """ "''''''''''''"" """
+        expect = "''''''''''''\",<EOF>"
+        self.assertTrue(TestLexer.test(input, expect, 1218))
+        
+    def test_some_thing_confused_19(self):
+        input = """ "''''''''''''"" " """
+        expect = "''''''''''''\",Unclosed String:  "
+        self.assertTrue(TestLexer.test(input, expect, 1219))
+        
+    def test_some_thing_confused_20(self):
+        ## sửa code theo MC thì sẽ unclose, code cũ là hợp lệ"
+        input = r"""
+            "string'"
+        """
+        expect = "Unclosed String: string'\""
+        self.assertTrue(TestLexer.test(input, expect, 1220))
+        
+    def test_some_thing_confused_21(self):
+        ## sửa code theo MC thì unclose, code cũ ilegal do không cho dấu / đứng 1 mình
+        input = """"string \\"""
+        expect = "Unclosed String: string "
+        self.assertTrue(TestLexer.test(input, expect, 1221))
+        
+    def test_some_thing_confused_22(self):
+        input = """"string \n"""
+        expect = "Unclosed String: string "
+        self.assertTrue(TestLexer.test(input, expect, 1222))
+    
+    def test_some_thing_confused_23(self):
+        input = """"string '"
+        """
+        expect = "Unclosed String: string '\""
+        self.assertTrue(TestLexer.test(input, expect, 1223))
+        
+    def test_some_thing_confused_24(self):
+        input = """"string '"\n"""
+        expect = "Unclosed String: string '\""
+        self.assertTrue(TestLexer.test(input, expect, 1224))
+        
+    def test_some_thing_confused_25(self):
+        input = """"string '"\b\""""
+        expect = "Unclosed String: string '\""
+        self.assertTrue(TestLexer.test(input, expect, 1225))
+        
+    def test_some_thing_confused_26(self):
+        input = """ "she \'\" """
+        expect = "Unclosed String: she \'\" "
+        self.assertTrue(TestLexer.test(input, expect, 1226))
+        
+    def test_some_thing_confused_27(self):
+        input = """ "she \'\""""
+        expect = "Unclosed String: she \'"
+        self.assertTrue(TestLexer.test(input, expect, 1227))

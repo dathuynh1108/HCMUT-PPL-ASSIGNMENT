@@ -1,1 +1,1 @@
-Error on line 9 col 8: <EOF>
+Error on line 19 col 35: $length

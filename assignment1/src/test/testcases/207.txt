@@ -1,7 +1,28 @@
 
-            Class Program {
-                Var num_1, num_2, num_3: Int;
-                Var x, y, z: Int = 1,2,3;
-                Val $a, $b, $c: String = "string 1", "string 2", "string 3";
-            }
-        
+                Class Program {
+                    
+                    Val str1: String = arr[1];
+
+                    Constructor(a: Int; B: Float) {}
+                    
+                    Destructor() {}
+
+                    main() {
+                        If (a == 5) {##nothing##}
+                        If (2+5 == 5) {##nothing##}
+                        If (arr[arr[arr[arr[100]]]] == (0b110101 && 0B1100100)) {##nothing##}
+                        If (True) {##nothing##}
+                        If (!True && False && ( (a == 5) || (b == 6) ) ) {##nothing##}
+                        
+                        If (!True && False) { ##nothing## } Else {##nothing##}
+                        
+                        If (!True && False) { ##nothing## } 
+                        Elseif (a == 5) {##nothing##}
+                        Elseif (b == 6) {  }
+                        Elseif (!False) {##nothing##}
+                        Elseif (a < b) {##nothing##}
+                        Elseif (Shape::$xyz >= 3) {##nothing##}
+                        Elseif (ar[2] > 3) {##nothing##}
+                    }
+                }
+                

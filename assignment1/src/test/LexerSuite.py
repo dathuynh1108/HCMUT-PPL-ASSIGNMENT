@@ -189,9 +189,7 @@ class LexerSuite(unittest.TestCase):
             "Hello \' there"
             "Huynh Thanh Dat\"
         """
-        expect = (
-            r"abc,abc\',abc',Hello \' there,Illegal Escape In String: Huynh Thanh Dat\""
-        )
+        expect = "abc,abc\\',Unclosed String: abc'\""
         num = 120
         self.assertTrue(TestLexer.test(input, expect, num))
 
@@ -272,10 +270,8 @@ class LexerSuite(unittest.TestCase):
         input = r"""
             "String end with double quote'""
             "Unclose string end with double quote'"
-            "String'"
-            "String'" 
         """
-        expect = """String end with double quote'",Unclose string end with double quote',String',Unclosed String: String'" """
+        expect = """String end with double quote'",Unclosed String: Unclose string end with double quote'\""""
         num = 128
         self.assertTrue(TestLexer.test(input, expect, num))
 
@@ -315,10 +311,9 @@ class LexerSuite(unittest.TestCase):
         input = r"""
             "Valid string"
             "'"Valid string'" Cristiano Ronaldo"
-            "String end with double quote'"
-            "String end with double quote and space '" 
+            "Unclose string end with double quote and space'" 
         """
-        expect = """Valid string,'"Valid string'" Cristiano Ronaldo,String end with double quote',Unclosed String: String end with double quote and space '" """
+        expect = """Valid string,'"Valid string'" Cristiano Ronaldo,Unclosed String: Unclose string end with double quote and space'" """
         num = 132
         self.assertTrue(TestLexer.test(input, expect, num))
 
@@ -926,7 +921,7 @@ class LexerSuite(unittest.TestCase):
         num = 178
         self.assertTrue(TestLexer.test(input, expect, num))
 
-    def test_079_special_case(self):
+    def test_079_string_special_case(self):
         input = r"""
             ## Unclose or Illegal ??, need do print \n? ##
             "abcde\
@@ -936,12 +931,12 @@ class LexerSuite(unittest.TestCase):
         num = 179
         self.assertTrue(TestLexer.test(input, expect, num))
 
-    def test_080_special_case(self):
+    def test_080_string_special_case(self):
         input = r"""
-            ## Unclose or Illegal ?? ##
+            ## Unclose or Illegal or Valid ?? ##
             "abcde'"
         """
-        expect = """abcde',<EOF>"""
+        expect = """Unclosed String: abcde'\""""
         num = 180
         self.assertTrue(TestLexer.test(input, expect, num))
 
@@ -1329,9 +1324,10 @@ class LexerSuite(unittest.TestCase):
         num = 195
         self.assertTrue(TestLexer.test(input, expect, num))
 
-    def test_096_string_illegal_escape(self):
+    def test_096_string_illegal_escape_and_unclose(self):
+        # Unclose or illegal ?, need to print \ ?
         input = """"String \\"""
-        expect = """Illegal Escape In String: String \\"""
+        expect = """Unclosed String: String """
         num = 196
         self.assertTrue(TestLexer.test(input, expect, num))
 

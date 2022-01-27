@@ -1,9 +1,40 @@
-
-            Class Program {
-                $Method() {
-                    Console.log(1);
-                    Console::$log(1);
-                }
-                Var x: Int = 1;
-
-        
+ 
+                    Class Program {
+                        Var x: Int;
+                        Var arr: Array[Array[Int, 1], 1] = some_arr[1][another_arr[2]];
+                        Var $length: Float;
+                        Var $width: Float;
+                        
+                        Constructor() {
+                            Shape::$length = 12;
+                            Shape::$width = 12;
+                        }
+                        
+                        Constructor(l, w: Float) {
+                            Shape::$length = l;
+                            Shape::$width = w;
+                        }
+                        
+                        $getLength() {
+                            Return $length;
+                        }
+                        
+                        $getWidth() {
+                            Return Shape::$width;
+                        }
+                        
+                        main() {
+                            Var obj: Shape = New Shape(20, 20);
+                            Var l: Float = $getLength();
+                            Var l2: Float = Program::$getLength();
+                            Var w: Float = $getWidth();
+                            Var w2: Float = Program::$getWidth();
+                            
+                            Foreach (x In 5 .. 2) {
+                                obj.printInt(arr[x]);
+                            }
+                            
+                            Return;
+                        }
+                    }
+                

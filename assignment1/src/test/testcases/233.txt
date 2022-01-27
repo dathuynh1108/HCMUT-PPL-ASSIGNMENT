@@ -1,8 +1,9 @@
 
-            Class Program {
-                main() {
-                    Var a: Int;
-                    a = b.$attribute;
-                }
-            }
-        
+                    Class Shape {
+                        Var x, $y, z: Boolean;
+                        Var m, $n, p: Boolean = True, False, False;
+                        main() {
+                            a = b;
+                        }
+                    }
+                

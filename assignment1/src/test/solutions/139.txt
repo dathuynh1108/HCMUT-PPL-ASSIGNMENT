@@ -1,1 +1,1 @@
-True,TRUE,False,FALSE,True_with_other_chars,False_with_other_chars,<EOF>
+str1,+.,str2,a,=,a,+,3.4,5,*,7,a,%,b,5,<=,7,c,/,d,<EOF>

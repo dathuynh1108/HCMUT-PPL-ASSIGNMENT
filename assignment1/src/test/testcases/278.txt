@@ -1,14 +1,23 @@
-
-            Class Program {
-                $Method() {
-                    Console.log(1);
-                    Console::$log(1);
-                }
-                Var x: Int = 1;
-                main() {
-                    Self.variable = 1;
-                    variable = 1;
-                    Self::$variable = 1;
-                }
-            }
-        
+ 
+                    Class Program {
+                        Var arr: Array[Array[Int, 2], 3] = Array(
+                                                                Array(1, "nhan"),
+                                                                Array (2, 4.5, 0.0000, 0x2341, "string"),
+                                                                Array()
+                                                            ); 
+                        
+                        main() {
+                            Str = "No need same type in multi-dimensional array";
+                        }
+                        
+                        Constructor(x: Float; str: String) {
+                            Self.x = x;
+                            y = str;
+                        }
+                        
+                        Destructor() {
+                            Self.x = 0;
+                            y = "";
+                        }
+                    }
+                

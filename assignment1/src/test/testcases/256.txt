@@ -1,69 +1,23 @@
 
-            Class Some_class {         
-                    Constructor(int: Int; string: String) {}
-                    Constructor() {}
-                    Destructor() {}
-            }
-            Class Program {
-                main() {
-                    If (1>2) {
-                        Var a,b,c: Int = 1,2,3;
-                        If (a+b+c) {
-                            a = 1;
-                            b = a + b + c;
-                            c = 1;
+                    Class Program {
+                        Constructor(a, b, c, d: Int; x, y, z: String; arr: Array[Int, 3]) {
+                            Var a: Int;
                         }
-                        Elseif(a+b+c == 100) {
-                            a = 1;
-                            b = a + b + c;
-                            c = 1;
-                        } 
-                        Elseif (1>2) {}
-                        Elseif (1>2) {}
-                        Else {
-                            a = 1;
-                            b = a + b + c;
-                            c = 1;
+                        
+                        main() {
+                            x.func();
+                            x.func(a, b, c, d, "nhanvo", 1+2, "str1" + "str2");
+                            x.func(a, "nhanvo", 1+2, "str1" + "str2").func2(a, "nhanvo", 1+2, "str1" + "str2");
+                            x.func(a, "nhanvo", 1+2, "str1" + "str2").func2(a, "nhanvo", 1+2, "str1" + "str2").func3(a, "nhanvo", 1+2, "str1" + "str2");
+                            New X().func();
+                            New X().func().func2();
+                            (New X().func().objInClass).func2();
+                            (Shape::$obj).func();
+                            New X().c.func();
+                            (arr[1]).c.func();
+                            Shape::$obj.obj2.func();
+                            obj.obj2.func();
+                            ("str" + "str").func();     ## ???? ##
                         }
                     }
-                    Elseif(10>2) {
-                        Var x,y,z: String = "abc", "abc", "abc";
-                        If ("abc" ==. x) {
-                            x = "xyz";
-                        }
-                        Elseif (y +. "abc") {
-                            y = y +. "xyz";
-                        }
-                        Elseif (1>2) {
-                            a = 1;
-                            b = a + b + c;
-                            c = 1;}
-                        Elseif (1||2) {
-                            a = 1;
-                            b = a + b + c;
-                            c = 1;
-                        }
-                        Elseif (1&&2) {
-                            a = 1;
-                            b = a + b + c;
-                            c = 1;
-                        }
-                        Elseif (!1) {
-                            a = 1;
-                            b = a + b + c;
-                            c = 1;
-                        }
-                        Else {
-                            z = z ==. "xyz";
-                        }
-                    }
-                    Elseif (1>2) {}
-                    Elseif (1>2) {}
-                    Elseif (1>2) {}
-                    Elseif (1>2) {}
-                    Else {
-                        a = 1;
-                    }
-                }
-            }
-        
+                

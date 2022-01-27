@@ -1,4 +1,1 @@
-
-            "String with expression: 1+1*1/1%1*(1+1)"
-            Expression: 1+1*1/1%1*(1+1)
-        
+! && || == !=

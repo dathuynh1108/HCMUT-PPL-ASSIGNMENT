@@ -1,1 +1,1 @@
-Illegal Escape In String: abcd\"
+\\\\ \\n \b \f \t \\b \\f \\t \f \f,<EOF>

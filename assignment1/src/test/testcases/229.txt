@@ -1,14 +1,8 @@
 
-            Class Program {
-                main() {
-                    Var a: Int;
-                    a = !(-1+2)*3/4%5 && True || False;
-                    a = 1 == 2;
-                    a = 1 != 2;
-                    a = 1 > 2;
-                    a = 1 < 2;
-                    a = 1 >= 2;
-                    a = 1<= 2;
-                }
-            }
-        
+                    Class Shape {
+                        Var a, b: Float = 10;
+                        main() {
+                            
+                        }
+                    }
+                

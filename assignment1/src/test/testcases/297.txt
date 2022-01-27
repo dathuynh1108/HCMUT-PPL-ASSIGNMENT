@@ -1,11 +1,11 @@
-
-            Class Program {
-                Var a,b,$c: Int = 1,2,3; ## Equal ##
-                Val a,b,$c: Int = 1,2,3; ## Equal ##
-                main() {
-                    Var a,b,c: Int = 1,2,3; ## Equal ##
-                    Val a,b,c: Int = 1,2,3; ## Equal ##
-                    Var a,b,c: Int = 1,2; ## Less than variable ##
-                }
-            }
-        
+ 
+                    Class Program {
+                        Var x: Array[Array[Int, 1], 1] = Array();
+                        Val $x, y, $z: String = "nhan", 1.000 + "nhan", ---True - !!!!!False;    
+                    
+                        main() {
+                            x = "My name is Nhan. This name has two \'N\' characters";
+                            input = "He asked me: '"Where is John?'"";
+                        }
+                    }
+                

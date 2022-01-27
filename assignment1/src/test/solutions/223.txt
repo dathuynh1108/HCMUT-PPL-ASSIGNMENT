@@ -1,1 +1,1 @@
-successful
+Error on line 8 col 32: $a

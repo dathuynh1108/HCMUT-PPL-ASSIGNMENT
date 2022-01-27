@@ -1,10 +1,26 @@
-
-            Class Program {
-                $Method() {
-                    Console.log(1);
-                    Console::$log(1);
-                }
-                Var x: Int = 1;
-            }
-            Something write here
-        
+ 
+                    Class Program {
+                        Var x = 0;
+                        Var arr: Array[Array[Int, 1], 1] = some_arr[1][another_arr[2]];
+                        Var $length: Float;
+                        Var $width: Float;
+                        
+                        Constructor() {
+                            $length = 12;
+                            $width = 12;
+                        }
+                        
+                        Constructor(l, w: Float) {
+                            $length = l;
+                            $width = w;
+                        }
+                        
+                        Destructor() {
+                            Self.arr = Array(0, 0);
+                        }
+                        
+                        main() {
+                            Var obj: Shape = New Shape(20, 20);
+                        }
+                    }
+                

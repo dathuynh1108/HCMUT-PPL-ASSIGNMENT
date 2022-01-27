@@ -1,1 +1,1 @@
-==.,+.,==,.,+,.,string,+.,string,string,==.,string,<EOF>
+.,123,.2e10,.3e-10,.014e+10,<EOF>

@@ -1,7 +1,29 @@
 
-            Class Program {
-                Var $x: Int = 1;
-                method_1(x: Int; y: String) {}
-                main() {}
-            }
-        
+                Class Program {
+                    
+                    Val str1: String = arr[1];
+
+                    Constructor(a: Int; B: Float) {}
+                    
+                    Destructor() {}
+
+                    main() {
+                        Foreach (i In 1 .. 100 By 2) {
+                            If (!True && False) { Continue; } 
+                            Elseif (a == 5) { Break; }
+                        }
+                        
+                        Foreach (x In 5+2 .. 100*3) {
+                            If (x == (3*2--3)) {
+                                Return "Nhan Vo";   
+                            }
+                        }
+                        
+                        Foreach (abc In (-123456 + -34231) .. 2) {
+                            If (Shape::$abc == 4) {
+                                Return;
+                            }
+                        }
+                    }
+                }
+                
