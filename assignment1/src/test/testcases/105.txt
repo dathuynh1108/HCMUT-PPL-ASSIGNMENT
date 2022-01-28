@@ -1,12 +1,8 @@
-##nhan 
-        vo
-        nguyen
-        thien
-        ## 
-        nhanvo
-        ##nhan vo
-        is in
-        block comment
-        ##
-        ##nothing change##
+
+            normal_Variable_123 
+            $static_Variable_123 
+            $_ 
+            $123_Static_start_with_digit
+            $123
+            $
         

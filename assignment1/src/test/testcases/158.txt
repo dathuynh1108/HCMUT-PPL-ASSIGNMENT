@@ -1,18 +1,9 @@
 
-            template<class T>
-            T SLinkedList<T>::get(int index) {
-                /* Give the data of the element at given index in the list. */
-                if (index > this->count - 1)
-                    index = this->count - 1;
-
-                int count1 = 0;
-                Node* temp = head;
-
-                while (temp && count1 != index) {
-                    temp = temp->next;
-                    count1++;
-                }
-
-                return temp->data;
-            }
+            1.123e10 + 1.123e10
+            .123e10 + .123e10
+            1.123e+10 + 1.123e+10
+            1.123e-10 - 1.123e-10
+            1.123e+10 * 1.123e-10
+            1.123e+10 / 1.123e-10
+            1.123e+10 % 1.123e-10
         

@@ -1,3 +1,5 @@
+// Student ID: 1910110
+// Name: Huynh Thanh Dat
 grammar D96;
 
 @lexer::header {
@@ -75,6 +77,7 @@ indexed_array: ARRAY LP list_of_expressions? RP;
 
 /*
  ARRAY LITERAL CHECK SỐ PHẦN TỬ ARRAY
+ Note: Không cần check vấn đề này trong parser
  */
 /*
  indexed_array 
@@ -157,6 +160,7 @@ sign_expression: SUB sign_expression | index_expression;
 index_expression:
 	index_expression LSB expression RSB
 	| instance_access_expression;
+
 instance_access_expression:
 	instance_access_expression DOT ID LP list_of_expressions? RP
 	| instance_access_expression DOT ID
@@ -188,12 +192,12 @@ statement:
 	variable_and_const_declaration
 	| assign_statement
 	| if_statement
-	| foreach_statement
-	//|     while_statement           
+	| foreach_statement         
 	| break_statement
 	| continue_statement
 	| return_statement
-	| method_invocation_statement;
+	| method_invocation_statement
+	| block_statement;
 
 variable_and_const_declaration
 	locals[number_variable = 0]:

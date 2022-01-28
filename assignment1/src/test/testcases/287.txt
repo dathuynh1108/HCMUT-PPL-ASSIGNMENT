@@ -1,13 +1,5 @@
 
-                    method() {
-                        str = "This is invalid cuz all methods must be inside class";
-                    }
-                    
-                    Class Program {
-                        Var x: Int = 5;
-                        
-                        main() {
-                                  
-                        }
-                    }
-                
+            Class Program {
+                main($x: Int) {}
+            }
+        

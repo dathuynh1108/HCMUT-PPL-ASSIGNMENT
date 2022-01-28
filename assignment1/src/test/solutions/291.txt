@@ -1,1 +1,1 @@
-Error on line 24 col 16: <EOF>
+successful

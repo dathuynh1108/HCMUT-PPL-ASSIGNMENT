@@ -1,9 +1,24 @@
 
-                    ##Inside
-                    Block
-                    Comment ? @@@@@ ^^^^^^ |||||||||||||||
-                    Have # # # # # # # # # # 	 
- 
-                    ##
-                    ###
-                
+            ## This comment is true
+                # Line 1
+                # Line 2
+                # Line 3
+                # Array (
+                    Array("Volvo", "22", "18"),
+                    Array("Saab", "5", "2"),
+                    Array("Land Rover", "17", "15")
+                    Array("Huynh Thanh Dat", "11/08/2001", "1910110")
+                    Array("")
+                )
+                # Some code:
+                Var circle: Circle;
+                Var string: String;
+                circle = New Circle("Red", 2.2);
+                string = circle.to_string();
+                console.log(circle.get_color());
+                Var i: Int;
+                # Some keyword
+                Break Continue If Elseif Else Foreach True False Array In Int Float Boolean String Return Null Class Val Var Constructor Destructor New
+            ##
+            ####
+        ###

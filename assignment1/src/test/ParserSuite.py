@@ -1668,13 +1668,16 @@ class ParserSuite(unittest.TestCase):
                     Console.log(1);
                     Console::$log(1);
                     {
-                        # Another block in block
+                        ## Another block in block ## 
+                        {
+                            ## Another block in block ## 
+                        }
                     }
                 }
                 Var x: Int = 1;
             }
         """
-        expect = r"""Error on line 6 col 20: {"""
+        expect = r"""successful"""
         num = 275
         self.assertTrue(TestParser.test(input, expect, num))
 

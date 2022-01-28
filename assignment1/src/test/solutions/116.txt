@@ -1,1 +1,1 @@
-Newline \n,<EOF>
+String,string,string     ,string\nstring,<EOF>

@@ -1,1 +1,1 @@
-Illegal Escape In String: This is legal escape: \n \t \b \r \f \\. This is illegal escape: \o
+0x123,.,123,0x123,.123e10,abc,.,123,abc,.123e10,<EOF>

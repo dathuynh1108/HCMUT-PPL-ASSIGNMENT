@@ -1,7 +1,47 @@
- 
-                    Class Program {
-                        main() {
-                            Var arr: Array[Int, 0b0];
+
+            Class Some_class {    
+                    Var $a, b: Int = 1, 2;
+                    Method(n: Int) {
+                        If (n == 1) {
+                            Return True;
+                        }
+                        Else {
+                            Return False;
+                        }
+                    }  
+                    $Method(n: Int) {
+                        If (n == 1) {
+                            Return True;
+                        }
+                        Else {
+                            Return False;
+                        }
+                    }    
+                    Constructor(int: Int; string: String) {}
+                    Constructor() {}
+                    Destructor() {}
+            }
+            Class Program {
+                main() {
+                    Var some_class: Some_class = New Some_class(1, "abc");
+                    Some_class::$Method(1+2-3*4/5%6);
+                    some_class.method(1+2+3);
+                    some_class.method().method().method();
+                    some_class.a.a.a.a.method();
+                    Some_class::$a.a.a.a.method();
+                    Some_class::$method().a.a.a.method();
+                    Foreach (i In Some_class::$Method(1+2-3*4/5%6) .. some_class.method(1+2+3) By 1) {
+                        Self.print(i);
+                        If (i > 1) {
+                            Self.print(i);
+                        }
+                        Elseif (i < -1) {
+                            Self.add_100(i);
+                        }
+                        Else {
+                            Self.sub_100(i);
                         }
                     }
-                
+                }
+            }
+        

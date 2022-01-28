@@ -1,11 +1,9 @@
- 
-                    Class Program {
-                        Var x: Int = 5;
-                        
-                        main() {
-                            x = Self.a;
-                            x = Self.func();
-                            x = Self.Self.Self.a;
-                        }
-                    }
-                
+
+            Class Program {
+                main() {
+                    Class_name::$a();
+                    Self.a();
+                    a.b;
+                }
+            }
+        

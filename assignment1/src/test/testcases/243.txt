@@ -1,7 +1,8 @@
 
-                    Class Program {
-                        main() {
-                            Var x: Float = 3.4, 5.6;
-                        }
-                    }
-                
+            Class Program {
+                main() {
+                    a = 1 && 2;
+                    a = 1 || 2;
+                }
+            }
+        

@@ -1,1 +1,1 @@
-Foreach,(,i,In,1,..,100,By,2,),{,Out,.,printInt,(,i,),;,},Foreach,(,<,scalar,variable,>,In,<,expr1,>,..,<,expr2,>,[,By,<,expr3,>,],Error Token ?
+(,),=,>,{,console,.,log,(,abc,),;,a,[,1,],;,Var,a,,,b,,,c,;,*,this,.,a,;,this,-,>,a,;,int,*,a,=,new,int,;,Class_name,::,a,;,Var,a,:,Int,;,},<EOF>

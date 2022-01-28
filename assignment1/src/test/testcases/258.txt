@@ -1,12 +1,17 @@
 
-                    Class Program {
-                        Constructor(a, b, c, d: Int; x, y, z: String; arr: Array[Int, 3]) {
-                            Var a: Int;
-                        }
-                        
-                        main() {
-                            Shape::getLength();
-                            Shape::$getLength(a, b, "nhan", 1+2-3*4/5, arr[1]);
-                        }
-                    }
-                
+            Class Some_class {         
+                    Constructor(int: Int; string: String) {}
+                    Constructor() {}
+                    Destructor() {}
+            }
+            Class Program {
+                main() {
+                   If (1 > 2) {}
+                   Elseif (1>2) {}
+                   Elseif (1||2) {}
+                   Elseif (1&&2) {}
+                   Elseif (!1) {}
+                   Else() {}
+                }
+            }
+        

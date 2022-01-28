@@ -1,1 +1,1 @@
-a,=,!,b,a,Error Token &
+String,'" String in string '",String'"String in string '"String in string in string'"'",## Comment in string ##,{braces in string},{,string in braces,},[square brackets in string],[,string in square brackets,],(parentheses in string),(,string in parentheses,),/* C comment in string */,/,*,string in C comment,*,/,<<abc>>,<,<,abc,>,>,<EOF>

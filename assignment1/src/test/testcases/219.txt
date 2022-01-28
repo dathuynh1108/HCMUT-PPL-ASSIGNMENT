@@ -1,10 +1,10 @@
 
-                    Class Shape {
-                        main() {
-                            a = object.length;
-                            c = Shape::$width;
-                            d = obj.getLength("abcd", 12);
-                            f = Shape::$getWidth();
-                        }
-                    }
-                
+            Class Program {
+                Var a: Array[Int, 5];
+                Var a: Array[Int, 0xFFFF];
+                Var a: Array[Int, 0XFFFF];
+                Var a: Array[Int, 0b1111];
+                Var a: Array[Int, 0B1111];
+                Var a: Array[Int, 01234];
+            }
+        

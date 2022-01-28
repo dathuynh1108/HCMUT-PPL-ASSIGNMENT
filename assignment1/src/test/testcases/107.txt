@@ -1,1 +1,15 @@
-1abc }abcd {xyzt ==nhanvo ..abcd
+
+            ## This is inline comment 	
+\';><?##
+            ## 
+                This is block comment
+                This is block comment
+                This is block comment
+                Huynh Thanh Dat
+                11082001
+                _____________________
+                	
+\';><?
+            ##
+            Huynh Thanh Dat
+        

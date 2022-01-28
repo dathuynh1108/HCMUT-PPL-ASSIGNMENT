@@ -1,1 +1,5 @@
-1_234_678 1_000_000_123_6978
+
+            "Valid string"
+            "'"Valid string'" Cristiano Ronaldo"
+            "Unclose string end with double quote and space'" 
+        

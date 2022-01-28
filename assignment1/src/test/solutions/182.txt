@@ -1,1 +1,1 @@
-The first string '"confused'",The second string is or not illegal 'n,<EOF>
+1234.,1234.,.,1234,.,1234e1234,.1e+1,+,1,.1e-1,-,1,*,(,),*,),%,!,+,+,(,+,),&&,||,*,(,),;,,,[,],(,),{,},%,+,-,==,==,=,*,/,Error Token &

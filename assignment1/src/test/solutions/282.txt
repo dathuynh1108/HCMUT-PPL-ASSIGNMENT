@@ -1,1 +1,1 @@
-Error on line 21 col 32: $func
+successful

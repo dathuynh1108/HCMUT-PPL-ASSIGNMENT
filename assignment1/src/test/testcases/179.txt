@@ -1,2 +1,5 @@
-BReaK ContInuE IF ElSEif eLSe foreAch tRue fAlse floAt boOlean
-                StrinG INt NUll VAR VaL ARRay sElf reTurn NEw IN class cONstructor dEstructor by
+
+            ## Unclose or Illegal ??, need do print \n? ##
+            "abcde\
+            ""
+        

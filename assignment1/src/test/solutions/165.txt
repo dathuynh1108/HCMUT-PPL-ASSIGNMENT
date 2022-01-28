@@ -1,1 +1,1 @@
-Iterator,(,FragmentLinkedList,<,T,>,*,pList,=,0,,,bool,begin,=,true,),;,Iterator,(,int,fragmentIndex,,,FragmentLinkedList,<,T,>,*,pList,=,0,,,bool,begin,=,true,),;,Iterator,Error Token &
+(,),[,],{,},.,,,;,::,:,Error Token @

@@ -1,1 +1,5 @@
-##Hello. This is comment has \n \n \n \\ \b##
+
+            "OK\'"
+            "OK'""
+            "ILLEGAL_ESCAPE\""
+        

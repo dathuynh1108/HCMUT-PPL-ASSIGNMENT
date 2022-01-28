@@ -1,42 +1,29 @@
 
-                    Class Program {
-                        Var $abc: Float = 12.0000;
-                        Var arr: Array[Int, 5] = Array (1, 2, 3, 4, 5);
-                        Var length: Int = 0;
-                        Val $width : Int = 0;
-                        
-                        Constructor(a, b, c, d: Int; x, y, z: String; arr: Array[Int, 3]) {
-                            Var a: Int;
-                            Return;
+            Class Some_class {         
+                    Constructor(int: Int; string: String) {}
+                    Constructor() {}
+                    Destructor() {}
+            }
+            Class Program {
+                main() {
+                    Foreach(i In 1 .. 100 By 1) {
+                        If (True || False) {
+                            Continue;
                         }
-                        
-                        getLength() {
-                            Self.length = 12 - 5 + 5 / 7 * 6 - arr[1];
-                            Return Self.length;
+                        Elseif (True && False) {
+                            Break;
                         }
-                        
-                        $getWidth(a, b: Int; str: String) {
-                            Shape::$width = 12 - 5 + 5 / 7 * 6 - arr[4];
-                            Return Shape::$width;
-                        }
-                        
-                        main() {
-                            Var a: Int = a.getLength();   ## calling method inside class ##
-                            Var b: Int = Shape::$getWidth(a, b, "nhan");   ## calling method inside class ##
-                            Return a-b;
+                        Return False;
+                    }
+                    Var x: Int = 1;
+                    Foreach(i In 1 .. 100 By 1) {
+                        Foreach(j In 1 .. 100 By 1) {
+                            Foreach(k In 1 .. 100 By 1) {
+                                x = x + i + j + k;
+                            }
                         }
                     }
-                    
-                    Class Shape {
-                        Var a: Int = 5;
-                        
-                        method1(a, b: Int) {
-                            Var a: Program = New Program();
-                            Var b: Int = a.getLength();
-                            Var c: Int = Program::$getWidth(12, 3, some_string);
-                            a.getLength();
-                            Program::$getWidth(12, 3, some_string);
-                            Return;
-                        }
-                    }
-                
+
+                }
+            }
+        

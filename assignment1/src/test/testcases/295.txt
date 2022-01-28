@@ -1,12 +1,14 @@
- 
-                    Class Program {
-                        Var x: Array[Array[Int, 1], 1] = Array();
-                        Val $x, y, $z: String = "nhan", 1.000 + "nhan", ---True - !!!!!False;    
-                    
-                        main() {
-                            x = a.b.c.d.e.f;
-                            Shape::$x = Null.a;
-                            Shape::$x = Self.Continue;
-                        }
-                    }
-                
+
+            Class Program {
+                main() {
+                    a = a.b.c;
+                    a = Class_name::$a;
+                    a = Class_name::$a.a.a.a();
+                    a = Null.a;
+                    a = Null.null.a;
+                    a = Self.a;
+                    a = Self.self.a;
+                    a = Self.Null;
+                }
+            }
+        

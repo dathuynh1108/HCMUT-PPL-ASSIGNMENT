@@ -1,34 +1,46 @@
- 
-                    Class Program {
-                        Var x: Int = 5;
-                        
-                        main() {
-                            x = Array();
-                            Shape::$x = Shape::$obj.obj2.pbj3.func();
-                            a.b = Shape::$obj.obj2.pbj3.func();
-                            a.b() = Shape::$obj.obj2.pbj3.func();
-                            a.b(a,True,Array(1,2,3)) = Shape::$obj.obj2.pbj3.func();
-                            a.b(a,True,Array(1,2,3)).attr = Shape::$obj.obj2.pbj3.func();
-                            Shape::$attr = Shape::$obj.obj2.pbj3.func();
-                            Shape::$attr.func() = Shape::$obj.obj2.pbj3.func();
-                            Shape::$attr.attr.func() = Shape::$obj.obj2.obj3.func();
-                            Shape::$attr.attr.attr.attr.func() = Shape::$obj.obj2.pbj3.func();
-                            Shape::$attr.attr.attr.attr.func().func().func() = Shape::$obj.obj2.pbj3.func();
-                            1[1]                                          = Shape::$obj.func();          
-                            1.23434e+10[1]                                = Shape::$obj.func();      
-                            1.23434e+10[12/3%2-4514+34141]                = Shape::$obj.func();      
-                            True[Null]                                    = Shape::$obj.func();      
-                            1[1.000000000]                                = Shape::$obj.func();      
-                            1_2_3_4_5_6[Array(1,2,3,4,"nhan")]            = Shape::$obj.func();  
-                            1_2_3_4_5_6.e-00000000[Array(1,2,3,4,"nhan")] = Shape::$obj.func(); 
-                            0[Array(1,2,3,4,"nhan")]                      = Shape::$obj.func();  
-                            00[Array(1,2,3,4,"nhan")]                     = Shape::$obj.func();
-                            0B0[Array(1,2,3,4,"nhan")]                    = Shape::$obj.func();  
-                            0x0[Array(1,2,3,4,"nhan")]                    = Shape::$obj.func();      
-                            0X0[Array(1,2,3,4,"nhan")]                    = Shape::$obj.func();      
-                            New X()[2]                                    = Shape::$obj.func();      
-                            New X()[2]                                   = Shape::$obj.func();          
-                            New X()[2]                                   = Shape::$obj.func();      
-                        }
-                    }
-                
+
+            Class Program {
+                main() {
+                    a = True && "String";
+                    a = "String" + 1 +. "String";
+                    a = "String" || "String" && "String" * 0 / 0x0 % (a + a.a + Class_name::$a);
+                    a = 0 + 0x0 + 0X0 + 0b0 + 0B0;
+                    a = !1e123 - -True + !True / -----"String";
+                    a = .123e123 > True;
+                    a = 1.234e123 == "String";
+                    a = 1.e-123 ==. "String";
+                    a = Array(1,2,3) + Array(Array(1,2,3), Array(1,2,3));             
+                    a = (1).a.a.a.a.a;
+                    a = (1).a().a().a().a();
+                    a = (1).a.a.a();
+                    a = 1[1];
+                    a = 1[1[1[1[1[1[1[1[1[1]]]]]]]]];
+                    a = 1[1[1[1]]][1[1[1]]][0x0 + 0X0 - 0XFF + 0b0 + 0B0 / 0B1111];
+                    a = (1).b[1][1][1][1][1];
+                    a = (a+b+c).a.a.a[1[1[1[1[1[1]]]]]][1][a.b][Class_name::$a][a][Class_name::$a];
+                    a = New X()[1];
+                    a = New X().a;
+                    a = New X(New X(a[New X()])).a[1];
+                    a = Array(1,2,3)[1];
+                    a = Array(Array(1,2,3), Array(1,2,3)).a.a.a();
+                    a = Array(1,2,3)[Array(1,2,3)[1]];
+                    a = "String"[1];
+                    a = "String"["String"[1]];
+                    a = "String"[New X().a];
+                    a = Null;
+                    a = Null.a;
+                    a = Null.a.a.a;
+                    a = Null.a.a.a();
+                    a = Null.a().a().a();
+                    a = Null[1];
+                    a = Array(Null);
+                    a = Null;
+                    
+                    Null.a();
+                    Null.a.a.a();
+                    Null.a();
+                    Null.a.a.a();
+                    Null.a().a().a();
+                }
+            }
+        

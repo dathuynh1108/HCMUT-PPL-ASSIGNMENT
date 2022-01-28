@@ -1,8 +1,13 @@
 
-                Class Shape {
-                    Var m: Array[Array[Int, 3], 3] = Array (Array(1,2,3), Array(4,5,6), Array(8,9,10));
-                    main() {
-                        
-                    }
+            Class Program {
+                main() {
+                    Var s: String;
+                    s = "abc" +. "abc";
+                    s = "abc" ==. "abc";
+
+                    ## Fail type but ok in parser ##
+                    s = "abc" + "abc";
+                    s = "abc" == "abc";
                 }
-                
+            }
+        

@@ -1,1 +1,1 @@
-Illegal Escape In String: My name is\o
+abc,abc\',Unclosed String: abc'"
