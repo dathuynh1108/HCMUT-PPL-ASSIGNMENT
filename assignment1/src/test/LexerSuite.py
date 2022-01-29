@@ -1327,7 +1327,7 @@ class LexerSuite(unittest.TestCase):
     def test_096_string_illegal_escape_and_unclose(self):
         # Unclose or illegal ?, need to print \ ?
         input = """"String \\"""
-        expect = """Unclosed String: String """
+        expect = """Unclosed String: String \\"""
         num = 196
         self.assertTrue(TestLexer.test(input, expect, num))
 

@@ -407,7 +407,7 @@ WS: [ \t\r\n\f]+ -> skip; // skip spaces, tabs, newlines
 
 UNCLOSE_STRING:
 	'"' STRING_CHAR* ([\b\t\f\r\n\\"] | EOF) {
-	if self.text[-1] in ['\b', '\t', '\f', '\r', '\n', '\\', '"']:
+	if self.text[-1] in ['\b', '\t', '\f', '\r', '\n', '"']:
 		raise UncloseString(self.text[1:-1])
 	else:
 		raise UncloseString(self.text[1:])

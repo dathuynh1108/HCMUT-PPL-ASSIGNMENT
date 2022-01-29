@@ -440,7 +440,7 @@ class D96Lexer(Lexer):
     def UNCLOSE_STRING_action(self, localctx:RuleContext , actionIndex:int):
         if actionIndex == 3:
 
-            	if self.text[-1] in ['\b', '\t', '\f', '\r', '\n', '\\', '"']:
+            	if self.text[-1] in ['\b', '\t', '\f', '\r', '\n', '"']:
             		raise UncloseString(self.text[1:-1])
             	else:
             		raise UncloseString(self.text[1:])
