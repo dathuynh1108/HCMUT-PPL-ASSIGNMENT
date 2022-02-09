@@ -1,9 +1,0 @@
- 
-                    Class Program {
-                        main() {
-                            Foreach (i in 1 .. 10) {
-                                ##nothing##
-                            }
-                        }
-                    }
-                

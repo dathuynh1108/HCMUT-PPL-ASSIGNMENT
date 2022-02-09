@@ -1,7 +1,0 @@
- 
-                    Class Program {
-                        main() {
-                            (a.a.a.a.a.arr[1]).a() = 12;
-                        }
-                    }
-                
