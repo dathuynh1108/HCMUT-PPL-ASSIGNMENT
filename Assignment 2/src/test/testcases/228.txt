@@ -1,0 +1,13 @@
+
+            Class Number {
+                Var data: String = "1234"; 
+            }
+            Class Integer : Number{
+                Var data: Number;
+            }
+            Class Program {
+                main() {
+                    Var x: Integer;
+                }
+            }
+        

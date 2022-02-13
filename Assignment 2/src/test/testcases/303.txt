@@ -1,0 +1,7 @@
+
+            Class Program {
+                Var a : Int;
+                Val b : Float;
+                Method() {}
+            }
+        

@@ -1,0 +1,48 @@
+
+            Class Some_class {
+                    Val str1: Array[Int, 1] = a[1];
+                    Val str2: Array[Array[Int, 1], 1] = a[1][2];
+                    Val a: Array[Array[Array[Int, 1],1], 1] = a[1][2][3];
+                    Var c: Int =  a[1][2][3][4];
+                    Var c: Int =  a[arr[arr[1]]];
+                    Var c: Int =  a[arr[1]];
+                    Val $str1: Array[Int, 1] = a[1];
+                    Val $str2: Array[Array[Int, 1], 1] = a[1][2];
+                    Val $a: Array[Array[Array[Int, 1],1], 1] = a[1][2][3];
+                    Var $c: Int =  a[1][2][3][4];
+                    Var $c: Int =  a[arr[arr[1]]];
+                    Var $c: Int =  a[arr[1]];
+                    
+                    Constructor(int: Int; string: String) {
+                        Val str1: Array[Int, 1] = a[1];
+                        Val str2: Array[Array[Int, 1], 1] = a[1][2];
+                        Val a: Array[Array[Array[Int, 1],1], 1] = a[1][2][3];
+                        Var c: Int =  a[1][2][3][4];
+                        Var c: Int =  a[arr[arr[1]]];
+                        Var c: Int =  a[arr[1]];
+                    }
+                    Destructor() {}
+            }
+            Class Program {
+                main() {
+                    Val str1: Array[Int, 1] = a[1];
+                    Val str2: Array[Array[Int, 1], 1] = a[1][2];
+                    Val a: Array[Array[Array[Int, 1],1], 1] = a[1][2][3];
+                    Var c: Int =  a[1][2][3][4];
+                    Var c: Int =  a[arr[arr[1]]];
+                    Var c: Int =  a[arr[1]];
+
+                    a = a[1];
+                    a = a[a[1]];
+                    a = a[1][1];
+                    a = a[1][1][1][1][1][1];
+                    a = a[a[1][1][1]][1][1][1];
+                    a = a[a[a[a[a[1]]]]][1][1][a[a[a[a[1]]]]];
+                    a = Some_class::$method(1,1,1)[1][1][1];
+                    a = some_object.method(1,1,1)[1][1][1];
+                    a = some_object.method(1,1,1).method(1,1,1)[some_object.method(1,1,1).method(1,1,1)][1][1];
+                    a = a.a.a[1][1][1];
+                    a = a.a.a[a.a.a[a.a.a[a.a.a[1]]]];
+                }
+            }
+        

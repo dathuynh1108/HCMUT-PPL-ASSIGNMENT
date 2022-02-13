@@ -1,3 +1,1 @@
-int main () {
-            putIntLn(4);
-        }
+Class Program : Object {}

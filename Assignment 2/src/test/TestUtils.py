@@ -8,7 +8,7 @@ if os.path.isdir('../target/main/d96/parser') and not '../target/main/d96/parser
 from D96Lexer import D96Lexer
 from D96Parser import D96Parser
 from lexererr import *
-# from ASTGeneration import ASTGeneration
+from ASTGeneration import ASTGeneration
 from StaticCheck import StaticChecker
 from StaticError import *
 from CodeGenerator import CodeGenerator

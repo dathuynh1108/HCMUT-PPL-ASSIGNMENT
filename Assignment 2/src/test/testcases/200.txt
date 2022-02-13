@@ -1,0 +1,7 @@
+
+            Class Program {
+                main() {
+                    1 = 1;
+                }
+            }
+        

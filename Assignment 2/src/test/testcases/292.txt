@@ -1,0 +1,16 @@
+
+            Class Program {
+                Constructor() {
+                    Return;
+                }
+                Constructor(x: Int; y: String; a: Array[Array[Int,1],1]) {
+                    Return a + x + y;
+                }
+                Destructor() {
+                    Console.log("End");
+                }
+                Destructor(x: Int) {
+                    Return x;
+                }
+            }
+        

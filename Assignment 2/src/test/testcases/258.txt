@@ -1,0 +1,17 @@
+
+            Class Some_class {         
+                    Constructor(int: Int; string: String) {}
+                    Constructor() {}
+                    Destructor() {}
+            }
+            Class Program {
+                main() {
+                   If (1 > 2) {}
+                   Elseif (1>2) {}
+                   Elseif (1||2) {}
+                   Elseif (1&&2) {}
+                   Elseif (!1) {}
+                   Else() {}
+                }
+            }
+        

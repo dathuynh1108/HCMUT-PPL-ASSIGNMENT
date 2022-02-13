@@ -1,0 +1,4 @@
+
+            ## Error Token catch in Lexer ##
+            ?^
+        

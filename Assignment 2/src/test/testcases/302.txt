@@ -1,3 +1,6 @@
-int main () {
-            getIntLn();
-        }
+
+            Class Object {}
+            Class Some_class : Object {}
+            Class Program : Object {}
+
+        

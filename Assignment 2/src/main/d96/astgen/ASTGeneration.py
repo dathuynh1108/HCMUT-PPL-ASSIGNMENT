@@ -5,25 +5,32 @@ from AST import *
 
 class ASTGeneration(D96Visitor):
     def visitProgram(self, ctx: D96Parser.ProgramContext):
-        return Program([FuncDecl(Id("main"),
-                                 [],
-                                 self.visit(ctx.mptype()),
-                                 Block([], [self.visit(ctx.body())] if ctx.body() else []))])
+        return Program([self.visit(class_declaration) for class_declaration in ctx.class_declaration()])
+    
+    def visitClass_declaration(self, ctx: D96Parser.Class_declarationContext):
+        # Have parent
+        if ctx.COLON(): 
+            # Class body not empty
+            if ctx.class_body():
+                return ClassDecl(Id(ctx.ID(0).getText()), self.visit(ctx.class_body()), Id(ctx.ID(1).getText()))
+            return ClassDecl(Id(ctx.ID(0).getText()), [], Id(ctx.ID(1).getText()))
+        
+        if ctx.class_body():
+            return ClassDecl(Id(ctx.ID(0).getText()), self.visit(ctx.class_body()))
+        return ClassDecl(Id(ctx.ID(0).getText()), [])
+    
+    def visitClass_body(self, ctx: D96Parser.Class_bodyContext):
+        # Visit list of member declaration
+        return [self.visit(class_member_declaration) for class_member_declaration in ctx.class_member_declaration()]
+    
+    def visitClass_member_declaration(self, ctx: D96Parser.Class_member_declarationContext):
+        # Pass, visit to children
+        return self.visitChildren(ctx)
 
-    def visitMptype(self, ctx: D96Parser.MptypeContext):
-        if ctx.INTTYPE():
-            return IntType()
-        else:
-            return VoidType()
+    def visitAttribute_declaration(self, ctx: D96Parser.Attribute_declarationContext):
+        # Mutable or Imutable
+        # Instance or Static
+        return "Attribute"
 
-    def visitBody(self, ctx: D96Parser.BodyContext):
-        return self.visit(ctx.funcall())
-
-    def visitFuncall(self, ctx: D96Parser.FuncallContext):
-        return CallExpr(Id(ctx.ID().getText()), [self.visit(ctx.exp())] if ctx.exp() else [])
-
-    def visitExp(self, ctx: D96Parser.ExpContext):
-        if (ctx.funcall()):
-            return self.visit(ctx.funcall())
-        else:
-            return IntLiteral(int(ctx.INTLIT().getText()))
+    def visitMethod_declaration(self, ctx: D96Parser.Method_declarationContext):
+        return "Method"

@@ -15,15 +15,16 @@ program: class_declaration+ EOF; // File không rỗng
 
 /***************************** CLASS ******************************/
 class_declaration:
-	CLASS class_name (COLON class_name)? LCB class_body RCB;
-class_name: ID;
-class_body: (
-		attribute_declaration
-		| method_declaration
-		| constructor_declaration
-		| destructor_declaration
-	)*;
+	CLASS ID (COLON ID)? LCB class_body? RCB;
 
+class_body: class_member_declaration+;
+
+class_member_declaration:
+	attribute_declaration
+	| method_declaration
+	| constructor_declaration
+	| destructor_declaration
+	;
 // Check số biến == số khởi tạo --> Dư: trả vị trí dấu , | Thiếu: trả vị trí dấu ;
 attribute_declaration
 	locals[number_attribute = 0]:
@@ -43,17 +44,20 @@ attribute_initialization_list:
 	({$attribute_declaration::number_attribute == 0}? SEMI); // check number_var == 0
 
 method_declaration: (ID | DOLLAR_ID) LP list_of_parameters? RP block_statement;
-constructor_declaration: CONSTRUCTOR LP list_of_parameters? RP block_statement;
+constructor_declaration:
+	CONSTRUCTOR LP list_of_parameters? RP block_statement;
 destructor_declaration: DESTRUCTOR LP RP block_statement;
 
-list_of_parameters: parameter_declaration (SEMI parameter_declaration)*;
+list_of_parameters:
+	parameter_declaration (SEMI parameter_declaration)*;
 parameter_declaration: ID (COMMA ID)* COLON type_name;
 
 /***************************** TYPE ******************************/
 
 type_name: primitive_type | array_type | class_type;
 primitive_type: INTEGER | FLOAT | STRING | BOOLEAN;
-array_type: ARRAY LSB (primitive_type | array_type) COMMA INTEGER_LITERAL RSB;
+array_type:
+	ARRAY LSB (primitive_type | array_type) COMMA INTEGER_LITERAL RSB;
 class_type: ID;
 
 /***************************** LITERAL AND ARRAY ******************************/
@@ -181,7 +185,7 @@ scalar_variable:
 	| scalar_index
 	| ID;
 scalar_instance_access: instance_access_expression DOT ID;
-scalar_static_access: class_name DOUBLE_COLON DOLLAR_ID;
+scalar_static_access: ID DOUBLE_COLON DOLLAR_ID;
 scalar_index: index_expression LSB expression RSB;
 
 block_statement: LCB statement* RCB;
@@ -254,7 +258,7 @@ prefix_instance_method_invocation:
 	| static_access_expression;
 
 static_method_invocation:
-	class_name DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP;
+	ID DOUBLE_COLON DOLLAR_ID LP list_of_expressions? RP;
 
 // ----------------------------------  LEXER  -------------------------------------------
 /********************** FRAGMENT ***********************/

@@ -1,0 +1,13 @@
+
+            Class Some_class {         
+                    Constructor(int: Int; string: String) {}
+                    Constructor() {}
+                    Destructor() {}
+            }
+            Class Program {
+                main() {
+                    Foreach(Class_name::$i In 1 .. 100 By 1) {}
+
+                }
+            }
+        

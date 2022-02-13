@@ -1,0 +1,7 @@
+
+            Class Program {
+                Var $x: Int = 1;
+                method_1(x: Int; y: String) {}
+                main() {}
+            }
+        

@@ -1,0 +1,9 @@
+
+            Class Author {
+                Var user_name: String;
+            }
+            Class Program {
+                Val author: Author;
+                main() {}
+            }
+        

@@ -1,0 +1,12 @@
+
+            Class Program {
+                main() {
+                    Self.a.a.a.a.a.a();
+                    Self.a().a().a().a();
+                    Class_name::$a.a.a.a.a();
+                    Class_name::$a().a.a.a.a();
+
+                    Class_name::$a;
+                }
+            }
+        

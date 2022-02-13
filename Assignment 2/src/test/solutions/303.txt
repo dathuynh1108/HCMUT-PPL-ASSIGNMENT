@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(Program),[Attribute,Attribute,Method])])
