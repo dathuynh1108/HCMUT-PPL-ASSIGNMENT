@@ -15,9 +15,9 @@ program: class_declaration+ EOF; // File không rỗng
 
 /***************************** CLASS ******************************/
 class_declaration:
-	CLASS ID (COLON ID)? LCB class_body RCB;
+	CLASS ID (COLON ID)? LCB class_body? RCB;
 
-class_body: class_member_declaration*;
+class_body: class_member_declaration+;
 
 class_member_declaration:
 	attribute_declaration
@@ -28,22 +28,22 @@ class_member_declaration:
 // Check số biến == số khởi tạo --> Dư: trả vị trí dấu , | Thiếu: trả vị trí dấu ;
 attribute_declaration
 	locals[number_attribute = 0]:
-	(VAR | VAL) attribute_name {$number_attribute+=1} (
-		COMMA attribute_name {$number_attribute+=1}
-	)* COLON type_name initialization[$number_attribute];
+	(VAR | VAL) attribute_name {$attribute_declaration::number_attribute+=1} (
+		COMMA attribute_name {$attribute_declaration::number_attribute+=1}
+	)* COLON type_name attribute_initialization;
 
 attribute_name : ID | DOLLAR_ID;
 
-initialization [number_variable]:
-	ASSIGN initialization_list[$number_variable]
+attribute_initialization:
+	ASSIGN attribute_initialization_list
 	| SEMI;
-	
-initialization_list [number_variable]:
-	expression {$number_variable -= 1} // first expression
+attribute_initialization_list:
+	expression {$attribute_declaration::number_attribute -= 1} // first expression
 	(
-		{$number_variable > 0}? COMMA expression {$number_variable -= 1}
+		{$attribute_declaration::number_attribute > 0}? COMMA expression {$attribute_declaration::number_attribute -= 1
+			}
 	)* // loop until number_var == 0 or not match
-	({$number_variable == 0}? SEMI); // check number_var == 0
+	({$attribute_declaration::number_attribute == 0}? SEMI); // check number_var == 0
 
 method_declaration: (ID | DOLLAR_ID) LP list_of_parameters? RP block_statement;
 constructor_declaration:
@@ -206,9 +206,19 @@ variable_and_const_declaration
 	locals[number_variable = 0]:
 	(VAR | VAL) ID {$variable_and_const_declaration::number_variable+=1} (
 		COMMA (ID) {$variable_and_const_declaration::number_variable+=1}
-	)* COLON type_name initialization[$number_variable];
+	)* COLON type_name variable_initialization;
 
+variable_initialization:
+	ASSIGN variable_initialization_list
+	| SEMI;
 
+variable_initialization_list:
+	expression {$variable_and_const_declaration::number_variable -= 1} (
+		{$variable_and_const_declaration::number_variable > 0}? COMMA expression {$variable_and_const_declaration::number_variable -= 1
+			}
+	)* (
+		{$variable_and_const_declaration::number_variable == 0}? SEMI
+	);
 assign_statement: left_hand_side ASSIGN expression SEMI;
 
 left_hand_side: scalar_variable;

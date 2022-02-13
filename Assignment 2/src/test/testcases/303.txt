@@ -1,7 +1,6 @@
 
             Class Program {
-                Var a : Int;
-                Val b : Float;
-                Method() {}
+                Var a,$b,c: Int = 1,2,3;
+                method() {}
             }
         

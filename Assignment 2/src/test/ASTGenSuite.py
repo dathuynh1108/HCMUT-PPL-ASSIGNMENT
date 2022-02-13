@@ -2,10 +2,13 @@ import unittest
 from TestUtils import TestAST
 from AST import *
 
+from main.d96.utils.AST import *
+
 class ASTGenSuite(unittest.TestCase):
     def test_000_simple_class(self):
         input = """Class Program {}"""
         expect = str(Program([ClassDecl(Id("Program"), [])]))
+        #expect = "Program([ClassDecl(Id(Program), [])])"
         num = 300
         self.assertTrue(TestAST.test(input, expect, num))
     def test_001_simple_class_with_parent(self):
@@ -25,12 +28,11 @@ class ASTGenSuite(unittest.TestCase):
         num = 302
         self.assertTrue(TestAST.test(input, expect, num))
 
-    def test_003_simple_class(self):
+    def test_003_attribute_declaration(self):
         input = """
             Class Program {
-                Var a : Int;
-                Val b : Float;
-                Method() {}
+                Var a,$b,c: Int = 1,2,3;
+                method() {}
             }
         """
         expect = str(Program([ClassDecl(Id("Program"), [])]))
