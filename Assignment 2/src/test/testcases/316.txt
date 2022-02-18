@@ -1,0 +1,5 @@
+
+            Class Program {
+                Var a, b: Int = a + 1, b - 1;
+            }
+        

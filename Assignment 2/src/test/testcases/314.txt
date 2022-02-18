@@ -1,0 +1,5 @@
+
+            Class Program {
+                Var a, b, c, d, e, f: Int = 1 == 1, 1 != 1, a > b, a >= b, a < 1, a <= 1;
+            }
+        

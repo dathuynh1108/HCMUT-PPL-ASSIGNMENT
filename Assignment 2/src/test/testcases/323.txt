@@ -1,0 +1,6 @@
+
+            Class Program {
+                Var a: Object = New Object();
+                Var a: Object = New Object(New Object(1,2,3));
+            }
+        

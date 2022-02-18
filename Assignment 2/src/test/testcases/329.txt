@@ -1,0 +1,8 @@
+
+            Class Program {
+                main() {
+                    a = a.b[1];
+                    a = a + b - c * d / e % f || g && h == 1 ==. "a";
+                }
+            }
+        

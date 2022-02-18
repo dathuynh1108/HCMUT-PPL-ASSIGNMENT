@@ -1,0 +1,8 @@
+
+            Class Program {
+                Var a: Int = a::$a;
+                Var b: Int = a::$method(1,a,1+1);
+                Var c: Int = a::$method(1,a,1+1).b;
+                Var d: Int = a::$method(1,a,1+1).b(1,True, a);
+            }
+        

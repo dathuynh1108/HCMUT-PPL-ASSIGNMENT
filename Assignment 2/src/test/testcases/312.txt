@@ -1,5 +1,7 @@
 
             Class Program {
-                Var a, b: String = "abc" +. "xyz", "abc" ==. "xyz";
+                Constructor() {}
+                Constructor(a,b:Int; b: String) {}
+                Destructor() {}
             }
         

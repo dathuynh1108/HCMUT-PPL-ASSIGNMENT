@@ -1,0 +1,7 @@
+
+            Class Program {
+                Var a: Int = a.b.c.d;
+                Var b: Int = a.c().c.d();
+                Var c: Int = a.b(1,2,3).c.d(a,b,c);
+            }
+        

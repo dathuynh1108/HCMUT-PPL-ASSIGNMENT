@@ -1,0 +1,5 @@
+
+            Class Program {
+                Var a, b, c: Int = a * 1, b / 1, c % 1;
+            }
+        

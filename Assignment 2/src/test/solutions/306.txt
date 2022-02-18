@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(Program),[AttributeDecl(Static,ConstDecl($a,IntType,None))])])
+Program([ClassDecl(Id(Program),[AttributeDecl(Static,ConstDecl(Id($a),IntType,None))])])

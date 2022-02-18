@@ -1,0 +1,5 @@
+
+            Class Program {
+                Var a, b: Int = a && True, b || False;
+            }
+        

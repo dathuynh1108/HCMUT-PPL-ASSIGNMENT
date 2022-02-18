@@ -19,7 +19,7 @@ class ASTGeneration(D96Visitor):
 
     def visitClass_body(self, ctx: D96Parser.Class_bodyContext):
         # Visit list of member declaration
-        # Check is instance chạy nhanh hơn so với high-order function 1 dòng
+        # Check isinstance chạy nhanh hơn so với high-order function 1 dòng
         if (not ctx.class_member_declaration()):
             return []
         class_member_declaration_list = []
@@ -56,10 +56,7 @@ class ASTGeneration(D96Visitor):
         attribute_list = [self.visit(attribute_name) for attribute_name in ctx.attribute_name()]
         type_name = self.visit(ctx.type_name())
         initialization_list = self.visit(ctx.initialization())
-        attribute_declaration_list = []
-        for i in range(0, len(attribute_list)):
-            attribute_declaration_list.append(AttributeDecl(Static() if attribute_list[i].name[0] == '$' else Instance(), mutable_or_imutable(attribute_list[i].name, type_name, initialization_list[i])) if initialization_list else AttributeDecl(Static() if attribute_list[i].name[0] == '$' else Instance(), mutable_or_imutable(attribute_list[i].name, type_name, None)))
-        return attribute_declaration_list  
+        return [AttributeDecl(Static() if attribute_list[i].name[0] == '$' else Instance(), mutable_or_imutable(attribute_list[i], type_name, initialization_list[i])) if initialization_list else AttributeDecl(Static() if attribute_list[i].name[0] == '$' else Instance(), mutable_or_imutable(attribute_list[i], type_name, None)) for i in range(0, len(attribute_list))]
 
     def visitAttribute_name(self, ctx: D96Parser.Attribute_nameContext):
         return Id(ctx.ID().getText()) if ctx.ID() else Id(ctx.DOLLAR_ID().getText())
@@ -277,10 +274,7 @@ class ASTGeneration(D96Visitor):
         variable_list = [Id(variable_name.getText()) for variable_name in ctx.ID()]
         type_name = self.visit(ctx.type_name())
         initialization_list = self.visit(ctx.initialization())
-        variable_declaration_list = []
-        for i in range(0, len(variable_list)):
-            variable_declaration_list.append(mutable_or_imutable(variable_list[i].name, type_name, initialization_list[i]) if initialization_list else mutable_or_imutable(variable_list[i].name, type_name, None))
-        return variable_declaration_list
+        return [mutable_or_imutable(variable_list[i], type_name, initialization_list[i]) if initialization_list else mutable_or_imutable(variable_list[i], type_name, None) for i in range(0, len(variable_list))]
     
     def visitAssign_statement(self, ctx: D96Parser.Assign_statementContext):
         return Assign(self.visit(ctx.left_hand_side()), self.visit(ctx.expression()))
@@ -313,7 +307,7 @@ class ASTGeneration(D96Visitor):
 
     def visitForeach_statement(self, ctx: D96Parser.Foreach_statementContext):
         expression_list = [self.visit(expression) for expression in ctx.expression()]
-        return For(Id(ctx.ID().getText()), expression_list[0], expression_list[1], self.visit(ctx.block_statement()), expression_list[2] if len(expression_list) == 3 else None)
+        return For(Id(ctx.ID().getText()), expression_list[0], expression_list[1], self.visit(ctx.block_statement()), expression_list[2] if len(expression_list) == 3 else IntLiteral(1))
     
     def visitBreak_statement(self, ctx: D96Parser.Break_statementContext):
         return Break()
@@ -325,6 +319,19 @@ class ASTGeneration(D96Visitor):
         return Return(self.visit(ctx.expression()) if ctx.expression() else None)
     
     def visitMethod_invocation_statement(self, ctx: D96Parser.Method_invocation_statementContext):
-        return "Method inovation statement"
+        return self.visit(ctx.getChild(0))
 
+    def visitInstance_method_invocation(self, ctx: D96Parser.Instance_method_invocationContext):
+        return CallStmt(self.visit(ctx.prefix_instance_method_invocation()), Id(ctx.ID().getText()), self.visit(ctx.list_of_expressions()) if ctx.list_of_expressions() else [])
+    
+    def visitPrefix_instance_method_invocation(self, ctx: D96Parser.Prefix_instance_method_invocationContext):
+        if ctx.getChildCount() == 1:
+           return self.visit(ctx.getChild(0))
+        # Field access:
+        if ctx.getChildCount() == 3:
+            return FieldAccess(self.visit(ctx.prefix_instance_method_invocation()), Id(ctx.ID().getText()))
+        return CallExpr(self.visit(ctx.prefix_instance_method_invocation()), Id(ctx.ID().getText()), self.visit(ctx.list_of_expressions()) if ctx.list_of_expressions() else [])
+    
+    def visitStatic_method_invocation(self, ctx: D96Parser.Static_method_invocationContext):
+        return CallStmt(Id(ctx.ID().getText()), Id(ctx.DOLLAR_ID().getText()), self.visit(ctx.list_of_expressions()) if ctx.list_of_expressions() else [])
     

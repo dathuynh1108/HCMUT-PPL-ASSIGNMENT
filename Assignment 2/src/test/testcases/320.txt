@@ -1,0 +1,5 @@
+
+            Class Program {
+                Var a: Int = a[1][2][3][4][a][1+2];
+            }
+        

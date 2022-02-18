@@ -1,0 +1,61 @@
+
+            Class Program {
+                main() {
+                    Var a: Int;
+                    ## Multi attribute ##
+                    a = class_variable.attribute;
+                    a = class_variable.attribute.attrubute;
+                    a = class_variable.attribute.attrubute.attribute;
+                   
+                    ## Multi static and instance ##
+                    a = class_name::$attribute;
+                    a = class_name::$attribute.attribute;
+                    a = class_name::$attribute.attribute.attribute;
+                    
+                    ## Multi method ##
+                    a = class_variable.method(a,b,c);
+                    a = class_variable.method(a,b,c).method(a,b,c);
+                    a = class_variable.method(a,b,c).method(a,b,c).method(a,b,c);
+                    
+                    ## Hybrid ##
+                    a = class_variable.attribute.method(a,b,c);
+                    a = class_variable.attribute.method(a,b,c).method(a,b,c);
+                    
+                    a = class_variable.attribute.attribute.method(a,b,c);
+                    a = class_variable.attribute.attribute.method(a,b,c).method(a,b,c);
+
+                    a = class_variable.method(a,b,c).attribute;
+                    a = class_variable.method(a,b,c).method(a,b,c).attribute;
+                    a = class_variable.method(a,b,c).method(a,b,c).attribute.attribute;
+                    a = class_variable.method(a,b,c).method(a,b,c).attribute.attribute.method(a,b,c);
+
+                    a = class_name::$method(abc).method(a,b,c);
+                    a = class_name::$method(abc).method(a,b,c).method(a,b,c);
+                    a = class_name::$method(abc).method(a,b,c).method(a,b,c).attribute;
+                    a = class_name::$method(abc).method(a,b,c).method(a,b,c).attribute.attribute;
+
+                    a = (123).a();
+                    a = (0).a();
+                    a = (0x0).a();
+                    a = (0b0).a();
+                    a = (1.234).a();
+
+                    a = (123).a.a.a.a();
+                    a = (0).a.a.a.a();
+                    a = (0x0).a.a.a.a();
+                    a = (0b0).a.a.a.a();
+                    a = (1.234).a.a.a.a();
+                    a = (123).a(123).a(123).a(123).a(123);
+
+                    a = New X().a;
+                    a = New X().a.a.a.a;
+                    a = New X().a.a.a.a.a();
+
+                    a = New X().a();
+                    a = New X().a().a.a.a();
+                    a = New X().a.a().a().a.a.a();
+                    a = New X().a().a().a().a().a();
+                    
+                }
+            }
+        
