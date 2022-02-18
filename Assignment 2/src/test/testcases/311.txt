@@ -1,5 +1,6 @@
 
             Class Program {
                 main() {}
+                main(a: Int) {}
             }
         

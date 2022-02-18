@@ -124,9 +124,10 @@ class ASTGenSuite(unittest.TestCase):
         input = """
             Class Program {
                 main() {}
+                main(a: Int) {}
             }
         """
-        expect = """Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([]))])])"""
+        expect = """Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([])),MethodDecl(Id(main),Instance,[param(Id(a),IntType)],Block([]))])])"""
         num = 311
         self.assertTrue(TestAST.test(input, expect, num))
 
