@@ -174,6 +174,11 @@ class D96Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by D96Parser#index_operator.
+    def visitIndex_operator(self, ctx:D96Parser.Index_operatorContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by D96Parser#instance_access_expression.
     def visitInstance_access_expression(self, ctx:D96Parser.Instance_access_expressionContext):
         return self.visitChildren(ctx)

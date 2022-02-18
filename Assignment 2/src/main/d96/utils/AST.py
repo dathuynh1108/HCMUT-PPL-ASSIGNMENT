@@ -13,8 +13,11 @@ class AST(ABC):
         visit = getattr(v, method_name)
         return visit(self, param)
 
+class Inst(AST):
+    __metaclass__ = ABCMeta
+    pass
 
-class Stmt(AST):
+class Stmt(Inst):
     __metaclass__ = ABCMeta
     pass
 
@@ -155,7 +158,7 @@ class SelfLiteral(Literal):
 
 @dataclass
 class ArrayLiteral(Literal):
-    value: List[Literal]
+    value: List[Expr]
 
     def __str__(self):
         return '[' + ','.join(str(i) for i in self.value) + ']'
@@ -166,7 +169,7 @@ class Decl(AST):
     pass
 
 
-class StoreDecl(Decl):
+class StoreDecl(Inst):
     __metaclass__ = ABCMeta
     pass
 
@@ -194,12 +197,12 @@ class If(Stmt):
 class For(Stmt):
     id: Id
     expr1: Expr
-    expr2: Expr
-    up: bool  # True => increase; False => decrease
+    expr2: Expr 
     loop: Stmt
+    expr3: Expr = None
 
     def __str__(self):
-        return "For(" + str(self.id) + "," + str(self.expr1) + "," + str(self.expr2) + "," + str(self.up) + ',' + str(self.loop) + "])"
+        return "For(" + str(self.id) + "," + str(self.expr1) + "," + str(self.expr2) + ("," + str(self.expr3) if self.expr3 else "") + "," + str(self.loop) + "])"
 
 
 class Break(Stmt):
@@ -214,10 +217,10 @@ class Continue(Stmt):
 
 @dataclass
 class Return(Stmt):
-    expr: Expr
+    expr: Expr = None
 
     def __str__(self):
-        return "Return(" + str(self.expr) + ")"
+        return "Return(" + (str(self.expr) if self.expr else "") + ")"
 
 
 @dataclass
@@ -247,11 +250,10 @@ class VarDecl(StoreDecl):
 
 @dataclass
 class Block(Stmt):
-    decl: List[StoreDecl]
-    stmt: List[Stmt]
+    inst: List[Inst]
 
     def __str__(self):
-        return "Block([" + ','.join(str(i) for i in self.decl) + "],[" + ','.join(str(i) for i in self.stmt) + "])"
+        return "Block([" + ','.join(str(i) for i in self.inst) + "])"
 
 
 # used for local constant declaration
@@ -259,7 +261,7 @@ class Block(Stmt):
 class ConstDecl(StoreDecl):
     constant: Id
     constType: Type
-    value: Expr
+    value: Expr = None # None if there is no initial
 
     def __str__(self):
         return "ConstDecl(" + str(self.constant) + "," + str(self.constType) + "," + str(self.value) + ")"
@@ -293,10 +295,9 @@ class Static(SIKind):
     def __str__(self):
         return "Static"
 
-# used for a normal or special method declaration.
-# In the case of special method declaration,the name will be Id("<init>")
-# and the return type is VoidType().
-# In the case of normal method declaration, the name and the return type are from the declaration.
+# used for a special or normal method declaration.
+# In the case of special method declaration, the name will be Id("Constructor") for Constructor or Id("Destructor") for Destructor.
+# In the case of normal method declaration, the name is from the declaration.
 
 
 @dataclass
@@ -307,7 +308,7 @@ class MethodDecl(MemDecl):
     body: Block
 
     def __str__(self):
-        return "MethodDecl(" + str(self.name) + ',' + str(self.kind) + ",[" + ','.join(i.toParam() for i in self.param) + "]," + + str(self.body) + ")"
+        return "MethodDecl(" + str(self.name) + ',' + str(self.kind) + ",[" + ','.join(i.toParam() for i in self.param) + "]," + str(self.body) + ")"
 # used for mutable (variable) or immutable (constant) declaration
 
 

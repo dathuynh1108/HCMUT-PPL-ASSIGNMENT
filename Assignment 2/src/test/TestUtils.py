@@ -5,6 +5,7 @@ if not './main/d96/parser/' in sys.path:
     sys.path.append('./main/d96/parser/')
 if os.path.isdir('../target/main/d96/parser') and not '../target/main/d96/parser/' in sys.path:
     sys.path.append('../target/main/d96/parser/')
+
 from D96Lexer import D96Lexer
 from D96Parser import D96Parser
 from lexererr import *

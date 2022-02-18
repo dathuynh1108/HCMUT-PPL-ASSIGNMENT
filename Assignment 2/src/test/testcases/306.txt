@@ -1,5 +1,5 @@
 
             Class Program {
-                Var a: Int;
+                Val $a: Int;
             }
         

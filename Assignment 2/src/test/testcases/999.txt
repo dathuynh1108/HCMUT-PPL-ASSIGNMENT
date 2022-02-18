@@ -1,0 +1,7 @@
+
+            Class Program : Object {
+                method() {
+                    a.b.c = 1;
+                }
+            }
+        

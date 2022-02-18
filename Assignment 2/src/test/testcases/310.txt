@@ -1,0 +1,8 @@
+
+            Class Program {
+                method() {}
+                $method() {}
+                method(a,b: Int; x,y: String) {}
+                $method(a,b: Int; x,y: String) {}
+            }
+        

@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(Program),[AttributeDecl(Static,VarDecl($a,IntType))])])

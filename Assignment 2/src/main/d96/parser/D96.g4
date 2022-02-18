@@ -72,9 +72,9 @@ primitive_literal:
 	| STRING_LITERAL
 	| BOOLEAN_LITERAL;
 
-array_literal: indexed_array | multi_demensional_array;
+array_literal: multi_demensional_array | indexed_array;
 // Phải để trước index để multi dimensional sẽ match multi trước
-multi_demensional_array: ARRAY LP array_literal_list? RP;
+multi_demensional_array: ARRAY LP array_literal_list RP;
 array_literal_list: array_literal (COMMA array_literal)*;
 indexed_array: ARRAY LP list_of_expressions? RP;
 
@@ -140,6 +140,7 @@ expression: string_expression;
 string_expression:
 	relation_expression (STRING_ADD | STRING_EQUAL) relation_expression
 	| relation_expression;
+
 relation_expression:
 	logical_expression (EQUAL | NOT_EQUAL | LT | LTE | GT | GTE) logical_expression
 	| logical_expression;
@@ -161,8 +162,10 @@ negative_expression: NOT negative_expression | sign_expression;
 sign_expression: SUB sign_expression | index_expression;
 
 index_expression:
-	index_expression LSB expression RSB
+	instance_access_expression index_operator
 	| instance_access_expression;
+
+index_operator: LSB expression RSB | LSB expression RSB index_operator;
 
 instance_access_expression:
 	instance_access_expression DOT ID LP list_of_expressions? RP
@@ -178,7 +181,7 @@ object_creation_expression:
 	NEW ID LP list_of_expressions? RP
 	| operand;
 
-operand: ID | SELF | literal | NULL | LP expression RP;
+operand: ID | SELF | NULL | literal | LP expression RP;
 
 /***************************** STATEMENT ******************************/
 scalar_variable:
@@ -188,7 +191,7 @@ scalar_variable:
 	| ID;
 scalar_instance_access: instance_access_expression DOT ID;
 scalar_static_access: ID DOUBLE_COLON DOLLAR_ID;
-scalar_index: index_expression LSB expression RSB;
+scalar_index: instance_access_expression index_operator;
 
 block_statement: LCB statement* RCB;
 statement:
@@ -229,7 +232,7 @@ elseif_statement: ELSEIF LP expression RP block_statement;
 else_statement: ELSE block_statement;
 
 foreach_statement:
-	FOREACH LP scalar_variable IN expression DOUBLE_DOT expression (
+	FOREACH LP ID IN expression DOUBLE_DOT expression (
 		BY expression
 	)? RP block_statement;
 break_statement: BREAK SEMI;

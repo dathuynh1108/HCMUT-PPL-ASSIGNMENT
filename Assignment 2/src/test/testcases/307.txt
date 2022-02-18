@@ -1,0 +1,6 @@
+
+            Class Program {
+                Var a, b, c : Int = 1, 2, 3;
+                Val x, y, z : Float = 1.1, 1.2, 1.3;
+            }
+        
