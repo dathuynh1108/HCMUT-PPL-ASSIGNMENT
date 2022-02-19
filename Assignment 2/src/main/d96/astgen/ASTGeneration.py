@@ -1,12 +1,11 @@
-from numpy import isin
 from D96Visitor import D96Visitor
 from D96Parser import D96Parser
 from AST import *
+# Nhớ bỏ đống này
 from functools import reduce
 from main.d96.utils.AST import *
 from main.d96.parser.D96Parser import D96Parser
 from main.d96.parser.D96Visitor import D96Visitor
-
 
 class ASTGeneration(D96Visitor):
     def visitProgram(self, ctx: D96Parser.ProgramContext):
@@ -248,7 +247,7 @@ class ASTGeneration(D96Visitor):
         return self.visit(ctx.indexed_array()) if ctx.indexed_array() else self.visit(ctx.multi_demensional_array())
 
     def visitIndexed_array(self, ctx: D96Parser.Indexed_arrayContext):
-        return ArrayLiteral(self.visit(ctx.list_of_expressions()))
+        return ArrayLiteral(self.visit(ctx.list_of_expressions()) if ctx.list_of_expressions() else [])
 
     def visitMulti_demensional_array(self, ctx: D96Parser.Multi_demensional_arrayContext):
         return ArrayLiteral(self.visit(ctx.array_literal_list()))

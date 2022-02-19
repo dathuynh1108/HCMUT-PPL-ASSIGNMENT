@@ -1,7 +1,7 @@
 
             Class Program : Object {
                 method() {
-                    a.b(1,2,3);
+                    a = Array()
                 }
             }
         
