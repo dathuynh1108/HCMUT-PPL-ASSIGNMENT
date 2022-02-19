@@ -231,6 +231,9 @@ class ASTGeneration(D96Visitor):
             if string[0] == '.': string = '0' + string
             return float(string)
 
+        def cast_to_boolean(string):
+            return True if string == "True" else False
+        
         if ctx.ZERO_INTEGER():
             return IntLiteral(cast_to_integer(ctx.ZERO_INTEGER().getText()))
         if ctx.INTEGER_LITERAL():
@@ -239,7 +242,7 @@ class ASTGeneration(D96Visitor):
             return FloatLiteral(cast_to_float(ctx.FLOAT_LITERAL().getText()))
         if ctx.STRING_LITERAL():
             return StringLiteral(ctx.STRING_LITERAL().getText())
-        return BooleanLiteral(bool(ctx.BOOLEAN_LITERAL().getText()))
+        return BooleanLiteral(cast_to_boolean(ctx.BOOLEAN_LITERAL().getText()))
     
     def visitArray_literal(self, ctx: D96Parser.Array_literalContext):
         return self.visit(ctx.indexed_array()) if ctx.indexed_array() else self.visit(ctx.multi_demensional_array())
