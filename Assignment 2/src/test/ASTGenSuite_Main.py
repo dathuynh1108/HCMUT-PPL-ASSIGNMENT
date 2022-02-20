@@ -488,3 +488,113 @@ class ASTGenSuite(unittest.TestCase):
         expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([AssignStmt(Id(a),NewExpr(Id(Some_class),[])),AssignStmt(Id(a),NewExpr(Id(Some_class),[IntLit(1),IntLit(2)])),AssignStmt(Id(a),NewExpr(Id(Some_class),[BinaryOp(&&,BinaryOp(||,BinaryOp(-,BinaryOp(+,IntLit(1),IntLit(2)),BinaryOp(%,BinaryOp(/,BinaryOp(*,IntLit(3),IntLit(4)),IntLit(5)),IntLit(6))),IntLit(7)),IntLit(8)),ArrayCell(Id(a),[IntLit(1),IntLit(1),IntLit(1)]),FieldAccess(FieldAccess(Id(a),Id(a)),Id(a)),CallExpr(Id(a),Id(method),[]),FieldAccess(Id(a),Id($a)),CallExpr(Id(a),Id($method),[])])),AssignStmt(Id(a),NewExpr(Id(Some_class),[NewExpr(Id(Some_class),[NewExpr(Id(Some_class),[IntLit(1),IntLit(2),IntLit(3)])])])),AssignStmt(Id(a),FieldAccess(NewExpr(Id(Some_class),[]),Id(fucking_attribute))),AssignStmt(Id(a),ArrayCell(NewExpr(Id(Some_class),[]),[IntLit(1),IntLit(2),IntLit(3)])),AssignStmt(Id(a),FieldAccess(FieldAccess(FieldAccess(NewExpr(Id(Some_class),[]),Id(a)),Id(b)),Id(c))),AssignStmt(Id(a),ArrayCell(NewExpr(Id(Some_class),[]),[IntLit(1),IntLit(2),IntLit(3)]))]))])])"
         num = 333
         self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_034_zero_integer_literal(self):
+        input = r"""
+            Class Program {
+                Var a_1: Int = 0;
+                Var a_2: Int = 00;
+                Var a_3: Int = 0x0;
+                Var a_4: Int = 0X0;
+                Var a_5: Int = 0b0;
+                Var a_6: Int = 0B0;
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a_1),IntType,IntLit(0))),AttributeDecl(Instance,VarDecl(Id(a_2),IntType,IntLit(0))),AttributeDecl(Instance,VarDecl(Id(a_3),IntType,IntLit(0))),AttributeDecl(Instance,VarDecl(Id(a_4),IntType,IntLit(0))),AttributeDecl(Instance,VarDecl(Id(a_5),IntType,IntLit(0))),AttributeDecl(Instance,VarDecl(Id(a_6),IntType,IntLit(0)))])])"
+        num = 334
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_035_integer_literal_dec(self):
+        input = r"""
+            Class Program {
+                Var a_1: Int = 123456;
+                Var a_2: Int = 1_2_3_4_5_6;
+                Var a_3: Int = 123_456;
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a_1),IntType,IntLit(123456))),AttributeDecl(Instance,VarDecl(Id(a_2),IntType,IntLit(123456))),AttributeDecl(Instance,VarDecl(Id(a_3),IntType,IntLit(123456)))])])"
+        num = 335
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_036_integer_literal_hex(self):
+        input = r"""
+            Class Program {
+                Var a_1: Int = 0xABCDEF12345;
+                Var a_2: Int = 0XABCDEF12345;
+                Var a_3: Int = 0xA_B_C_D_E_F_1_2_3_4_5;
+                Var a_4: Int = 0XA_B_C_D_E_F_1_2_3_4_5;
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a_1),IntType,IntLit(11806310474565))),AttributeDecl(Instance,VarDecl(Id(a_2),IntType,IntLit(11806310474565))),AttributeDecl(Instance,VarDecl(Id(a_3),IntType,IntLit(11806310474565))),AttributeDecl(Instance,VarDecl(Id(a_4),IntType,IntLit(11806310474565)))])])"
+        num = 336
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_037_integer_literal_oct(self):
+        input = r"""
+            Class Program {
+                Var a_1: Int = 012345670;
+                Var a_2: Int = 01_2_3_4_5_6_7_0;
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a_1),IntType,IntLit(2739128))),AttributeDecl(Instance,VarDecl(Id(a_2),IntType,IntLit(2739128)))])])"
+        num = 337
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_038_iteger_literal_bin(self):
+        input = r"""
+            Class Program {
+                Var a_1: Int = 0b10101010101010;
+                Var a_2: Int = 0B10101010101010;
+                Var a_3: Int = 0b1_0_1_0_1_0_1_0;
+                Var a_4: Int = 0B1_0_1_0_1_0_1_0;
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a_1),IntType,IntLit(10922))),AttributeDecl(Instance,VarDecl(Id(a_2),IntType,IntLit(10922))),AttributeDecl(Instance,VarDecl(Id(a_3),IntType,IntLit(170))),AttributeDecl(Instance,VarDecl(Id(a_4),IntType,IntLit(170)))])])"
+        num = 338
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_039_float_literal(self):
+        input = r"""
+            Class Program {
+                Var a_1: Float = 1.12345;
+                Var a_2: Float = 1.12345e2;
+                Var a_3: Float = 1.12345e+2;
+                Var a_4: Float = 1.12345e-2;
+                Var a_5: Float = 1.e2;
+                Var a_6: Float = 1.e-2;
+                Var a_7: Float = 1.e+2;
+                Var a_8: Float = 1e2;
+                Var a_9: Float = 1e-2;
+                Var a_10: Float = 1e+2;
+                Var a_11: Float = .e2;
+                Var a_12: Float = .e-2;
+                Var a_13: Float = .e+2;
+                Var a_14: Float = .1e2;
+                Var a_15: Float = .1e-2;
+                Var a_16: Float = .1e+2;
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a_1),FloatType,FloatLit(1.12345))),AttributeDecl(Instance,VarDecl(Id(a_2),FloatType,FloatLit(112.345))),AttributeDecl(Instance,VarDecl(Id(a_3),FloatType,FloatLit(112.345))),AttributeDecl(Instance,VarDecl(Id(a_4),FloatType,FloatLit(0.0112345))),AttributeDecl(Instance,VarDecl(Id(a_5),FloatType,FloatLit(100.0))),AttributeDecl(Instance,VarDecl(Id(a_6),FloatType,FloatLit(0.01))),AttributeDecl(Instance,VarDecl(Id(a_7),FloatType,FloatLit(100.0))),AttributeDecl(Instance,VarDecl(Id(a_8),FloatType,FloatLit(100.0))),AttributeDecl(Instance,VarDecl(Id(a_9),FloatType,FloatLit(0.01))),AttributeDecl(Instance,VarDecl(Id(a_10),FloatType,FloatLit(100.0))),AttributeDecl(Instance,VarDecl(Id(a_11),FloatType,FloatLit(0.0))),AttributeDecl(Instance,VarDecl(Id(a_12),FloatType,FloatLit(0.0))),AttributeDecl(Instance,VarDecl(Id(a_13),FloatType,FloatLit(0.0))),AttributeDecl(Instance,VarDecl(Id(a_14),FloatType,FloatLit(10.0))),AttributeDecl(Instance,VarDecl(Id(a_15),FloatType,FloatLit(0.001))),AttributeDecl(Instance,VarDecl(Id(a_16),FloatType,FloatLit(10.0)))])])"
+        num = 339
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_040_string_literal(self):
+        input = r"""
+            Class Program {
+                Var a_1: String = "abcdef";
+                Var a_2: String = "abc\n\t\b\f\r'""; 
+            }
+        """
+        expect = r"""Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a_1),StringType,StringLit(abcdef))),AttributeDecl(Instance,VarDecl(Id(a_2),StringType,StringLit(abc\n\t\b\f\r'")))])])"""
+        num = 340
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_041_boolean_literal(self):
+        input = r"""
+            Class Program {
+                Var a: Float = .1;
+            }
+        """
+        expect = r"""Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a_1),StringType,StringLit(abcdef))),AttributeDecl(Instance,VarDecl(Id(a_2),StringType,StringLit(abc\n\t\b\f\r'")))])])"""
+        num = 341
+        self.assertTrue(TestAST.test(input, expect, num))

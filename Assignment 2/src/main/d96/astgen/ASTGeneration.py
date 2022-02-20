@@ -297,15 +297,19 @@ class ASTGeneration(D96Visitor):
         return FieldAccess(Id(ctx.ID().getText()), Id(ctx.DOLLAR_ID().getText()))
 
     def visitIf_statement(self, ctx: D96Parser.If_statementContext):
-        elseif_statement = [self.visit(elseif_statement) for elseif_statement in ctx.elseif_statement()] if ctx.elseif_statement() else None
-        else_statement = self.visit(ctx.else_statement()) if ctx.else_statement() else None
-        return "If statement"
+        elseif_statement_list= [self.visit(elseif_statement) for elseif_statement in ctx.elseif_statement()] if ctx.elseif_statement() else []
+        else_statement = self.convert_elseif_statement(elseif_statement_list, self.visit(ctx.else_statement()) if ctx.else_statement() else None )
+        return If(self.visit(ctx.expression()), self.visit(ctx.block_statement()), else_statement) 
+
+    def convert_elseif_statement(self, elseif_statement_list, else_statement):
+        if not elseif_statement_list: return else_statement
+        return If(elseif_statement_list[0][0], elseif_statement_list[0][1], else_statement) if len(elseif_statement_list) == 1 else If(elseif_statement_list[0][0], elseif_statement_list[0][1], self.convert_elseif_statement(elseif_statement_list[1:], else_statement))
 
     def visitElseif_statement(self, ctx: D96Parser.Elseif_statementContext):
-        return "Elseif statement"
+        return [self.visit(ctx.expression()), self.visit(ctx.block_statement())]
 
     def visitElse_statement(self, ctx: D96Parser.Else_statementContext):
-        return "Else statement"
+        return self.visit(ctx.block_statement())
 
     def visitForeach_statement(self, ctx: D96Parser.Foreach_statementContext):
         expression_list = [self.visit(expression) for expression in ctx.expression()]

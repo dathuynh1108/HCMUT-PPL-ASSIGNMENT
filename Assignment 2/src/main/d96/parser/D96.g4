@@ -263,8 +263,7 @@ static_method_invocation:
 fragment DEC_INTEGER_LITERAL: [1-9]('_'? [0-9])*;
 fragment OCT_INTEGER_LITERAL: '0' [1-7]('_'? [0-7])*;
 fragment BIN_INTEGER_LITERAL: '0' [bB][1]('_'? [0-1])*;
-fragment HEX_INTEGER_LITERAL:
-	'0' [xX] [1-9A-F]('_'? [0-9A-F])*;
+fragment HEX_INTEGER_LITERAL: '0' [xX] [1-9A-F]('_'? [0-9A-F])*;
 
 fragment STRING_CHAR:
 	~([\b\t\f\r\n\\"])

@@ -1,0 +1,6 @@
+
+            Class Program {
+                Var a_1: Int = 012345670;
+                Var a_2: Int = 01_2_3_4_5_6_7_0;
+            }
+        

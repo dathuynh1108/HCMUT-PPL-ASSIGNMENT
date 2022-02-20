@@ -7,7 +7,10 @@ class ASTGenSuite(unittest.TestCase):
         input = """
             Class Program : Object {
                 method() {
-                    a = Array()
+                    If (1 == 1) {}
+                    Elseif (2 == 2) {}
+                    Elseif (3 == 3) {}
+                    Else {}
                 }
             }
         """

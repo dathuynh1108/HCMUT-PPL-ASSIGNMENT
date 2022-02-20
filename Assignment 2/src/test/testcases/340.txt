@@ -1,0 +1,6 @@
+
+            Class Program {
+                Var a_1: String = "abcdef";
+                Var a_2: String = "abc\n\t\b\f\r'""; 
+            }
+        

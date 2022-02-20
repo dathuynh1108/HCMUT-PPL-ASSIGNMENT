@@ -1,0 +1,20 @@
+
+            Class Program {
+                Var a_1: Float = 1.12345;
+                Var a_2: Float = 1.12345e2;
+                Var a_3: Float = 1.12345e+2;
+                Var a_4: Float = 1.12345e-2;
+                Var a_5: Float = 1.e2;
+                Var a_6: Float = 1.e-2;
+                Var a_7: Float = 1.e+2;
+                Var a_8: Float = 1e2;
+                Var a_9: Float = 1e-2;
+                Var a_10: Float = 1e+2;
+                Var a_11: Float = .e2;
+                Var a_12: Float = .e-2;
+                Var a_13: Float = .e+2;
+                Var a_14: Float = .1e2;
+                Var a_15: Float = .1e-2;
+                Var a_16: Float = .1e+2;
+            }
+        

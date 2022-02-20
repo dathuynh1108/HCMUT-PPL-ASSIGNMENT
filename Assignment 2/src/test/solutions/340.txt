@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a_1),StringType,StringLit(abcdef))),AttributeDecl(Instance,VarDecl(Id(a_2),StringType,StringLit(abc\n\t\b\f\r'")))])])
