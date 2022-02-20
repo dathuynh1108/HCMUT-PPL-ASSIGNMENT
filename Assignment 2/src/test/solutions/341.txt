@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a),BoolType,BooleanLit(True))),AttributeDecl(Instance,VarDecl(Id(b),BoolType,BooleanLit(False)))])])

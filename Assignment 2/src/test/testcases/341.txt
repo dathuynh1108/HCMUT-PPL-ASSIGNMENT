@@ -1,5 +1,6 @@
 
             Class Program {
-                Var a: Float = .1;
+                Var a: Boolean = True;
+                Var b: Boolean = False;
             }
         

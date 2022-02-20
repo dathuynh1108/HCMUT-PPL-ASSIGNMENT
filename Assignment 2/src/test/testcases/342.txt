@@ -1,0 +1,7 @@
+
+            Class Program {
+                Var a: Array[Int, 100] = Array();
+                Var b: Array[Int, 100] = Array(1,2,3,4);
+                Var c: Array[String, 100] = Array("huynh", "thanh", "dat");
+            }
+        

@@ -1,0 +1,16 @@
+
+            Class Number {
+                Var data: String = "1234"; 
+            }
+            Class Integer : Number{
+                Var data: Number;
+                Constructor(x: Int) {
+                    Self.data = x;
+                }
+            }
+            Class Program {
+                main() {
+                    Var x: Integer = New Integer(1);
+                }
+            }
+        

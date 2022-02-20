@@ -1,0 +1,10 @@
+
+            Class Program {
+                main() {
+                    Self.x = 1;
+                    Self.x();
+                    Self.x(1,2,3);
+                    Self.x = Null;
+                }
+            }
+        

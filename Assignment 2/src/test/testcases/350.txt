@@ -1,0 +1,9 @@
+
+            Class Program {
+                Constructor() {}
+                Constructor(x: Int) {}
+                Destructor() {}
+                main() {}
+                main(x: Int) {}
+            }
+        

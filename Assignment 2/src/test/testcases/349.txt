@@ -1,0 +1,7 @@
+
+            Class Program {
+                main() {
+                    Var x: Int = Array(1,2,3, Array(1,2,3));
+                }
+            }
+        

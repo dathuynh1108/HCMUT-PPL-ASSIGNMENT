@@ -1,0 +1,7 @@
+
+            Class Program {
+                Var a: Array[Array[Int, 100], 100] = Array(Array(), Array(), Array());
+                Var a: Array[Array[Int, 100], 100] = Array(Array(1,2,3), Array(1,2,3), Array(1,2,3));
+                Var a: Array[Array[Array[Int, 100], 100], 100] = Array(Array(Array(1,2,3), Array(1,2,3)), Array(Array(1,2,3), Array(1,2,3)));
+            }
+        
