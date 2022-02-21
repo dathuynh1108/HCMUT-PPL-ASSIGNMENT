@@ -1,0 +1,9 @@
+
+            Class Program {
+                method() {
+                    Foreach (i In 1 .. 100) {
+                        Continue;
+                    } 
+                }
+            }
+        

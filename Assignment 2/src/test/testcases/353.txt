@@ -1,0 +1,8 @@
+
+            Class Program {
+                method() {}
+                main() {}
+                method(a,b,c: Int; x,y,z: String) {}
+                main(a,b,c: Int; x,y,z: String) {}
+            }
+        

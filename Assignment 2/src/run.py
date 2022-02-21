@@ -7,7 +7,7 @@ for path in ['./test/','./main/d96/parser/','./main/d96/utils/','./main/d96/astg
 	sys.path.append(path)
 ANTLR_JAR = os.environ.get('ANTLR_JAR')
 TARGET_DIR = '../target'
-GENERATE_DIR = '../target'
+GENERATE_DIR = './main/d96/parser'
 
 def main(argv):
     if len(argv) < 1:

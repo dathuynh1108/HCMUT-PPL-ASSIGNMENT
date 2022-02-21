@@ -754,3 +754,725 @@ class ASTGenSuite(unittest.TestCase):
         expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(Constructor),Instance,[],Block([])),MethodDecl(Id(Constructor),Instance,[param(Id(x),IntType)],Block([])),MethodDecl(Id(Destructor),Instance,[],Block([])),MethodDecl(Id(main),Static,[],Block([])),MethodDecl(Id(main),Instance,[param(Id(x),IntType)],Block([]))])])"
         num = 350
         self.assertTrue(TestAST.test(input, expect, num))
+    
+    def test_051_no_check_type_in_expression(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = True && "String";
+                    a = "String" + 1 +. "String";
+                    a = "String" || "String" && "String" * 0 / 0x0 % (a + a.a + Class_name::$a);
+                    a = 0 + 0x0 + 0X0 + 0b0 + 0B0;
+                    a = !1e123 - -True + !True / -----"String";
+                    a = .123e123 > True;
+                    a = 1.234e123 == "String";
+                    a = 1.e-123 ==. "String";
+                    a = Array(1,2,3) + Array(Array(1,2,3), Array(1,2,3));             
+                    a = (1).a.a.a.a.a;
+                    a = (1).a().a().a().a();
+                    a = (1).a.a.a();
+                    a = 1[1];
+                    a = 1[1[1[1[1[1[1[1[1[1]]]]]]]]];
+                    a = 1[1[1[1]]][1[1[1]]][0x0 + 0X0 - 0XFF + 0b0 + 0B0 / 0B1111];
+                    a = (1).b[1][1][1][1][1];
+                    a = (a+b+c).a.a.a[1[1[1[1[1[1]]]]]][1][a.b][Class_name::$a][a][Class_name::$a];
+                    a = New X()[1];
+                    a = New X().a;
+                    a = New X(New X(a[New X()])).a[1];
+                    a = Array(1,2,3)[1];
+                    a = Array(Array(1,2,3), Array(1,2,3)).a.a.a();
+                    a = Array(1,2,3)[Array(1,2,3)[1]];
+                    a = "String"[1];
+                    a = "String"["String"[1]];
+                    a = "String"[New X().a];
+                    a = Null;
+                    a = Null.a;
+                    a = Null.a.a.a;
+                    a = Null.a.a.a();
+                    a = Null.a().a().a();
+                    a = Null[1];
+                    a = Array(Null);
+                    a = Null;
+                    
+                    Null.a();
+                    Null.a.a.a();
+                    Null.a();
+                    Null.a.a.a();
+                    Null.a().a().a();
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([AssignStmt(Id(a),BinaryOp(&&,BooleanLit(True),StringLit(String))),AssignStmt(Id(a),BinaryOp(+.,BinaryOp(+,StringLit(String),IntLit(1)),StringLit(String))),AssignStmt(Id(a),BinaryOp(&&,BinaryOp(||,StringLit(String),StringLit(String)),BinaryOp(%,BinaryOp(/,BinaryOp(*,StringLit(String),IntLit(0)),IntLit(0)),BinaryOp(+,BinaryOp(+,Id(a),FieldAccess(Id(a),Id(a))),FieldAccess(Id(Class_name),Id($a)))))),AssignStmt(Id(a),BinaryOp(+,BinaryOp(+,BinaryOp(+,BinaryOp(+,IntLit(0),IntLit(0)),IntLit(0)),IntLit(0)),IntLit(0))),AssignStmt(Id(a),BinaryOp(+,BinaryOp(-,UnaryOp(!,FloatLit(1e+123)),UnaryOp(-,BooleanLit(True))),BinaryOp(/,UnaryOp(!,BooleanLit(True)),UnaryOp(-,UnaryOp(-,UnaryOp(-,UnaryOp(-,UnaryOp(-,StringLit(String))))))))),AssignStmt(Id(a),BinaryOp(>,FloatLit(1.23e+122),BooleanLit(True))),AssignStmt(Id(a),BinaryOp(==,FloatLit(1.234e+123),StringLit(String))),AssignStmt(Id(a),BinaryOp(==.,FloatLit(1e-123),StringLit(String))),AssignStmt(Id(a),BinaryOp(+,[IntLit(1),IntLit(2),IntLit(3)],[[IntLit(1),IntLit(2),IntLit(3)],[IntLit(1),IntLit(2),IntLit(3)]])),AssignStmt(Id(a),FieldAccess(FieldAccess(FieldAccess(FieldAccess(FieldAccess(IntLit(1),Id(a)),Id(a)),Id(a)),Id(a)),Id(a))),AssignStmt(Id(a),CallExpr(CallExpr(CallExpr(CallExpr(IntLit(1),Id(a),[]),Id(a),[]),Id(a),[]),Id(a),[])),AssignStmt(Id(a),CallExpr(FieldAccess(FieldAccess(IntLit(1),Id(a)),Id(a)),Id(a),[])),AssignStmt(Id(a),ArrayCell(IntLit(1),[IntLit(1)])),AssignStmt(Id(a),ArrayCell(IntLit(1),[ArrayCell(IntLit(1),[ArrayCell(IntLit(1),[ArrayCell(IntLit(1),[ArrayCell(IntLit(1),[ArrayCell(IntLit(1),[ArrayCell(IntLit(1),[ArrayCell(IntLit(1),[ArrayCell(IntLit(1),[IntLit(1)])])])])])])])])])),AssignStmt(Id(a),ArrayCell(IntLit(1),[ArrayCell(IntLit(1),[ArrayCell(IntLit(1),[IntLit(1)])]),ArrayCell(IntLit(1),[ArrayCell(IntLit(1),[IntLit(1)])]),BinaryOp(+,BinaryOp(+,BinaryOp(-,BinaryOp(+,IntLit(0),IntLit(0)),IntLit(255)),IntLit(0)),BinaryOp(/,IntLit(0),IntLit(15)))])),AssignStmt(Id(a),ArrayCell(FieldAccess(IntLit(1),Id(b)),[IntLit(1),IntLit(1),IntLit(1),IntLit(1),IntLit(1)])),AssignStmt(Id(a),ArrayCell(FieldAccess(FieldAccess(FieldAccess(BinaryOp(+,BinaryOp(+,Id(a),Id(b)),Id(c)),Id(a)),Id(a)),Id(a)),[ArrayCell(IntLit(1),[ArrayCell(IntLit(1),[ArrayCell(IntLit(1),[ArrayCell(IntLit(1),[ArrayCell(IntLit(1),[IntLit(1)])])])])]),IntLit(1),FieldAccess(Id(a),Id(b)),FieldAccess(Id(Class_name),Id($a)),Id(a),FieldAccess(Id(Class_name),Id($a))])),AssignStmt(Id(a),ArrayCell(NewExpr(Id(X),[]),[IntLit(1)])),AssignStmt(Id(a),FieldAccess(NewExpr(Id(X),[]),Id(a))),AssignStmt(Id(a),ArrayCell(FieldAccess(NewExpr(Id(X),[NewExpr(Id(X),[ArrayCell(Id(a),[NewExpr(Id(X),[])])])]),Id(a)),[IntLit(1)])),AssignStmt(Id(a),ArrayCell([IntLit(1),IntLit(2),IntLit(3)],[IntLit(1)])),AssignStmt(Id(a),CallExpr(FieldAccess(FieldAccess([[IntLit(1),IntLit(2),IntLit(3)],[IntLit(1),IntLit(2),IntLit(3)]],Id(a)),Id(a)),Id(a),[])),AssignStmt(Id(a),ArrayCell([IntLit(1),IntLit(2),IntLit(3)],[ArrayCell([IntLit(1),IntLit(2),IntLit(3)],[IntLit(1)])])),AssignStmt(Id(a),ArrayCell(StringLit(String),[IntLit(1)])),AssignStmt(Id(a),ArrayCell(StringLit(String),[ArrayCell(StringLit(String),[IntLit(1)])])),AssignStmt(Id(a),ArrayCell(StringLit(String),[FieldAccess(NewExpr(Id(X),[]),Id(a))])),AssignStmt(Id(a),NullLiteral()),AssignStmt(Id(a),FieldAccess(NullLiteral(),Id(a))),AssignStmt(Id(a),FieldAccess(FieldAccess(FieldAccess(NullLiteral(),Id(a)),Id(a)),Id(a))),AssignStmt(Id(a),CallExpr(FieldAccess(FieldAccess(NullLiteral(),Id(a)),Id(a)),Id(a),[])),AssignStmt(Id(a),CallExpr(CallExpr(CallExpr(NullLiteral(),Id(a),[]),Id(a),[]),Id(a),[])),AssignStmt(Id(a),ArrayCell(NullLiteral(),[IntLit(1)])),AssignStmt(Id(a),[NullLiteral()]),AssignStmt(Id(a),NullLiteral()),Call(NullLiteral(),Id(a),[]),Call(FieldAccess(FieldAccess(NullLiteral(),Id(a)),Id(a)),Id(a),[]),Call(NullLiteral(),Id(a),[]),Call(FieldAccess(FieldAccess(NullLiteral(),Id(a)),Id(a)),Id(a),[]),Call(CallExpr(CallExpr(NullLiteral(),Id(a),[]),Id(a),[]),Id(a),[])]))])])"
+        num = 351
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_052_method_param(self):
+        input = r"""
+            Class Program {
+                method() {}
+                main() {}
+                method(a,b,c: Int; x,y,z: String) {}
+                main(a,b,c: Int; x,y,z: String) {}
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([])),MethodDecl(Id(main),Static,[],Block([])),MethodDecl(Id(method),Instance,[param(Id(a),IntType),param(Id(b),IntType),param(Id(c),IntType),param(Id(x),StringType),param(Id(y),StringType),param(Id(z),StringType)],Block([])),MethodDecl(Id(main),Instance,[param(Id(a),IntType),param(Id(b),IntType),param(Id(c),IntType),param(Id(x),StringType),param(Id(y),StringType),param(Id(z),StringType)],Block([]))])])"
+        num = 352
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_053_method_param(self):
+        input = r"""
+            Class Program {
+                method() {}
+                main() {}
+                method(a,b,c: Int; x,y,z: String) {}
+                main(a,b,c: Int; x,y,z: String) {}
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([])),MethodDecl(Id(main),Static,[],Block([])),MethodDecl(Id(method),Instance,[param(Id(a),IntType),param(Id(b),IntType),param(Id(c),IntType),param(Id(x),StringType),param(Id(y),StringType),param(Id(z),StringType)],Block([])),MethodDecl(Id(main),Instance,[param(Id(a),IntType),param(Id(b),IntType),param(Id(c),IntType),param(Id(x),StringType),param(Id(y),StringType),param(Id(z),StringType)],Block([]))])])"
+        num = 353
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_054_assign_statement_lhs_is_id(self):
+        input = r"""
+            Class Program {
+                method() {
+                    a = 1;
+                    a = 1 + 1;
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([AssignStmt(Id(a),IntLit(1)),AssignStmt(Id(a),BinaryOp(+,IntLit(1),IntLit(1)))]))])])"
+        num = 354
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_055_assign_statement_lhs_is_array_cell(self):
+        input = r"""
+            Class Program {
+                method() {
+                    a[1] = 1;
+                    a[1][1] = 1;
+                    a[1][1][1] = 1;
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([AssignStmt(ArrayCell(Id(a),[IntLit(1)]),IntLit(1)),AssignStmt(ArrayCell(Id(a),[IntLit(1),IntLit(1)]),IntLit(1)),AssignStmt(ArrayCell(Id(a),[IntLit(1),IntLit(1),IntLit(1)]),IntLit(1))]))])])"
+        num = 355
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_056_assign_statement_lhs_is_field_access(self):
+        input = r"""
+            Class Program {
+                method() {
+                    a.b = 1;
+                    a.b.c = 1;
+                    a.b.c.d.e = 1;
+                    a.b().c().d = 1;
+                    Self.a().b = 1;
+                    Self.a().b().c().d = 1;
+                    Self.a().b = Null;
+                    Self.a().b().c().d = Null;
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([AssignStmt(FieldAccess(Id(a),Id(b)),IntLit(1)),AssignStmt(FieldAccess(FieldAccess(Id(a),Id(b)),Id(c)),IntLit(1)),AssignStmt(FieldAccess(FieldAccess(FieldAccess(FieldAccess(Id(a),Id(b)),Id(c)),Id(d)),Id(e)),IntLit(1)),AssignStmt(FieldAccess(CallExpr(CallExpr(Id(a),Id(b),[]),Id(c),[]),Id(d)),IntLit(1)),AssignStmt(FieldAccess(CallExpr(Self(),Id(a),[]),Id(b)),IntLit(1)),AssignStmt(FieldAccess(CallExpr(CallExpr(CallExpr(Self(),Id(a),[]),Id(b),[]),Id(c),[]),Id(d)),IntLit(1)),AssignStmt(FieldAccess(CallExpr(Self(),Id(a),[]),Id(b)),NullLiteral()),AssignStmt(FieldAccess(CallExpr(CallExpr(CallExpr(Self(),Id(a),[]),Id(b),[]),Id(c),[]),Id(d)),NullLiteral())]))])])"
+        num = 356
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_057_simple_foreach_statement(self):
+        input = r"""
+            Class Program {
+                method() {
+                    Foreach (i In 1 .. 100 By 1) {}
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([For(Id(i),IntLit(1),IntLit(100),IntLit(1),Block([])])]))])])"
+        num = 357
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_058_foreach_statement_miss_by(self):
+        input = r"""
+            Class Program {
+                method() {
+                    Foreach (i In 1 .. 100) {}
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([For(Id(i),IntLit(1),IntLit(100),IntLit(1),Block([])])]))])])"
+        num = 358
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_059_foreach_statement_statement_with_expression(self):
+        input = r"""
+            Class Program {
+                method() {
+                    Foreach (i In 1 + 1 + a + b .. a + b * c / d By Self.a) {}
+                    Foreach (i In Self.a .. Self.b() By a::$b) {}
+                    
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([For(Id(i),BinaryOp(+,BinaryOp(+,BinaryOp(+,IntLit(1),IntLit(1)),Id(a)),Id(b)),BinaryOp(+,Id(a),BinaryOp(/,BinaryOp(*,Id(b),Id(c)),Id(d))),FieldAccess(Self(),Id(a)),Block([])]),For(Id(i),FieldAccess(Self(),Id(a)),CallExpr(Self(),Id(b),[]),FieldAccess(Id(a),Id($b)),Block([])])]))])])"
+        num = 359
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_060_break_statement(self):
+        input = r"""
+            Class Program {
+                method() {
+                    Foreach (i In 1 .. 100) {
+                        Break;
+                    } 
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([For(Id(i),IntLit(1),IntLit(100),IntLit(1),Block([Break])])]))])])"
+        num = 360
+        self.assertTrue(TestAST.test(input, expect, num))
+    def test_061_break_statement(self):
+        input = r"""
+            Class Program {
+                method() {
+                    Foreach (i In 1 .. 100) {
+                        Continue;
+                    } 
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([For(Id(i),IntLit(1),IntLit(100),IntLit(1),Block([Continue])])]))])])"
+        num = 361
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_062_return_statement_without_expression(self):
+        input = r"""
+            Class Program {
+                method() {
+                    Return;
+                    Foreach (i In 1 .. 100) {
+                        Return;
+                    }
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([Return(),For(Id(i),IntLit(1),IntLit(100),IntLit(1),Block([Return()])])]))])])"
+        num = 362
+        self.assertTrue(TestAST.test(input, expect, num))
+    
+    def test_063_return_statement_with_expression(self):
+        input = r"""
+            Class Program {
+                method() {
+                    Return a + 1 * b;
+                    Foreach (i In 1 .. 100) {
+                        Return i * i + a.b;
+                    }
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([Return(BinaryOp(+,Id(a),BinaryOp(*,IntLit(1),Id(b)))),For(Id(i),IntLit(1),IntLit(100),IntLit(1),Block([Return(BinaryOp(+,BinaryOp(*,Id(i),Id(i)),FieldAccess(Id(a),Id(b))))])])]))])])"
+        num = 363
+        self.assertTrue(TestAST.test(input, expect, num))
+    
+    def test_064_block_statement_in_block_statement(self):
+        input = r"""
+            Class Program {
+                method() {
+                    {{{{}}}}
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([Block([Block([Block([Block([])])])])]))])])"
+        num = 364
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_065_foreach_in_foreach(self):
+        input = r"""
+            Class Program {
+                method() {
+                    Foreach (i In 1 .. 100) {
+                        Foreach (j In 1 .. i By i * i) {
+                            {
+                                Break;
+                            }
+                        }
+                    }
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([For(Id(i),IntLit(1),IntLit(100),IntLit(1),Block([For(Id(j),IntLit(1),Id(i),BinaryOp(*,Id(i),Id(i)),Block([Block([Break])])])])])]))])])"
+        num = 365
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_066_method_inovation_statement_pure_instance(self):
+        input = r"""
+            Class Program {
+                method() {
+                    a.b();
+                    a.b.c();
+                    a.b().c();
+                    a.b.c.d();
+                    a.b.c().d();
+                    a.b().c().d();
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([Call(Id(a),Id(b),[]),Call(FieldAccess(Id(a),Id(b)),Id(c),[]),Call(CallExpr(Id(a),Id(b),[]),Id(c),[]),Call(FieldAccess(FieldAccess(Id(a),Id(b)),Id(c)),Id(d),[]),Call(CallExpr(FieldAccess(Id(a),Id(b)),Id(c),[]),Id(d),[]),Call(CallExpr(CallExpr(Id(a),Id(b),[]),Id(c),[]),Id(d),[])]))])])"
+        num = 366
+        self.assertTrue(TestAST.test(input, expect, num))
+    
+    def test_067_method_inovation_statement_static_instance(self):
+        input = r"""
+            Class Program {
+                method() {
+                    a::$b();
+                    a::$b.c();
+                    a::$b.c.d();
+                    a::$b.c().d();
+                    a::$b().c().d();
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([Call(Id(a),Id($b),[]),Call(FieldAccess(Id(a),Id($b)),Id(c),[]),Call(FieldAccess(FieldAccess(Id(a),Id($b)),Id(c)),Id(d),[]),Call(CallExpr(FieldAccess(Id(a),Id($b)),Id(c),[]),Id(d),[]),Call(CallExpr(CallExpr(Id(a),Id($b),[]),Id(c),[]),Id(d),[])]))])])"
+        num = 367
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_068_method_inovation_statement_of_new_expression(self):
+        input = r"""
+            Class Program {
+                method() {
+                    New X().a();
+                    New X().a.b();
+                    New X().a().b();
+                    New X(New X()).a().b();
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([Call(NewExpr(Id(X),[]),Id(a),[]),Call(FieldAccess(NewExpr(Id(X),[]),Id(a)),Id(b),[]),Call(CallExpr(NewExpr(Id(X),[]),Id(a),[]),Id(b),[]),Call(CallExpr(NewExpr(Id(X),[NewExpr(Id(X),[])]),Id(a),[]),Id(b),[])]))])])"
+        num = 368
+        self.assertTrue(TestAST.test(input, expect, num))
+    
+    def test_069_method_inovation_statement(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a.b();
+                    a.b.c();
+                    a.b.c.d();
+                    a.b().c().d();
+                    
+                    a.b(123).c(123);
+                    a.b(123).c.d(123);
+                    a.b.c(123).d(123);
+                    a.b(123).c(123).d(123);
+                    a.b(123).c().d(123);
+                    
+                    a::$b();
+                    a::$b.c();
+                    a::$b.c.d();
+
+                    a::$b.c(123).d(123);
+                    a::$b(123).c.d(123);
+                    a::$b(123).c().d(123);            
+                
+                    Self.a();
+                    Self.a.b();
+                    Self.a.b.c();
+                    Self.a().b.c();
+                    Self.a().b().c();
+
+                    (123).a();
+                    (0).a();
+                    (0x0).a();
+                    (0b0).a();
+                    (1.234).a();
+
+                    (123).a.a.a.a();
+                    (0).a.a.a.a();
+                    (0x0).a.a.a.a();
+                    (0b0).a.a.a.a();
+                    (1.234).a.a.a.a();
+                    (123).a(123).a(123).a(123).a(123);
+                    
+                    New X().a();
+                    New X().a.a.a();
+                    New X().a().a.a();
+                    New X().a().a().a();
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([Call(Id(a),Id(b),[]),Call(FieldAccess(Id(a),Id(b)),Id(c),[]),Call(FieldAccess(FieldAccess(Id(a),Id(b)),Id(c)),Id(d),[]),Call(CallExpr(CallExpr(Id(a),Id(b),[]),Id(c),[]),Id(d),[]),Call(CallExpr(Id(a),Id(b),[IntLit(123)]),Id(c),[IntLit(123)]),Call(FieldAccess(CallExpr(Id(a),Id(b),[IntLit(123)]),Id(c)),Id(d),[IntLit(123)]),Call(CallExpr(FieldAccess(Id(a),Id(b)),Id(c),[IntLit(123)]),Id(d),[IntLit(123)]),Call(CallExpr(CallExpr(Id(a),Id(b),[IntLit(123)]),Id(c),[IntLit(123)]),Id(d),[IntLit(123)]),Call(CallExpr(CallExpr(Id(a),Id(b),[IntLit(123)]),Id(c),[]),Id(d),[IntLit(123)]),Call(Id(a),Id($b),[]),Call(FieldAccess(Id(a),Id($b)),Id(c),[]),Call(FieldAccess(FieldAccess(Id(a),Id($b)),Id(c)),Id(d),[]),Call(CallExpr(FieldAccess(Id(a),Id($b)),Id(c),[IntLit(123)]),Id(d),[IntLit(123)]),Call(FieldAccess(CallExpr(Id(a),Id($b),[IntLit(123)]),Id(c)),Id(d),[IntLit(123)]),Call(CallExpr(CallExpr(Id(a),Id($b),[IntLit(123)]),Id(c),[]),Id(d),[IntLit(123)]),Call(Self(),Id(a),[]),Call(FieldAccess(Self(),Id(a)),Id(b),[]),Call(FieldAccess(FieldAccess(Self(),Id(a)),Id(b)),Id(c),[]),Call(FieldAccess(CallExpr(Self(),Id(a),[]),Id(b)),Id(c),[]),Call(CallExpr(CallExpr(Self(),Id(a),[]),Id(b),[]),Id(c),[]),Call(IntLit(123),Id(a),[]),Call(IntLit(0),Id(a),[]),Call(IntLit(0),Id(a),[]),Call(IntLit(0),Id(a),[]),Call(FloatLit(1.234),Id(a),[]),Call(FieldAccess(FieldAccess(FieldAccess(IntLit(123),Id(a)),Id(a)),Id(a)),Id(a),[]),Call(FieldAccess(FieldAccess(FieldAccess(IntLit(0),Id(a)),Id(a)),Id(a)),Id(a),[]),Call(FieldAccess(FieldAccess(FieldAccess(IntLit(0),Id(a)),Id(a)),Id(a)),Id(a),[]),Call(FieldAccess(FieldAccess(FieldAccess(IntLit(0),Id(a)),Id(a)),Id(a)),Id(a),[]),Call(FieldAccess(FieldAccess(FieldAccess(FloatLit(1.234),Id(a)),Id(a)),Id(a)),Id(a),[]),Call(CallExpr(CallExpr(CallExpr(IntLit(123),Id(a),[IntLit(123)]),Id(a),[IntLit(123)]),Id(a),[IntLit(123)]),Id(a),[IntLit(123)]),Call(NewExpr(Id(X),[]),Id(a),[]),Call(FieldAccess(FieldAccess(NewExpr(Id(X),[]),Id(a)),Id(a)),Id(a),[]),Call(FieldAccess(CallExpr(NewExpr(Id(X),[]),Id(a),[]),Id(a)),Id(a),[]),Call(CallExpr(CallExpr(NewExpr(Id(X),[]),Id(a),[]),Id(a),[]),Id(a),[])]))])])"
+        num = 369
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_070_index_with_access_expression(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = a.b[1];
+                    a = a.a.a.a.a.a[1];
+                    a = Self.a[1];
+                    a = Self.a.a.a.a.a[1];
+                    a = Class_name::$a[1];
+                    a = Class_name::$a.a.a.a[1];
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([AssignStmt(Id(a),ArrayCell(FieldAccess(Id(a),Id(b)),[IntLit(1)])),AssignStmt(Id(a),ArrayCell(FieldAccess(FieldAccess(FieldAccess(FieldAccess(FieldAccess(Id(a),Id(a)),Id(a)),Id(a)),Id(a)),Id(a)),[IntLit(1)])),AssignStmt(Id(a),ArrayCell(FieldAccess(Self(),Id(a)),[IntLit(1)])),AssignStmt(Id(a),ArrayCell(FieldAccess(FieldAccess(FieldAccess(FieldAccess(FieldAccess(Self(),Id(a)),Id(a)),Id(a)),Id(a)),Id(a)),[IntLit(1)])),AssignStmt(Id(a),ArrayCell(FieldAccess(Id(Class_name),Id($a)),[IntLit(1)])),AssignStmt(Id(a),ArrayCell(FieldAccess(FieldAccess(FieldAccess(FieldAccess(Id(Class_name),Id($a)),Id(a)),Id(a)),Id(a)),[IntLit(1)]))]))])])"
+        num = 370
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_071_index_with_method_call_expression(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = a.b()[1];
+                    a = a.b(1,2,3)[1][2][3];
+                    a = a.b.c(1,2,3).d[1][2][3];
+                    a = a.b().c(1,2,3).d()[1][2][3];
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([AssignStmt(Id(a),ArrayCell(CallExpr(Id(a),Id(b),[]),[IntLit(1)])),AssignStmt(Id(a),ArrayCell(CallExpr(Id(a),Id(b),[IntLit(1),IntLit(2),IntLit(3)]),[IntLit(1),IntLit(2),IntLit(3)])),AssignStmt(Id(a),ArrayCell(FieldAccess(CallExpr(FieldAccess(Id(a),Id(b)),Id(c),[IntLit(1),IntLit(2),IntLit(3)]),Id(d)),[IntLit(1),IntLit(2),IntLit(3)])),AssignStmt(Id(a),ArrayCell(CallExpr(CallExpr(CallExpr(Id(a),Id(b),[]),Id(c),[IntLit(1),IntLit(2),IntLit(3)]),Id(d),[]),[IntLit(1),IntLit(2),IntLit(3)]))]))])])"
+        num = 371
+        self.assertTrue(TestAST.test(input, expect, num))
+    
+    def test_072_left_hand_side(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = 1;
+                    a[1] = 1;
+                    a[1][2][3] = 1;
+                    a[1][a[a[2]]][3][4] = 1;
+                    a[a[a[1][2][3]]][2][3] = 1;
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([AssignStmt(Id(a),IntLit(1)),AssignStmt(ArrayCell(Id(a),[IntLit(1)]),IntLit(1)),AssignStmt(ArrayCell(Id(a),[IntLit(1),IntLit(2),IntLit(3)]),IntLit(1)),AssignStmt(ArrayCell(Id(a),[IntLit(1),ArrayCell(Id(a),[ArrayCell(Id(a),[IntLit(2)])]),IntLit(3),IntLit(4)]),IntLit(1)),AssignStmt(ArrayCell(Id(a),[ArrayCell(Id(a),[ArrayCell(Id(a),[IntLit(1),IntLit(2),IntLit(3)])]),IntLit(2),IntLit(3)]),IntLit(1))]))])])"
+        num = 372
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_072_left_hand_side(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = 1;
+                    a[1] = 1;
+                    a[1][2][3] = 1;
+                    a[1][a[a[2]]][3][4] = 1;
+                    a[a[a[1][2][3]]][2][3] = 1;
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([AssignStmt(Id(a),IntLit(1)),AssignStmt(ArrayCell(Id(a),[IntLit(1)]),IntLit(1)),AssignStmt(ArrayCell(Id(a),[IntLit(1),IntLit(2),IntLit(3)]),IntLit(1)),AssignStmt(ArrayCell(Id(a),[IntLit(1),ArrayCell(Id(a),[ArrayCell(Id(a),[IntLit(2)])]),IntLit(3),IntLit(4)]),IntLit(1)),AssignStmt(ArrayCell(Id(a),[ArrayCell(Id(a),[ArrayCell(Id(a),[IntLit(1),IntLit(2),IntLit(3)])]),IntLit(2),IntLit(3)]),IntLit(1))]))])])"
+        num = 372
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_073_foreach_statement_reverse(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Foreach (i In 1 .. 100 By -1) {}
+                    Foreach (i In 100 .. 1) {}
+                    Foreach (i In 100 .. 1 By 1) {}
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([For(Id(i),IntLit(1),IntLit(100),UnaryOp(-,IntLit(1)),Block([])]),For(Id(i),IntLit(100),IntLit(1),IntLit(1),Block([])]),For(Id(i),IntLit(100),IntLit(1),IntLit(1),Block([])])]))])])"
+        num = 373
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_074_self_method(self):
+        input = r"""
+            Class Some_class {    
+                    Var $a, b: Int = 1, 2;
+                    Method(n: Int) {
+                        If (n == 1) {
+                            Return True;
+                        }
+                        Else {
+                            Return False;
+                        }
+                    }  
+                    $Method(n: Int) {
+                        If (n == 1) {
+                            Return True;
+                        }
+                        Else {
+                            Return False;
+                        }
+                    }    
+                    Constructor(int: Int; string: String) {
+                        Some_class::$Method(1,2,3);
+                        Self.Method(1,2,3);
+                        a = Some_class::$Method(1,2,3);
+                        a = Self.Method(1,2,3);
+                    }
+                    Constructor() {}
+                    Destructor() {}
+            }
+            Class Program {
+                add_100 (i:Int) {
+                    i = i + 100;
+                    Return i;
+                }
+                $sub_100(i:Int) {
+                    i = i - 100;
+                    Return i;
+                }
+                main() {
+                    Var some_class: Some_class = New Some_class(1, "abc");
+                    Foreach (i In Some_class::$Method(1+2-3*4/5%6) .. some_class.method(1+2+3) By 1) {
+                        Self.print(i);
+                        If (i > 1) {
+                            Self.print(i);
+                        }
+                        Elseif (i < -1) {
+                            Self.add_100(i);
+                        }
+                        Else {
+                            Some_class::$sub_100(i);
+                        }
+                    }
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Some_class),[AttributeDecl(Static,VarDecl(Id($a),IntType,IntLit(1))),AttributeDecl(Instance,VarDecl(Id(b),IntType,IntLit(2))),MethodDecl(Id(Method),Instance,[param(Id(n),IntType)],Block([If(BinaryOp(==,Id(n),IntLit(1)),Block([Return(BooleanLit(True))]),Block([Return(BooleanLit(False))]))])),MethodDecl(Id($Method),Static,[param(Id(n),IntType)],Block([If(BinaryOp(==,Id(n),IntLit(1)),Block([Return(BooleanLit(True))]),Block([Return(BooleanLit(False))]))])),MethodDecl(Id(Constructor),Instance,[param(Id(int),IntType),param(Id(string),StringType)],Block([Call(Id(Some_class),Id($Method),[IntLit(1),IntLit(2),IntLit(3)]),Call(Self(),Id(Method),[IntLit(1),IntLit(2),IntLit(3)]),AssignStmt(Id(a),CallExpr(Id(Some_class),Id($Method),[IntLit(1),IntLit(2),IntLit(3)])),AssignStmt(Id(a),CallExpr(Self(),Id(Method),[IntLit(1),IntLit(2),IntLit(3)]))])),MethodDecl(Id(Constructor),Instance,[],Block([])),MethodDecl(Id(Destructor),Instance,[],Block([]))]),ClassDecl(Id(Program),[MethodDecl(Id(add_100),Instance,[param(Id(i),IntType)],Block([AssignStmt(Id(i),BinaryOp(+,Id(i),IntLit(100))),Return(Id(i))])),MethodDecl(Id($sub_100),Static,[param(Id(i),IntType)],Block([AssignStmt(Id(i),BinaryOp(-,Id(i),IntLit(100))),Return(Id(i))])),MethodDecl(Id(main),Static,[],Block([VarDecl(Id(some_class),ClassType(Id(Some_class)),NewExpr(Id(Some_class),[IntLit(1),StringLit(abc)])),For(Id(i),CallExpr(Id(Some_class),Id($Method),[BinaryOp(-,BinaryOp(+,IntLit(1),IntLit(2)),BinaryOp(%,BinaryOp(/,BinaryOp(*,IntLit(3),IntLit(4)),IntLit(5)),IntLit(6)))]),CallExpr(Id(some_class),Id(method),[BinaryOp(+,BinaryOp(+,IntLit(1),IntLit(2)),IntLit(3))]),IntLit(1),Block([Call(Self(),Id(print),[Id(i)]),If(BinaryOp(>,Id(i),IntLit(1)),Block([Call(Self(),Id(print),[Id(i)])]),If(BinaryOp(<,Id(i),UnaryOp(-,IntLit(1))),Block([Call(Self(),Id(add_100),[Id(i)])]),Block([Call(Id(Some_class),Id($sub_100),[Id(i)])])))])])]))])])"
+        num = 374
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_075_complex_multi_demensional_array(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = Array(
+                        Array(1,2,3),
+                        Array(1,2),
+                        Array(Array(1,2,3), Array(1,2,3,4), Array(1,2,3,4,5)),
+                        Array(a[1], New X(), New X()[1], a==b, "String" ==. "String"),
+                        a[Array(1,2,3,4)],
+                        New X(),
+                        (1+2+3)
+                    );
+                }
+            }
+        """
+        expect = r"""Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([AssignStmt(Id(a),[[IntLit(1),IntLit(2),IntLit(3)],[IntLit(1),IntLit(2)],[[IntLit(1),IntLit(2),IntLit(3)],[IntLit(1),IntLit(2),IntLit(3),IntLit(4)],[IntLit(1),IntLit(2),IntLit(3),IntLit(4),IntLit(5)]],[ArrayCell(Id(a),[IntLit(1)]),NewExpr(Id(X),[]),ArrayCell(NewExpr(Id(X),[]),[IntLit(1)]),BinaryOp(==,Id(a),Id(b)),BinaryOp(==.,StringLit(String),StringLit(String))],ArrayCell(Id(a),[[IntLit(1),IntLit(2),IntLit(3),IntLit(4)]]),NewExpr(Id(X),[]),BinaryOp(+,BinaryOp(+,IntLit(1),IntLit(2)),IntLit(3))])]))])])"""
+        num = 375
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_076_expression_with_lp_rp(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = 1 + (2 + 3);
+                }
+            }
+        """
+        expect = r"""Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([AssignStmt(Id(a),BinaryOp(+,IntLit(1),BinaryOp(+,IntLit(2),IntLit(3))))]))])])"""
+        num = 376
+        self.assertTrue(TestAST.test(input, expect, num))
+    
+    def test_077_method_call_with_complex_expression(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a.b(1, 1 + 2, True && False, "huynh" +. "dat", (1 + 2), -1);
+                }
+            }
+        """
+        expect = r"""Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([Call(Id(a),Id(b),[IntLit(1),BinaryOp(+,IntLit(1),IntLit(2)),BinaryOp(&&,BooleanLit(True),BooleanLit(False)),BinaryOp(+.,StringLit(huynh),StringLit(dat)),BinaryOp(+,IntLit(1),IntLit(2)),UnaryOp(-,IntLit(1))])]))])])"""
+        num = 377
+        self.assertTrue(TestAST.test(input, expect, num))
+    
+    def test_078_method_call_with_complex_expression(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = !-1;
+                    a = -(!1);
+                }
+            }
+        """
+        expect = r"""Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([AssignStmt(Id(a),UnaryOp(!,UnaryOp(-,IntLit(1)))),AssignStmt(Id(a),UnaryOp(-,UnaryOp(!,IntLit(1))))]))])])"""
+        num = 378
+        self.assertTrue(TestAST.test(input, expect, num))
+    
+    def test_079_multi_lp_rp(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = ((((((1 + 2)))))) * 3;
+                }
+            }
+        """
+        expect = r"""Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([AssignStmt(Id(a),BinaryOp(*,BinaryOp(+,IntLit(1),IntLit(2)),IntLit(3)))]))])])"""
+        num = 379
+        self.assertTrue(TestAST.test(input, expect, num))
+    
+    def test_080_special_parameter(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = a.b(Self, Null, (((((1))))));
+                }
+            }
+        """
+        expect = r"""Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([AssignStmt(Id(a),CallExpr(Id(a),Id(b),[Self(),NullLiteral(),IntLit(1)]))]))])])"""
+        num = 380
+        self.assertTrue(TestAST.test(input, expect, num))
+    
+    def test_081_multi_destructor_constructor_without_return(self):
+        # Not valid but ok 
+        input = r"""
+            Class Program {
+                Constructor() {
+                    Return;
+                }
+                Constructor(x: Int; y: String; a: Array[Array[Int,1],1]) {
+                    Return a + x + y;
+                }
+                Destructor() {
+                    Console.log("End");
+                }
+                Destructor() {
+                    Return;
+                }
+                Constructor() {}
+                Constructor(x: Int; y: String; a: Array[Array[Int,1],1]) {}
+                Destructor() {}
+                Destructor() {}
+            }
+        """
+        expect = r"""Program([ClassDecl(Id(Program),[MethodDecl(Id(Constructor),Instance,[],Block([Return()])),MethodDecl(Id(Constructor),Instance,[param(Id(x),IntType),param(Id(y),StringType),param(Id(a),ArrayType(1,ArrayType(1,IntType)))],Block([Return(BinaryOp(+,BinaryOp(+,Id(a),Id(x)),Id(y)))])),MethodDecl(Id(Destructor),Instance,[],Block([Call(Id(Console),Id(log),[StringLit(End)])])),MethodDecl(Id(Destructor),Instance,[],Block([Return()])),MethodDecl(Id(Constructor),Instance,[],Block([])),MethodDecl(Id(Constructor),Instance,[param(Id(x),IntType),param(Id(y),StringType),param(Id(a),ArrayType(1,ArrayType(1,IntType)))],Block([])),MethodDecl(Id(Destructor),Instance,[],Block([])),MethodDecl(Id(Destructor),Instance,[],Block([]))])])"""
+        num = 381
+        self.assertTrue(TestAST.test(input, expect, num))
+    
+    def test_082_member_access_invalid_but_ok(self):
+        input = r"""
+            Class Program {
+                main() {
+                    a = a.b.c;
+                    a = Class_name::$a;
+                    a = Class_name::$a.a.a.a();
+                    a = Null.a;
+                    a = Null.null.a;
+                    a = Self.a;
+                    a = Self.self.a;
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([AssignStmt(Id(a),FieldAccess(FieldAccess(Id(a),Id(b)),Id(c))),AssignStmt(Id(a),FieldAccess(Id(Class_name),Id($a))),AssignStmt(Id(a),CallExpr(FieldAccess(FieldAccess(FieldAccess(Id(Class_name),Id($a)),Id(a)),Id(a)),Id(a),[])),AssignStmt(Id(a),FieldAccess(NullLiteral(),Id(a))),AssignStmt(Id(a),FieldAccess(FieldAccess(NullLiteral(),Id(null)),Id(a))),AssignStmt(Id(a),FieldAccess(Self(),Id(a))),AssignStmt(Id(a),FieldAccess(FieldAccess(Self(),Id(self)),Id(a)))]))])])"
+        num = 382
+        self.assertTrue(TestAST.test(input, expect, num))
+    
+    def test_083_new_expression_associativity(self):
+        input = r"""
+            Class Some_class {         
+                    Constructor(int: Int; string: String) {}
+                    Constructor() {}
+                    Destructor() {}
+            }
+            Class Program : Some_class {
+                main() {
+                    a = New a(New a(New a(1,2,3), New a(1,2,3)), New a());
+                    a = New Some_class();
+                    a = New Some_class(1,2);
+                    a = New Some_class(1+2-3*4/5%6||7&&8, a[1][1][1], a.a.a, a.method(), a::$a, a::$method());
+                    a = New Some_class(New Some_class(New Some_class(1,2,3)));
+                    a = New Some_class(New Some_class(New Some_class()))[1][2][3];
+                    a = (New Some_class() + Self).a.a.a;
+                    a = (New Some_class() + Null)[1][2][3];
+                }
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Some_class),[MethodDecl(Id(Constructor),Instance,[param(Id(int),IntType),param(Id(string),StringType)],Block([])),MethodDecl(Id(Constructor),Instance,[],Block([])),MethodDecl(Id(Destructor),Instance,[],Block([]))]),ClassDecl(Id(Program),Id(Some_class),[MethodDecl(Id(main),Static,[],Block([AssignStmt(Id(a),NewExpr(Id(a),[NewExpr(Id(a),[NewExpr(Id(a),[IntLit(1),IntLit(2),IntLit(3)]),NewExpr(Id(a),[IntLit(1),IntLit(2),IntLit(3)])]),NewExpr(Id(a),[])])),AssignStmt(Id(a),NewExpr(Id(Some_class),[])),AssignStmt(Id(a),NewExpr(Id(Some_class),[IntLit(1),IntLit(2)])),AssignStmt(Id(a),NewExpr(Id(Some_class),[BinaryOp(&&,BinaryOp(||,BinaryOp(-,BinaryOp(+,IntLit(1),IntLit(2)),BinaryOp(%,BinaryOp(/,BinaryOp(*,IntLit(3),IntLit(4)),IntLit(5)),IntLit(6))),IntLit(7)),IntLit(8)),ArrayCell(Id(a),[IntLit(1),IntLit(1),IntLit(1)]),FieldAccess(FieldAccess(Id(a),Id(a)),Id(a)),CallExpr(Id(a),Id(method),[]),FieldAccess(Id(a),Id($a)),CallExpr(Id(a),Id($method),[])])),AssignStmt(Id(a),NewExpr(Id(Some_class),[NewExpr(Id(Some_class),[NewExpr(Id(Some_class),[IntLit(1),IntLit(2),IntLit(3)])])])),AssignStmt(Id(a),ArrayCell(NewExpr(Id(Some_class),[NewExpr(Id(Some_class),[NewExpr(Id(Some_class),[])])]),[IntLit(1),IntLit(2),IntLit(3)])),AssignStmt(Id(a),FieldAccess(FieldAccess(FieldAccess(BinaryOp(+,NewExpr(Id(Some_class),[]),Self()),Id(a)),Id(a)),Id(a))),AssignStmt(Id(a),ArrayCell(BinaryOp(+,NewExpr(Id(Some_class),[]),NullLiteral()),[IntLit(1),IntLit(2),IntLit(3)]))]))])])"
+        num = 383
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_084_array_complex_initialization(self):
+        input = r"""
+            Class Program {
+                Var array_1, array_2, array_3: Array[Array[Int,6], 6] = Array(
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x))
+                    ),
+                    Array(
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x))
+                    ),
+                    Array(
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x)),
+                        Array(1+2+3, 4*5*6, 100/2/10, 100 % 2, !-100, Self.f(x))
+                    );  
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(array_1),ArrayType(6,ArrayType(6,IntType)),[[BinaryOp(+,BinaryOp(+,IntLit(1),IntLit(2)),IntLit(3)),BinaryOp(*,BinaryOp(*,IntLit(4),IntLit(5)),IntLit(6)),BinaryOp(/,BinaryOp(/,IntLit(100),IntLit(2)),IntLit(10)),BinaryOp(%,IntLit(100),IntLit(2)),UnaryOp(!,UnaryOp(-,IntLit(100))),CallExpr(Self(),Id(f),[Id(x)])],[BinaryOp(+,BinaryOp(+,IntLit(1),IntLit(2)),IntLit(3)),BinaryOp(*,BinaryOp(*,IntLit(4),IntLit(5)),IntLit(6)),BinaryOp(/,BinaryOp(/,IntLit(100),IntLit(2)),IntLit(10)),BinaryOp(%,IntLit(100),IntLit(2)),UnaryOp(!,UnaryOp(-,IntLit(100))),CallExpr(Self(),Id(f),[Id(x)])],[BinaryOp(+,BinaryOp(+,IntLit(1),IntLit(2)),IntLit(3)),BinaryOp(*,BinaryOp(*,IntLit(4),IntLit(5)),IntLit(6)),BinaryOp(/,BinaryOp(/,IntLit(100),IntLit(2)),IntLit(10)),BinaryOp(%,IntLit(100),IntLit(2)),UnaryOp(!,UnaryOp(-,IntLit(100))),CallExpr(Self(),Id(f),[Id(x)])]])),AttributeDecl(Instance,VarDecl(Id(array_2),ArrayType(6,ArrayType(6,IntType)),[[BinaryOp(+,BinaryOp(+,IntLit(1),IntLit(2)),IntLit(3)),BinaryOp(*,BinaryOp(*,IntLit(4),IntLit(5)),IntLit(6)),BinaryOp(/,BinaryOp(/,IntLit(100),IntLit(2)),IntLit(10)),BinaryOp(%,IntLit(100),IntLit(2)),UnaryOp(!,UnaryOp(-,IntLit(100))),CallExpr(Self(),Id(f),[Id(x)])],[BinaryOp(+,BinaryOp(+,IntLit(1),IntLit(2)),IntLit(3)),BinaryOp(*,BinaryOp(*,IntLit(4),IntLit(5)),IntLit(6)),BinaryOp(/,BinaryOp(/,IntLit(100),IntLit(2)),IntLit(10)),BinaryOp(%,IntLit(100),IntLit(2)),UnaryOp(!,UnaryOp(-,IntLit(100))),CallExpr(Self(),Id(f),[Id(x)])],[BinaryOp(+,BinaryOp(+,IntLit(1),IntLit(2)),IntLit(3)),BinaryOp(*,BinaryOp(*,IntLit(4),IntLit(5)),IntLit(6)),BinaryOp(/,BinaryOp(/,IntLit(100),IntLit(2)),IntLit(10)),BinaryOp(%,IntLit(100),IntLit(2)),UnaryOp(!,UnaryOp(-,IntLit(100))),CallExpr(Self(),Id(f),[Id(x)])]])),AttributeDecl(Instance,VarDecl(Id(array_3),ArrayType(6,ArrayType(6,IntType)),[[BinaryOp(+,BinaryOp(+,IntLit(1),IntLit(2)),IntLit(3)),BinaryOp(*,BinaryOp(*,IntLit(4),IntLit(5)),IntLit(6)),BinaryOp(/,BinaryOp(/,IntLit(100),IntLit(2)),IntLit(10)),BinaryOp(%,IntLit(100),IntLit(2)),UnaryOp(!,UnaryOp(-,IntLit(100))),CallExpr(Self(),Id(f),[Id(x)])],[BinaryOp(+,BinaryOp(+,IntLit(1),IntLit(2)),IntLit(3)),BinaryOp(*,BinaryOp(*,IntLit(4),IntLit(5)),IntLit(6)),BinaryOp(/,BinaryOp(/,IntLit(100),IntLit(2)),IntLit(10)),BinaryOp(%,IntLit(100),IntLit(2)),UnaryOp(!,UnaryOp(-,IntLit(100))),CallExpr(Self(),Id(f),[Id(x)])],[BinaryOp(+,BinaryOp(+,IntLit(1),IntLit(2)),IntLit(3)),BinaryOp(*,BinaryOp(*,IntLit(4),IntLit(5)),IntLit(6)),BinaryOp(/,BinaryOp(/,IntLit(100),IntLit(2)),IntLit(10)),BinaryOp(%,IntLit(100),IntLit(2)),UnaryOp(!,UnaryOp(-,IntLit(100))),CallExpr(Self(),Id(f),[Id(x)])]]))])])"
+        num = 384
+        self.assertTrue(TestAST.test(input, expect, num))
+    def test_085_array_declaration_with_many_base(self):
+        input = r"""
+            Class Program {
+                Var a: Array[Int, 5];
+                Var a: Array[Int, 0xFFFF];
+                Var a: Array[Int, 0XFFFF];
+                Var a: Array[Int, 0b1111];
+                Var a: Array[Int, 0B1111];
+                Var a: Array[Int, 01234];
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a),ArrayType(5,IntType))),AttributeDecl(Instance,VarDecl(Id(a),ArrayType(65535,IntType))),AttributeDecl(Instance,VarDecl(Id(a),ArrayType(65535,IntType))),AttributeDecl(Instance,VarDecl(Id(a),ArrayType(15,IntType))),AttributeDecl(Instance,VarDecl(Id(a),ArrayType(15,IntType))),AttributeDecl(Instance,VarDecl(Id(a),ArrayType(668,IntType)))])])"
+        num = 385
+        self.assertTrue(TestAST.test(input, expect, num))
+    
+    def test_086_float_overflow(self):
+        input = r"""
+            Class Program {
+                Var a: Float = 1.111111111111111111111111111111111111111111;
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a),FloatType,FloatLit(1.1111111111111112)))])])"
+        num = 386
+        self.assertTrue(TestAST.test(input, expect, num))
+    def test_087_int_over_flow(self):
+        input = r"""
+            Class Program {
+                Var a: Float = 99999999999999999999999999999999999999999999999999999;
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a),FloatType,IntLit(99999999999999999999999999999999999999999999999999999)))])])"
+        num = 387
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_088_add_expression_associativity(self):
+        input = r"""
+            Class Program {
+                Var a: Int = a + b - c - d + e;
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a),IntType,BinaryOp(+,BinaryOp(-,BinaryOp(-,BinaryOp(+,Id(a),Id(b)),Id(c)),Id(d)),Id(e))))])])"
+        num = 388
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_089_logical_expression_associativity(self):
+        input = r"""
+            Class Program {
+                Var a: Int = a || b && c || d && e;
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a),IntType,BinaryOp(&&,BinaryOp(||,BinaryOp(&&,BinaryOp(||,Id(a),Id(b)),Id(c)),Id(d)),Id(e))))])])"
+        num = 389
+        self.assertTrue(TestAST.test(input, expect, num))
+
+    def test_090_mul_expression_associativity(self):
+        input = r"""
+            Class Program {
+                Var a: Int = a * b / c * d % e;
+            }
+        """
+        expect = r"Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a),IntType,BinaryOp(%,BinaryOp(*,BinaryOp(/,BinaryOp(*,Id(a),Id(b)),Id(c)),Id(d)),Id(e))))])])"
+        num = 390
+        self.assertTrue(TestAST.test(input, expect, num))

@@ -1,0 +1,10 @@
+
+            Class Program {
+                method() {
+                    Return;
+                    Foreach (i In 1 .. 100) {
+                        Return;
+                    }
+                }
+            }
+        

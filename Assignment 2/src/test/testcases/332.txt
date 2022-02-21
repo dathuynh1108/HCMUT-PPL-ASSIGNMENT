@@ -1,17 +1,13 @@
 
+            Class Some_class {
+                    Constructor(int: Int; string: String) {}
+                    Constructor() {}
+                    Destructor() {}
+            }
             Class Program {
                 main() {
-                    a = a[1];
-                    a = a[a[1]];
-                    a = a[1][1];
-                    a = a[1][1][1][1][1][1];
-                    a = a[a[1][1][1]][1][1][1];
-                    a = a[a[a[a[a[1]]]]][1][1][a[a[a[a[1]]]]];
-                    a = Some_class::$method(1,1,1)[1][1][1];
-                    a = some_object.method(1,1,1)[1][1][1];
-                    a = some_object.method(1,1,1).method(1,1,1)[some_object.method(1,1,1).method(1,1,1)][1][1];
-                    a = a.a.a[1][1][1];
-                    a = a.a.a[a.a.a[a.a.a[a.a.a[1]]]];
+                    Var a, b: Array[Int, 1] = Array(), a == 5.4;
+                    b = Array();
                 }
             }
         

@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([Block([Block([Block([Block([])])])])]))])])

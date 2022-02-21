@@ -1,0 +1,13 @@
+
+            Class Program {
+                method() {
+                    Foreach (i In 1 .. 100) {
+                        Foreach (j In 1 .. i By i * i) {
+                            {
+                                Break;
+                            }
+                        }
+                    }
+                }
+            }
+        

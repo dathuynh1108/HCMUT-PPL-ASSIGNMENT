@@ -1,8 +1,10 @@
 import sys,os
 from antlr4 import *
 from antlr4.error.ErrorListener import ConsoleErrorListener,ErrorListener
+
 if not './main/d96/parser/' in sys.path:
     sys.path.append('./main/d96/parser/')
+
 if os.path.isdir('../target/main/d96/parser') and not '../target/main/d96/parser/' in sys.path:
     sys.path.append('../target/main/d96/parser/')
 

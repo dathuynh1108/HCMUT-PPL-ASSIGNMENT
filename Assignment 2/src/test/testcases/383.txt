@@ -1,0 +1,19 @@
+
+            Class Some_class {         
+                    Constructor(int: Int; string: String) {}
+                    Constructor() {}
+                    Destructor() {}
+            }
+            Class Program : Some_class {
+                main() {
+                    a = New a(New a(New a(1,2,3), New a(1,2,3)), New a());
+                    a = New Some_class();
+                    a = New Some_class(1,2);
+                    a = New Some_class(1+2-3*4/5%6||7&&8, a[1][1][1], a.a.a, a.method(), a::$a, a::$method());
+                    a = New Some_class(New Some_class(New Some_class(1,2,3)));
+                    a = New Some_class(New Some_class(New Some_class()))[1][2][3];
+                    a = (New Some_class() + Self).a.a.a;
+                    a = (New Some_class() + Null)[1][2][3];
+                }
+            }
+        

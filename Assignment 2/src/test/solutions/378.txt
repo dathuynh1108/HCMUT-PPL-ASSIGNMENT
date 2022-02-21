@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([AssignStmt(Id(a),UnaryOp(!,UnaryOp(-,IntLit(1)))),AssignStmt(Id(a),UnaryOp(-,UnaryOp(!,IntLit(1))))]))])])

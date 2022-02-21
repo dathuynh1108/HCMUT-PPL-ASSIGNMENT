@@ -1,0 +1,7 @@
+
+            Class Program {
+                main() {
+                    a.b(1, 1 + 2, True && False, "huynh" +. "dat", (1 + 2), -1);
+                }
+            }
+        

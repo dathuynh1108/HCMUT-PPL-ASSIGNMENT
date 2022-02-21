@@ -1,0 +1,8 @@
+
+            Class Program {
+                method() {
+                    a = 1;
+                    a = 1 + 1;
+                }
+            }
+        

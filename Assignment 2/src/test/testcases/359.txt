@@ -1,0 +1,9 @@
+
+            Class Program {
+                method() {
+                    Foreach (i In 1 + 1 + a + b .. a + b * c / d By Self.a) {}
+                    Foreach (i In Self.a .. Self.b() By a::$b) {}
+                    
+                }
+            }
+        

@@ -1,0 +1,14 @@
+
+            Class Program {
+                method() {
+                    a.b = 1;
+                    a.b.c = 1;
+                    a.b.c.d.e = 1;
+                    a.b().c().d = 1;
+                    Self.a().b = 1;
+                    Self.a().b().c().d = 1;
+                    Self.a().b = Null;
+                    Self.a().b().c().d = Null;
+                }
+            }
+        

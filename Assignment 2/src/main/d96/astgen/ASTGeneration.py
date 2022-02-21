@@ -18,7 +18,7 @@ class ASTGeneration(D96Visitor):
 
     def visitClass_body(self, ctx: D96Parser.Class_bodyContext):
         # Visit list of member declaration
-        # Check isinstance chạy nhanh hơn so với high-order function 1 dòng
+        # Check isinstance faster than high-order function
         if (not ctx.class_member_declaration()):
             return []
         class_member_declaration_list = []
@@ -104,7 +104,7 @@ class ASTGeneration(D96Visitor):
         method_name = ctx.ID().getText() if ctx.ID() else ctx.DOLLAR_ID().getText()
         instance_or_static = Static() if method_name[0] == '$' else Instance()
         list_of_parameters = self.visit(ctx.list_of_parameters()) if ctx.list_of_parameters() else []
-        body = self.visit(ctx.block_statement())
+        body = self.visit(ctx.block_statement()) if ctx.block_statement() else None
         return MethodDecl(instance_or_static, Id(method_name), list_of_parameters, body)
 
     def visitList_of_parameters(self, ctx: D96Parser.List_of_parametersContext):
@@ -137,7 +137,10 @@ class ASTGeneration(D96Visitor):
     def visitString_expression(self, ctx: D96Parser.String_expressionContext):
         if ctx.getChildCount() == 1:
             return self.visit(ctx.getChild(0))
-        return BinaryOp(ctx.getChild(1).getText(), self.visit(ctx.getChild(0)), self.visit(ctx.getChild(2)))
+        # Prevent fault
+        if ctx.getChildCount() == 3:
+            return BinaryOp(ctx.getChild(1).getText(), self.visit(ctx.getChild(0)), self.visit(ctx.getChild(2)))
+        return None 
 
     def visitRelation_expression(self, ctx: D96Parser.Relation_expressionContext):
         if ctx.getChildCount() == 1:

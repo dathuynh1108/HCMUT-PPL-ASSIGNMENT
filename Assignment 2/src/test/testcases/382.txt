@@ -1,0 +1,13 @@
+
+            Class Program {
+                main() {
+                    a = a.b.c;
+                    a = Class_name::$a;
+                    a = Class_name::$a.a.a.a();
+                    a = Null.a;
+                    a = Null.null.a;
+                    a = Self.a;
+                    a = Self.self.a;
+                }
+            }
+        

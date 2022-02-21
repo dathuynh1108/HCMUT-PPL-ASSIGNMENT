@@ -1,0 +1,10 @@
+
+            Class Program {
+                method() {
+                    Return a + 1 * b;
+                    Foreach (i In 1 .. 100) {
+                        Return i * i + a.b;
+                    }
+                }
+            }
+        

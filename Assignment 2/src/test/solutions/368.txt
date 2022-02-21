@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(Program),[MethodDecl(Id(method),Instance,[],Block([Call(NewExpr(Id(X),[]),Id(a),[]),Call(FieldAccess(NewExpr(Id(X),[]),Id(a)),Id(b),[]),Call(CallExpr(NewExpr(Id(X),[]),Id(a),[]),Id(b),[]),Call(CallExpr(NewExpr(Id(X),[NewExpr(Id(X),[])]),Id(a),[]),Id(b),[])]))])])

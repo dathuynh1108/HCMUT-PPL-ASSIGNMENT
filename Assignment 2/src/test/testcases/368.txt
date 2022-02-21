@@ -1,0 +1,10 @@
+
+            Class Program {
+                method() {
+                    New X().a();
+                    New X().a.b();
+                    New X().a().b();
+                    New X(New X()).a().b();
+                }
+            }
+        
