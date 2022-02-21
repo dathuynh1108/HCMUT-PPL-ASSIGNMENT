@@ -27,6 +27,8 @@ class ASTGeneration(D96Visitor):
             if isinstance(visit_result, list):
                 class_member_declaration_list += visit_result
             else:
+                if visit_result.name.name == "Constructor" or visit_result.name.name == "Destructor":
+                    visit_result.kind = Static()
                 class_member_declaration_list.append(visit_result)
         return class_member_declaration_list
 
@@ -39,6 +41,8 @@ class ASTGeneration(D96Visitor):
             if isinstance(visit_result, list):
                 class_member_declaration_list += visit_result
             else:
+                if visit_result.name.name == "Constructor" or visit_result.name.name == "Destructor":
+                    visit_result.kind = Static()
                 if visit_result.name.name == "main" and not visit_result.param:
                     visit_result.kind = Static()
                 class_member_declaration_list.append(visit_result)
