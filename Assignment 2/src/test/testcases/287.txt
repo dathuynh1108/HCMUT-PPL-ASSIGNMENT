@@ -1,5 +1,0 @@
-
-            Class Program {
-                main($x: Int) {}
-            }
-        

@@ -1,9 +1,0 @@
-
-            Class Program {
-                $Method() {
-                    Console.log(1);
-                    Console::$log(1);
-                }
-                Var x: Int = 1;
-
-        

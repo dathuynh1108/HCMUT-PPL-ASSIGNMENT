@@ -1,7 +1,0 @@
-
-            Class Program {
-                main() {
-                    Self.method() = 1;
-                }
-            }
-        

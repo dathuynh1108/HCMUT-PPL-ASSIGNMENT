@@ -1,9 +1,0 @@
-
-            Class Program {
-                main() {
-                    Class_name::$a();
-                    Self.a();
-                    a.b;
-                }
-            }
-        

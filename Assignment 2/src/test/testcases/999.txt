@@ -1,6 +1,0 @@
-
-            Class  Object {
-                Var a: Int;
-                method() {}
-            }
-        

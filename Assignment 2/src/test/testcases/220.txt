@@ -1,5 +1,0 @@
-
-            Class Program {
-                Var array: Array[Int, 5] = Array(1, 1+2-3*4/5, a.b, Class_name::$a, a.b().c, a.b(), Class_name::$a.a());
-            }
-        

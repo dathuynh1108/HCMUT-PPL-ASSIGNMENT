@@ -1,7 +1,0 @@
-
-            Class Program {
-                Var num_1, num_2, num_3: Int;
-                Var x, y, z: Int = 1,2,3;
-                Val $a, $b, $c: String = "string 1", "string 2", "string 3";
-            }
-        

@@ -1,7 +1,0 @@
-
-            Class Program {
-                main() {
-                    a = New class_name(New class_name(a[i][j][z][a.b.method().method() + !!!!----1+2-3*4/5%6||7&&8], a[1+2-3*4/5%6||7&&8], "string 1" +. "string 2", "string 1" ==. "string 2", New class(1+2-3*4/5%6||7&&8)));
-                }
-            }
-        
