@@ -26,17 +26,16 @@ class ASTGeneration(D96Visitor):
         return Program([self.visit(class_declaration) for class_declaration in ctx.class_declaration()])
 
     def visitClass_declaration(self, ctx: D96Parser.Class_declarationContext):
-        # Have parent or not
         class_body = self.visit_program_class_body(ctx.class_body()) if ctx.ID(0).getText() == "Program" else self.visit(ctx.class_body())
         return ClassDecl(Id(ctx.ID(0).getText()), class_body, Id(ctx.ID(1).getText())) if ctx.COLON() else ClassDecl(Id(ctx.ID(0).getText()), class_body)
 
     def visitClass_body(self, ctx: D96Parser.Class_bodyContext):
-        # Visit list of member declaration
-        # Check isinstance faster than high-order function
         if (not ctx.class_member_declaration()):
             return []
         return reduce(lambda previous, current: (previous + current) if isinstance(current, list) else previous + [current], [self.visit(class_member_declaration) for class_member_declaration in ctx.class_member_declaration()], [])
     
+    # Check main method, if it is main method in class Program 
+    # --> kind is static (name main will be an instance method)
     def check_and_convert_to_static(self, class_member_declaration):
         if class_member_declaration.name.name == "main" and not class_member_declaration.param:
             class_member_declaration.kind = Static()
