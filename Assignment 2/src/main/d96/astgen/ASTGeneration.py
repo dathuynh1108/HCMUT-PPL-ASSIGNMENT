@@ -8,6 +8,20 @@ from main.d96.parser.D96Parser import D96Parser
 from main.d96.parser.D96Visitor import D96Visitor
 
 class ASTGeneration(D96Visitor):
+    def cast_to_integer(self, string):
+        if string == '0': return 0
+        if string[0:2] == '0x' or string[0:2] == '0X': return int(string, 16)
+        if string[0:2] == '0b' or string[0:2] == '0B': return int(string, 2)
+        if string[0] == '0': return int(string, 8)
+        return int(string, 10)
+        
+    def cast_to_float(self, string):
+            if string[0] == '.': string = '0' + string
+            return float(string)
+
+    def cast_to_boolean(self, string):
+            return True if string == "True" else False
+
     def visitProgram(self, ctx: D96Parser.ProgramContext):
         return Program([self.visit(class_declaration) for class_declaration in ctx.class_declaration()])
 
@@ -22,30 +36,16 @@ class ASTGeneration(D96Visitor):
         if (not ctx.class_member_declaration()):
             return []
         return reduce(lambda previous, current: (previous + current) if isinstance(current, list) else previous + [current], [self.visit(class_member_declaration) for class_member_declaration in ctx.class_member_declaration()], [])
-        """
-        class_member_declaration_list = []
-        for class_member_declaration in ctx.class_member_declaration():
-            visit_result = self.visit(class_member_declaration)
-            if isinstance(visit_result, list):
-                class_member_declaration_list += visit_result
-            else:
-                class_member_declaration_list.append(visit_result)
-        return class_member_declaration_list
-        """
+    
+    def check_and_convert_to_static(self, class_member_declaration):
+        if class_member_declaration.name.name == "main" and not class_member_declaration.param:
+            class_member_declaration.kind = Static()
+        return class_member_declaration
+
     def visit_program_class_body(self, ctx: D96Parser.Class_bodyContext):
         if (not ctx.class_member_declaration()):
             return []
-        class_member_declaration_list = []
-        for class_member_declaration in ctx.class_member_declaration():
-            visit_result = self.visit(class_member_declaration)
-            if isinstance(visit_result, list):
-                class_member_declaration_list += visit_result
-            else:
-                if visit_result.name.name == "main" and not visit_result.param:
-                    visit_result.kind = Static()
-                class_member_declaration_list.append(visit_result)
-        return class_member_declaration_list
-        
+        return reduce(lambda previous, current: (previous + current) if isinstance(current, list) else previous + [self.check_and_convert_to_static(current)], [self.visit(class_member_declaration) for class_member_declaration in ctx.class_member_declaration()], [])
 
     def visitClass_member_declaration(self, ctx: D96Parser.Class_member_declarationContext):
         # Pass, visit to children
@@ -78,18 +78,7 @@ class ASTGeneration(D96Visitor):
         
 
     def visitArray_type(self, ctx: D96Parser.Array_typeContext):
-        def cast_to_integer(string):
-            if string == '0':
-                return 0
-            if string[0:2] == '0x' or string[0:2] == '0X':
-                return int(string, 16)
-            if string[0:2] == '0b' or string[0:2] == '0B':
-                return int(string, 2)
-            if string[0] == '0':
-                return int(string, 8)
-            return int(string, 10)
-        
-        size = cast_to_integer(ctx.INTEGER_LITERAL().getText())
+        size = self.cast_to_integer(ctx.INTEGER_LITERAL().getText())
         element_type = self.visit(ctx.primitive_type()) if ctx.primitive_type() else self.visit(ctx.array_type())
         return ArrayType(size, element_type)
 
@@ -214,29 +203,17 @@ class ASTGeneration(D96Visitor):
         return self.visit(ctx.primitive_literal()) if ctx.primitive_literal() else self.visit(ctx.array_literal())
 
     def visitPrimitive_literal(self, ctx: D96Parser.Primitive_literalContext):
-        def cast_to_integer(string):
-            if string == '0': return 0
-            if string[0:2] == '0x' or string[0:2] == '0X': return int(string, 16)
-            if string[0:2] == '0b' or string[0:2] == '0B': return int(string, 2)
-            if string[0] == '0': return int(string, 8)
-            return int(string, 10)
-        
-        def cast_to_float(string):
-            if string[0] == '.': string = '0' + string
-            return float(string)
 
-        def cast_to_boolean(string):
-            return True if string == "True" else False
         
         if ctx.ZERO_INTEGER():
-            return IntLiteral(cast_to_integer(ctx.ZERO_INTEGER().getText()))
+            return IntLiteral(self.cast_to_integer(ctx.ZERO_INTEGER().getText()))
         if ctx.INTEGER_LITERAL():
-            return IntLiteral(cast_to_integer(ctx.INTEGER_LITERAL().getText()))
+            return IntLiteral(self.cast_to_integer(ctx.INTEGER_LITERAL().getText()))
         if ctx.FLOAT_LITERAL():
-            return FloatLiteral(cast_to_float(ctx.FLOAT_LITERAL().getText()))
+            return FloatLiteral(self.cast_to_float(ctx.FLOAT_LITERAL().getText()))
         if ctx.STRING_LITERAL():
             return StringLiteral(ctx.STRING_LITERAL().getText())
-        return BooleanLiteral(cast_to_boolean(ctx.BOOLEAN_LITERAL().getText()))
+        return BooleanLiteral(self.cast_to_boolean(ctx.BOOLEAN_LITERAL().getText()))
     
     def visitArray_literal(self, ctx: D96Parser.Array_literalContext):
         return self.visit(ctx.indexed_array()) if ctx.indexed_array() else self.visit(ctx.multi_demensional_array())
