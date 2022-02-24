@@ -1,0 +1,13 @@
+
+            Class Program {
+                method(a: Int) {
+                    If (a > 1) {
+                        Return 1;
+                    }
+                    Elseif (a < 1) {
+                        Return 2;
+                    }
+                    Return 2;
+                }
+            }
+        

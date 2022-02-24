@@ -1,0 +1,21 @@
+
+            Class Program {
+                method(a: Int) {
+                    If (a > 1) {
+                        Return 1;
+                    }
+                    Elseif (a < 1) {
+                        Return 2;
+                    }
+                    Elseif (a == 1) {
+                        Return 3;
+                    }
+                    Elseif (b > 1) {
+                        Return 4;
+                    }
+                    Else {
+                        Return 5;
+                    }
+                }
+            }
+        

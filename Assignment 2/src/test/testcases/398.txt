@@ -1,0 +1,63 @@
+
+            Class Program {
+                Var x, y: Int;
+                Val $a, $b: Float = 1.1, 1.2;
+                method(a: Int) {
+                    Var x, y: Int = Self.x, Self.y;
+                    Val a, b: Float = Program::$a, Program::$b;
+                    If (a == 1) {
+                        If (b == 1) {
+                            Foreach (i In 1 .. 100) {
+                                If (i % Self.x == 0) {
+                                    Break;
+                                }
+                                Else {
+                                    Continue;
+                                }
+                            }
+                            Self.x = 1;
+                        }
+                        Elseif (b == 2) {
+                            Self.x = Self.x + b;
+                        }
+                        Elseif (b == 3) {
+                            {{{}}}
+                        }
+                        Else {
+                            Console.log("Huynh Thanh Dat");
+                            Self.y = a.b();
+                        }
+                        Return 1;
+                    }
+                    Elseif (a == 2) {
+                        If (b == 1) {
+                            Program::$a = a.b;
+                            Program::$b = a.b(1,2,Self.x);
+                        }
+                        Elseif (b == 2) {}
+                        Elseif (b == 3) {}
+                        Else {}
+                        Foreach (i In 1 .. 100 By i % 2) {
+                                If (i % Self.x == 0) {
+                                    Break;
+                                }
+                                Else {
+                                    Continue;
+                                }
+                        }
+                    }
+                    Elseif (a == 3) {
+                        If (b == 1) {}
+                        Elseif (b == 2) {}
+                        Elseif (b == 3) {}
+                        Else {}
+                    }
+                    Else {
+                        If (b == 1) {}
+                        Elseif (b == 2) {}
+                        Elseif (b == 3) {}
+                        Else {}
+                    }
+                }
+            }
+        

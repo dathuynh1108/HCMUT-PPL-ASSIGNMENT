@@ -5,10 +5,9 @@ from AST import *
 class ASTGenSuite(unittest.TestCase):
     def test_con_cac(self):
         input = """
-            Class Program : Object {
-                method() {
-                    a = a.$b;
-                }
+            Class  Object {
+                Var a: Int;
+                method() {}
             }
         """
         expect = ""

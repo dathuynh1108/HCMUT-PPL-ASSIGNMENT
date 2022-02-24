@@ -1,0 +1,30 @@
+
+            Class Program {
+                method(a: Int) {
+                    If (a == 1) {
+                        If (b == 1) {}
+                        Elseif (b == 2) {}
+                        Elseif (b == 3) {}
+                        Else {}
+                    }
+                    Elseif (a == 2) {
+                        If (b == 1) {}
+                        Elseif (b == 2) {}
+                        Elseif (b == 3) {}
+                        Else {}
+                    }
+                    Elseif (a == 3) {
+                        If (b == 1) {}
+                        Elseif (b == 2) {}
+                        Elseif (b == 3) {}
+                        Else {}
+                    }
+                    Else {
+                        If (b == 1) {}
+                        Elseif (b == 2) {}
+                        Elseif (b == 3) {}
+                        Else {}
+                    }
+                }
+            }
+        

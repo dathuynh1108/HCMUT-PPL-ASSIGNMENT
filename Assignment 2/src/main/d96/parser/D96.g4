@@ -1,5 +1,4 @@
-// Student ID: 1910110
-// Name: Huynh Thanh Dat
+// Student ID: 1910110 Name: Huynh Thanh Dat
 grammar D96;
 
 @lexer::header {
@@ -14,8 +13,7 @@ options {
 program: class_declaration+ EOF; // File không rỗng
 
 /***************************** CLASS ******************************/
-class_declaration:
-	CLASS ID (COLON ID)? LCB class_body RCB;
+class_declaration: CLASS ID (COLON ID)? LCB class_body RCB;
 
 class_body: class_member_declaration*;
 
@@ -23,8 +21,7 @@ class_member_declaration:
 	attribute_declaration
 	| method_declaration
 	| constructor_declaration
-	| destructor_declaration
-	;
+	| destructor_declaration;
 // Check số biến == số khởi tạo --> Dư: trả vị trí dấu , | Thiếu: trả vị trí dấu ;
 attribute_declaration
 	locals[number_attribute = 0]:
@@ -32,13 +29,13 @@ attribute_declaration
 		COMMA attribute_name {$number_attribute+=1}
 	)* COLON type_name initialization[$number_attribute];
 
-attribute_name : ID | DOLLAR_ID;
+attribute_name: ID | DOLLAR_ID;
 
-initialization [number_variable]:
+initialization[number_variable]:
 	ASSIGN initialization_list[$number_variable]
 	| SEMI;
-	
-initialization_list [number_variable]:
+
+initialization_list[number_variable]:
 	expression {$number_variable -= 1} // first expression
 	(
 		{$number_variable > 0}? COMMA expression {$number_variable -= 1}
@@ -165,7 +162,9 @@ index_expression:
 	instance_access_expression index_operator
 	| instance_access_expression;
 
-index_operator: LSB expression RSB | LSB expression RSB index_operator;
+index_operator:
+	LSB expression RSB
+	| LSB expression RSB index_operator;
 
 instance_access_expression:
 	instance_access_expression DOT ID LP list_of_expressions? RP
@@ -198,7 +197,7 @@ statement:
 	variable_and_const_declaration
 	| assign_statement
 	| if_statement
-	| foreach_statement         
+	| foreach_statement
 	| break_statement
 	| continue_statement
 	| return_statement
@@ -210,7 +209,6 @@ variable_and_const_declaration
 	(VAR | VAL) ID {$variable_and_const_declaration::number_variable+=1} (
 		COMMA (ID) {$variable_and_const_declaration::number_variable+=1}
 	)* COLON type_name initialization[$number_variable];
-
 
 assign_statement: left_hand_side ASSIGN expression SEMI;
 
@@ -263,7 +261,8 @@ static_method_invocation:
 fragment DEC_INTEGER_LITERAL: [1-9]('_'? [0-9])*;
 fragment OCT_INTEGER_LITERAL: '0' [1-7]('_'? [0-7])*;
 fragment BIN_INTEGER_LITERAL: '0' [bB][1]('_'? [0-1])*;
-fragment HEX_INTEGER_LITERAL: '0' [xX] [1-9A-F]('_'? [0-9A-F])*;
+fragment HEX_INTEGER_LITERAL:
+	'0' [xX] [1-9A-F]('_'? [0-9A-F])*;
 
 fragment STRING_CHAR:
 	~([\b\t\f\r\n\\"])

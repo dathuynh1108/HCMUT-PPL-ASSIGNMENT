@@ -1,8 +1,8 @@
 from D96Visitor import D96Visitor
 from D96Parser import D96Parser
 from AST import *
-# Nhớ bỏ đống này
 from functools import reduce
+# Nhớ bỏ đống này
 from main.d96.utils.AST import *
 from main.d96.parser.D96Parser import D96Parser
 from main.d96.parser.D96Visitor import D96Visitor
@@ -21,17 +21,17 @@ class ASTGeneration(D96Visitor):
         # Check isinstance faster than high-order function
         if (not ctx.class_member_declaration()):
             return []
+        return reduce(lambda previous, current: (previous + current) if isinstance(current, list) else previous + [current], [self.visit(class_member_declaration) for class_member_declaration in ctx.class_member_declaration()], [])
+        """
         class_member_declaration_list = []
         for class_member_declaration in ctx.class_member_declaration():
             visit_result = self.visit(class_member_declaration)
             if isinstance(visit_result, list):
                 class_member_declaration_list += visit_result
             else:
-                if visit_result.name.name == "Constructor" or visit_result.name.name == "Destructor":
-                    visit_result.kind = Static()
                 class_member_declaration_list.append(visit_result)
         return class_member_declaration_list
-
+        """
     def visit_program_class_body(self, ctx: D96Parser.Class_bodyContext):
         if (not ctx.class_member_declaration()):
             return []
@@ -41,12 +41,11 @@ class ASTGeneration(D96Visitor):
             if isinstance(visit_result, list):
                 class_member_declaration_list += visit_result
             else:
-                if visit_result.name.name == "Constructor" or visit_result.name.name == "Destructor":
-                    visit_result.kind = Static()
                 if visit_result.name.name == "main" and not visit_result.param:
                     visit_result.kind = Static()
                 class_member_declaration_list.append(visit_result)
         return class_member_declaration_list
+        
 
     def visitClass_member_declaration(self, ctx: D96Parser.Class_member_declarationContext):
         # Pass, visit to children
@@ -91,8 +90,7 @@ class ASTGeneration(D96Visitor):
             return int(string, 10)
         
         size = cast_to_integer(ctx.INTEGER_LITERAL().getText())
-        element_type = self.visit(ctx.primitive_type(
-        )) if ctx.primitive_type() else self.visit(ctx.array_type())
+        element_type = self.visit(ctx.primitive_type()) if ctx.primitive_type() else self.visit(ctx.array_type())
         return ArrayType(size, element_type)
 
     def visitClass_type(self, ctx: D96Parser.Class_typeContext):
@@ -112,27 +110,17 @@ class ASTGeneration(D96Visitor):
         return MethodDecl(instance_or_static, Id(method_name), list_of_parameters, body)
 
     def visitList_of_parameters(self, ctx: D96Parser.List_of_parametersContext):
-        list_of_parameters = []
-        for parameter_declaration in ctx.parameter_declaration():
-            list_of_parameters += self.visit(parameter_declaration)
-        return list_of_parameters
-
+        return reduce(lambda previous, current: previous + current, [self.visit(parameter_declaration) for parameter_declaration in ctx.parameter_declaration()], [])
+    
     def visitParameter_declaration(self, ctx: D96Parser.Parameter_declarationContext):
-        list_of_same_type_parameter = []
         type_name = self.visit(ctx.type_name())
-        for parameter_name in [parameter_name.getText() for parameter_name in ctx.ID()]:
-            list_of_same_type_parameter.append(VarDecl(Id(parameter_name), type_name, None))
-        return list_of_same_type_parameter
+        return reduce(lambda previous, current: previous + [VarDecl(Id(current), type_name, None)], [parameter_name.getText() for parameter_name in ctx.ID()], [])
 
     def visitConstructor_declaration(self, ctx: D96Parser.Constructor_declarationContext):
-        list_of_parameters = self.visit(
-            ctx.list_of_parameters()) if ctx.list_of_parameters() else []
-        body = self.visit(ctx.block_statement())
-        return MethodDecl(Instance(), Id("Constructor"), list_of_parameters, body)
+        return MethodDecl(Instance(), Id("Constructor"), self.visit(ctx.list_of_parameters()) if ctx.list_of_parameters() else [], self.visit(ctx.block_statement()))
 
     def visitDestructor_declaration(self, ctx: D96Parser.Destructor_declarationContext):
-        body = self.visit(ctx.block_statement())
-        return MethodDecl(Instance(), Id("Destructor"), [], body)
+        return MethodDecl(Instance(), Id("Destructor"), [], self.visit(ctx.block_statement()))
 
     def visitExpression(self, ctx: D96Parser.ExpressionContext):
         # Pass, visit children
@@ -266,15 +254,8 @@ class ASTGeneration(D96Visitor):
        return [self.visit(expression) for expression in ctx.expression()]
 
     def visitBlock_statement(self, ctx: D96Parser.Block_statementContext):
-        list_of_statement = []
-        for statement in ctx.statement():
-            visit_result = self.visit(statement)
-            if isinstance(visit_result, list):
-                list_of_statement += visit_result
-            else:
-                list_of_statement.append(visit_result)
-        return Block(list_of_statement)
-    
+        return Block(reduce(lambda previous, current: (previous + current) if isinstance(current, list) else previous + [current], [self.visit(statement) for statement in ctx.statement()], []))
+
     def visitStatement(self, ctx: D96Parser.StatementContext):
         return self.visitChildren(ctx)
 

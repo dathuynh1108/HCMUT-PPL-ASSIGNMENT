@@ -1,7 +1,6 @@
 
-            Class Program : Object {
-                method() {
-                    a = a.$b;
-                }
+            Class  Object {
+                Var a: Int;
+                method() {}
             }
         

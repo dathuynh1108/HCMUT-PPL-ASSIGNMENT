@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(Program),[MethodDecl(Id(Constructor),Static,[],Block([])),MethodDecl(Id(Constructor),Static,[param(Id(a),IntType),param(Id(b),IntType),param(Id(b),StringType)],Block([])),MethodDecl(Id(Destructor),Static,[],Block([]))])])
+Program([ClassDecl(Id(Program),[MethodDecl(Id(Constructor),Instance,[],Block([])),MethodDecl(Id(Constructor),Instance,[param(Id(a),IntType),param(Id(b),IntType),param(Id(b),StringType)],Block([])),MethodDecl(Id(Destructor),Instance,[],Block([]))])])

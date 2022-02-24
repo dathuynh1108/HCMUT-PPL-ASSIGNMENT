@@ -13,9 +13,11 @@ class AST(ABC):
         visit = getattr(v, method_name)
         return visit(self, param)
 
+
 class Inst(AST):
     __metaclass__ = ABCMeta
     pass
+
 
 class Stmt(Inst):
     __metaclass__ = ABCMeta
@@ -197,7 +199,7 @@ class If(Stmt):
 class For(Stmt):
     id: Id
     expr1: Expr
-    expr2: Expr 
+    expr2: Expr
     loop: Stmt
     expr3: Expr = None
 
@@ -261,7 +263,7 @@ class Block(Stmt):
 class ConstDecl(StoreDecl):
     constant: Id
     constType: Type
-    value: Expr = None # None if there is no initial
+    value: Expr = None  # None if there is no initial
 
     def __str__(self):
         return "ConstDecl(" + str(self.constant) + "," + str(self.constType) + "," + str(self.value) + ")"

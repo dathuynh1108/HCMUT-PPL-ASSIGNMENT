@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(Program),Id(Object),[MethodDecl(Id(method),Instance,[],Block([AssignStmt(Id(a),None),None,None])),MethodDecl(Id($b),Static,[],None)])])
+Program([ClassDecl(Id(Object),[AttributeDecl(Instance,VarDecl(Id(a),IntType)),MethodDecl(Id(method),Instance,[],Block([]))])])

@@ -1,0 +1,20 @@
+
+            Class Object {
+                Var x: Int = Self.a();
+                main() {
+                    x = Self.a();
+                    x = a.a();
+                    Self.a();
+                    a.a();
+                }
+            }
+            Class Program : Object {
+                main() {
+                    Var x: Int = Object::$main();
+                    Var x: Int = Object.main();
+                    Object::$main();
+                    object.main();
+                    object.main(object.main());
+                }
+            }
+        
