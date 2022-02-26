@@ -18,5 +18,6 @@
                     Val y: Class_type;
                     Var y: Class_type = New Class_type();
                 }
+                method(x,y: Class_type; a,b: Class_type; m,n: Int) {}
             }
         

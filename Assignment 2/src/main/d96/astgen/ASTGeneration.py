@@ -102,7 +102,7 @@ class ASTGeneration(D96Visitor):
     
     def visitParameter_declaration(self, ctx: D96Parser.Parameter_declarationContext):
         type_name = self.visit(ctx.type_name())
-        return reduce(lambda previous, current: previous + [VarDecl(Id(current), type_name, None)], [parameter_name.getText() for parameter_name in ctx.ID()], [])
+        return reduce(lambda previous, current: previous + [VarDecl(Id(current), type_name, NullLiteral() if isinstance(type_name, ClassType) else None)], [parameter_name.getText() for parameter_name in ctx.ID()], [])
 
     def visitConstructor_declaration(self, ctx: D96Parser.Constructor_declarationContext):
         return MethodDecl(Instance(), Id("Constructor"), self.visit(ctx.list_of_parameters()) if ctx.list_of_parameters() else [], self.visit(ctx.block_statement()))
