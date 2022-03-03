@@ -1,3 +1,4 @@
+from cProfile import run
 import importlib
 import inspect
 import os, subprocess
@@ -7,6 +8,12 @@ class CountFunc(ast.NodeVisitor):
     func_count = 0
     def visit_FunctionDef(self, node):
         self.func_count += 1
+
+
+p = ast.parse(open("./test/ASTGenSuite.py").read())
+f = CountFunc()
+f.visit(p)
+print(f.func_count)
 
 
 folder_list = [
@@ -22,12 +29,8 @@ def check(file_name, file_list):
     return int(file_name) >= 300 and int(file_name) <= 399 and file_name not in file_list
 
 
-p = ast.parse(open("./test/ASTGenSuite.py").read())
-f = CountFunc()
-f.visit(p)
-print("Test method: ", f.func_count)
-print("Testcase and solution: ", end = "")
 
+print("Testcase and solution: ", end="")
 for folder in folder_list:
     for base, dirs, files in os.walk(folder):
         for file in files:
