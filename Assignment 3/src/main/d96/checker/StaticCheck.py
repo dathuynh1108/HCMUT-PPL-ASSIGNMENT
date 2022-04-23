@@ -44,7 +44,6 @@ class D96_utils:
     
     @staticmethod
     def coercion(type_1, type_2, inheritance): # Check a type can coercion to another type
-        print(inheritance)
         if type(type_2) == FloatType and type(type_1) == IntType: return True
         # Check type_2 is parent type_1
         # print(type_1, type_2)
@@ -135,7 +134,6 @@ class StaticChecker(BaseVisitor,Utils):
             kind = "instance" if isinstance(kind, Instance) else "static"
             if ast.constant.name in scope["global"][scope["current"]]: raise Redeclared(Attribute(), ast.constant.name)
             scope["global"][scope["current"]][ast.constant.name] = D96_type("imutable", kind, decl_type)
-
 
         if "local" in scope: # if not in class context because class context has been check
             if ast.constant.name in scope["local"][0]: raise Redeclared(kind, ast.constant.name)
