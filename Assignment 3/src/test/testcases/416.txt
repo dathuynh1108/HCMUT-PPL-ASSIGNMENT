@@ -1,0 +1,13 @@
+
+            Class A {
+                Var x, y: Int = 1, 1;
+                Var a, b: Int = x, y; 
+                method(a,b: Int) {
+                    Var x1 : Int = x;
+                    Var y1 : Int = y;
+                    Var a1 : Int = a;
+                    Var b1 : Int = b;
+                    Var c1 : Int = c;
+                }
+            }
+        

@@ -1,0 +1,9 @@
+
+            Class A {
+                Val x, y: Int = 1, 1;
+                method(a,b: Int) {
+                    Val x, y : Int = x, y;
+                    Val a: Int = x;
+                }
+            }
+        

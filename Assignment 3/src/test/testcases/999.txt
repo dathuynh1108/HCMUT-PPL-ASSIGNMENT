@@ -1,0 +1,13 @@
+
+            Class Object {}
+            Class Animal : Object {}
+            Class Dog : Animal {
+                Constructor(x: Object; y: Object; z: Object) {}
+            }
+            Class Program {
+                main() {
+                    Var x: Int = New Dog(New Object(), New Dog(), New Animal());
+                }
+            }
+
+        

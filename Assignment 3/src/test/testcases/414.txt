@@ -1,0 +1,15 @@
+
+            Class A {
+                Var a: Int  = 1;
+            }
+            Class B : A {
+                Var b: Int = 1;
+            }
+            Class C: B {
+                Var c: Int = 1;
+                method() {
+                    Var a_1, a_2, a_3 : Int = a, b, c;
+                    Var x_1 : Int = x;
+                }
+            }
+        

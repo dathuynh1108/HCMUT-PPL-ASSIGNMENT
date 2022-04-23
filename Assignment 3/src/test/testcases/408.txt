@@ -1,0 +1,6 @@
+
+            Class A {
+                x() {}
+                Val x, y: Int = 1, 1;
+            }
+        

@@ -1,0 +1,6 @@
+
+            Class A {
+                Var x: Int;
+                x() {}
+            }
+        

@@ -1,0 +1,11 @@
+
+            Class Object {
+                Var a, b : Int = 1, 2;
+            }
+            Class A : Object {
+                method() {
+                    Var x, y : Int = a, b; ## OK ##
+                    Var m, n : Int = m, n; 
+                }
+            }
+        

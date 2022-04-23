@@ -1,0 +1,6 @@
+
+            Class Program {
+                Var a: Int = Self.a;
+                main() {}
+            }
+        

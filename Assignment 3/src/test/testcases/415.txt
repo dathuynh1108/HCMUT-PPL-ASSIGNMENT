@@ -1,0 +1,11 @@
+
+            Class A {
+                Var x: Int = 1;
+                method(x: Int) {}
+            }
+            Class B : A {
+                Var a: A;
+                method(x: A) {}
+            }
+            Class C: Object {}
+        
