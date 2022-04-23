@@ -1,22 +1,28 @@
 
             Class Program {
                 Var a_1: Class_type = New Class_type();
+                Var a_1: Class_type = Null;
                 Var a_1: Class_type;
                 
                 Var $a_2: Class_type = New Class_type();
+                Var $a_2: Class_type = Null;
                 Var $a_2: Class_tye;
                 
-                Var a_3: Class_type = New Class_type();
+                Val a_3: Class_type = New Class_type();
+                Val a_3: Class_type = Null;
                 Val a_3: Class_type;
                 
-                Var $a_3: Class_type = New Class_type();
+                Val $a_3: Class_type = New Class_type();
+                Val $a_3: Class_type = Null;
                 Val $a_3: Class_type;
                 method() {
-                    Var x: Class_type;
                     Var x: Class_type = New Class_type();
+                    Var x: Class_type = Null;
+                    Var x: Class_type;
                     
+                    Val y: Class_type = New Class_type();
+                    Val y: Class_type = Null;
                     Val y: Class_type;
-                    Var y: Class_type = New Class_type();
                 }
                 method(x,y: Class_type; a,b: Class_type; m,n: Int) {}
             }

@@ -10,7 +10,7 @@ class CountFunc(ast.NodeVisitor):
         self.func_count += 1
 
 
-p = ast.parse(open("./test/ASTGenSuite.py").read())
+p = ast.parse(open("./test/ParserSuite.py").read())
 f = CountFunc()
 f.visit(p)
 print(f.func_count)

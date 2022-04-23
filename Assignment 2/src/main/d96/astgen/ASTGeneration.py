@@ -58,9 +58,10 @@ class ASTGeneration(D96Visitor):
         mutable_or_imutable = VarDecl if ctx.VAR() else ConstDecl
         attribute_list = [self.visit(attribute_name) for attribute_name in ctx.attribute_name()]
         type_name = self.visit(ctx.type_name())
-        initialization_list = self.visit(ctx.initialization())
-        return [AttributeDecl(Static() if attribute_list[i].name[0] == '$' else Instance(), mutable_or_imutable(attribute_list[i], type_name, initialization_list[i])) if initialization_list else AttributeDecl(Static() if attribute_list[i].name[0] == '$' else Instance(), mutable_or_imutable(attribute_list[i], type_name, None)) for i in range(0, len(attribute_list))]
-
+        initialization_list = self.visit(ctx.initialization()) 
+        #return [AttributeDecl(Static() if attribute_list[i].name[0] == '$' else Instance(), mutable_or_imutable(attribute_list[i], type_name, initialization_list[i])) if initialization_list else AttributeDecl(Static() if attribute_list[i].name[0] == '$' else Instance(), mutable_or_imutable(attribute_list[i], type_name, None)) for i in range(0, len(attribute_list))]
+        return [AttributeDecl(Static() if attribute_list[i].name[0] == '$' else Instance(), mutable_or_imutable(attribute_list[i], type_name, initialization_list[i])) if initialization_list else AttributeDecl(Static() if attribute_list[i].name[0] == '$' else Instance(), mutable_or_imutable(attribute_list[i], type_name, NullLiteral() if mutable_or_imutable == VarDecl and isinstance(type_name, ClassType) else None)) for i in range(0, len(attribute_list))]
+    
     def visitAttribute_name(self, ctx: D96Parser.Attribute_nameContext):
         return Id(ctx.ID().getText()) if ctx.ID() else Id(ctx.DOLLAR_ID().getText())
 
@@ -242,7 +243,8 @@ class ASTGeneration(D96Visitor):
         variable_list = [Id(variable_name.getText()) for variable_name in ctx.ID()]
         type_name = self.visit(ctx.type_name())
         initialization_list = self.visit(ctx.initialization())
-        return [mutable_or_imutable(variable_list[i], type_name, initialization_list[i]) if initialization_list else mutable_or_imutable(variable_list[i], type_name, None) for i in range(0, len(variable_list))]
+        #return [mutable_or_imutable(variable_list[i], type_name, initialization_list[i]) if initialization_list else mutable_or_imutable(variable_list[i], type_name, None) for i in range(0, len(variable_list))]
+        return [mutable_or_imutable(variable_list[i], type_name, initialization_list[i]) if initialization_list else mutable_or_imutable(variable_list[i], type_name, NullLiteral() if mutable_or_imutable == VarDecl and isinstance(type_name, ClassType) else None) for i in range(0, len(variable_list))]
     
     def visitAssign_statement(self, ctx: D96Parser.Assign_statementContext):
         return Assign(self.visit(ctx.left_hand_side()), self.visit(ctx.expression()))

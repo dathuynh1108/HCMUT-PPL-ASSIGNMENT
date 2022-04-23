@@ -35,13 +35,14 @@ attribute_initialization:
 	ASSIGN attribute_initialization_list
 	| SEMI;
 attribute_initialization_list:
-	expression {$attribute_declaration::number_attribute -= 1} // first expression
-	(
-		{$attribute_declaration::number_attribute > 0}? COMMA expression {$attribute_declaration::number_attribute -= 1
-			}
-	)* // loop until number_var == 0 or not match
-	({$attribute_declaration::number_attribute == 0}? SEMI); // check number_var == 0
-
+	// expression {$attribute_declaration::number_attribute -= 1} // first expression
+	// (
+	// 	{$attribute_declaration::number_attribute > 0}? COMMA expression {$attribute_declaration::number_attribute -= 1
+	// 		}
+	// )* // loop until number_var == 0 or not match
+	// ({$attribute_declaration::number_attribute == 0}? SEMI); // check number_var == 0
+	expression COMMA expression
+	;
 method_declaration: (ID | DOLLAR_ID) LP list_of_parameters? RP block_statement;
 constructor_declaration:
 	CONSTRUCTOR LP list_of_parameters? RP block_statement;

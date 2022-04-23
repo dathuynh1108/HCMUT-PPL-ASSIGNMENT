@@ -712,7 +712,7 @@ class ASTGenSuite(unittest.TestCase):
                 }
             }
         """
-        expect = r"Program([ClassDecl(Id(Number),[AttributeDecl(Instance,VarDecl(Id(data),StringType,StringLit(1234)))]),ClassDecl(Id(Integer),Id(Number),[AttributeDecl(Instance,VarDecl(Id(data),ClassType(Id(Number)))),MethodDecl(Id(Constructor),Instance,[param(Id(x),IntType)],Block([AssignStmt(FieldAccess(Self(),Id(data)),Id(x))]))]),ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([VarDecl(Id(x),ClassType(Id(Integer)),NewExpr(Id(Integer),[IntLit(1)]))]))])])"
+        expect = r"Program([ClassDecl(Id(Number),[AttributeDecl(Instance,VarDecl(Id(data),StringType,StringLit(1234)))]),ClassDecl(Id(Integer),Id(Number),[AttributeDecl(Instance,VarDecl(Id(data),ClassType(Id(Number)),NullLiteral())),MethodDecl(Id(Constructor),Instance,[param(Id(x),IntType)],Block([AssignStmt(FieldAccess(Self(),Id(data)),Id(x))]))]),ClassDecl(Id(Program),[MethodDecl(Id(main),Static,[],Block([VarDecl(Id(x),ClassType(Id(Integer)),NewExpr(Id(Integer),[IntLit(1)]))]))])])"                
         num = 347
         self.assertTrue(TestAST.test(input, expect, num))
 
@@ -1623,27 +1623,33 @@ class ASTGenSuite(unittest.TestCase):
         input = r"""
             Class Program {
                 Var a_1: Class_type = New Class_type();
+                Var a_1: Class_type = Null;
                 Var a_1: Class_type;
                 
                 Var $a_2: Class_type = New Class_type();
+                Var $a_2: Class_type = Null;
                 Var $a_2: Class_tye;
                 
-                Var a_3: Class_type = New Class_type();
+                Val a_3: Class_type = New Class_type();
+                Val a_3: Class_type = Null;
                 Val a_3: Class_type;
                 
-                Var $a_3: Class_type = New Class_type();
+                Val $a_3: Class_type = New Class_type();
+                Val $a_3: Class_type = Null;
                 Val $a_3: Class_type;
                 method() {
-                    Var x: Class_type;
                     Var x: Class_type = New Class_type();
+                    Var x: Class_type = Null;
+                    Var x: Class_type;
                     
+                    Val y: Class_type = New Class_type();
+                    Val y: Class_type = Null;
                     Val y: Class_type;
-                    Var y: Class_type = New Class_type();
                 }
                 method(x,y: Class_type; a,b: Class_type; m,n: Int) {}
             }
         """
-        expect = r"Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a_1),ClassType(Id(Class_type)),NewExpr(Id(Class_type),[]))),AttributeDecl(Instance,VarDecl(Id(a_1),ClassType(Id(Class_type)))),AttributeDecl(Static,VarDecl(Id($a_2),ClassType(Id(Class_type)),NewExpr(Id(Class_type),[]))),AttributeDecl(Static,VarDecl(Id($a_2),ClassType(Id(Class_tye)))),AttributeDecl(Instance,VarDecl(Id(a_3),ClassType(Id(Class_type)),NewExpr(Id(Class_type),[]))),AttributeDecl(Instance,ConstDecl(Id(a_3),ClassType(Id(Class_type)),None)),AttributeDecl(Static,VarDecl(Id($a_3),ClassType(Id(Class_type)),NewExpr(Id(Class_type),[]))),AttributeDecl(Static,ConstDecl(Id($a_3),ClassType(Id(Class_type)),None)),MethodDecl(Id(method),Instance,[],Block([VarDecl(Id(x),ClassType(Id(Class_type))),VarDecl(Id(x),ClassType(Id(Class_type)),NewExpr(Id(Class_type),[])),ConstDecl(Id(y),ClassType(Id(Class_type)),None),VarDecl(Id(y),ClassType(Id(Class_type)),NewExpr(Id(Class_type),[]))])),MethodDecl(Id(method),Instance,[param(Id(x),ClassType(Id(Class_type))),param(Id(y),ClassType(Id(Class_type))),param(Id(a),ClassType(Id(Class_type))),param(Id(b),ClassType(Id(Class_type))),param(Id(m),IntType),param(Id(n),IntType)],Block([]))])])"
+        expect = r"Program([ClassDecl(Id(Program),[AttributeDecl(Instance,VarDecl(Id(a_1),ClassType(Id(Class_type)),NewExpr(Id(Class_type),[]))),AttributeDecl(Instance,VarDecl(Id(a_1),ClassType(Id(Class_type)),NullLiteral())),AttributeDecl(Instance,VarDecl(Id(a_1),ClassType(Id(Class_type)),NullLiteral())),AttributeDecl(Static,VarDecl(Id($a_2),ClassType(Id(Class_type)),NewExpr(Id(Class_type),[]))),AttributeDecl(Static,VarDecl(Id($a_2),ClassType(Id(Class_type)),NullLiteral())),AttributeDecl(Static,VarDecl(Id($a_2),ClassType(Id(Class_tye)),NullLiteral())),AttributeDecl(Instance,ConstDecl(Id(a_3),ClassType(Id(Class_type)),NewExpr(Id(Class_type),[]))),AttributeDecl(Instance,ConstDecl(Id(a_3),ClassType(Id(Class_type)),NullLiteral())),AttributeDecl(Instance,ConstDecl(Id(a_3),ClassType(Id(Class_type)),None)),AttributeDecl(Static,ConstDecl(Id($a_3),ClassType(Id(Class_type)),NewExpr(Id(Class_type),[]))),AttributeDecl(Static,ConstDecl(Id($a_3),ClassType(Id(Class_type)),NullLiteral())),AttributeDecl(Static,ConstDecl(Id($a_3),ClassType(Id(Class_type)),None)),MethodDecl(Id(method),Instance,[],Block([VarDecl(Id(x),ClassType(Id(Class_type)),NewExpr(Id(Class_type),[])),VarDecl(Id(x),ClassType(Id(Class_type)),NullLiteral()),VarDecl(Id(x),ClassType(Id(Class_type)),NullLiteral()),ConstDecl(Id(y),ClassType(Id(Class_type)),NewExpr(Id(Class_type),[])),ConstDecl(Id(y),ClassType(Id(Class_type)),NullLiteral()),ConstDecl(Id(y),ClassType(Id(Class_type)),None)])),MethodDecl(Id(method),Instance,[param(Id(x),ClassType(Id(Class_type))),param(Id(y),ClassType(Id(Class_type))),param(Id(a),ClassType(Id(Class_type))),param(Id(b),ClassType(Id(Class_type))),param(Id(m),IntType),param(Id(n),IntType)],Block([]))])])"
         num = 398
         self.assertTrue(TestAST.test(input, expect, num))
 
