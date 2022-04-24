@@ -5,16 +5,11 @@ from AST import *
 class CheckerSuite(unittest.TestCase):
     def test_999(self):
         input = r"""
-            Class Object {}
-            Class Animal : Object {}
-            Class Dog : Animal {
-                Constructor(x: Object; y: Object; z: Object) {}
+            Class Object {
+                Var x: Array[Array[Int, 1], 1] = 1;
+                Val y: Int = x[0][1][0];
             }
-            Class Program {
-                main() {
-                    Var x: Int = New Dog(New Object(), New Dog(), New Animal());
-                }
-            }
+            
 
         """
         expect = "Undeclared Identifier: p"

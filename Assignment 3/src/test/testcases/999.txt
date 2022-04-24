@@ -1,13 +1,8 @@
 
-            Class Object {}
-            Class Animal : Object {}
-            Class Dog : Animal {
-                Constructor(x: Object; y: Object; z: Object) {}
+            Class Object {
+                Var x: Array[Array[Int, 1], 1] = 1;
+                Val y: Int = x[0][1][0];
             }
-            Class Program {
-                main() {
-                    Var x: Int = New Dog(New Object(), New Dog(), New Animal());
-                }
-            }
+            
 
         

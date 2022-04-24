@@ -129,7 +129,7 @@ class StaticChecker(BaseVisitor,Utils):
         kind, scope = scope
         if ast.value == None: raise IllegalConstantExpression(ast.value)
         decl_type = self.visit(ast.constType, scope)
-        init_type = self.visit(ast.value, (True, scope)) if ast.value else None
+        init_type = self.visit(ast.value, (ast.value, scope)) if ast.value else None
         if "local" not in scope:  # attribute
             kind = "instance" if isinstance(kind, Instance) else "static"
             if ast.constant.name in scope["global"][scope["current"]]: raise Redeclared(Attribute(), ast.constant.name)
@@ -138,7 +138,7 @@ class StaticChecker(BaseVisitor,Utils):
         if "local" in scope: # if not in class context because class context has been check
             if ast.constant.name in scope["local"][0]: raise Redeclared(kind, ast.constant.name)
             scope["local"][0][ast.constant.name] = D96_type("constant", None, decl_type)
-
+        print(init_type)
         # Check type
         # if isinstance(init_type, D96_type): 
         #     if init_type.kind == "mutable" or init_type == ""
@@ -168,10 +168,10 @@ class StaticChecker(BaseVisitor,Utils):
     def visitUnaryOp(self, ast, scope): 
         body_type = self.visit(ast.body, scope)
         if isinstance(scope, tuple):
-            in_const_expression, scope = scope
+            const_expression, scope = scope
             if isinstance(body_type, D96_type): # body is an ID, FieldAccess or ArrayCell
                 # Check is in const expression
-                if in_const_expression and (body_type.kind == "mutable" or body_type.kind == "variable"): raise IllegalConstantExpression(ast)
+                if const_expression and (body_type.kind == "mutable" or body_type.kind == "variable"): raise IllegalConstantExpression(const_expression)
         # take the type
         if isinstance(body_type, D96_type): 
             if body_type.kind == "method": raise TypeMismatchInExpression(ast)
@@ -186,11 +186,11 @@ class StaticChecker(BaseVisitor,Utils):
         left_type = self.visit(ast.left, scope)
         right_type = self.visit(ast.right, scope)
         if isinstance(scope, tuple):
-            in_const_expression, scope = scope
+            const_expression, scope = scope
             if isinstance(left_type, D96_type):
-                if in_const_expression and (left_type.kind == "mutable" or left_type.kind == "variable"): raise IllegalConstantExpression(ast)
+                if const_expression and (left_type.kind == "mutable" or left_type.kind == "variable"): raise IllegalConstantExpression(const_expression)
             if isinstance(right_type, D96_type):
-                if in_const_expression and (right_type.kind == "mutable" or right_type.kind == "variable"): raise IllegalConstantExpression(ast)
+                if const_expression and (right_type.kind == "mutable" or right_type.kind == "variable"): raise IllegalConstantExpression(const_expression)
         
         if isinstance(left_type, D96_type): 
             if left_type.kind == "method": raise TypeMismatchInExpression(ast)
@@ -237,7 +237,7 @@ class StaticChecker(BaseVisitor,Utils):
             return BoolType()
     
     def visitNewExpr(self, ast, scope):
-        if isinstance(scope, tuple): in_const_expresion, scope = scope
+        if isinstance(scope, tuple): const_expression, scope = scope
         if ast.classname.name in scope["global"]:
             return_type = ClassType(ast.classname)
         else: raise Undeclared(Class(), ast.classname.name)
@@ -254,7 +254,7 @@ class StaticChecker(BaseVisitor,Utils):
         return return_type
 
     def visitArrayCell(self, ast, scope): 
-        if isinstance(scope, tuple): in_const_expresion, scope = scope
+        if isinstance(scope, tuple): const_expression, scope = scope
         array_type = self.visit(ast.arr, scope)
         if isinstance(array_type, D96_type): array_type = array_type.type
         index_type_list = [self.visit(idx, scope) for idx in ast.idx]
