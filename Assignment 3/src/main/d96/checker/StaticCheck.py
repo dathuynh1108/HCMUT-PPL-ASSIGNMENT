@@ -64,7 +64,8 @@ class D96_utils:
 
 class D96_type:
     # Type use for LHS Symbol: ID, Field Access, ArrayCell
-    def __init__(self, kind, si_kind, type, param_type = None):
+    def __init__(self, name, kind, si_kind, type, param_type = None):
+        self.name = name
         self.kind = kind
         self.si_kind = si_kind
         self.type = type
@@ -113,12 +114,12 @@ class StaticChecker(BaseVisitor,Utils):
         if "local" not in scope: # Attribute
             kind = "instance" if isinstance(kind, Instance) else "static"
             if ast.variable.name in scope["global"][scope["current"]]: raise Redeclared(Attribute(), ast.variable.name)
-            scope["global"][scope["current"]][ast.variable.name] = D96_type("mutable", kind, decl_type)
+            scope["global"][scope["current"]][ast.variable.name] = D96_type(ast.variable.name, "mutable", kind, decl_type)
         # if not in class scope (in local)
         # --> push to local and check redeclare (Class scope has been checked)
         else: # Local scope --> Variable
             if ast.variable.name in scope["local"][0]: raise Redeclared(kind, ast.variable.name)
-            scope["local"][0][ast.variable.name] = D96_type("variable", None, decl_type)
+            scope["local"][0][ast.variable.name] = D96_type(ast.variable.name, "variable", None, decl_type)
         
         #print(ast.variable.name, "Declare type:", decl_type, "Init type:", init_type)
         # Check type
@@ -133,11 +134,11 @@ class StaticChecker(BaseVisitor,Utils):
         if "local" not in scope:  # attribute
             kind = "instance" if isinstance(kind, Instance) else "static"
             if ast.constant.name in scope["global"][scope["current"]]: raise Redeclared(Attribute(), ast.constant.name)
-            scope["global"][scope["current"]][ast.constant.name] = D96_type("imutable", kind, decl_type)
+            scope["global"][scope["current"]][ast.constant.name] = D96_type(ast.constant.name, "imutable", kind, decl_type)
 
         if "local" in scope: # if not in class context because class context has been check
             if ast.constant.name in scope["local"][0]: raise Redeclared(kind, ast.constant.name)
-            scope["local"][0][ast.constant.name] = D96_type("constant", None, decl_type)
+            scope["local"][0][ast.constant.name] = D96_type(ast.constant.name, "constant", None, decl_type)
         print(init_type)
         # Check type
         # if isinstance(init_type, D96_type): 
@@ -149,20 +150,19 @@ class StaticChecker(BaseVisitor,Utils):
         if ast.name.name in scope["global"][scope["current"]]: raise Redeclared(Method(), ast.name.name)
         si_kind = "instance" if isinstance(ast.kind, Instance) else "static"
         param_type = [self.visit(param.varType, scope) for param in ast.param]
-        scope["global"][scope["current"]][ast.name.name] = D96_type("method", si_kind, None, param_type)
+        scope["global"][scope["current"]][ast.name.name] = D96_type(ast.name.name, "method", si_kind, None, param_type)
 
-        new_scope = {} # create new --> reference global and current --> add local
-        new_scope["global"] = scope["global"]
-        new_scope["current"] = scope["current"]
+        new_scope = scope.copy() # create new --> reference global and current --> add local
         new_scope["local"] = [{}] 
         in_loop = False
+        method_name = ast.name.name
         # Check param redeclare
         for param in ast.param: self.visit(param, (Parameter(), new_scope))
         # Check body
         for stmt in ast.body.inst: 
             if isinstance(stmt, VarDecl): self.visit(stmt, (Variable(), new_scope)) 
             elif isinstance(stmt, ConstDecl): self.visit(stmt, (Constant(), new_scope))
-            else: self.visit(stmt, (in_loop, new_scope))   
+            else: self.visit(stmt, (method_name, in_loop, new_scope))   
 
     # Expression: 
     def visitUnaryOp(self, ast, scope): 
@@ -174,7 +174,7 @@ class StaticChecker(BaseVisitor,Utils):
                 if const_expression and (body_type.kind == "mutable" or body_type.kind == "variable"): raise IllegalConstantExpression(const_expression)
         # take the type
         if isinstance(body_type, D96_type): 
-            if body_type.kind == "method": raise TypeMismatchInExpression(ast)
+            if body_type.kind == "method": raise Undeclared(Identifier(), body_type.name)
             body_type = body_type.type
         if ast.op == "-":
             if type(body_type) == IntType or type(body_type) == FloatType: return body_type
@@ -193,20 +193,19 @@ class StaticChecker(BaseVisitor,Utils):
                 if const_expression and (right_type.kind == "mutable" or right_type.kind == "variable"): raise IllegalConstantExpression(const_expression)
         
         if isinstance(left_type, D96_type): 
-            if left_type.kind == "method": raise TypeMismatchInExpression(ast)
+            if left_type.kind == "method": raise Undeclared(Identifier(), left_type.name)
             left_type = left_type.type
         if isinstance(right_type, D96_type):
-            if right_type.kind == "method": raise TypeMismatchInExpression(ast)
+            if right_type.kind == "method": raise Undeclared(Identifier(), right_type.name)
             right_type = right_type.type
-
         if ast.op in ["+", "-", "*", "/"]:
             if not (
                 (type(left_type) == IntType or type(left_type) == FloatType) 
                 and 
                 (type(right_type) == IntType or type(right_type) == FloatType)
             ): raise TypeMismatchInExpression(ast)
-            if type(left_type) == FloatType or type(right_type) == FloatType: return FloatType
-            return FloatType if ast.op != "/" else IntType
+            if type(left_type) == FloatType or type(right_type) == FloatType: return FloatType()
+            return FloatType() if ast.op == "/" else IntType()
         
         if ast.op == "%":
             if type(left_type) == IntType and type(right_type) == IntType: return left_type
@@ -265,7 +264,9 @@ class StaticChecker(BaseVisitor,Utils):
             array_type = array_type.eleType
         return array_type
         
-    def visitFieldAccess(self, ast,scope):
+    def visitFieldAccess(self, ast, scope):
+        param = scope
+        in_const_expresion = None
         if isinstance(scope, tuple):
             in_const_expresion, scope = scope
         if type(ast.obj) == SelfLiteral:
@@ -273,46 +274,50 @@ class StaticChecker(BaseVisitor,Utils):
             field_name_type = D96_utils.find_attribute(scope["current"], ast.fieldname.name, scope["global"], self.inheritance)
             if field_name_type == None: raise Undeclared(Attribute(), ast.fieldname.name)
             if field_name_type.si_kind == "static": raise IllegalMemberAccess(ast)
+            if field_name_type.kind == "method": raise Undeclared(Attribute(), field_name_type.name)
             return field_name_type
         
         if isinstance(ast.obj, Id): # A class name or a attribute
-            # obj is static marked
+            # obj is static marked --> need a class
             if "$" in ast.fieldname.name: 
                 if ast.obj.name not in scope["global"]: 
-                    try: 
-                        self.visit(ast.obj, (in_const_expresion, scope))
-                    except: 
-                        # Exception when ast.obj.fieldname is not an Variable / Attribute --> Classname
-                        raise Undeclared(Class(), ast.obj.name)
-                    # An variable / attribute --> Not access to static    
-                    raise IllegalMemberAccess(ast)
+                    # try: 
+                    #     self.visit(ast.obj, (in_const_expresion, scope))
+                    # except: 
+                    #     # Exception when ast.obj.fieldname is not an Variable / Attribute --> Classname
+                    #     raise Undeclared(Class(), ast.obj.name)
+                    # # An variable / attribute --> Not access to static    
+                    # raise IllegalMemberAccess(ast)
+                    raise Undeclared(Class(), ast.obj.name)
                 field_name_type = D96_utils.find_attribute(ast.obj.name, ast.fieldname.name, scope["global"], self.inheritance)
                 if field_name_type == None: raise Undeclared(Attribute(), ast.fieldname.name)
                 if field_name_type.kind == "method": raise TypeMismatchInExpression(ast)
                 return field_name_type
             
-            if ast.obj.name in scope["global"]: # a class name --> obj is static
-                field_name_type = D96_utils.find_attribute(ast.obj.name, ast.fieldname.name, scope["global"], self.inheritance)
-                if field_name_type == None: raise Undeclared(Attribute(), ast.fieldname.name)
-                if field_name_type.si_kind == "instance": raise IllegalMemberAccess(ast)
-                if field_name_type.kind == "method": raise TypeMismatchInExpression(ast)
-                return field_name_type
+            # if ast.obj.name in scope["global"]: # a class name --> obj is static
+            #     field_name_type = D96_utils.find_attribute(ast.obj.name, ast.fieldname.name, scope["global"], self.inheritance)
+            #     if field_name_type == None: raise Undeclared(Attribute(), ast.fieldname.name)
+            #     if field_name_type.si_kind == "instance": raise IllegalMemberAccess(ast)
+            #     if field_name_type.kind == "method": raise TypeMismatchInExpression(ast)
+            #     return field_name_type
+            # Normal ID ---> An attribute
         
-        # A ID of attr/var or Expression ---> obj is instance    
-        obj_type = self.visit(ast.obj, (in_const_expresion, scope)) # instance
+        # A ID of attr/var or Expression ---> obj is instance   
+        # instance
+        obj_type = self.visit(ast.obj, param)
         if type(obj_type) == D96_type: obj_type = obj_type.type
         if type(obj_type) != ClassType: raise TypeMismatchInExpression(ast)
         class_name = obj_type.classname.name
         field_name_type = D96_utils.find_attribute(class_name, ast.fieldname.name, scope["global"], self.inheritance)
         if field_name_type == None: raise Undeclared(Attribute(), ast.fieldname.name)
         if field_name_type.si_kind == "static": raise IllegalMemberAccess(ast)
-        if field_name_type.kind == "method": raise TypeMismatchInExpression(ast)
+        if field_name_type.kind == "method": raise Undeclared(Attribute(), field_name_type.name)
         return field_name_type
             
     def visitId(self, ast, scope):
         # check is in const declare
         if isinstance(scope, tuple):
-            in_const_expression, scope = scope
+            const_expression, scope = scope
         # check local scope
         if "local" in scope: 
             for local_scope in scope["local"]: 
@@ -368,3 +373,39 @@ class StaticChecker(BaseVisitor,Utils):
             if not D96_utils.compare(type_of_element, type_of_element_list[0]): 
                 raise IllegalArrayLiteral(ast)
         return ArrayType(len(type_of_element_list), type_of_element_list[0])
+    
+    # Statement:
+    def visitAssign(self, ast, scope): 
+        method_name, in_loop, scope = scope
+        rhs = self.visit(ast.exp, scope)
+        lhs = self.visit(ast.lhs, scope)
+        if isinstance(lhs, D96_type): 
+            if lhs.kind == "imutable" or lhs.kind == "constant": raise CannotAssignToConstant(ast)
+
+    def visitBlock(self, ast, scope): 
+        param = scope
+        #method_name, in_loop, scope = scope
+        scope = scope[2]
+        new_scope = scope.copy()
+        new_scope["local"] = [{}] + scope["local"]
+        for stmt in ast.inst: 
+            if isinstance(stmt, VarDecl): self.visit(stmt, (Variable(), new_scope)) 
+            elif isinstance(stmt, ConstDecl): self.visit(stmt, (Constant(), new_scope))
+            else: self.visit(stmt, param)   
+
+
+    def visitIf(self, ast, scope): 
+        param = scope
+        #method_name, in_loop, scope = scope
+        scope = scope[2]
+        condition_type = self.visit(ast.expr, scope)
+        if isinstance(condition_type, D96_type): condition_type = condition_type.type
+        if type(condition_type) != BoolType: raise TypeMismatchInStatement(ast)
+        self.visit(ast.thenStmt, param)
+        self.visit(ast.elseStmt, param)
+
+    def visitFor(self, ast, scope): pass
+    def visitBreak(self, ast, scope): pass
+    def visitContinue(self, ast, scope): pass
+    def visitReturn(self, ast, scope): pass
+    def visitCallStmt(self, ast, scope): pass    

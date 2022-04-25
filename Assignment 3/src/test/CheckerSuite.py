@@ -6,8 +6,15 @@ class CheckerSuite(unittest.TestCase):
     def test_999(self):
         input = r"""
             Class Object {
-                Var x: Array[Array[Int, 1], 1] = 1;
-                Val y: Int = x[0][1][0];
+                Var x: Int = 1;
+                method(a: Int) {
+                    Var x: Int = 1;
+                    {
+                        Var x: Int = 1;
+                        {Var x: Int = 2;}
+                    }
+                }
+                Var a: Int = method;
             }
             
 
