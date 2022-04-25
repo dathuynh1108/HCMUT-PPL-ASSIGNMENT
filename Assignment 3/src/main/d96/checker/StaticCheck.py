@@ -26,6 +26,7 @@ def print_scope(scope):
             print("]")
     print("]")
 
+from types import NoneType
 from main.d96.utils.AST import *
 from main.d96.utils.Utils import Utils
 from main.d96.utils.Visitor import *
@@ -404,8 +405,47 @@ class StaticChecker(BaseVisitor,Utils):
         self.visit(ast.thenStmt, param)
         self.visit(ast.elseStmt, param)
 
-    def visitFor(self, ast, scope): pass
-    def visitBreak(self, ast, scope): pass
-    def visitContinue(self, ast, scope): pass
-    def visitReturn(self, ast, scope): pass
+    def visitFor(self, ast, scope): 
+        method_name, in_loop, scope = scope
+        in_loop = True
+        id_type = self.visit(ast.id, scope)
+        expr1_type = self.visit(ast.expr1, scope)
+        expr2_type = self.visit(ast.expr2, scope)
+        # "In the case of a for statement, just the assignment part in this statement is printed out in the error message."
+        if id_type.kind == "constant" or id_type.kind == "imutable": raise CannotAssignToConstant(ast.expr1)
+        id_type = id_type.type
+        if isinstance(expr1_type, D96_type):
+            if expr1_type.kind == "method": raise Undeclared(Identifier(), expr1_type.name)
+            expr1_type = expr1_type.type
+        if isinstance(expr2_type, D96_type):
+            if expr2_type.kind == "method": raise Undeclared(Identifier(), expr2_type.name)
+            expr2_type = expr2_type.type
+        if type(expr1_type) != IntType or type(expr2_type) != IntType: raise TypeMismatchInStatement(ast)
+        if type(id_type) != IntType and type(id_type) != FloatType: raise TypeMismatchInStatement(ast)
+        
+        # Not say anything about Expr3 ??
+        
+        self.visit(ast.loop, (method_name, in_loop, scope))
+
+    def visitBreak(self, ast, scope): 
+        method_name, in_loop, scope = scope
+        if not in_loop: raise MustInLoop(ast)
+    
+    def visitContinue(self, ast, scope): 
+        method_name, in_loop, scope = scope
+        if not in_loop: raise MustInLoop(ast)
+    
+    def visitReturn(self, ast, scope): 
+        method_name, in_loop, scope = scope
+        print(method_name)
+        print(scope["global"][scope["current"]][method_name].type)
+        currnet_return_type = self.visit(ast.expr, scope) if ast.expr else None
+        if type(scope["global"][scope["current"]][method_name].type) == NoneType: 
+            scope["global"][scope["current"]][method_name].type = currnet_return_type
+        else:
+            # Chỗ này so cứng hay cho ép kiểu ??
+            if not D96_utils.compare(currnet_return_type, scope["global"][scope["current"]][method_name].type) and not D96_utils.coercion(currnet_return_type, scope["global"][scope["current"]][method_name].type, self.inheritance):
+                raise TypeMismatchInStatement(ast)
+            
+
     def visitCallStmt(self, ast, scope): pass    

@@ -6,15 +6,13 @@ class CheckerSuite(unittest.TestCase):
     def test_999(self):
         input = r"""
             Class Object {
-                Var x: Int = 1;
-                method(a: Int) {
-                    Var x: Int = 1;
-                    {
-                        Var x: Int = 1;
-                        {Var x: Int = 2;}
-                    }
+                Var a: Int = 1;
+                Var x: Int = a;
+                method() {
+                    Return 1;
+                    Return 2.1;
                 }
-                Var a: Int = method;
+                
             }
             
 
