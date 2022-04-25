@@ -9,8 +9,8 @@ class CheckerSuite(unittest.TestCase):
                 Var a: Int = 1;
                 Var x: Int = a;
                 method() {
-                    Return 1;
-                    Return 2.1;
+                    Var a: Array[Int, 1] = 1;
+                    a = Array(1, 2);
                 }
                 
             }

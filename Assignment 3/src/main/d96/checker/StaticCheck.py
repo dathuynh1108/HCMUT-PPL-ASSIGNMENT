@@ -36,7 +36,7 @@ class D96_utils:
     @staticmethod
     def compare(type_1, type_2): # Compare 2 type
         # Two array equal if size and element type is same
-        if type(type_1) == ArrayType and type_2 == ArrayType: 
+        if type(type_1) == ArrayType and type(type_2) == ArrayType: 
             return type_1.size == type_2.size and D96_utils.compare(type_1.eleType, type_2.eleType)
         # Same class type
         if type(type_1) ==  ClassType and type(type_2) == ClassType:
@@ -245,8 +245,6 @@ class StaticChecker(BaseVisitor,Utils):
             if "Constructor" in scope["global"][ast.classname.name]:
                 class_constructor = scope["global"][ast.classname.name]["Constructor"]
                 argument_type = [self.visit(param, scope) for param in ast.param]
-                print(argument_type)
-                print(class_constructor.param_type)
                 if len(argument_type) != len(class_constructor.param_type): raise TypeMismatchInExpression(ast)
                 for i in range(len(argument_type)): 
                     if not D96_utils.compare(argument_type[i], class_constructor.param_type[i]) and not D96_utils.coercion(argument_type[i], class_constructor.param_type[i], self.inheritance): raise TypeMismatchInExpression(ast)
@@ -378,10 +376,19 @@ class StaticChecker(BaseVisitor,Utils):
     # Statement:
     def visitAssign(self, ast, scope): 
         method_name, in_loop, scope = scope
-        rhs = self.visit(ast.exp, scope)
-        lhs = self.visit(ast.lhs, scope)
-        if isinstance(lhs, D96_type): 
-            if lhs.kind == "imutable" or lhs.kind == "constant": raise CannotAssignToConstant(ast)
+        rhs_type = self.visit(ast.exp, scope)
+        lhs_type = self.visit(ast.lhs, scope)
+        if isinstance(lhs_type, D96_type): 
+            if lhs_type.kind == "imutable" or lhs_type.kind == "constant": raise CannotAssignToConstant(ast)
+            if lhs_type.kind == "method": raise Undeclared(Identifier(), lhs_type.name)
+            lhs_type = lhs_type.type
+        if isinstance(rhs_type, D96_type):
+            if lhs_type.kind == "method": raise Undeclared(Identifier(), lhs_type.name)
+            rhs_type = rhs_type.type
+        print(lhs_type, rhs_type)
+        if not D96_utils.compare(lhs_type, rhs_type) and not D96_utils.coercion(rhs_type, lhs_type, self.inheritance): 
+            raise TypeMismatchInStatement(ast)
+
 
     def visitBlock(self, ast, scope): 
         param = scope
@@ -437,8 +444,6 @@ class StaticChecker(BaseVisitor,Utils):
     
     def visitReturn(self, ast, scope): 
         method_name, in_loop, scope = scope
-        print(method_name)
-        print(scope["global"][scope["current"]][method_name].type)
         currnet_return_type = self.visit(ast.expr, scope) if ast.expr else None
         if type(scope["global"][scope["current"]][method_name].type) == NoneType: 
             scope["global"][scope["current"]][method_name].type = currnet_return_type
