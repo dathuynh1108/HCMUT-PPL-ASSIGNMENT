@@ -362,6 +362,8 @@ class StaticChecker(BaseVisitor,Utils):
             if call_method.kind != "method": raise Undeclared(Method(), ast.method.name)
             if call_method.si_kind == "instance": raise IllegalMemberAccess(ast)
             # Check type param
+            argument_type = [self.visit(param, scope) for param in ast.param]
+            if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInExpression(ast)
             return call_method.type
         
         # Normal ID or Expr --> Instance
@@ -371,6 +373,9 @@ class StaticChecker(BaseVisitor,Utils):
         if call_method == None: raise Undeclared(Method(), ast.method.name)
         if call_method.kind != "method": raise Undeclared(Method(), ast.method.name)
         if call_method.si_kind == "static": raise IllegalMemberAccess(ast)
+        # Check type param
+        argument_type = [self.visit(param, scope) for param in ast.param]
+        if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInExpression(ast)
         return call_method.type
 
     def visitId(self, ast, scope): # Only use to find local variable
