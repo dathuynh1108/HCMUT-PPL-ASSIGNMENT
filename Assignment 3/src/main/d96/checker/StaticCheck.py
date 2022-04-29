@@ -36,8 +36,7 @@ from StaticError import *
 
 class D96_type:
     # Type use for LHS Symbol: ID, Field Access, ArrayCell
-    def __init__(self, name, kind, si_kind, type, param_type=None):
-        self.name = name
+    def __init__(self, kind, si_kind, type, param_type=None):
         self.kind = kind
         self.si_kind = si_kind
         self.type = type
@@ -137,12 +136,12 @@ class StaticChecker(BaseVisitor,Utils):
         if "local" not in scope: # Attribute
             kind = "instance" if isinstance(kind, Instance) else "static"
             if ast.variable.name in scope["global"][scope["current"]]: raise Redeclared(Attribute(), ast.variable.name)
-            scope["global"][scope["current"]][ast.variable.name] = D96_type(ast.variable.name, "mutable", kind, decl_type)
+            scope["global"][scope["current"]][ast.variable.name] = D96_type("mutable", kind, decl_type)
         # if not in class scope (in local)
         # --> push to local and check redeclare (Class scope has been checked)
         else: # Local scope --> Variable
             if ast.variable.name in scope["local"][0]: raise Redeclared(kind, ast.variable.name)
-            scope["local"][0][ast.variable.name] = D96_type(ast.variable.name, "variable", None, decl_type)
+            scope["local"][0][ast.variable.name] = D96_type("variable", None, decl_type)
         
         #print(ast.variable.name, "Declare type:", decl_type, "Init type:", init_type)
         # Check type
@@ -157,11 +156,11 @@ class StaticChecker(BaseVisitor,Utils):
         if "local" not in scope:  # attribute
             kind = "instance" if isinstance(kind, Instance) else "static"
             if ast.constant.name in scope["global"][scope["current"]]: raise Redeclared(Attribute(), ast.constant.name)
-            scope["global"][scope["current"]][ast.constant.name] = D96_type(ast.constant.name, "imutable", kind, decl_type)
+            scope["global"][scope["current"]][ast.constant.name] = D96_type("imutable", kind, decl_type)
 
         if "local" in scope: # if not in class context because class context has been check
             if ast.constant.name in scope["local"][0]: raise Redeclared(kind, ast.constant.name)
-            scope["local"][0][ast.constant.name] = D96_type(ast.constant.name, "constant", None, decl_type)
+            scope["local"][0][ast.constant.name] = D96_type("constant", None, decl_type)
         print(init_type)
         # Check type
         # if isinstance(init_type, D96_type): 
@@ -174,7 +173,7 @@ class StaticChecker(BaseVisitor,Utils):
         if ast.name.name in scope["global"][scope["current"]]: raise Redeclared(Method(), ast.name.name)
         si_kind = "instance" if isinstance(ast.kind, Instance) else "static"
         param_type = [self.visit(param.varType, scope) for param in ast.param]
-        scope["global"][scope["current"]][ast.name.name] = D96_type(ast.name.name, "method", si_kind, None, param_type)
+        scope["global"][scope["current"]][ast.name.name] = D96_type("method", si_kind, None, param_type)
 
         new_scope = scope.copy() # create new --> reference global and current --> add local
         new_scope["local"] = [{}] 
