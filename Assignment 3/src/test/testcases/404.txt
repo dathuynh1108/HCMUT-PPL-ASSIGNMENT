@@ -2,8 +2,8 @@
             Class A {
                 Val x, y: Int = 1, 1;
                 method(a,b: Int) {
-                    Val x, y : Int = x, y;
-                    Val a: Int = a;
+                    Var x, y : Int = Self.x, Self.y;
+                    Val a: Int = 1;
                 }
             }
         

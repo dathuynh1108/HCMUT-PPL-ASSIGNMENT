@@ -8,7 +8,7 @@
             Class C: B {
                 Var c: Int = 1;
                 method() {
-                    Var a_1, a_2, a_3 : Int = a, b, c;
+                    Var a_1, a_2, a_3 : Int = Self.a, Self.b, Self.c;
                     Var x_1 : Int = x;
                 }
             }

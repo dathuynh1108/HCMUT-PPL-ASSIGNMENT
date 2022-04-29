@@ -4,7 +4,7 @@
             }
             Class A : Object {
                 method() {
-                    Var x, y : Int = a, b; ## OK ##
+                    Var x, y : Int = Self.a, Self.b; ## OK ##
                     Var m, n : Int = m, n; 
                 }
             }

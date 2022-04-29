@@ -3,10 +3,9 @@
  * @author Huynh Thanh Dat
 """
 
-# from types import NoneType
-# from AST import * 
-# from Visitor import *
+# from AST import *
 # from Utils import Utils
+# from Visitor import *
 # from StaticError import *
 
 
@@ -26,8 +25,6 @@ def print_scope(scope):
                 print("   ", var, local_scope[var])
             print("]")
     print("]")
-
-from types import NoneType
 from main.d96.utils.AST import *
 from main.d96.utils.Utils import Utils
 from main.d96.utils.Visitor import *
@@ -86,7 +83,7 @@ class D96_utils:
         return True
 
 
-class StaticChecker(BaseVisitor,Utils):    
+class StaticChecker(BaseVisitor, Utils):    
     def __init__(self,ast):
         self.ast = ast
         self.inheritance = {}  # inheritance list, parent of each class
@@ -511,7 +508,7 @@ class StaticChecker(BaseVisitor,Utils):
         currnet_return_type = self.visit(ast.expr, scope) if ast.expr else None
         # if isinstance(currnet_return_type, D96_type): currnet_return_type = currnet_return_type.type
         # Suy diễn kiểu
-        if type(scope["global"][scope["current"]][self.current_method].type) == NoneType: 
+        if isinstance(scope["global"][scope["current"]][self.current_method].type, Type): 
             scope["global"][scope["current"]][self.current_method].type = currnet_return_type
         else:
             # Chỗ này so cứng hay cho ép kiểu ??

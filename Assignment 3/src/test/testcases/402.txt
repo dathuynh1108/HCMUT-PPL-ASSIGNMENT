@@ -2,7 +2,7 @@
             Class A {
                 Var x, y: Int = 1, 1;
                 method(a,b: Int) {
-                    Val x, y : Int = x, y;
+                    Val x, y : Int = 1, 2;
                     Var x: Int = a;
                 }
             }
