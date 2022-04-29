@@ -30,7 +30,6 @@ from main.d96.utils.Utils import Utils
 from main.d96.utils.Visitor import *
 from StaticError import *
 
-
 class D96_type:
     # Type use for LHS Symbol: ID, Field Access, ArrayCell
     def __init__(self, kind, si_kind, type, param_type=None):
@@ -88,6 +87,7 @@ class StaticChecker(BaseVisitor, Utils):
         self.ast = ast
         self.inheritance = {}  # inheritance list, parent of each class
         self.current_method = None
+        self.current_class = None
     
     def check(self):
         return self.visit(self.ast, None)
@@ -114,10 +114,14 @@ class StaticChecker(BaseVisitor, Utils):
             self.inheritance[ast.classname.name] = ast.parentname.name
         else: self.inheritance[ast.classname.name] = None
         #print_scope(scope)
+        self.current_class = ast.classname.name
+        
         entry_point_fail = True if ast.classname.name == "Program" else False
         for mem in ast.memlist: 
             self.visit(mem, scope) 
-            if ast.classname.name == "Program" and isinstance(mem, MethodDecl) and mem.name.name == "main": entry_point_fail = False
+            if ast.classname.name == "Program" and isinstance(mem, MethodDecl) and mem.name.name == "main" and mem.param == []: entry_point_fail = False
+        
+        self.current_class = None
         return entry_point_fail
         
 
@@ -165,12 +169,13 @@ class StaticChecker(BaseVisitor, Utils):
 
 
     def visitMethodDecl(self, ast, scope): 
-        self.current_method = ast.name.name
         # Check redeclare
         if ast.name.name in scope["global"][scope["current"]]: raise Redeclared(Method(), ast.name.name)
         si_kind = "instance" if isinstance(ast.kind, Instance) else "static"
         param_type = [self.visit(param.varType, scope) for param in ast.param]
         scope["global"][scope["current"]][ast.name.name] = D96_type("method", si_kind, None, param_type)
+
+        self.current_method = ast.name.name
 
         new_scope = scope.copy() # create new --> reference global and current --> add local
         new_scope["local"] = [{}] 
@@ -505,10 +510,14 @@ class StaticChecker(BaseVisitor, Utils):
     
     def visitReturn(self, ast, scope): 
         in_loop, scope = scope
-        currnet_return_type = self.visit(ast.expr, scope) if ast.expr else None
+
+        if self.current_method == "main" and self.current_class == "Program" and ast.expr != None: raise TypeMismatchInStatement(ast)
+        if self.current_method == "Destructor": raise TypeMismatchInStatement(ast)
+        currnet_return_type = self.visit(ast.expr, scope) if ast.expr else VoidType()
+
         # if isinstance(currnet_return_type, D96_type): currnet_return_type = currnet_return_type.type
         # Suy diễn kiểu
-        if isinstance(scope["global"][scope["current"]][self.current_method].type, Type): 
+        if not isinstance(scope["global"][scope["current"]][self.current_method].type, Type): 
             scope["global"][scope["current"]][self.current_method].type = currnet_return_type
         else:
             # Chỗ này so cứng hay cho ép kiểu ??
