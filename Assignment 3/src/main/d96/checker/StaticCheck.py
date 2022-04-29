@@ -26,6 +26,7 @@ def print_scope(scope):
             print("]")
     print("]")
 
+from importlib.metadata import entry_points
 from types import NoneType
 from main.d96.utils.AST import *
 from main.d96.utils.Utils import Utils
@@ -73,13 +74,14 @@ class D96_type:
         self.param_type = param_type
     
     def __str__(self):
-        return "["+ str(self.kind) + " " + str(self.si_kind) + " " +str(self.type)  + (" " + str(self.param_type) if self.param_type else "") + "]"
+        return "["+ str(self.kind) + " " + str(self.si_kind) + " " + str(self.type)  + (" " + str(self.param_type) if self.param_type != None  else "") + "]"
 
 
 class StaticChecker(BaseVisitor,Utils):    
     def __init__(self,ast):
         self.ast = ast
         self.inheritance = {}  # inheritance list, parent of each class
+        self.current_method = None
     
     def check(self):
         return self.visit(self.ast, None)
@@ -88,7 +90,12 @@ class StaticChecker(BaseVisitor,Utils):
         #self.global_scope, self.inheritance = Get_global_scope().get_all_class_scope(ast)
         scope = {}
         scope["global"] = {}
-        for decl in ast.decl: self.visit(decl, scope)
+        has_program_class = False
+        for decl in ast.decl: 
+            entry_point_fail = self.visit(decl, scope)
+            if decl.classname.name == "Program": has_program_class = True
+            if entry_point_fail: raise NoEntryPoint()
+        if not has_program_class: raise NoEntryPoint()
         return []
     
     def visitClassDecl(self, ast, scope):
@@ -101,7 +108,12 @@ class StaticChecker(BaseVisitor,Utils):
             self.inheritance[ast.classname.name] = ast.parentname.name
         else: self.inheritance[ast.classname.name] = None
         #print_scope(scope)
-        for mem in ast.memlist: self.visit(mem, scope)
+        entry_point_fail = True if ast.classname.name == "Program" else False
+        for mem in ast.memlist: 
+            self.visit(mem, scope) 
+            if ast.classname.name == "Program" and isinstance(mem, MethodDecl) and mem.name.name == "main": entry_point_fail = False
+        return entry_point_fail
+        
 
     def visitAttributeDecl(self, ast, scope):
         self.visit(ast.decl, (ast.kind, scope))
@@ -147,6 +159,7 @@ class StaticChecker(BaseVisitor,Utils):
 
 
     def visitMethodDecl(self, ast, scope): 
+        self.current_method = ast.name.name
         # Check redeclare
         if ast.name.name in scope["global"][scope["current"]]: raise Redeclared(Method(), ast.name.name)
         si_kind = "instance" if isinstance(ast.kind, Instance) else "static"
@@ -156,15 +169,15 @@ class StaticChecker(BaseVisitor,Utils):
         new_scope = scope.copy() # create new --> reference global and current --> add local
         new_scope["local"] = [{}] 
         in_loop = False
-        method_name = ast.name.name
         # Check param redeclare
         for param in ast.param: self.visit(param, (Parameter(), new_scope))
         # Check body
         for stmt in ast.body.inst: 
             if isinstance(stmt, VarDecl): self.visit(stmt, (Variable(), new_scope)) 
             elif isinstance(stmt, ConstDecl): self.visit(stmt, (Constant(), new_scope))
-            else: self.visit(stmt, (method_name, in_loop, new_scope))   
-
+            else: self.visit(stmt, (in_loop, new_scope))   
+        self.current_method = None
+    
     # Expression: 
     def visitUnaryOp(self, ast, scope): 
         body_type = self.visit(ast.body, scope)
@@ -323,9 +336,9 @@ class StaticChecker(BaseVisitor,Utils):
                 if ast.name in local_scope: return local_scope[ast.name]
         
         # check class scope        
-        found_id = D96_utils.find_attribute(scope["current"], ast.name, scope["global"], self.inheritance)
-        #print(ast.name, found_id)
-        if found_id: return found_id
+        # found_id = D96_utils.find_attribute(scope["current"], ast.name, scope["global"], self.inheritance)
+        # print(ast.name, found_id)
+        # if found_id: return found_id
         raise Undeclared(Identifier(), ast.name)
 
     def visitIntType(self, ast, scope):
@@ -375,7 +388,7 @@ class StaticChecker(BaseVisitor,Utils):
     
     # Statement:
     def visitAssign(self, ast, scope): 
-        method_name, in_loop, scope = scope
+        in_loop, scope = scope
         rhs_type = self.visit(ast.exp, scope)
         lhs_type = self.visit(ast.lhs, scope)
         if isinstance(lhs_type, D96_type): 
@@ -385,15 +398,14 @@ class StaticChecker(BaseVisitor,Utils):
         if isinstance(rhs_type, D96_type):
             if lhs_type.kind == "method": raise Undeclared(Identifier(), lhs_type.name)
             rhs_type = rhs_type.type
-        print(lhs_type, rhs_type)
         if not D96_utils.compare(lhs_type, rhs_type) and not D96_utils.coercion(rhs_type, lhs_type, self.inheritance): 
             raise TypeMismatchInStatement(ast)
 
 
     def visitBlock(self, ast, scope): 
         param = scope
-        #method_name, in_loop, scope = scope
-        scope = scope[2]
+        #in_loop, scope = scope
+        scope = scope[1]
         new_scope = scope.copy()
         new_scope["local"] = [{}] + scope["local"]
         for stmt in ast.inst: 
@@ -404,8 +416,8 @@ class StaticChecker(BaseVisitor,Utils):
 
     def visitIf(self, ast, scope): 
         param = scope
-        #method_name, in_loop, scope = scope
-        scope = scope[2]
+        #in_loop, scope = scope
+        scope = scope[1]
         condition_type = self.visit(ast.expr, scope)
         if isinstance(condition_type, D96_type): condition_type = condition_type.type
         if type(condition_type) != BoolType: raise TypeMismatchInStatement(ast)
@@ -413,7 +425,7 @@ class StaticChecker(BaseVisitor,Utils):
         self.visit(ast.elseStmt, param)
 
     def visitFor(self, ast, scope): 
-        method_name, in_loop, scope = scope
+        in_loop, scope = scope
         in_loop = True
         id_type = self.visit(ast.id, scope)
         expr1_type = self.visit(ast.expr1, scope)
@@ -432,24 +444,24 @@ class StaticChecker(BaseVisitor,Utils):
         
         # Not say anything about Expr3 ??
         
-        self.visit(ast.loop, (method_name, in_loop, scope))
+        self.visit(ast.loop, (in_loop, scope))
 
     def visitBreak(self, ast, scope): 
-        method_name, in_loop, scope = scope
+        in_loop, scope = scope
         if not in_loop: raise MustInLoop(ast)
     
     def visitContinue(self, ast, scope): 
-        method_name, in_loop, scope = scope
+        in_loop, scope = scope
         if not in_loop: raise MustInLoop(ast)
     
     def visitReturn(self, ast, scope): 
-        method_name, in_loop, scope = scope
+        in_loop, scope = scope
         currnet_return_type = self.visit(ast.expr, scope) if ast.expr else None
-        if type(scope["global"][scope["current"]][method_name].type) == NoneType: 
-            scope["global"][scope["current"]][method_name].type = currnet_return_type
+        if type(scope["global"][scope["current"]][self.current_method].type) == NoneType: 
+            scope["global"][scope["current"]][self.current_method].type = currnet_return_type
         else:
             # Chỗ này so cứng hay cho ép kiểu ??
-            if not D96_utils.compare(currnet_return_type, scope["global"][scope["current"]][method_name].type) and not D96_utils.coercion(currnet_return_type, scope["global"][scope["current"]][method_name].type, self.inheritance):
+            if not D96_utils.compare(currnet_return_type, scope["global"][scope["current"]][self.current_method].type) and not D96_utils.coercion(currnet_return_type, scope["global"][scope["current"]][method_name].type, self.inheritance):
                 raise TypeMismatchInStatement(ast)
             
 

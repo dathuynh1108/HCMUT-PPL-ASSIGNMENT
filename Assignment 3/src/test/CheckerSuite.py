@@ -5,14 +5,14 @@ from AST import *
 class CheckerSuite(unittest.TestCase):
     def test_999(self):
         input = r"""
-            Class Object {
+            Class Program {
                 Var a: Int = 1;
-                Var x: Int = a;
-                method() {
-                    Var a: Array[Int, 1] = 1;
-                    a = Array(1, 2);
-                }
-                
+                Var x: Int = Self.a;
+                Val y: Int = Self.a;
+                Constructor() {}
+                main() {
+                    Var x: Int = Self.a;
+                } 
             }
             
 
