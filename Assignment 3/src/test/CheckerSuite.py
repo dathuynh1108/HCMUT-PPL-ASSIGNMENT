@@ -13,6 +13,9 @@ class CheckerSuite(unittest.TestCase):
                 main() {}
                 Val object: Object = New Object();
                 Var x: Int = Self.object.object.object.object;
+                method() {
+                    Self.object.method(1, 2);
+                }
             }
         """
         expect = "Undeclared Identifier: p"

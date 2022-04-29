@@ -515,4 +515,38 @@ class StaticChecker(BaseVisitor,Utils):
                 raise TypeMismatchInStatement(ast)
             
 
-    def visitCallStmt(self, ast, scope): pass    
+    def visitCallStmt(self, ast, scope): 
+        in_loop, scope = scope
+        if type(ast.obj) == SelfLiteral:
+            if self.current_method and scope["global"][scope["current"]][self.current_method].si_kind == "static": raise IllegalMemberAccess(ast)
+            call_method  = D96_utils.find_attribute(scope["current"], ast.method.name, scope["global"], self.inheritance)
+            if call_method == None: raise Undeclared(Method(), ast.method.name)
+            if call_method.kind != "method": raise Undeclared(Method(), ast.method.name)
+            if call_method.si_kind == "static": raise IllegalMemberAccess(ast)
+            # Check type param
+            argument_type = [self.visit(param, scope) for param in ast.param]
+            if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInStatement(ast)
+            # return call_method.type
+        
+        # Static method
+        if isinstance(ast.obj, Id) and "$" in ast.method.name:
+            if ast.obj.name not in scope["global"]: raise Undeclared(Class(), ast.obj.name)
+            call_method = D96_utils.find_attribute(ast.obj.name, ast.method.name, scope["global"], self.inheritance)
+            if call_method == None: raise Undeclared(Method(), ast.method.name)
+            if call_method.kind != "method": raise Undeclared(Method(), ast.method.name)
+            if call_method.si_kind == "instance": raise IllegalMemberAccess(ast)
+            # Check type param
+            argument_type = [self.visit(param, scope) for param in ast.param]
+            if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInStatement(ast)
+            # return call_method.type
+        
+        # Normal ID or Expr --> Instance
+        obj_type = self.visit(ast.obj, scope)
+        if type(obj_type) != ClassType: raise TypeMismatchInExpression(ast)
+        call_method = D96_utils.find_attribute(obj_type.classname.name, ast.method.name, scope["global"], self.inheritance)
+        if call_method == None: raise Undeclared(Method(), ast.method.name)
+        if call_method.kind != "method": raise Undeclared(Method(), ast.method.name)
+        if call_method.si_kind == "static": raise IllegalMemberAccess(ast)
+        argument_type = [self.visit(param, scope) for param in ast.param]
+        if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInStatement(ast)
+        # return call_method.type
