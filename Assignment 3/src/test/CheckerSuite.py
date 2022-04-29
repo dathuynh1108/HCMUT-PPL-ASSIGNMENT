@@ -5,17 +5,15 @@ from AST import *
 class CheckerSuite(unittest.TestCase):
     def test_999(self):
         input = r"""
-            Class Program {
-                Var a: Int = 1;
-                Var x: Int = Self.a;
-                Val y: Int = Self.a;
-                Constructor() {}
-                main() {
-                    Var x: Int = Self.a;
-                } 
+            Class Object {
+                Var object: Object = New Object();
+                method(x: Int; y: Float) {}
             }
-            
-
+            Class Program {
+                main() {}
+                Val object: Object = New Object();
+                Var x: Int = Self.object.object.object.object;
+            }
         """
         expect = "Undeclared Identifier: p"
         self.assertTrue(TestChecker.test(input, expect, 999))
