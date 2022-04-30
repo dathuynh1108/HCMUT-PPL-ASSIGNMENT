@@ -478,7 +478,7 @@ class StaticChecker(BaseVisitor, Utils):
         # if isinstance(condition_type, D96_type): condition_type = condition_type.type
         if type(condition_type) != BoolType: raise TypeMismatchInStatement(ast)
         self.visit(ast.thenStmt, param)
-        self.visit(ast.elseStmt, param)
+        if ast.elseStmt: self.visit(ast.elseStmt, param) 
 
     def visitFor(self, ast, scope): 
         in_loop, scope = scope
