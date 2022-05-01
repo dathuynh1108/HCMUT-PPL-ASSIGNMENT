@@ -1,5 +1,10 @@
 
+            Class Class_type {}
             Class Program {
-                main() {}
+                Var $a: Array[Int, 5];
+                main() {
+                    Val a: Array[Float, 3] = Array(1,2,3);
+                    a = Array(1,2,3);
+                }
             }
         

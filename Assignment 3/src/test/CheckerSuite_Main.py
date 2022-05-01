@@ -581,6 +581,42 @@ class CheckerSuite(unittest.TestCase):
             Class Class_type {}
             Class Program {
                 main() {
+                    Var a_1: Boolean = True;
+                    Var b_1: Boolean = False;
+                    Var c_1: Boolean = True != False;
+                    Var d_1: Boolean = a_1 != True;
+                    Var e_1: Boolean = a_1 != b_1;
+
+                    Var a_2: Int = 1;
+                    Var b_2: Int = 1;
+                    Var c_2: Boolean = 1 != 1;
+                    Var d_2: Boolean = a_2 != 1;
+                    Var e_2: Boolean = a_2 != b_2;
+
+                    Var a_3: Float = 1.2;
+                    Var b_3: Float = 1.2;
+                    Var c_3: Boolean = 1.2 != 1.2;
+                    Var d_3: Boolean = a_3 != 1.2;
+                    Var e_3: Boolean = a_3 != b_3; 
+
+                    Var a_4: Int = 1;
+                    Var b_4: Float = 1.2;
+                    Var c_4: Boolean = 1 != 1.2;
+                    Var d_4: Boolean = a_4 != 1.2;
+                    Var e_4: Boolean = a_4 != b_4;
+
+                    Var f: Boolean = True != 1;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: BinaryOp(!=,Id(a),IntLit(1))"
+        self.assertTrue(TestChecker.test(input, expect, 440))
+    
+    def test_041_binary_op(self):
+        input = r"""
+            Class Class_type {}
+            Class Program {
+                main() {
                     Var a_2: Int = 1;
                     Var b_2: Int = 1;
                     Var c_2: Boolean = 1 > 1;
@@ -599,12 +635,103 @@ class CheckerSuite(unittest.TestCase):
                     Var d_4: Boolean = a_4 > 1.2;
                     Var e_4: Boolean = a_4 > b_4;
 
-                    Var f: Boolean = True > 1;
+                    Var f: Boolean = 1 > True;
                 }
             }
         """
-        expect = "Type Mismatch In Expression: BinaryOp(>,BooleanLit(True),IntLit(1))"
-        self.assertTrue(TestChecker.test(input, expect, 440))
+        expect = "Type Mismatch In Expression: BinaryOp(>,IntLit(1),BooleanLit(True))"
+        self.assertTrue(TestChecker.test(input, expect, 441))
+    
+    def test_042_binary_op(self):
+        input = r"""
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var a_2: Int = 1;
+                    Var b_2: Int = 1;
+                    Var c_2: Boolean = 1 >= 1;
+                    Var d_2: Boolean = a_2 >= 1;
+                    Var e_2: Boolean = a_2 >= b_2;
+
+                    Var a_3: Float = 1.2;
+                    Var b_3: Float = 1.2;
+                    Var c_3: Boolean = 1.2 >= 1.2;
+                    Var d_3: Boolean = a_3 >= 1.2;
+                    Var e_3: Boolean = a_3 >= b_3; 
+
+                    Var a_4: Int = 1;
+                    Var b_4: Float = 1.2;
+                    Var c_4: Boolean = 1 >= 1.2;
+                    Var d_4: Boolean = a_4 >= 1.2;
+                    Var e_4: Boolean = a_4 >= b_4;
+
+                    Var f: Boolean = 1 >= True;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: BinaryOp(>=,IntLit(1),BooleanLit(True))"
+        self.assertTrue(TestChecker.test(input, expect, 442))
+    
+    def test_043_binary_op(self):
+        input = r"""
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var a_2: Int = 1;
+                    Var b_2: Int = 1;
+                    Var c_2: Boolean = 1 < 1;
+                    Var d_2: Boolean = a_2 < 1;
+                    Var e_2: Boolean = a_2 < b_2;
+
+                    Var a_3: Float = 1.2;
+                    Var b_3: Float = 1.2;
+                    Var c_3: Boolean = 1.2 < 1.2;
+                    Var d_3: Boolean = a_3 < 1.2;
+                    Var e_3: Boolean = a_3 < b_3; 
+
+                    Var a_4: Int = 1;
+                    Var b_4: Float = 1.2;
+                    Var c_4: Boolean = 1 < 1.2;
+                    Var d_4: Boolean = a_4 < 1.2;
+                    Var e_4: Boolean = a_4 < b_4;
+
+                    Var f: Boolean = 1 < True;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: BinaryOp(<,IntLit(1),BooleanLit(True))"
+        self.assertTrue(TestChecker.test(input, expect, 443))
+    
+    def test_044_binary_op(self):
+        input = r"""
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var a_2: Int = 1;
+                    Var b_2: Int = 1;
+                    Var c_2: Boolean = 1 <= 1;
+                    Var d_2: Boolean = a_2 <= 1;
+                    Var e_2: Boolean = a_2 <= b_2;
+
+                    Var a_3: Float = 1.2;
+                    Var b_3: Float = 1.2;
+                    Var c_3: Boolean = 1.2 <= 1.2;
+                    Var d_3: Boolean = a_3 <= 1.2;
+                    Var e_3: Boolean = a_3 <= b_3; 
+
+                    Var a_4: Int = 1;
+                    Var b_4: Float = 1.2;
+                    Var c_4: Boolean = 1 <= 1.2;
+                    Var d_4: Boolean = a_4 <= 1.2;
+                    Var e_4: Boolean = a_4 <= b_4;
+
+                    Var f: Boolean = 1 <= True;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: BinaryOp(<=,IntLit(1),BooleanLit(True))"
+        self.assertTrue(TestChecker.test(input, expect, 444))
+
 
 
 

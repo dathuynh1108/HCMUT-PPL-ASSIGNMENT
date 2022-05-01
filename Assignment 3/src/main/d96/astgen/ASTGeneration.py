@@ -3,12 +3,6 @@ from D96Parser import D96Parser
 from AST import *
 from functools import reduce
 
-"""
-from main.d96.utils.AST import *
-from main.d96.parser.D96Parser import D96Parser
-from main.d96.parser.D96Visitor import D96Visitor
-"""
-
 class ASTGeneration(D96Visitor):
     def cast_to_integer(self, string):
         if string == '0': return 0
