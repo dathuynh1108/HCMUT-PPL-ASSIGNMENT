@@ -1,1 +1,1 @@
-No Entry Point
+Type Mismatch In Expression: BinaryOp(==.,Id(a),IntLit(1))

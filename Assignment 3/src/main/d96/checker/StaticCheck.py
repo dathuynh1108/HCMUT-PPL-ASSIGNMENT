@@ -58,6 +58,7 @@ class D96_utils:
         if type(type_2) == FloatType and type(type_1) == IntType: return True
         # Check type_2 is parent type_1
         # print(type_1, type_2)
+        if type(type_2) == ClassType and type(type_1) == NullLiteral: return True
         if type(type_2) == ClassType and type(type_1) == ClassType:
             parent_name = inheritance[type_1.classname.name]
             while parent_name: 
@@ -208,6 +209,7 @@ class StaticChecker(BaseVisitor, Utils):
     def visitBinaryOp(self, ast, scope): 
         left_type = self.visit(ast.left, scope)
         right_type = self.visit(ast.right, scope)
+        print(left_type, right_type)
         if isinstance(scope, tuple):
             const_expression, scope = scope
             # if isinstance(left_type, D96_type):
@@ -230,12 +232,13 @@ class StaticChecker(BaseVisitor, Utils):
             if type(left_type) == IntType and type(right_type) == IntType: return left_type
             raise TypeMismatchInExpression(ast)
 
-        if ast.op in ["&&, ||"]:
+        if ast.op in ["&&", "||"]:
             if type(left_type) == BoolType and type(right_type) == BoolType: return left_type
             raise TypeMismatchInExpression(ast)
 
         if ast.op == "==.":
             if type(left_type) == StringType and type(right_type) == StringType: return BoolType()
+            raise TypeMismatchInExpression(ast)
 
         if ast.op == "+.":
             if type(left_type) == StringType and type(right_type) == StringType: return left_type
@@ -498,6 +501,7 @@ class StaticChecker(BaseVisitor, Utils):
         if type(expr1_type) != IntType or type(expr2_type) != IntType: raise TypeMismatchInStatement(ast)
         if type(id_type) != IntType and type(id_type) != FloatType: raise TypeMismatchInStatement(ast)
         # Not say anything about Expr3 ??
+        # Check type of expression 3
         self.visit(ast.loop, (in_loop, scope))
 
     def visitBreak(self, ast, scope): 

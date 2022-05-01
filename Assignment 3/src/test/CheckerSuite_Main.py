@@ -263,6 +263,7 @@ class CheckerSuite(unittest.TestCase):
     
     def test_021_no_entry_point_1(self):
         input = r"""
+            Class Object {main() {}}
             Class ABC {
                 main() {}
             }
@@ -270,12 +271,258 @@ class CheckerSuite(unittest.TestCase):
         expect = "No Entry Point"
         self.assertTrue(TestChecker.test(input, expect, 421))
     
-    def test_021_no_entry_point_2(self):
+    def test_022_no_entry_point_2(self):
         input = r"""
+            Class Object {main(){}}
             Class Program {}
         """
         expect = "No Entry Point"
         self.assertTrue(TestChecker.test(input, expect, 422))
+    
+    def test_023_no_entry_point_3(self): 
+        input = r"""
+            Class Object {main(){}}
+            Class Program {
+                main(x: Int) {}
+            }
+        """
+        expect = "No Entry Point"
+        self.assertTrue(TestChecker.test(input, expect, 423))
+    
+    def test_024_unary_op_1(self):
+        input = r"""
+            Class Program {
+                Var x: Int = - True;
+                main() {}
+            }
+        """
+        expect = "Type Mismatch In Expression: UnaryOp(-,BooleanLit(True))"
+        self.assertTrue(TestChecker.test(input, expect, 424))
+
+    def test_025_unary_op_2(self):
+        input = r"""
+            Class Program {
+                Var x: Int = - "String";
+                main() {}
+            }
+        """
+        expect = "Type Mismatch In Expression: UnaryOp(-,StringLit(String))"
+        self.assertTrue(TestChecker.test(input, expect, 425))
+    
+    def test_026_unary_op_3(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var a: Int = 1;
+                    Var b: Int = - a;
+                    Var c: Float = 1.2;
+                    Var d: Float = - 1.2;
+                    Var e: Float = - c;
+                    Var x: Boolean = True;
+                    Var y: Int = - x;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: UnaryOp(-,Id(x))"
+        self.assertTrue(TestChecker.test(input, expect, 426))
+    
+    def test_027_unary_op_4(self):
+        input = r"""
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var x: Class_type = New Class_type();
+                    Var y: Int = - x;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: UnaryOp(-,Id(x))"
+        self.assertTrue(TestChecker.test(input, expect, 427))
+
+    def test_028_unary_op_5(self):
+        input = r"""
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var x: Boolean = True;
+                    Var y: Boolean = ! True;
+                    Var z: Boolean = ! x;
+                    Var m: Boolean = ! 1; 
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: UnaryOp(!,IntLit(1))"
+        self.assertTrue(TestChecker.test(input, expect, 428))
+    
+    def test_029_binary_op(self):
+        input = r"""
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var x: Int = 1 + 2;
+                    Var y: Float = 1 + 1.2;
+                    Var m: Int = x + 3;
+                    Var n: Float = y + 1.2;
+                    Var z: Float = x + y;
+                    Var t: Int = m + x;
+                    
+                    Var a: String;
+                    Var b: String = a +. "String";
+                    Var c: String = a + "String";
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: BinaryOp(+,Id(a),StringLit(String))"
+        self.assertTrue(TestChecker.test(input, expect, 429))
+    
+    def test_030_binary_op(self):
+        input = r"""
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var x: Int = 1 - 2;
+                    Var y: Float = 1 - 1.2;
+                    Var m: Int = x - 3;
+                    Var n: Float = y - 1.2;
+                    Var z: Float = x - y;
+                    Var t: Int = m - x;
+                    
+                    Var a: Int = 1 - True;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: BinaryOp(-,IntLit(1),BooleanLit(True))"
+        self.assertTrue(TestChecker.test(input, expect, 430))
+
+    def test_031_binary_op(self):
+        input = r"""
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var x: Int = 1 * 2;
+                    Var y: Float = 1 * 1.2;
+                    Var m: Int = x * 3;
+                    Var n: Float = y * 1.2;
+                    Var z: Float = x * y;
+                    Var t: Int = m * x;
+       
+                    Var a: Int = 1 * True;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: BinaryOp(*,IntLit(1),BooleanLit(True))"
+        self.assertTrue(TestChecker.test(input, expect, 431))
+    
+    def test_032_binary_op(self):
+        input = r"""
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var x: Int = 1 / 2;
+                    Var y: Float = 1 / 1.2;
+                    Var m: Int = x / 3;
+                    Var n: Float = y / 1.2;
+                    Var z: Float = x / y;
+                    Var t: Int = m / x;
+       
+                    Var a: Int = 1 / True;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: BinaryOp(/,IntLit(1),BooleanLit(True))"
+        self.assertTrue(TestChecker.test(input, expect, 432))
+    
+    def test_033_binary_op(self):
+        input = r"""
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var a: Int = 1;
+                    Var b: Int = 1;
+                    Var x: Int = 1 % 1;
+                    Var y: Int = a % 1;
+                    Var z: Int = a % b;
+
+                    Var m: Int = 1 % 1.2;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: BinaryOp(%,IntLit(1),FloatLit(1.2))"
+        self.assertTrue(TestChecker.test(input, expect, 433))
+
+    def test_034_binary_op(self):
+        input = r"""
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var a: Boolean = True;
+                    Var b: Boolean = False;
+                    Var x: Int = True && False;
+                    Var y: Int = True && a;
+                    Var z: Int = a && b;
+
+                    Var m: Int = 1 && True;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: BinaryOp(&&,IntLit(1),BooleanLit(True))"
+        self.assertTrue(TestChecker.test(input, expect, 434))
+    
+    def test_035_binary_op(self):
+        input = r"""
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var a: Boolean = True;
+                    Var b: Boolean = False;
+                    Var x: Int = True || False;
+                    Var y: Int = True || a;
+                    Var z: Int = a || b;
+
+                    Var m: Int = 1 || True;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: BinaryOp(||,IntLit(1),BooleanLit(True))"
+        self.assertTrue(TestChecker.test(input, expect, 435))
+    
+    def test_036_binary_op(self):
+        input = r"""
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var a: String = "abc";
+                    Var b: String = "abc";
+                    Var c: String = "abc" +. "abc";
+                    Var d: String = a +. "abc";
+                    Var e: String = a +. b;
+
+                    Var f: String = a +. 1;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: BinaryOp(+.,Id(a),IntLit(1))"
+        self.assertTrue(TestChecker.test(input, expect, 436))
+    
+    def test_037_binary_op(self):
+        input = r"""
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var a: String = "abc";
+                    Var b: String = "abc";
+                    Var c: Boolean = "abc" ==. "abc";
+                    Var d: Boolean = a ==. "abc";
+                    Var e: Boolean = a ==. b;
+
+                    Var f: Boolean = a ==. 1;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: BinaryOp(==.,Id(a),IntLit(1))"
+        self.assertTrue(TestChecker.test(input, expect, 437))
+
+
 
 
 
