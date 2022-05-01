@@ -209,7 +209,7 @@ class StaticChecker(BaseVisitor, Utils):
     def visitBinaryOp(self, ast, scope): 
         left_type = self.visit(ast.left, scope)
         right_type = self.visit(ast.right, scope)
-        print(left_type, right_type)
+        #print(left_type, right_type)
         if isinstance(scope, tuple):
             const_expression, scope = scope
             # if isinstance(left_type, D96_type):

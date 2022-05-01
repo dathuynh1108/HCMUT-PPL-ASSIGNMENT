@@ -1,14 +1,5 @@
 
-            Class Class_type {}
             Class Program {
-                main() {
-                    Var a: String = "abc";
-                    Var b: String = "abc";
-                    Var c: Boolean = "abc" ==. "abc";
-                    Var d: Boolean = a ==. "abc";
-                    Var e: Boolean = a ==. b;
-
-                    Var f: Boolean = a ==. 1;
-                }
+                main() {}
             }
         
