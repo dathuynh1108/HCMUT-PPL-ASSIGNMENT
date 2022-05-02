@@ -1,0 +1,17 @@
+
+            Class Base {}
+            Class Sub: Base {}
+            Class Object {
+                Constructor(x: Float; y: Base) {}
+            }
+            Class Program {
+                main() {
+                    Var o_1: Object = New Object(1.2, New Base());
+                    Var o_2: Object = New Object(1.2, New Sub());
+                    Var o_3: Object = New Object(1, New Base());
+                    Var o_4: Object = New Object(1, New Sub());
+
+                    Var o : Object = New Object(1, 1);
+                }
+            }
+        

@@ -1,0 +1,15 @@
+
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var x: Int = 1 - 2;
+                    Var y: Float = 1 - 1.2;
+                    Var m: Int = x - 3;
+                    Var n: Float = y - 1.2;
+                    Var z: Float = x - y;
+                    Var t: Int = m - x;
+                    
+                    Var a: Int = 1 - True;
+                }
+            }
+        

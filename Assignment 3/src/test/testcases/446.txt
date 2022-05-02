@@ -1,0 +1,11 @@
+
+            Class Object {
+                Constructor() {}
+            }
+            Class Program {
+                main() {
+                    Var o: Object = New Object();
+                    Var e: Object = New Object(1);
+                }
+            }
+        

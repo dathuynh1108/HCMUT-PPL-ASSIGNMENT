@@ -1,0 +1,6 @@
+
+            Class Program {
+                Var x: Int = - True;
+                main() {}
+            }
+        

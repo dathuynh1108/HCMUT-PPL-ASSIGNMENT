@@ -1,0 +1,9 @@
+
+            Class Object {}
+            Class Program {
+                main() {
+                    Var o: Object = New Object();
+                    Var e: Object = New E();
+                }
+            }
+        

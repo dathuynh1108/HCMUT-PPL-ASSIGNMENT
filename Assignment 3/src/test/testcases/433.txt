@@ -1,0 +1,14 @@
+
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var a: Int = 1;
+                    Var b: Int = 1;
+                    Var x: Int = 1 % 1;
+                    Var y: Int = a % 1;
+                    Var z: Int = a % b;
+
+                    Var m: Int = 1 % 1.2;
+                }
+            }
+        

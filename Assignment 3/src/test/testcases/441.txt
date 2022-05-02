@@ -1,0 +1,26 @@
+
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var a_2: Int = 1;
+                    Var b_2: Int = 1;
+                    Var c_2: Boolean = 1 > 1;
+                    Var d_2: Boolean = a_2 > 1;
+                    Var e_2: Boolean = a_2 > b_2;
+
+                    Var a_3: Float = 1.2;
+                    Var b_3: Float = 1.2;
+                    Var c_3: Boolean = 1.2 > 1.2;
+                    Var d_3: Boolean = a_3 > 1.2;
+                    Var e_3: Boolean = a_3 > b_3; 
+
+                    Var a_4: Int = 1;
+                    Var b_4: Float = 1.2;
+                    Var c_4: Boolean = 1 > 1.2;
+                    Var d_4: Boolean = a_4 > 1.2;
+                    Var e_4: Boolean = a_4 > b_4;
+
+                    Var f: Boolean = 1 > True;
+                }
+            }
+        

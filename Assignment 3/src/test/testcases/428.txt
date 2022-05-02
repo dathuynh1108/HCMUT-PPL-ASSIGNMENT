@@ -1,0 +1,11 @@
+
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var x: Boolean = True;
+                    Var y: Boolean = ! True;
+                    Var z: Boolean = ! x;
+                    Var m: Boolean = ! 1; 
+                }
+            }
+        

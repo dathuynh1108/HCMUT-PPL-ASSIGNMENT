@@ -1,9 +1,11 @@
 
-            Class D {}
-            Class E : D {}
-            Class Program {
-                main() {
-                    Val e: D = New D();
+            Class Object {
+                Var a, b : Int = 1, 2;
+            }
+            Class A : Object {
+                method() {
+                    Var x, y : Int = Self.a, Self.b; ## OK ##
+                    Var m, n : Int = m, n; 
                 }
             }
         

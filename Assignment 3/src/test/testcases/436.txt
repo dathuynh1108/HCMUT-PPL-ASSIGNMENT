@@ -1,0 +1,14 @@
+
+            Class Class_type {}
+            Class Program {
+                main() {
+                    Var a: String = "abc";
+                    Var b: String = "abc";
+                    Var c: String = "abc" +. "abc";
+                    Var d: String = a +. "abc";
+                    Var e: String = a +. b;
+
+                    Var f: String = a +. 1;
+                }
+            }
+        

@@ -1,0 +1,9 @@
+
+            Class Object {}
+            Class Program {
+                main() {
+                    Var o_1: Object = New Object();
+                    Var o_2: Object = New Object(1);
+                }
+            }
+        

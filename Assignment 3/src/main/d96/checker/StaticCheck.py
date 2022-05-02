@@ -144,6 +144,7 @@ class StaticChecker(BaseVisitor, Utils):
         # Check redeclare:   
         kind, scope = scope  # param or variable
         decl_type = self.visit(ast.varType, scope)
+        init_type = self.visit(ast.varInit, scope) if ast.varInit else None
         if "local" not in scope: # Attribute
             kind = "instance" if isinstance(kind, Instance) else "static"
             if ast.variable.name in scope["global"][scope["current"]]: raise Redeclared(Attribute(), ast.variable.name)
@@ -155,8 +156,8 @@ class StaticChecker(BaseVisitor, Utils):
             scope["local"][0][ast.variable.name] = D96_type("variable", None, decl_type)
         
         if ast.varInit: 
-            init_type = self.visit(ast.varInit, scope)
-            if not D96_utils.compare(init_type, decl_type) and not D96_utils.coercion(init_type, decl_type, self.inheritance): raise TypeMismatchInConstant(ast)
+            if isinstance(init_type, D96_type): init_type = init_type.type
+            if not D96_utils.compare(init_type, decl_type) and not D96_utils.coercion(init_type, decl_type, self.inheritance): raise TypeMismatchInStatement(ast)
         #print(ast.variable.name, "Declare type:", decl_type, "Init type:", init_type)
         # Check type
 
@@ -166,6 +167,7 @@ class StaticChecker(BaseVisitor, Utils):
         kind, scope = scope
         if ast.value == None: raise IllegalConstantExpression(ast.value)
         decl_type = self.visit(ast.constType, scope)
+        init_type = self.visit(ast.value, (ast.value, scope)) if ast.value else None
         if "local" not in scope:  # attribute
             kind = "instance" if isinstance(kind, Instance) else "static"
             if ast.constant.name in scope["global"][scope["current"]]: raise Redeclared(Attribute(), ast.constant.name)
@@ -176,7 +178,7 @@ class StaticChecker(BaseVisitor, Utils):
             scope["local"][0][ast.constant.name] = D96_type("constant", None, decl_type)
         
         if ast.value:
-            init_type = self.visit(ast.value, (ast.value, scope))
+            if isinstance(init_type, D96_type): init_type = init_type.type
             if not D96_utils.compare(init_type, decl_type) and not D96_utils.coercion(init_type, decl_type, self.inheritance): raise TypeMismatchInConstant(ast)
         # Check type
         # if isinstance(init_type, D96_type): 

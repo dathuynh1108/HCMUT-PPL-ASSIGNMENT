@@ -1,3 +1,4 @@
 
+            Class Object {main(){}}
             Class Program {}
         
