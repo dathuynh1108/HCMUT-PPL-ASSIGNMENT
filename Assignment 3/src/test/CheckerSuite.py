@@ -5,15 +5,11 @@ from AST import *
 class CheckerSuite(unittest.TestCase):
     def test_999(self):
         input = r"""
-            Class E {
-                Var a: Int;
-                Var $b: Int;
-                method() {}
-            }
+            Class D {}
+            Class E : D {}
             Class Program {
                 main() {
-                    Var e: E = New E();
-                    Var x: Int = E.a;
+                    Val e: D = New D();
                 }
             }
         """

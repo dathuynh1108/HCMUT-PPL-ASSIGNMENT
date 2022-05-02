@@ -731,6 +731,19 @@ class CheckerSuite(unittest.TestCase):
         """
         expect = "Type Mismatch In Expression: BinaryOp(<=,IntLit(1),BooleanLit(True))"
         self.assertTrue(TestChecker.test(input, expect, 444))
+    
+    def test_045_new_expression(self):
+        input = r"""
+            Class Object {}
+            Class Program {
+                main() {
+                    Var o: Object = New Object();
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: BinaryOp(<=,IntLit(1),BooleanLit(True))"
+        self.assertTrue(TestChecker.test(input, expect, 445))
+
 
 
 

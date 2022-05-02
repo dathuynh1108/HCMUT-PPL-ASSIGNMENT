@@ -144,7 +144,6 @@ class StaticChecker(BaseVisitor, Utils):
         # Check redeclare:   
         kind, scope = scope  # param or variable
         decl_type = self.visit(ast.varType, scope)
-        init_type = self.visit(ast.varInit, scope) if ast.varInit else None
         if "local" not in scope: # Attribute
             kind = "instance" if isinstance(kind, Instance) else "static"
             if ast.variable.name in scope["global"][scope["current"]]: raise Redeclared(Attribute(), ast.variable.name)
@@ -155,6 +154,9 @@ class StaticChecker(BaseVisitor, Utils):
             if ast.variable.name in scope["local"][0]: raise Redeclared(kind, ast.variable.name)
             scope["local"][0][ast.variable.name] = D96_type("variable", None, decl_type)
         
+        if ast.varInit: 
+            init_type = self.visit(ast.varInit, scope)
+            if not D96_utils.compare(init_type, decl_type) and not D96_utils.coercion(init_type, decl_type, self.inheritance): raise TypeMismatchInConstant(ast)
         #print(ast.variable.name, "Declare type:", decl_type, "Init type:", init_type)
         # Check type
 
@@ -164,7 +166,6 @@ class StaticChecker(BaseVisitor, Utils):
         kind, scope = scope
         if ast.value == None: raise IllegalConstantExpression(ast.value)
         decl_type = self.visit(ast.constType, scope)
-        init_type = self.visit(ast.value, (ast.value, scope)) if ast.value else None
         if "local" not in scope:  # attribute
             kind = "instance" if isinstance(kind, Instance) else "static"
             if ast.constant.name in scope["global"][scope["current"]]: raise Redeclared(Attribute(), ast.constant.name)
@@ -173,7 +174,10 @@ class StaticChecker(BaseVisitor, Utils):
         if "local" in scope: # if not in class context because class context has been check
             if ast.constant.name in scope["local"][0]: raise Redeclared(kind, ast.constant.name)
             scope["local"][0][ast.constant.name] = D96_type("constant", None, decl_type)
-        print(init_type)
+        
+        if ast.value:
+            init_type = self.visit(ast.value, (ast.value, scope))
+            if not D96_utils.compare(init_type, decl_type) and not D96_utils.coercion(init_type, decl_type, self.inheritance): raise TypeMismatchInConstant(ast)
         # Check type
         # if isinstance(init_type, D96_type): 
         #     if init_type.kind == "mutable" or init_type == ""
@@ -499,14 +503,12 @@ class StaticChecker(BaseVisitor, Utils):
         in_loop, scope = scope
         rhs_type = self.visit(ast.exp, scope)
         lhs_type = self.visit(ast.lhs, scope)
-        print(lhs_type, rhs_type)
+        # print(lhs_type, rhs_type)
         if isinstance(lhs_type, D96_type): 
             if lhs_type.kind == "imutable" or lhs_type.kind == "constant": raise CannotAssignToConstant(ast)
             lhs_type = lhs_type.type
-        if isinstance(rhs_type, D96_type):
-            rhs_type = rhs_type.type
-        if not D96_utils.compare(lhs_type, rhs_type) and not D96_utils.coercion(rhs_type, lhs_type, self.inheritance): 
-            raise TypeMismatchInStatement(ast)
+        if isinstance(rhs_type, D96_type): rhs_type = rhs_type.type
+        if not D96_utils.compare(lhs_type, rhs_type) and not D96_utils.coercion(rhs_type, lhs_type, self.inheritance): raise TypeMismatchInStatement(ast)
 
 
     def visitBlock(self, ast, scope): 
