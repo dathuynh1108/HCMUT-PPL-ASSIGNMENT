@@ -15,8 +15,6 @@
                     Return New Object();
                 }
             }
-
-            }
             Class Program : Object {
                 sub_main() {
                     Self.o();

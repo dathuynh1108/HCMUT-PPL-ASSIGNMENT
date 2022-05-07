@@ -2028,8 +2028,6 @@ class CheckerSuite(unittest.TestCase):
                     Return New Object();
                 }
             }
-
-            }
             Class Program : Object {
                 sub_main() {
                     Self.o();
@@ -2050,7 +2048,6 @@ class CheckerSuite(unittest.TestCase):
                 }
             }
 
-            }
             Class Program : Object {
                 sub_main() {
                     Self.method();
