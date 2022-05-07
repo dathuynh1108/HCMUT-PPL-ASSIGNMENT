@@ -1,0 +1,11 @@
+
+            Class Object {
+                Var a: Int;
+            }
+            Class Program : Object {
+                main() {
+                    Var a: Int = 1;
+                    a = Self.a;
+                }
+            }
+        

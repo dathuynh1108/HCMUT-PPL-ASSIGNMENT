@@ -343,7 +343,7 @@ class StaticChecker(BaseVisitor):
                 # If a class --> find attribute
                 field_name_type = D96_utils.find_attribute(ast.obj.name, ast.fieldname.name, scope["global"], self.inheritance)
                 if field_name_type is None: raise Undeclared(Attribute(), ast.fieldname.name)
-                if field_name_type.kind == "method": Undeclared(Attribute(), ast.fieldname.name)
+                if field_name_type.kind == "method": raise Undeclared(Attribute(), ast.fieldname.name)
                 if field_name_type.si_kind == "instance": raise IllegalMemberAccess(ast)
                 if const_expresion and field_name_type.kind == "mutable": raise IllegalConstantExpression(const_expresion)
                 return field_name_type
@@ -355,8 +355,7 @@ class StaticChecker(BaseVisitor):
             # --> Prio E is local
             obj_type  = D96_utils.find_local(ast.obj.name, scope["local"])
             if obj_type: # is a local
-                # if isinstance(obj_type, D96_type): 
-                obj_type = obj_type.type
+                if isinstance(obj_type, D96_type): obj_type = obj_type.type
                 if type(obj_type) != ClassType: raise TypeMismatchInExpression(ast)
                 
                 # Class Scope: Current class can see instance attribute of it or it's parent
@@ -373,10 +372,8 @@ class StaticChecker(BaseVisitor):
             raise Undeclared(Identifier(), ast.obj.name)
         
         obj_type = self.visit(ast.obj, param)
-        # if isinstance(obj_type, D96_type): 
-        obj_type = obj_type.type
+        if isinstance(obj_type, D96_type): obj_type = obj_type.type
         if type(obj_type) != ClassType: raise TypeMismatchInExpression(ast)
-        
         # Class Scope: Current class can see instance attribute of it or it's parent
         if not D96_utils.check_class_scope(self.current_class, obj_type.classname.name, self.inheritance): raise Undeclared(Attribute(), ast.fieldname.name)
                 
@@ -400,7 +397,7 @@ class StaticChecker(BaseVisitor):
             if call_method is None: raise Undeclared(Method(), ast.method.name)
             if call_method.kind != "method": raise Undeclared(Method(), ast.method.name)
             if call_method.si_kind == "static": raise IllegalMemberAccess(ast)
-            if type(call_method.type) == VoidType: raise TypeMismatchInStatement(ast) 
+            if type(call_method.type) == VoidType: raise TypeMismatchInExpression(ast) 
             # Check type param
             argument_type = [self.visit(param, scope) for param in ast.param]
             if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInExpression(ast)
@@ -419,7 +416,7 @@ class StaticChecker(BaseVisitor):
                 if call_method is None: raise Undeclared(Method(), ast.method.name)
                 if call_method.kind != "method": raise Undeclared(Method(), ast.method.name)
                 if call_method.si_kind == "instance": raise IllegalMemberAccess(ast)
-                if type(call_method.type) == VoidType: raise TypeMismatchInStatement(ast) 
+                if type(call_method.type) == VoidType: raise TypeMismatchInExpression(ast) 
                 # Check type param
                 argument_type = [self.visit(param, scope) for param in ast.param]
                 if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInExpression(ast)
@@ -427,13 +424,12 @@ class StaticChecker(BaseVisitor):
             
             obj_type = D96_utils.find_local(ast.obj.name, scope["local"])
             if obj_type:
-                #if isinstance(obj_type, D96_type): 
-                obj_type = obj_type.type
+                if isinstance(obj_type, D96_type): obj_type = obj_type.type
                 call_method = D96_utils.find_attribute(obj_type.classname.name, ast.method.name, scope["global"], self.inheritance)
                 if call_method is None: raise Undeclared(Method(), ast.method.name)
                 if call_method.kind != "method": raise Undeclared(Method(), ast.method.name)
                 if call_method.si_kind == "static": raise IllegalMemberAccess(ast)
-                if type(call_method.type) == VoidType: raise TypeMismatchInStatement(ast) 
+                if type(call_method.type) == VoidType: raise TypeMismatchInExpression(ast) 
                 # Check type param
                 argument_type = [self.visit(param, scope) for param in ast.param]
                 if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInExpression(ast)
@@ -450,7 +446,7 @@ class StaticChecker(BaseVisitor):
         if call_method is None: raise Undeclared(Method(), ast.method.name)
         if call_method.kind != "method": raise Undeclared(Method(), ast.method.name)
         if call_method.si_kind == "static": raise IllegalMemberAccess(ast)
-        if type(call_method.type) == VoidType: raise TypeMismatchInStatement(ast) 
+        if type(call_method.type) == VoidType: raise TypeMismatchInExpression(ast) 
         # Check type param
         argument_type = [self.visit(param, scope) for param in ast.param]
         if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInExpression(ast)
@@ -631,8 +627,7 @@ class StaticChecker(BaseVisitor):
             
             obj_type = D96_utils.find_local(ast.obj.name, scope["local"])
             if obj_type:
-                # if isinstance(obj_type, D96_type): 
-                obj_type = obj_type.type
+                if isinstance(obj_type, D96_type): obj_type = obj_type.type
                 call_method = D96_utils.find_attribute(obj_type.classname.name, ast.method.name, scope["global"], self.inheritance)
                 if call_method is None: raise Undeclared(Method(), ast.method.name)
                 if call_method.kind != "method": raise Undeclared(Method(), ast.method.name)

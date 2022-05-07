@@ -1,0 +1,98 @@
+
+            Class Object {
+                Var a: Int;
+                Var o: Object;
+                Var $o: Object;
+                method() {
+                    Return New Object();
+                }
+                $method() {
+                    Return New Object();
+                }
+            }
+            Class Object_1 : Object {
+                Var a: Int;
+                Var o_1: Object_1;
+                Var $o_1: Object_1;
+                method_1() {
+                    Return New Object_1();
+                }
+                $method_1() {
+                    Return New Object_1();
+                }
+            }
+            Class Other_object {
+                Var a: Int;
+                Var o: Object;
+                Var $o: Object;
+                method() {
+                    Return New Object();
+                }
+                $method() {
+                    Return New Object();
+                }
+            }
+            Class Program : Object_1 {
+                main() {
+                    ## Program and Object can see attribute of Object ## 
+                    Var o: Object = New Object();
+                    o = o.o.o.o.o.method();
+                    o = o.o.o.method().o.o.o;
+                    o = o.o.o.method().o.o.o.method();
+                    o = o.o.o.method().o.o.o.method().method().method();
+
+                    o = Object::$o;
+                    o = Object::$o.o.o.o.method().method();
+                    o = Object::$o.o.o.o.method().method().o.o.o;
+                    o = Object::$o.o.o.o.method().method().o.o.o.method();
+                    o = Object::$method();
+                    
+                    ## Program : Object_1 : Object --> It can see attribute of itself, Object_1, and Object ##
+
+                    ## Attribute of Object ##
+                    o = Object_1::$o;
+                    o = Object_1::$o.o.o;
+                    o = Object_1::$o.method();
+                    o = Object_1::$o.o.o.method().method();
+                    o = Object_1::$method();
+                    o = Object_1::$method().o.o.o;
+                    o = Object_1::$method().o.o.o.method();
+
+                    ## Attribute of Object_1 ##
+                    o = Object_1::$o_1;
+                    o = Object_1::$o_1.o_1.o_1;
+                    o = Object_1::$o_1.method_1();
+                    o = Object_1::$o_1.o_1.o_1.method_1().method_1();
+                    o = Object_1::$method_1();
+                    o = Object_1::$method_1().o_1.o_1.o_1;
+                    o = Object_1::$method_1().o_1.o_1.o_1.method_1().method_1();
+                    
+                    ## Mix ##
+                    ## OK, Program see Object_1, Object attribute ##
+                    Var o_1: Object_1 = New Object_1();
+                    o = o_1.o.o.o.o.o.method();     
+                    o = o_1.o_1.o.o.o.o.method();   
+                    o = o_1.o.o.o.o.o.method().o.o.o;
+                    o = o_1.o.o.o.o.o.method().o.o.o.method();
+                    o = o_1.o.o.o.o.o.method().o.o.o.method().method().method();
+
+                    o = o_1.o_1.o_1.o_1.o.o.o.method();
+                    o = o_1.o_1.o_1.method_1().method_1();
+                    o = o_1.o_1.o_1.method_1().o.o.method();                                        
+                                    
+                    o = Object_1::$o_1.o;
+                    o = Object_1::$o_1.o_1.o;
+                    o = Object_1::$o_1.o_1.method_1().method_1().method();
+                    o = Object_1::$o_1.o_1.method_1().method_1().o.o.method().method();
+                    o = Object_1::$o_1.o_1.method_1().method_1().o_1.o_1.method_1().method_1().method();
+                    
+                    Var o_o: Other_object = New Other_object();
+                    ## OK, Program can see Other_object's method and Object's attribute##
+                    o = o_o.method().method();      
+                    o = o_o.method().method().o.o.o;
+                    o = o_o.method().method().o.o.o.method().method();
+
+                    o = o_o.o.method();             ## Fail, Program can's see Other_object's attribute ##                 
+                }
+            }
+        

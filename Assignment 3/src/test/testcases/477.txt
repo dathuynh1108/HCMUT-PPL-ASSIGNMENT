@@ -1,0 +1,20 @@
+
+            Class Object {
+                Var a: Int;
+                method_int() {
+                    Return Self.a;
+                }
+                method_void() {
+                    Return;
+                }
+            }
+            Class Program : Object {
+                sub_main() {
+                    Var o : Object = New Object();
+                    Var a: Int = 1;
+                    a = o.method_int();
+                    a = o.method_void();
+                }
+                main() {}
+            }
+        

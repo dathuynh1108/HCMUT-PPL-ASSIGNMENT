@@ -1,0 +1,32 @@
+
+            Class Object {
+                Var a: Int;
+                Var $o: Object;
+                method() {
+                    Return New Object();
+                }
+                $method() {
+                    Return New Object();
+                }
+            }
+            Class Inheritance_object : Object {
+                main() {
+                    Var a: Int;
+                    Var o: Object = New Object();
+                    o = Object::$o;
+                    o = Object::$method();
+                    o = Object::$method().method().method().method();
+                    a = Object::$method().method().method().method().a; ## OK because sub class can see "a" attribute of Object ##
+                }
+            }
+            Class Program {
+                main() {
+                    Var a: Int;
+                    Var o: Object = New Object();
+                    o = Object::$o;
+                    o = Object::$method();
+                    o = Object::$method().method().method().method();
+                    a = Object::$method().method().method().method().a; ## Fail because Program class only see Object class's method ##
+                }
+            }
+        

@@ -1,0 +1,14 @@
+
+            Class Object {
+                $method() {
+                    Return 1;
+                }
+            }
+            Class Program {
+                main() {
+                    Var a: Int = 1;
+                    a = Object::$method();
+                    a = Object::$method_1();
+                }
+            }
+        

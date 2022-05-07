@@ -1,0 +1,19 @@
+
+            Class Object {
+                Var $a: Int;
+                $method_int() {
+                    Return Object::$a;
+                }
+                $method_void() {
+                    Return;
+                }
+            }
+            Class Program : Object {
+                sub_main() {
+                    Var a: Int = 1;
+                    a = Object::$method_int();
+                    a = Object::$method_void();
+                }
+                main() {}
+            }
+        

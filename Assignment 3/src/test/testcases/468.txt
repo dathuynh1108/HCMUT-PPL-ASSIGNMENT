@@ -1,0 +1,24 @@
+
+            Class Object {
+                Var a: Int;
+                method() {
+                    Return New Object();
+                }
+            }
+            Class Inheritance_object : Object {
+                main() {
+                    Var o: Object = New Object();
+                    o = o.method().method().method().method().method();
+                    Var a: Int = 1;
+                    a = o.method().method().a; ## OK because sub class can see "a" attribute of Object ##
+                }
+            }
+            Class Program {
+                main() {
+                    Var o: Object = New Object();
+                    o = o.method().method().method().method().method();
+                    Var a: Int = 1;
+                    a = o.method().method().a; ## Fail because Program class only see Object class's method ##
+                }
+            }
+        

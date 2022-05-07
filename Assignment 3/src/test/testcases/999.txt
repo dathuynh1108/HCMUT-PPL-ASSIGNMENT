@@ -1,11 +1,18 @@
 
             Class Object {
-                Var a, b : Int = 1, 2;
-            }
-            Class A : Object {
+                Var a: Int;
+                Var $o: Object;
                 method() {
-                    Var x, y : Int = Self.a, Self.b; ## OK ##
-                    Var m, n : Int = m, n; 
+                    Return New Object();
+                }
+                $method() {
+                    Return New Object();
+                }
+            }
+            Class Program : Object{
+                main() {
+                    Var o: Object = New Object();
+                    o = o.method;
                 }
             }
         

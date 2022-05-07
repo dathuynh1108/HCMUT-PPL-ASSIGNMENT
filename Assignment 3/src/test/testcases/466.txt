@@ -1,0 +1,15 @@
+
+            Class Object {
+                method() {
+                    Return 1;
+                }
+            }
+            Class Program {
+                main() {
+                    Var o: Object = New Object();
+                    Var a: Int = 1;
+                    a = o.method();
+                    a = o.method_1();
+                }
+            }
+        

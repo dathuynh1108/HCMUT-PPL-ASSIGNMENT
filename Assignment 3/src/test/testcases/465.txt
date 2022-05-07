@@ -1,0 +1,13 @@
+
+            Class Program {
+                method() {
+                    Return 1;
+                }
+                sub_main() {
+                    Var a: Int = 1;
+                    a = Self.method();
+                    a = Self.method_1();
+                }
+                main() {}
+            }
+        
