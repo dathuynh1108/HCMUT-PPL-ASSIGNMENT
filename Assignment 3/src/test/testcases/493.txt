@@ -1,0 +1,26 @@
+
+            Class Object {
+                Var o : Object;
+                Var $o : Object;
+                method() {
+                    Return;
+                }
+                $method() {
+                    Return;
+                }
+                method_o() {
+                    Return New Object();
+                }
+                $method_o() {
+                    Return New Object();
+                }
+            }
+
+            }
+            Class Program : Object {
+                sub_main() {
+                    Self.o();
+                }
+                main() {}
+            }
+        

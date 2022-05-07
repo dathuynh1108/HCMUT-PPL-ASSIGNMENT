@@ -1,0 +1,1 @@
+Type Mismatch In Statement: AssignStmt(Id(o_1),Id(o))

@@ -1,0 +1,15 @@
+
+            Class Object {}
+            Class Object_1 : Object {}
+            Class Program  {
+                main() {
+                    Var a_i: Array[Int, 5];
+                    Var a_f: Array[Float, 5];
+                    a_f = a_i;
+                    a_i = Array(1,2,3,4,5);
+                    a_f = Array(1,2,3,4,5);
+
+                    a_i = Array(1,2,3);
+                }
+            }
+        

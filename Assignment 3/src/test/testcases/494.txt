@@ -1,0 +1,17 @@
+
+            Class Object {
+                Var o : Object;
+                Var $o : Object;
+                method() {
+                    Return;
+                }
+            }
+
+            }
+            Class Program : Object {
+                sub_main() {
+                    Self.method();
+                }
+                main() {}
+            }
+        

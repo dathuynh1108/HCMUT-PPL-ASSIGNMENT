@@ -1,0 +1,56 @@
+
+            Class Object {
+                Var o : Object;
+                Var $o : Object;
+                method() {
+                    Return;
+                }
+                $method() {
+                    Return;
+                }
+                method_o() {
+                    Return New Object();
+                }
+                $method_o() {
+                    Return New Object();
+                }
+            }
+            Class Object_1 : Object {
+                Var o_1 : Object_1;
+                Var $o_1 : Object_1;
+                method_1() {
+                    Return;
+                }
+                $method_1() {
+                    Return;
+                }
+
+                method_o_1() {
+                    Return New Object_1();
+                }
+                $method_o_1() {
+                    Return New Object_1();
+                }
+            }
+            Class Program : Object_1 {
+                sub_main() {
+                    Self.method_1();
+                    Self.method();
+                    Program::$method();
+                    Program::$method_1();
+                    Self.method_o().method();
+                    Self.method_o_1().method();
+                    Self.method_o_1().o_1.method();
+                    Self.method_o_1().o.method_o().o.method();
+                    Self.method_o_1().o_1.method_o_1().method_o().method();
+                    Program::$method_o().method();
+                    Program::$method_o().method_o().method_o().method();
+                    Program::$method_o_1().o_1.method_o_1().o_1.method_o_1().method();
+                    Program::$method_o_1().o_1.method_o_1().o_1.method_o_1().method_1();
+                    Program::$method_o_1().o_1.method_o_1().o_1.method_o_1().o.method_o().o.method_o().method();
+
+                    Program::$method_o_1().o_1.method_o_1().o_1.method_o_1().o.method_o().o.method_o().method_1(); ## Fail ##
+                }
+                main() {}
+            }
+        

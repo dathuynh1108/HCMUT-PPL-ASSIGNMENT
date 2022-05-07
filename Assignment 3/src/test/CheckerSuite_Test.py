@@ -6,19 +6,14 @@ class CheckerSuite(unittest.TestCase):
     def test_999(self):
         input = r"""
             Class Object {
-                Var a: Int;
-                Var $o: Object;
-                method() {
-                    Return New Object();
-                }
-                $method() {
-                    Return New Object();
-                }
+                Constructor(a,b : Int) {}
             }
-            Class Program : Object{
+            Class Program {
+
                 main() {
-                    Var o: Object = New Object();
-                    o = o.method;
+                    Var a: Int = 1;
+                    Var b: Int = 1;
+                    Var o : Object = New Object(a,b);
                 }
             }
         """

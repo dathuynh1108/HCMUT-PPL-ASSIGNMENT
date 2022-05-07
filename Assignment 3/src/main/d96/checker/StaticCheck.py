@@ -86,6 +86,7 @@ class D96_utils:
     def check_param_type(method, argument_type, inheritance):
         if len(method.param_type) != len(argument_type): return False
         for i in range(len(argument_type)): 
+            if isinstance(argument_type[i], D96_type): argument_type[i] = argument_type[i].type
             if not D96_utils.compare(argument_type[i], method.param_type[i]) and not D96_utils.coercion(argument_type[i], method.param_type[i], inheritance):
                 return False
         return True
@@ -160,11 +161,11 @@ class StaticChecker(BaseVisitor):
             if ast.variable.name in scope["local"][0]: raise Redeclared(kind, ast.variable.name)
             scope["local"][0][ast.variable.name] = D96_type("variable", None, decl_type)
         
+        # Check type
         if ast.varInit: 
             if isinstance(init_type, D96_type): init_type = init_type.type
             if not D96_utils.compare(init_type, decl_type) and not D96_utils.coercion(init_type, decl_type, self.inheritance): raise TypeMismatchInStatement(ast)
-        #print(ast.variable.name, "Declare type:", decl_type, "Init type:", init_type)
-        # Check type
+
 
 
     def visitConstDecl(self, ast, scope):
@@ -182,12 +183,11 @@ class StaticChecker(BaseVisitor):
             if ast.constant.name in scope["local"][0]: raise Redeclared(kind, ast.constant.name)
             scope["local"][0][ast.constant.name] = D96_type("constant", None, decl_type)
         
+        # Check type
         if ast.value:
             if isinstance(init_type, D96_type): init_type = init_type.type
             if not D96_utils.compare(init_type, decl_type) and not D96_utils.coercion(init_type, decl_type, self.inheritance): raise TypeMismatchInConstant(ast)
-        # Check type
-        # if isinstance(init_type, D96_type): 
-        #     if init_type.kind == "mutable" or init_type == ""
+
 
 
     def visitMethodDecl(self, ast, scope): 
@@ -217,9 +217,6 @@ class StaticChecker(BaseVisitor):
         body_type = self.visit(ast.body, scope)
         if isinstance(scope, tuple):
             const_expression, scope = scope
-            # if isinstance(body_type, D96_type): # body is an ID, FieldAccess or ArrayCell
-            #     # Check is in const expression
-            #     if const_expression and (body_type.kind == "mutable" or body_type.kind == "variable"): raise IllegalConstantExpression(const_expression)
         # take the type
         if isinstance(body_type, D96_type): body_type = body_type.type
         if ast.op == "-":
@@ -234,11 +231,6 @@ class StaticChecker(BaseVisitor):
         #print(left_type, right_type)
         if isinstance(scope, tuple):
             const_expression, scope = scope
-            # if isinstance(left_type, D96_type):
-            #     if const_expression and (left_type.kind == "mutable" or left_type.kind == "variable"): raise IllegalConstantExpression(const_expression)
-            # if isinstance(right_type, D96_type):
-            #     if const_expression and (right_type.kind == "mutable" or right_type.kind == "variable"): raise IllegalConstantExpression(const_expression)
-        
         if isinstance(left_type, D96_type): left_type = left_type.type
         if isinstance(right_type, D96_type): right_type = right_type.type
         if ast.op in ["+", "-", "*", "/"]:
@@ -540,7 +532,7 @@ class StaticChecker(BaseVisitor):
         #in_loop, scope = scope
         scope = scope[1]
         condition_type = self.visit(ast.expr, scope)
-        # if isinstance(condition_type, D96_type): condition_type = condition_type.type
+        if isinstance(condition_type, D96_type): condition_type = condition_type.type
         if type(condition_type) != BoolType: raise TypeMismatchInStatement(ast)
         self.visit(ast.thenStmt, param)
         if ast.elseStmt: self.visit(ast.elseStmt, param) 
@@ -554,16 +546,13 @@ class StaticChecker(BaseVisitor):
         # "In the case of a for statement, just the assignment part in this statement is printed out in the error message."
         if id_type.kind == "constant" or id_type.kind == "imutable": raise CannotAssignToConstant(ast.expr1)
         id_type = id_type.type
-        # if isinstance(expr1_type, D96_type):
-        #     if expr1_type.kind == "method": raise Undeclared(Identifier(), expr1_type.name)
-        #     expr1_type = expr1_type.type
-        # if isinstance(expr2_type, D96_type):
-        #     if expr2_type.kind == "method": raise Undeclared(Identifier(), expr2_type.name)
-        #     expr2_type = expr2_type.type
+        if isinstance(expr1_type, D96_type): expr1_type = expr1_type.type
+        if isinstance(expr2_type, D96_type): expr2_type = expr2_type.type
         if type(expr1_type) != IntType or type(expr2_type) != IntType: raise TypeMismatchInStatement(ast)
         if type(id_type) != IntType and type(id_type) != FloatType: raise TypeMismatchInStatement(ast)
         if ast.expr3:
-            expr3_type = self.visit(ast.expr_3, scope) 
+            expr3_type = self.visit(ast.expr3, scope) 
+            if isinstance(expr3_type, D96_type): expr3_type = expr3_type.type
             if type(expr3_type) != IntType: raise TypeMismatchInStatement(ast)
         self.visit(ast.loop, (in_loop, scope))
 
@@ -582,13 +571,13 @@ class StaticChecker(BaseVisitor):
         if self.current_method == "Destructor": raise TypeMismatchInStatement(ast)
         currnet_return_type = self.visit(ast.expr, scope) if ast.expr else VoidType()
 
-        # if isinstance(currnet_return_type, D96_type): currnet_return_type = currnet_return_type.type
+        if isinstance(currnet_return_type, D96_type): currnet_return_type = currnet_return_type.type
         # Suy diễn kiểu
         if not isinstance(scope["global"][self.current_class][self.current_method].type, Type):
             scope["global"][self.current_class][self.current_method].type = currnet_return_type
         else:
             # Chỗ này so cứng hay cho ép kiểu ??
-            if not D96_utils.compare(currnet_return_type, scope["global"][self.current_class][self.current_method].type) and not D96_utils.coercion(currnet_return_type, scope["global"][scope["current"]][self.current_method].type, self.inheritance):
+            if not D96_utils.compare(currnet_return_type, scope["global"][self.current_class][self.current_method].type) and not D96_utils.coercion(currnet_return_type, scope["global"][self.current_class][self.current_method].type, self.inheritance):
                 raise TypeMismatchInStatement(ast)
             
 
@@ -603,9 +592,10 @@ class StaticChecker(BaseVisitor):
             if type(call_method.type) != VoidType: raise TypeMismatchInStatement(ast) 
             # Check type param
             argument_type = [self.visit(param, scope) for param in ast.param]
-            if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInExpression(ast)
+            if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInStatement(ast)
             # return call_method.type
-        
+            return
+
         # Static method
         if isinstance(ast.obj, Id):
             if "$" in ast.method.name:
@@ -622,8 +612,9 @@ class StaticChecker(BaseVisitor):
                 if type(call_method.type) != VoidType: raise TypeMismatchInStatement(ast) 
                 # Check type param
                 argument_type = [self.visit(param, scope) for param in ast.param]
-                if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInExpression(ast)
+                if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInStatement(ast)
                 # return call_method.type
+                return
             
             obj_type = D96_utils.find_local(ast.obj.name, scope["local"])
             if obj_type:
@@ -635,16 +626,17 @@ class StaticChecker(BaseVisitor):
                 if type(call_method.type) != VoidType: raise TypeMismatchInStatement(ast) 
                 # Check type param
                 argument_type = [self.visit(param, scope) for param in ast.param]
-                if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInExpression(ast)
+                if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInStatement(ast)
                 # return call_method.type
+                return
             # Not a local --> A class or Undeclare
             if ast.obj.name in scope["global"]: raise IllegalMemberAccess(ast)
             raise Undeclared(Identifier(), ast.obj.name)
-        
+
         # Normal ID or Expr --> Instance
         obj_type = self.visit(ast.obj, scope)
         if isinstance(obj_type, D96_type): obj_type = obj_type.type
-        if type(obj_type) != ClassType: raise TypeMismatchInExpression(ast)
+        if type(obj_type) != ClassType: raise TypeMismatchInStatement(ast)
         call_method = D96_utils.find_attribute(obj_type.classname.name, ast.method.name, scope["global"], self.inheritance)
         if call_method is None: raise Undeclared(Method(), ast.method.name)
         if call_method.kind != "method": raise Undeclared(Method(), ast.method.name)
@@ -652,5 +644,5 @@ class StaticChecker(BaseVisitor):
         if type(call_method.type) != VoidType: raise TypeMismatchInStatement(ast) 
         # Check type param
         argument_type = [self.visit(param, scope) for param in ast.param]
-        if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInExpression(ast)
+        if not D96_utils.check_param_type(call_method, argument_type, self.inheritance): raise TypeMismatchInStatement(ast)
         # return call_method.type

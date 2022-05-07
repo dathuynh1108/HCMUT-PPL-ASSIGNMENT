@@ -1,0 +1,1 @@
+Type Mismatch In Statement: AssignStmt(Id(b),CallExpr(Self(),Id(some_method),[]))

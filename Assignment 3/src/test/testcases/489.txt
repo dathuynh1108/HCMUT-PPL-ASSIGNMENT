@@ -1,0 +1,18 @@
+
+            Class Program {
+                Var a: Int = 1;
+                Var $a: Int = 1;
+                $method() {Return 1;}
+                method() {
+                    Var a: Int = 1;
+                    Return 1;
+                    Return a;
+                    Return Self.a;
+                    Return a + 1 * Self.a;
+                    Return a + 1 * Self.a % Program::$a;
+                    Return a + 1 * Self.a % Program::$a - Program::$method();
+                    Return a + 1 * Self.a % Program::$a - Program::$method() + 1.2;
+                }
+                main() {}
+            }
+        

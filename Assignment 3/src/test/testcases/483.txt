@@ -1,0 +1,13 @@
+
+            Class Program  {
+                main() {
+                    Var a: Int = 1;
+                    {
+                        Var a: Int = 1;
+                        {
+                            Var a: Int = 1;
+                        }
+                    }
+                }
+            }
+        

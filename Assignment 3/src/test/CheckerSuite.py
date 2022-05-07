@@ -1404,17 +1404,29 @@ class CheckerSuite(unittest.TestCase):
                     o = Object::$o.o.o.o.method().method().o.o.o;
                     o = Object::$o.o.o.o.method().method().o.o.o.method();
                     o = Object::$method();
+
+                    o = Object_1::$o;
+                    o = Object_1::$o.o.o.o.method().method();
+                    o = Object_1::$o.o.o.o.method().method().o.o.o;
+                    o = Object_1::$o.o.o.o.method().method().o.o.o.method();
+                    o = Object_1::$method();
+
+                    o = Program::$o;
+                    o = Program::$o.o.o.o.method().method();
+                    o = Program::$o.o.o.o.method().method().o.o.o;
+                    o = Program::$o.o.o.o.method().method().o.o.o.method();
+                    o = Program::$method();
                     
                     ## Program : Object_1 : Object --> It can see attribute of itself, Object_1, and Object ##
 
                     ## Attribute of Object ##
-                    o = Object_1::$o;
-                    o = Object_1::$o.o.o;
-                    o = Object_1::$o.method();
-                    o = Object_1::$o.o.o.method().method();
-                    o = Object_1::$method();
-                    o = Object_1::$method().o.o.o;
-                    o = Object_1::$method().o.o.o.method();
+                    o = Object::$o;
+                    o = Object::$o.o.o;
+                    o = Object::$o.method();
+                    o = Object::$o.o.o.method().method();
+                    o = Object::$method();
+                    o = Object::$method().o.o.o;
+                    o = Object::$method().o.o.o.method();
 
                     ## Attribute of Object_1 ##
                     o = Object_1::$o_1;
@@ -1424,6 +1436,22 @@ class CheckerSuite(unittest.TestCase):
                     o = Object_1::$method_1();
                     o = Object_1::$method_1().o_1.o_1.o_1;
                     o = Object_1::$method_1().o_1.o_1.o_1.method_1().method_1();
+
+                    ## Attribute of Program ##
+                    o = Program::$o;
+                    o = Program::$o.o.o;
+                    o = Program::$o.method();
+                    o = Program::$o.o.o.method().method();
+                    o = Program::$method();
+                    o = Program::$method().o.o.o;
+                    o = Program::$method().o.o.o.method();
+                    o = Program::$o_1;
+                    o = Program::$o_1.o_1.o_1;
+                    o = Program::$o_1.method_1();
+                    o = Program::$o_1.o_1.o_1.method_1().method_1();
+                    o = Program::$method_1();
+                    o = Program::$method_1().o_1.o_1.o_1;
+                    o = Program::$method_1().o_1.o_1.o_1.method_1().method_1();
                     
                     ## Mix ##
                     ## OK, Program see Object_1, Object attribute ##
@@ -1443,6 +1471,11 @@ class CheckerSuite(unittest.TestCase):
                     o = Object_1::$o_1.o_1.method_1().method_1().method();
                     o = Object_1::$o_1.o_1.method_1().method_1().o.o.method().method();
                     o = Object_1::$o_1.o_1.method_1().method_1().o_1.o_1.method_1().method_1().method();
+                    o = Program::$o_1.o;
+                    o = Program::$o_1.o_1.o;
+                    o = Program::$o_1.o_1.method_1().method_1().method();
+                    o = Program::$o_1.o_1.method_1().method_1().o.o.method().method();
+                    o = Program::$o_1.o_1.method_1().method_1().o_1.o_1.method_1().method_1().method();
                     
                     Var o_o: Other_object = New Other_object();
                     ## OK, Program can see Other_object's method and Object's attribute##
@@ -1542,5 +1575,495 @@ class CheckerSuite(unittest.TestCase):
         expect = "Type Mismatch In Expression: CallExpr(Id(Object),Id($method_void),[])"
         self.assertTrue(TestChecker.test(input, expect, 478))
 
+    def test_079_assign_statement(self):
+        input = r"""
+            Class Object {}
+            Class Program : Object {
+                main() {
+                    Var a: Int = 1;
+                    Var b: Int = 1;
+                    b = a;
+
+                    Var c: Float = 1.2;
+                    Var d: Float = 1.2;
+                    d = c;
+
+                    Var e: Boolean = True;
+                    Var f: Boolean = False;
+                    f = e;
+
+                    Var g: String = "abc";
+                    Var h: String = "abc";
+                    h = g;
+
+                    d = a;
+                    a = e;
+                }
+            }
+        """
+        expect = "Type Mismatch In Statement: AssignStmt(Id(a),Id(e))"
+        self.assertTrue(TestChecker.test(input, expect, 479))
+
+    def test_080_assign_statement_with_coercion(self):
+        input = r"""
+            Class Object {}
+            Class Object_1 : Object {}
+            Class Program  {
+                main() {
+                    Var i : Int = 1;
+                    Var f: Float = 1.2;
+                    f = i; 
+
+                    Var o : Object = New Object();
+                    Var o_1: Object_1 = New Object_1();
+                    o = o_1;
+
+                    o_1 = o;
+                }
+            }
+        """
+        expect = "Type Mismatch In Statement: AssignStmt(Id(o_1),Id(o))"
+        self.assertTrue(TestChecker.test(input, expect, 480))
+
+    def test_081_assign_statement_with_coercion_for_array(self):
+        input = r"""
+            Class Object {}
+            Class Object_1 : Object {}
+            Class Program  {
+                main() {
+                    Var a_i: Array[Int, 5];
+                    Var a_f: Array[Float, 5];
+                    a_f = a_i;
+                    a_i = Array(1,2,3,4,5);
+                    a_f = Array(1,2,3,4,5);
+
+                    a_i = Array(1,2,3);
+                }
+            }
+        """
+        expect = "Type Mismatch In Statement: AssignStmt(Id(a_i),[IntLit(1),IntLit(2),IntLit(3)])"
+        self.assertTrue(TestChecker.test(input, expect, 481))
+
+    def test_082_assign_statement_with_coercion_for_array(self):
+        input = r"""
+            Class Object {}
+            Class Object_1 : Object {}
+            Class Program  {
+                main() {
+                    Var a_i: Array[Int, 5];
+                    Var a_f: Array[Float, 5];
+                    a_f = a_i;
+
+                    Var a_i_i : Array[Array[Int, 5], 5];
+                    Var a_f_f : Array[Array[Float, 5], 5];
+                    a_f_f = a_i_i;
+
+                    a_i = Array(1, 2, 3, 4, 5);
+                    a_f = Array(1.1, 2.2, 3.3, 4.4, 5.5);
+                    a_f = Array(1, 2, 3, 4, 5);
+
+                    a_i_i = Array(
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5)
+                    );
+                    a_f_f = Array(
+                        Array(1.1,2.2,3.3,4.4,5.5),
+                        Array(1.1,2.2,3.3,4.4,5.5),
+                        Array(1.1,2.2,3.3,4.4,5.5),
+                        Array(1.1,2.2,3.3,4.4,5.5),
+                        Array(1.1,2.2,3.3,4.4,5.5)
+                    );
+                    a_f_f = Array(
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5)
+                    );
+                    
+                    a_i_i = a_f_f;
+                }
+            }
+        """
+        expect = "Type Mismatch In Statement: AssignStmt(Id(a_i_i),Id(a_f_f))"
+        self.assertTrue(TestChecker.test(input, expect, 482))
+
+    def test_083_block(self):
+        input = r"""
+            Class Program  {
+                main() {
+                    Var a: Int = 1;
+                    {
+                        Var a: Int = 1;
+                        {
+                            Var a: Int = 1;
+                        }
+                    }
+                }
+            }
+        """
+        expect = "[]"
+        self.assertTrue(TestChecker.test(input, expect, 483)) 
+    
+    def test_084_if_statement(self):
+        input = r"""
+            Class Program  {
+                main() {
+                    Var a: Int = 1;
+                    Var b: Int = 1;
+                    Var c: Float = 1.2;
+                    Var d: Float = 1.2;
+                    Var x: Boolean = True;
+                    Var y: Boolean = False;
+                    
+                    If (True) {}
+                    If (x) {} Else {}
+                    If (x == y) {}
+                    If (x != y) {}
+                    If (x && y) {}
+                    If (x || y) {}
+                    
+                    If (a == b) {}   
+                    If (a != b) {}   
+                    If (a > b) {}   
+                    If (a >= b) {}  
+                    If (a < b) {}   
+                    If (a <= b) {}  
+                    
+                    If (c > d) {}   
+                    If (c >= d) {}  
+                    If (c < d) {}   
+                    If (c <= d) {}    
+
+                    Var n: Int = 1;
+                    If (True) {
+                        Var n: Int = 1; 
+                        If (True) {
+                            Var n: Int = 1;
+                        }
+                        Else {
+                            Var n: Int = 1;
+                        }
+                    }
+                    Else {
+                        Var n: Int = 1;
+                    }
+
+                    If (a) {}
+                }
+            }
+        """
+        expect = "Type Mismatch In Statement: If(Id(a),Block([]))"
+        self.assertTrue(TestChecker.test(input, expect, 484))
+    
+    def test_085_if_statement(self):
+        input = r"""
+            Class Object {
+                Var a: Int = 1;
+                Var $a: Int = 1;
+                method() {Return 1;}
+                main() {
+                    Var a: Int = 1;
+                    Foreach (a In Self.a .. Self.method() By Object::$a) {}
+                }
+            }
+            Class Program  {
+                Var $a: Int = 1;
+                $method() {Return 1;}
+                main() {
+                    Var a: Int = 1;
+                    Var b: Int = 1;
+                    Var c: Int = 1;
+                    Var d: Int = 1;
+                    
+                    Foreach(a In 1 .. 100) {}
+                    Foreach(a In 1 .. 100 By 2) {}
+                    Foreach(a In b .. c) {}
+                    Foreach(a In b .. c By d) {}
+                    Foreach(a In b + c + d .. b * c * d By b - c - d) {}
+                    Foreach(a In b % c % d .. Program::$method() By Program::$a) {}
+
+                    Foreach(a In 1 .. 100) {
+                        Var a: Int = 1;
+                        Foreach(a In 1 .. 100) {
+                            Var a: Int = 1;
+                        }
+                    }
+
+                    Foreach (a In 1.2 .. 1.3 By 1.4) {}
+                }
+            }
+        """
+        expect = "Type Mismatch In Statement: For(Id(a),FloatLit(1.2),FloatLit(1.3),FloatLit(1.4),Block([])])"
+        self.assertTrue(TestChecker.test(input, expect, 485))
+
+    def test_086_for_statement_with_constant(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Val a: Int = 1;
+                    Foreach(a In 1 .. 100) {}
+                }
+            }
+        """
+        expect = "Cannot Assign To Constant: IntLit(1)"
+        self.assertTrue(TestChecker.test(input, expect, 486))
+
+    def test_087_break_statement(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var a: Int;
+                    Foreach(a In 1 .. 100) {
+                        Break;
+                        {Break;}
+                        If (True) {Break;}
+                        Foreach(a In 1 .. 100) {
+                            Break;
+                            {Break;}
+                            If (True) {Break;}
+                        }
+                        Break;
+                    }
+                    Break;
+                }
+            }
+        """
+        expect = "Break Not In Loop"
+        self.assertTrue(TestChecker.test(input, expect, 487))
+    
+    def test_088_continue_statement(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var a: Int;
+                    Foreach(a In 1 .. 100) {
+                        Continue;
+                        {Continue;}
+                        If (True) {Continue;}
+                        Foreach(a In 1 .. 100) {
+                            Continue;
+                            {Continue;}
+                            If (True) {Continue;}
+                        }
+                        Continue;
+                    }
+                    Continue;
+                }
+            }
+        """
+        expect = "Continue Not In Loop"
+        self.assertTrue(TestChecker.test(input, expect, 488))
+    
+    def test_089_return_statement(self):
+        input = r"""
+            Class Program {
+                Var a: Int = 1;
+                Var $a: Int = 1;
+                $method() {Return 1;}
+                method() {
+                    Var a: Int = 1;
+                    Return 1;
+                    Return a;
+                    Return Self.a;
+                    Return a + 1 * Self.a;
+                    Return a + 1 * Self.a % Program::$a;
+                    Return a + 1 * Self.a % Program::$a - Program::$method();
+                    Return a + 1 * Self.a % Program::$a - Program::$method() + 1.2;
+                }
+                main() {}
+            }
+        """
+        expect = "Type Mismatch In Statement: Return(BinaryOp(+,BinaryOp(-,BinaryOp(+,Id(a),BinaryOp(%,BinaryOp(*,IntLit(1),FieldAccess(Self(),Id(a))),FieldAccess(Id(Program),Id($a)))),CallExpr(Id(Program),Id($method),[])),FloatLit(1.2)))"
+        self.assertTrue(TestChecker.test(input, expect, 489))
+    
+    def test_090_check_param_type(self):
+        input = r"""
+            Class Object {
+                Var a: Int = 1;
+                Var b: Int = 1;
+                Constructor(a,b : Int) {}
+                method(a,b: Int) {
+                    Var o : Object = New Object(Self.a, Self.b);
+                    o = New Object(1, 1);
+                    o = New Object(1 + 1 - 1 *  1, 1 % 1);
+                    o = New Object(Self.a + Self.b - a - b, Self.a * Self.b % a % b);
+                    Return o;
+                }
+                method_float(a,b: Float) {
+                    Return a + b;
+                }
+            }
+            Class Animal : Object {}
+            Class Dog : Animal {}
+            Class Program : Object {
+                some_method() {
+                    Var a: Int = 1;
+                    Var b: Int = 1;
+                    Var o : Object = New Object(a,b);
+                    o = Self.method(a,b);
+                    o = Self.method(1,1);
+                    o = Self.method(a + b, a - b);
+                    o = Self.method(a + 1, b - 1);
+                    o = Self.method(1 + 1, 1 - 1);
+                    Var x: Float = Self.method_float(a, b);
+                    x = Self.method_float(a + b, a - b);
+                    Return Self.method_float(1, 1.2);
+                }
+                object_method(d_1, d_2: Object) {
+                    Return 1;
+                }
+                test_method () {
+                    Var a: Float = Self.some_method();
+                    Var b: Int = 1;
+                    b = Self.object_method(New Object(1,1), New Object());
+                    b = Self.object_method(New Animal(), New Animal());
+                    b = Self.object_method(New Dog(), New Dog());
+                    Var d_1, d_2 : Animal = New Dog(), New Animal();
+                    b = Self.object_method(d_1, d_2);
+    
+                    b = Self.some_method(); ## Fail ##
+                }
+                main() {}
+            }
+        """
+        expect = "Type Mismatch In Statement: AssignStmt(Id(b),CallExpr(Self(),Id(some_method),[]))"
+        self.assertTrue(TestChecker.test(input, expect, 490))
+    
+    def test_091_check_default_constructor(self):
+        input = r"""
+            Class Object {
+                Constructor(x: Int) {}
+            }
+            Class Program {
+                main() {
+                    Var x: Object;
+                    x = New Object();
+                    x = New Object(1);
+                    x = New Object(1,2);
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: NewExpr(Id(Object),[IntLit(1),IntLit(2)])"
+        self.assertTrue(TestChecker.test(input, expect, 491))
+    
+    def test_092_call_statement(self):
+        input = r"""
+            Class Object {
+                Var o : Object;
+                Var $o : Object;
+                method() {
+                    Return;
+                }
+                $method() {
+                    Return;
+                }
+                method_o() {
+                    Return New Object();
+                }
+                $method_o() {
+                    Return New Object();
+                }
+            }
+            Class Object_1 : Object {
+                Var o_1 : Object_1;
+                Var $o_1 : Object_1;
+                method_1() {
+                    Return;
+                }
+                $method_1() {
+                    Return;
+                }
+
+                method_o_1() {
+                    Return New Object_1();
+                }
+                $method_o_1() {
+                    Return New Object_1();
+                }
+            }
+            Class Program : Object_1 {
+                sub_main() {
+                    Self.method_1();
+                    Self.method();
+                    Program::$method();
+                    Program::$method_1();
+                    Self.method_o().method();
+                    Self.method_o_1().method();
+                    Self.method_o_1().o_1.method();
+                    Self.method_o_1().o.method_o().o.method();
+                    Self.method_o_1().o_1.method_o_1().method_o().method();
+                    Program::$method_o().method();
+                    Program::$method_o().method_o().method_o().method();
+                    Program::$method_o_1().o_1.method_o_1().o_1.method_o_1().method();
+                    Program::$method_o_1().o_1.method_o_1().o_1.method_o_1().method_1();
+                    Program::$method_o_1().o_1.method_o_1().o_1.method_o_1().o.method_o().o.method_o().method();
+
+                    Program::$method_o_1().o_1.method_o_1().o_1.method_o_1().o.method_o().o.method_o().method_1(); ## Fail ##
+                }
+                main() {}
+            }
+        """
+        expect = "Undeclared Method: method_1"
+        self.assertTrue(TestChecker.test(input, expect, 492))
+    
+    def test_093_use_attribute_as_call_statement(self):
+        input = r"""
+            Class Object {
+                Var o : Object;
+                Var $o : Object;
+                method() {
+                    Return;
+                }
+                $method() {
+                    Return;
+                }
+                method_o() {
+                    Return New Object();
+                }
+                $method_o() {
+                    Return New Object();
+                }
+            }
+
+            }
+            Class Program : Object {
+                sub_main() {
+                    Self.o();
+                }
+                main() {}
+            }
+        """
+        expect = "Undeclared Method: o"
+        self.assertTrue(TestChecker.test(input, expect, 493))
+    
+    def test_094_call_statement_non_void_type(self):
+        input = r"""
+            Class Object {
+                Var o : Object;
+                Var $o : Object;
+                method() {
+                    Return 1;
+                }
+            }
+
+            }
+            Class Program : Object {
+                sub_main() {
+                    Self.method();
+                }
+                main() {}
+            }
+        """
+        expect = "Type Mismatch In Statement: Call(Self(),Id(method),[])"
+        self.assertTrue(TestChecker.test(input, expect, 494))
+    
 
 
+    
+    
+    
+    

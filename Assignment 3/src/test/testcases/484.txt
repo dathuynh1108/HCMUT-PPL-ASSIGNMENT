@@ -1,0 +1,47 @@
+
+            Class Program  {
+                main() {
+                    Var a: Int = 1;
+                    Var b: Int = 1;
+                    Var c: Float = 1.2;
+                    Var d: Float = 1.2;
+                    Var x: Boolean = True;
+                    Var y: Boolean = False;
+                    
+                    If (True) {}
+                    If (x) {} Else {}
+                    If (x == y) {}
+                    If (x != y) {}
+                    If (x && y) {}
+                    If (x || y) {}
+                    
+                    If (a == b) {}   
+                    If (a != b) {}   
+                    If (a > b) {}   
+                    If (a >= b) {}  
+                    If (a < b) {}   
+                    If (a <= b) {}  
+                    
+                    If (c > d) {}   
+                    If (c >= d) {}  
+                    If (c < d) {}   
+                    If (c <= d) {}    
+
+                    Var n: Int = 1;
+                    If (True) {
+                        Var n: Int = 1; 
+                        If (True) {
+                            Var n: Int = 1;
+                        }
+                        Else {
+                            Var n: Int = 1;
+                        }
+                    }
+                    Else {
+                        Var n: Int = 1;
+                    }
+
+                    If (a) {}
+                }
+            }
+        

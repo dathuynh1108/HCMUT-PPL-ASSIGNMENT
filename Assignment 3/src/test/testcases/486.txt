@@ -1,0 +1,8 @@
+
+            Class Program {
+                main() {
+                    Val a: Int = 1;
+                    Foreach(a In 1 .. 100) {}
+                }
+            }
+        

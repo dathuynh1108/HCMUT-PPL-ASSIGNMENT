@@ -1,0 +1,25 @@
+
+            Class Object {}
+            Class Program : Object {
+                main() {
+                    Var a: Int = 1;
+                    Var b: Int = 1;
+                    b = a;
+
+                    Var c: Float = 1.2;
+                    Var d: Float = 1.2;
+                    d = c;
+
+                    Var e: Boolean = True;
+                    Var f: Boolean = False;
+                    f = e;
+
+                    Var g: String = "abc";
+                    Var h: String = "abc";
+                    h = g;
+
+                    d = a;
+                    a = e;
+                }
+            }
+        

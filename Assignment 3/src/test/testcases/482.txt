@@ -1,0 +1,43 @@
+
+            Class Object {}
+            Class Object_1 : Object {}
+            Class Program  {
+                main() {
+                    Var a_i: Array[Int, 5];
+                    Var a_f: Array[Float, 5];
+                    a_f = a_i;
+
+                    Var a_i_i : Array[Array[Int, 5], 5];
+                    Var a_f_f : Array[Array[Float, 5], 5];
+                    a_f_f = a_i_i;
+
+                    a_i = Array(1, 2, 3, 4, 5);
+                    a_f = Array(1.1, 2.2, 3.3, 4.4, 5.5);
+                    a_f = Array(1, 2, 3, 4, 5);
+
+                    a_i_i = Array(
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5)
+                    );
+                    a_f_f = Array(
+                        Array(1.1,2.2,3.3,4.4,5.5),
+                        Array(1.1,2.2,3.3,4.4,5.5),
+                        Array(1.1,2.2,3.3,4.4,5.5),
+                        Array(1.1,2.2,3.3,4.4,5.5),
+                        Array(1.1,2.2,3.3,4.4,5.5)
+                    );
+                    a_f_f = Array(
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5)
+                    );
+                    
+                    a_i_i = a_f_f;
+                }
+            }
+        

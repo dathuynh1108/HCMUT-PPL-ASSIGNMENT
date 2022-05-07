@@ -1,0 +1,49 @@
+
+            Class Object {
+                Var a: Int = 1;
+                Var b: Int = 1;
+                Constructor(a,b : Int) {}
+                method(a,b: Int) {
+                    Var o : Object = New Object(Self.a, Self.b);
+                    o = New Object(1, 1);
+                    o = New Object(1 + 1 - 1 *  1, 1 % 1);
+                    o = New Object(Self.a + Self.b - a - b, Self.a * Self.b % a % b);
+                    Return o;
+                }
+                method_float(a,b: Float) {
+                    Return a + b;
+                }
+            }
+            Class Animal : Object {}
+            Class Dog : Animal {}
+            Class Program : Object {
+                some_method() {
+                    Var a: Int = 1;
+                    Var b: Int = 1;
+                    Var o : Object = New Object(a,b);
+                    o = Self.method(a,b);
+                    o = Self.method(1,1);
+                    o = Self.method(a + b, a - b);
+                    o = Self.method(a + 1, b - 1);
+                    o = Self.method(1 + 1, 1 - 1);
+                    Var x: Float = Self.method_float(a, b);
+                    x = Self.method_float(a + b, a - b);
+                    Return Self.method_float(1, 1.2);
+                }
+                object_method(d_1, d_2: Object) {
+                    Return 1;
+                }
+                test_method () {
+                    Var a: Float = Self.some_method();
+                    Var b: Int = 1;
+                    b = Self.object_method(New Object(1,1), New Object());
+                    b = Self.object_method(New Animal(), New Animal());
+                    b = Self.object_method(New Dog(), New Dog());
+                    Var d_1, d_2 : Animal = New Dog(), New Animal();
+                    b = Self.object_method(d_1, d_2);
+    
+                    b = Self.some_method(); ## Fail ##
+                }
+                main() {}
+            }
+        
