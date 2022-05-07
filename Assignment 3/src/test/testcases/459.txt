@@ -1,0 +1,27 @@
+
+            Class Object_1 {
+                Var a: Int = 1;
+            }
+            Class Object_2 : Object_1 {
+                Var o_1: Object_1;
+                Var o_2: Object_2;
+            }
+
+            Class Program : Object_2 {
+                main() {
+                    Var o_2 : Object_2 = New Object_2();
+                    Var o_1 : Object_1;
+                    o_2 = o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_2;
+                    o_1 = o_2.o_1;
+                    o_1 = o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_1;
+                    
+                    Var a: Int = 1;
+                    a = o_2.o_1.a;
+                    a = o_2.o_2.o_1.a;
+                    a = o_2.o_2.o_2.o_1.a;
+                    a = o_1.a;
+                    a = o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_1.a;
+                    a = o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_1.b;
+                }
+            }
+        

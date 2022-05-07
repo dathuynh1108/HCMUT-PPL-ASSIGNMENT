@@ -1,0 +1,11 @@
+
+            Class Program {
+                main() {
+                    Var a: Array[Int, 3] = Array(1,2,3);
+                    a[0] = 1;
+                    a[1] = 2;
+                    a[a[a[0]]] = 1;
+                    a[0][0] = 1;
+                }
+            }
+        

@@ -1,0 +1,26 @@
+
+            Class Object {
+                Var $a: Int = 1;
+                Var $b: Float = 1.2;
+                Var $c: Boolean = True;
+                Var $d: String = "abc";
+            }
+            Class Dog : Object {
+                Var $e: Int = 1;
+            }
+            Class Program {
+                main() {
+                    Var o: Dog = New Dog();
+                    Var a: Int = 1;
+                    Var b: Float = 1.2;
+                    Var c: Boolean = True;
+                    Var d: String = "abc";
+                    a = a + Object::$a;
+                    b = b + Object::$b;
+                    c = c == Object::$c;
+                    d = d +. Object::$d;
+                    a = a - Dog::$e;
+                    a = a - Dog::$f;
+                }
+            }
+        

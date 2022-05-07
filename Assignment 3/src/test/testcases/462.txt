@@ -1,0 +1,14 @@
+
+            Class Object {
+                Var a: Int = 1;
+            }
+            Class Program : Object {
+                main() {
+                    Var Object: Object = New Object();
+                    Var a: Int = 1;
+                    
+                    a = Object.a;       ## OK because of having a local variable "Object" ##
+                    a = Object_2.a;     ## Fail because of NOT having a local variable "Object_2" and Object_2 is NOT a classname ##
+                }
+            }
+        

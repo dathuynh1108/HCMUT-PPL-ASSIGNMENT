@@ -760,7 +760,7 @@ class CheckerSuite(unittest.TestCase):
         expect = "Type Mismatch In Expression: NewExpr(Id(Object),[IntLit(1)])"
         self.assertTrue(TestChecker.test(input, expect, 446))
     
-    def test_047_new_expression_with_constructor(self):
+    def test_047_new_expression_with_constructor_and_coercion(self):
         input = r"""
             Class Base {}
             Class Sub: Base {}
@@ -793,6 +793,367 @@ class CheckerSuite(unittest.TestCase):
         """
         expect = "Undeclared Method: Constructor"
         self.assertTrue(TestChecker.test(input, expect, 448))
+    
+    def test_049_default_constructor_and_user_define_constructor(self):
+        input = r"""
+            Class Object {
+                Constructor(x: Int) {}
+            }
+            Class Program {
+                main() {
+                    Var a: Object = Null;
+                    Var b: Object = New Object();
+                    Var c: Object = New Object(1);
+                    Var d: Object = New Object(1, 2);
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: NewExpr(Id(Object),[IntLit(1),IntLit(2)])"
+        self.assertTrue(TestChecker.test(input, expect, 449))
+
+    def test_050_array_cell_simple(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var a: Array[Int, 3] = Array(1,2,3);
+                    a[0] = 1;
+                    a[1] = 2;
+                    a[a[a[0]]] = 1;
+                    a[0][0] = 1;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: ArrayCell(Id(a),[IntLit(0),IntLit(0)])"
+        self.assertTrue(TestChecker.test(input, expect, 450))
+
+    def test_051_array_cell_complex(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var a_1: Array[Int, 3] = Array(1,2,3);
+                    Var a_2: Array[Array[Int, 3], 3] = Array(
+                                                                Array(1,2,3), 
+                                                                Array(1,2,3), 
+                                                                Array(1,2,3)
+                                                            );
+                    a_1 = Array(1,2,3);
+                    a_1[0] = 1;
+                    a_2 = Array(Array(1,2,3), Array(1,2,3), Array(1,2,3));
+                    a_2[0] = Array(1,2,3);
+                    a_2[0] = a_1;
+                    a_2[0][0] = 1;
+                    a_2[a_1[0]][a_1[0]] = 1;
+                    a_2[a_2[0][0]][a_2[0][0]] = 1;
+                    a_2[0][0][0] = 1;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: ArrayCell(Id(a_2),[IntLit(0),IntLit(0),IntLit(0)])"
+        self.assertTrue(TestChecker.test(input, expect, 451))
+    
+    def test_052_array_cell_index_is_not_int(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var a: Array[Int, 3] = Array(1,2,3);
+                    a[0] = 1;
+                    a[1.2] = 1;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: ArrayCell(Id(a),[FloatLit(1.2)])"
+        self.assertTrue(TestChecker.test(input, expect, 452))
+    
+    def test_053_array_cell_index_is_not_int_expression(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var a: Array[Int, 3] = Array(1,2,3);
+                    Var x: Int = 1;
+                    Var y: Float = 1.2;
+                    a[x] = 1;
+                    a[x + y] = 1;
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: ArrayCell(Id(a),[BinaryOp(+,Id(x),Id(y))])"
+        self.assertTrue(TestChecker.test(input, expect, 453))
+    
+    def test_054_instance_field_access_with_self(self):
+        input = r"""
+            Class Program {
+                Var a: Int = 1;
+                Var b: Float = 1.2;
+                method() {
+                    Var a: Int = 1;
+                    Var b: Float = 1.2;
+                    a = a + Self.a;
+                    b = b + Self.b;
+                    Var c: String = Self.c;
+                }
+                main() {}
+            }
+        """
+        expect = "Undeclared Attribute: c"
+        self.assertTrue(TestChecker.test(input, expect, 454))
+    
+    def test_055_instance_field_access_with_id(self):
+        input = r"""
+            Class Object {
+                Var a: Int = 1;
+                Var b: Float = 1.2;
+                Var c: Boolean = True;
+                Var d: String = "abc";
+            }
+            Class Program : Object {
+                main() {
+                    Var o: Object = New Object();
+                    Var a: Int = 1;
+                    Var b: Float = 1.2;
+                    Var c: Boolean = True;
+                    Var d: String = "abc";
+                    a = a + o.a;
+                    b = b + o.b;
+                    c = c == o.c;
+                    d = d +. o.d;
+                    a = a - o.e;
+                }
+            }
+        """
+        expect = "Undeclared Attribute: e"
+        self.assertTrue(TestChecker.test(input, expect, 455))
+    
+    def test_056_static_field_access_with_id(self):
+        input = r"""
+            Class Object {
+                Var $a: Int = 1;
+                Var $b: Float = 1.2;
+                Var $c: Boolean = True;
+                Var $d: String = "abc";
+            }
+            Class Program {
+                main() {
+                    Var o: Object = New Object();
+                    Var a: Int = 1;
+                    Var b: Float = 1.2;
+                    Var c: Boolean = True;
+                    Var d: String = "abc";
+                    a = a + Object::$a;
+                    b = b + Object::$b;
+                    c = c == Object::$c;
+                    d = d +. Object::$d;
+                    a = a - Object::$e;
+                }
+            }
+        """
+        expect = "Undeclared Attribute: $e"
+        self.assertTrue(TestChecker.test(input, expect, 456))
+
+    def test_057_inheritance_instance_field_access_with_id(self):
+        input = r"""
+            Class Object {
+                Var a: Int = 1;
+                Var b: Float = 1.2;
+                Var c: Boolean = True;
+                Var d: String = "abc";
+            }
+
+            Class Dog : Object {
+                Var e: Int = 1;
+            }
+
+            Class Program : Dog {
+                main() {
+                    Var o: Dog = New Dog();
+                    Var a: Int = 1;
+                    Var b: Float = 1.2;
+                    Var c: Boolean = True;
+                    Var d: String = "abc";
+                    a = a + o.a;
+                    b = b + o.b;
+                    c = c == o.c;
+                    d = d +. o.d;
+                    a = a - o.e;
+                    a = a - o.f;
+                }
+            }
+        """
+        expect = "Undeclared Attribute: f"
+        self.assertTrue(TestChecker.test(input, expect, 457))
+    
+    def test_058_static_field_access_with_id(self):
+        input = r"""
+            Class Object {
+                Var $a: Int = 1;
+                Var $b: Float = 1.2;
+                Var $c: Boolean = True;
+                Var $d: String = "abc";
+            }
+            Class Dog : Object {
+                Var $e: Int = 1;
+            }
+            Class Program {
+                main() {
+                    Var o: Dog = New Dog();
+                    Var a: Int = 1;
+                    Var b: Float = 1.2;
+                    Var c: Boolean = True;
+                    Var d: String = "abc";
+                    a = a + Object::$a;
+                    b = b + Object::$b;
+                    c = c == Object::$c;
+                    d = d +. Object::$d;
+                    a = a - Dog::$e;
+                    a = a - Dog::$f;
+                }
+            }
+        """
+        expect = "Undeclared Attribute: $f"
+        self.assertTrue(TestChecker.test(input, expect, 458))
+
+    def test_059_long_instance_field_access_with_id(self):
+        input = r"""
+            Class Object_1 {
+                Var a: Int = 1;
+            }
+            Class Object_2 : Object_1 {
+                Var o_1: Object_1;
+                Var o_2: Object_2;
+            }
+
+            Class Program : Object_2 {
+                main() {
+                    Var o_2 : Object_2 = New Object_2();
+                    Var o_1 : Object_1;
+                    o_2 = o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_2;
+                    o_1 = o_2.o_1;
+                    o_1 = o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_1;
+                    
+                    Var a: Int = 1;
+                    a = o_2.o_1.a;
+                    a = o_2.o_2.o_1.a;
+                    a = o_2.o_2.o_2.o_1.a;
+                    a = o_1.a;
+                    a = o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_1.a;
+                    a = o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_2.o_1.b;
+                }
+            }
+        """
+        expect = "Undeclared Attribute: b"
+        self.assertTrue(TestChecker.test(input, expect, 459))
+    
+    def test_060_long_static_instance_field_access_with_id(self):
+        input = r"""
+            Class Object_1 {
+                Var a: Int = 1;
+            }
+            Class Object_2 : Object_1 {
+                Var o_1: Object_1;
+                Var o_2: Object_2;
+                Var $o_1: Object_1;
+                Var $o_2: Object_2;
+            }
+
+            Class Program : Object_2 {
+                main() {
+                    Var o_1 : Object_1;
+                    Var o_2 : Object_2;
+                    o_1 = Object_2::$o_1;
+                    o_2 = Object_2::$o_2;
+                    o_1 = Object_2::$o_2.o_1;
+                    o_1 = Object_2::$o_2.o_2.o_1;
+                    o_1 = Object_2::$o_2.o_2.o_2.o_2.o_2.o_2.o_1;
+
+                    Var a: Int = 1;
+                    a = Object_2::$o_1.a;
+                    a = Object_2::$o_2.o_2.o_2.o_2.o_2.o_2.o_1.a;
+                    a = Object_2::$o_2.o_2.o_2.o_2.o_2.o_2.o_1.b;
+                }
+            }
+        """
+        expect = "Undeclared Attribute: b"
+        self.assertTrue(TestChecker.test(input, expect, 460))
+
+    def test_061_special_instance_field_access_object_same_as_a_classname_1(self):
+        input = r"""
+            Class Object {
+                Var a: Int = 1;
+            }
+            Class Object_2 {
+                Var a: Int = 1;
+            }
+            Class Program : Object {
+                main() {
+                    Var Object: Object = New Object();
+                    Var a: Int = 1;
+                    
+                    a = Object.a;       ## OK because of having a local variable "Object" ##
+                    a = Object_2.a;     ## Fail because of NOT having a local variable "Object_2" and Object_2 is a classname ##
+                }
+            }
+        """
+        expect = "Illegal Member Access: FieldAccess(Id(Object_2),Id(a))"
+        self.assertTrue(TestChecker.test(input, expect, 461))
+    
+    def test_062_special_instance_field_access_object_same_as_a_classname_2(self):
+        input = r"""
+            Class Object {
+                Var a: Int = 1;
+            }
+            Class Program : Object {
+                main() {
+                    Var Object: Object = New Object();
+                    Var a: Int = 1;
+                    
+                    a = Object.a;       ## OK because of having a local variable "Object" ##
+                    a = Object_2.a;     ## Fail because of NOT having a local variable "Object_2" and Object_2 is NOT a classname ##
+                }
+            }
+        """
+        expect = "Undeclared Identifier: Object_2"
+        self.assertTrue(TestChecker.test(input, expect, 462))
+    
+    def test_063_special_staic_field_access_object_same_as_a_classname_1(self):
+        input = r"""
+            Class Object {
+                Var $a: Int = 1;
+            }
+            Class Program : Object {
+                main() {
+                    Var Object: Object = New Object();
+                    Var Object_2: Object = New Object();
+                    Var a: Int = 1;
+                    
+                    a = Object::$a;       ## OK because of having a class "Object" ##
+                    a = Object_2::$a;     ## Fail because of NOT having a class "Object_2" and Object_2 is a local variable ##
+                }
+            }
+        """
+        expect = "Illegal Member Access: FieldAccess(Id(Object_2),Id($a))"
+        self.assertTrue(TestChecker.test(input, expect, 463))
+    
+    def test_064_special_staic_field_access_object_same_as_a_classname_1(self):
+        input = r"""
+            Class Object {
+                Var $a: Int = 1;
+            }
+            Class Program : Object {
+                main() {
+                    Var Object: Object = New Object();
+                    Var a: Int = 1;
+                    
+                    a = Object::$a;       ## OK because of having a class "Object" ##
+                    a = Object_2::$a;     ## Fail because of NOT having a class "Object_2" and Object_2 is NOT a local variable ##
+                }
+            }
+        """
+        expect = "Undeclared Class: Object_2"
+        self.assertTrue(TestChecker.test(input, expect, 464))
+
+
+    
+
+
 
 
 

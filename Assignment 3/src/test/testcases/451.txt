@@ -1,0 +1,21 @@
+
+            Class Program {
+                main() {
+                    Var a_1: Array[Int, 3] = Array(1,2,3);
+                    Var a_2: Array[Array[Int, 3], 3] = Array(
+                                                                Array(1,2,3), 
+                                                                Array(1,2,3), 
+                                                                Array(1,2,3)
+                                                            );
+                    a_1 = Array(1,2,3);
+                    a_1[0] = 1;
+                    a_2 = Array(Array(1,2,3), Array(1,2,3), Array(1,2,3));
+                    a_2[0] = Array(1,2,3);
+                    a_2[0] = a_1;
+                    a_2[0][0] = 1;
+                    a_2[a_1[0]][a_1[0]] = 1;
+                    a_2[a_2[0][0]][a_2[0][0]] = 1;
+                    a_2[0][0][0] = 1;
+                }
+            }
+        

@@ -1,0 +1,22 @@
+
+            Class Object {
+                Var a: Int = 1;
+                Var b: Float = 1.2;
+                Var c: Boolean = True;
+                Var d: String = "abc";
+            }
+            Class Program : Object {
+                main() {
+                    Var o: Object = New Object();
+                    Var a: Int = 1;
+                    Var b: Float = 1.2;
+                    Var c: Boolean = True;
+                    Var d: String = "abc";
+                    a = a + o.a;
+                    b = b + o.b;
+                    c = c == o.c;
+                    d = d +. o.d;
+                    a = a - o.e;
+                }
+            }
+        

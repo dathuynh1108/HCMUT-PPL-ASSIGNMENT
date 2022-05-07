@@ -1,0 +1,28 @@
+
+            Class Object {
+                Var a: Int = 1;
+                Var b: Float = 1.2;
+                Var c: Boolean = True;
+                Var d: String = "abc";
+            }
+
+            Class Dog : Object {
+                Var e: Int = 1;
+            }
+
+            Class Program : Dog {
+                main() {
+                    Var o: Dog = New Dog();
+                    Var a: Int = 1;
+                    Var b: Float = 1.2;
+                    Var c: Boolean = True;
+                    Var d: String = "abc";
+                    a = a + o.a;
+                    b = b + o.b;
+                    c = c == o.c;
+                    d = d +. o.d;
+                    a = a - o.e;
+                    a = a - o.f;
+                }
+            }
+        

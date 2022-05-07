@@ -1,0 +1,14 @@
+
+            Class Program {
+                Var a: Int = 1;
+                Var b: Float = 1.2;
+                method() {
+                    Var a: Int = 1;
+                    Var b: Float = 1.2;
+                    a = a + Self.a;
+                    b = b + Self.b;
+                    Var c: String = Self.c;
+                }
+                main() {}
+            }
+        
