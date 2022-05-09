@@ -8,13 +8,12 @@
                     Return;
                 }
             }
-            Class Program : Object {
-                sub_main() {
+            Class Program {
+                main() {
                     Var o : Object = New Object();
                     Var a: Int = 1;
                     a = o.method_int();
                     a = o.method_void();
                 }
-                main() {}
             }
         

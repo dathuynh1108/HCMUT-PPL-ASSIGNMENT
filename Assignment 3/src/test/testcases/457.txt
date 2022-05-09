@@ -17,12 +17,11 @@
                     Var b: Float = 1.2;
                     Var c: Boolean = True;
                     Var d: String = "abc";
+                    a = a - o.e;
                     a = a + o.a;
                     b = b + o.b;
                     c = c == o.c;
                     d = d +. o.d;
-                    a = a - o.e;
-                    a = a - o.f;
                 }
             }
         

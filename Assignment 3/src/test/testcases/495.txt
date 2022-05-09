@@ -1,0 +1,20 @@
+
+
+            Class Object {
+                Constructor(x: Object) {}
+            }
+            Class Object_1 : Object {}
+            Class Program {
+                method(x,y: Object) {
+                    Return 1;
+                }
+
+                main() {
+                    Var x: Int = Self.method(New Object(), New Object());
+                    x = Self.method(Null, Null);
+                    x = Self.method(New Object(New Object()), New Object(Null));
+                    x = Self.method(New Object(New Object(New Object())), New Object(New Object(Null)));
+                    x = Self.method(New Object_1(), Null);
+                }
+            }
+        

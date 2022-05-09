@@ -1,1 +1,1 @@
-Type Mismatch In Statement: AssignStmt(Id(b),CallExpr(Self(),Id(some_method),[]))
+Type Mismatch In Expression: CallExpr(Self(),Id(object_method),[NewExpr(Id(Animal),[]),NewExpr(Id(Animal),[])])

@@ -33,7 +33,7 @@
                 }
             }
             Class Program : Object_1 {
-                sub_main() {
+                main() {
                     Self.method_1();
                     Self.method();
                     Program::$method();
@@ -51,6 +51,5 @@
 
                     Program::$method_o_1().o_1.method_o_1().o_1.method_o_1().o.method_o().o.method_o().method_1(); ## Fail ##
                 }
-                main() {}
             }
         

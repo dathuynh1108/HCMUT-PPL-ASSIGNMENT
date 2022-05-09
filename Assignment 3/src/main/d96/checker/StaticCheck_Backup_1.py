@@ -524,7 +524,8 @@ class StaticChecker(BaseVisitor):
     def visitArrayLiteral(self, ast, scope):
         type_of_element_list = [self.visit(value, scope) for value in ast.value]
         for type_of_element in type_of_element_list: 
-            if not D96_utils.compare(type_of_element, type_of_element_list[0]): raise IllegalArrayLiteral(ast)
+            if not D96_utils.compare(type_of_element, type_of_element_list[0]): 
+                raise IllegalArrayLiteral(ast)
         return ArrayType(len(type_of_element_list), type_of_element_list[0])
     
     # Statement:

@@ -3,9 +3,14 @@
                 Var a: Int;
             }
             Class Program : Object {
+                Var x: Int = 1;
                 main() {
                     Var a: Int = 1;
-                    a = Self.a;
+                    a = Self.x;
+                }
+                $method() {
+                    Var a: Int = 1;
+                    a = Self.x;
                 }
             }
         

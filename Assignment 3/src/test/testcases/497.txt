@@ -1,0 +1,10 @@
+
+            Class Program {
+                method() {
+                    Return 1;
+                }
+                main() {
+                    Val x: Int = Self.method();
+                }
+            }
+        

@@ -110,7 +110,7 @@ class CheckerSuite(unittest.TestCase):
                 Val x, y: Int = 1, 1;
             }
         """
-        expect = "Redeclared Attribute: x"
+        expect = "No Entry Point"
         self.assertTrue(TestChecker.test(input, expect, 408))
 
     def test_009_redeclare_class(self):
@@ -138,7 +138,7 @@ class CheckerSuite(unittest.TestCase):
                 x() {}
             }
         """
-        expect = "Redeclared Method: x"
+        expect = "No Entry Point"
         self.assertTrue(TestChecker.test(input, expect, 411))
 
     def test_012_redeclare_parameter(self):
@@ -162,7 +162,7 @@ class CheckerSuite(unittest.TestCase):
                 }
             }
         """
-        expect = "Undeclared Identifier: m"
+        expect = "Undeclared Attribute: a"
         self.assertTrue(TestChecker.test(input, expect, 413))
 
     def test_014_multi_layer_inheritance(self):
@@ -181,7 +181,7 @@ class CheckerSuite(unittest.TestCase):
                 }
             }
         """
-        expect = "Undeclared Identifier: x"
+        expect = "Undeclared Attribute: a"
         self.assertTrue(TestChecker.test(input, expect, 414))
 
     def test_015_inheritance_undeclare_class(self):
@@ -777,7 +777,7 @@ class CheckerSuite(unittest.TestCase):
                 }
             }
         """
-        expect = "Type Mismatch In Expression: NewExpr(Id(Object),[IntLit(1),IntLit(1)])"
+        expect = "Type Mismatch In Expression: NewExpr(Id(Object),[FloatLit(1.2),NewExpr(Id(Sub),[])])"
         self.assertTrue(TestChecker.test(input, expect, 447))
 
     def test_048_new_expression_without_constructor(self):
@@ -968,16 +968,15 @@ class CheckerSuite(unittest.TestCase):
                     Var b: Float = 1.2;
                     Var c: Boolean = True;
                     Var d: String = "abc";
+                    a = a - o.e;
                     a = a + o.a;
                     b = b + o.b;
                     c = c == o.c;
                     d = d +. o.d;
-                    a = a - o.e;
-                    a = a - o.f;
                 }
             }
         """
-        expect = "Undeclared Attribute: f"
+        expect = "Undeclared Attribute: a"
         self.assertTrue(TestChecker.test(input, expect, 457))
 
     def test_058_static_field_access_with_id(self):
@@ -1405,6 +1404,7 @@ class CheckerSuite(unittest.TestCase):
                     o = Object::$o.o.o.o.method().method().o.o.o.method();
                     o = Object::$method();
 
+                    ##
                     o = Object_1::$o;
                     o = Object_1::$o.o.o.o.method().method();
                     o = Object_1::$o.o.o.o.method().method().o.o.o;
@@ -1416,7 +1416,7 @@ class CheckerSuite(unittest.TestCase):
                     o = Program::$o.o.o.o.method().method().o.o.o;
                     o = Program::$o.o.o.o.method().method().o.o.o.method();
                     o = Program::$method();
-                    
+                    ##
                     ## Program : Object_1 : Object --> It can see attribute of itself, Object_1, and Object ##
 
                     ## Attribute of Object ##
@@ -1429,6 +1429,7 @@ class CheckerSuite(unittest.TestCase):
                     o = Object::$method().o.o.o.method();
 
                     ## Attribute of Object_1 ##
+                    ##
                     o = Object_1::$o_1;
                     o = Object_1::$o_1.o_1.o_1;
                     o = Object_1::$o_1.method_1();
@@ -1436,8 +1437,9 @@ class CheckerSuite(unittest.TestCase):
                     o = Object_1::$method_1();
                     o = Object_1::$method_1().o_1.o_1.o_1;
                     o = Object_1::$method_1().o_1.o_1.o_1.method_1().method_1();
-
+                    ##
                     ## Attribute of Program ##
+                    ##
                     o = Program::$o;
                     o = Program::$o.o.o;
                     o = Program::$o.method();
@@ -1452,9 +1454,13 @@ class CheckerSuite(unittest.TestCase):
                     o = Program::$method_1();
                     o = Program::$method_1().o_1.o_1.o_1;
                     o = Program::$method_1().o_1.o_1.o_1.method_1().method_1();
+                    ##
+                    
+                    
                     
                     ## Mix ##
                     ## OK, Program see Object_1, Object attribute ##
+                    ##
                     Var o_1: Object_1 = New Object_1();
                     o = o_1.o.o.o.o.o.method();     
                     o = o_1.o_1.o.o.o.o.method();   
@@ -1476,14 +1482,17 @@ class CheckerSuite(unittest.TestCase):
                     o = Program::$o_1.o_1.method_1().method_1().method();
                     o = Program::$o_1.o_1.method_1().method_1().o.o.method().method();
                     o = Program::$o_1.o_1.method_1().method_1().o_1.o_1.method_1().method_1().method();
-                    
+                    ##
                     Var o_o: Other_object = New Other_object();
                     ## OK, Program can see Other_object's method and Object's attribute##
                     o = o_o.method().method();      
                     o = o_o.method().method().o.o.o;
                     o = o_o.method().method().o.o.o.method().method();
 
-                    o = o_o.o.method();             ## Fail, Program can's see Other_object's attribute ##                 
+                    o = o_o.o.method();      
+                    ## Test inheritance ##
+                    Var o_1: Object_1 = New Object_1();
+                    o = o_1.o.o.o.o.o.method();                   
                 }
             }
         """
@@ -1496,13 +1505,18 @@ class CheckerSuite(unittest.TestCase):
                 Var a: Int;
             }
             Class Program : Object {
+                Var x: Int = 1;
                 main() {
                     Var a: Int = 1;
-                    a = Self.a;
+                    a = Self.x;
+                }
+                $method() {
+                    Var a: Int = 1;
+                    a = Self.x;
                 }
             }
         """
-        expect = "Illegal Member Access: FieldAccess(Self(),Id(a))"
+        expect = "Illegal Member Access: FieldAccess(Self(),Id(x))"
         self.assertTrue(TestChecker.test(input, expect, 475))
 
     def test_076_call_self_void_method_as_call_expression(self):
@@ -1517,12 +1531,18 @@ class CheckerSuite(unittest.TestCase):
                 }
             }
             Class Program : Object {
-                sub_main() {
+                Var a: Int;
+                method_int() {
+                    Return Self.a;
+                }
+                method_void() {
+                    Return;
+                }
+                main() {
                     Var a: Int = 1;
                     a = Self.method_int();
                     a = Self.method_void();
                 }
-                main() {}
             }
         """
         expect = "Type Mismatch In Expression: CallExpr(Self(),Id(method_void),[])"
@@ -1539,14 +1559,13 @@ class CheckerSuite(unittest.TestCase):
                     Return;
                 }
             }
-            Class Program : Object {
-                sub_main() {
+            Class Program {
+                main() {
                     Var o : Object = New Object();
                     Var a: Int = 1;
                     a = o.method_int();
                     a = o.method_void();
                 }
-                main() {}
             }
         """
         expect = "Type Mismatch In Expression: CallExpr(Id(o),Id(method_void),[])"
@@ -1611,18 +1630,21 @@ class CheckerSuite(unittest.TestCase):
             Class Program  {
                 main() {
                     Var i : Int = 1;
+                    Var j: Float = 1;
                     Var f: Float = 1.2;
                     f = i; 
-
+                    
                     Var o : Object = New Object();
                     Var o_1: Object_1 = New Object_1();
+                    o = Null;
+                    o_1 = Null;
                     o = o_1;
 
                     o_1 = o;
                 }
             }
         """
-        expect = "Type Mismatch In Statement: AssignStmt(Id(o_1),Id(o))"
+        expect = "Type Mismatch In Statement: AssignStmt(Id(o),Id(o_1))"
         self.assertTrue(TestChecker.test(input, expect, 480))
 
     def test_081_assign_statement_with_coercion_for_array(self):
@@ -1809,7 +1831,7 @@ class CheckerSuite(unittest.TestCase):
                 }
             }
         """
-        expect = "Cannot Assign To Constant: IntLit(1)"
+        expect = "Cannot Assign To Constant: AssignStmt(Id(a),IntLit(1))"
         self.assertTrue(TestChecker.test(input, expect, 486))
 
     def test_087_break_statement(self):
@@ -1900,6 +1922,19 @@ class CheckerSuite(unittest.TestCase):
             Class Animal : Object {}
             Class Dog : Animal {}
             Class Program : Object {
+                Var a: Int = 1;
+                Var b: Int = 1;
+                Constructor(a,b : Int) {}
+                method(a,b: Int) {
+                    Var o : Object = New Object(Self.a, Self.b);
+                    o = New Object(1, 1);
+                    o = New Object(1 + 1 - 1 *  1, 1 % 1);
+                    o = New Object(Self.a + Self.b - a - b, Self.a * Self.b % a % b);
+                    Return o;
+                }
+                method_float(a,b: Float) {
+                    Return a + b;
+                }
                 some_method() {
                     Var a: Int = 1;
                     Var b: Int = 1;
@@ -1930,7 +1965,7 @@ class CheckerSuite(unittest.TestCase):
                 main() {}
             }
         """
-        expect = "Type Mismatch In Statement: AssignStmt(Id(b),CallExpr(Self(),Id(some_method),[]))"
+        expect = "Type Mismatch In Expression: CallExpr(Self(),Id(object_method),[NewExpr(Id(Animal),[]),NewExpr(Id(Animal),[])])"
         self.assertTrue(TestChecker.test(input, expect, 490))
     
     def test_091_check_default_constructor(self):
@@ -1986,7 +2021,7 @@ class CheckerSuite(unittest.TestCase):
                 }
             }
             Class Program : Object_1 {
-                sub_main() {
+                main() {
                     Self.method_1();
                     Self.method();
                     Program::$method();
@@ -2004,7 +2039,6 @@ class CheckerSuite(unittest.TestCase):
 
                     Program::$method_o_1().o_1.method_o_1().o_1.method_o_1().o.method_o().o.method_o().method_1(); ## Fail ##
                 }
-                main() {}
             }
         """
         expect = "Undeclared Method: method_1"
@@ -2029,10 +2063,9 @@ class CheckerSuite(unittest.TestCase):
                 }
             }
             Class Program : Object {
-                sub_main() {
+                main() {
                     Self.o();
                 }
-                main() {}
             }
         """
         expect = "Undeclared Method: o"
@@ -2049,14 +2082,84 @@ class CheckerSuite(unittest.TestCase):
             }
 
             Class Program : Object {
-                sub_main() {
+                Var o : Object;
+                Var $o : Object;
+                method() {
+                    Return 1;
+                }
+                main() {
                     Self.method();
                 }
-                main() {}
             }
         """
         expect = "Type Mismatch In Statement: Call(Self(),Id(method),[])"
         self.assertTrue(TestChecker.test(input, expect, 494))
+    
+    def test_095_null_as_parameter(self):
+        input = r"""
+
+            Class Object {
+                Constructor(x: Object) {}
+            }
+            Class Object_1 : Object {}
+            Class Program {
+                method(x,y: Object) {
+                    Return 1;
+                }
+
+                main() {
+                    Var x: Int = Self.method(New Object(), New Object());
+                    x = Self.method(Null, Null);
+                    x = Self.method(New Object(New Object()), New Object(Null));
+                    x = Self.method(New Object(New Object(New Object())), New Object(New Object(Null)));
+                    x = Self.method(New Object_1(), Null);
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: CallExpr(Self(),Id(method),[NewExpr(Id(Object_1),[]),NullLiteral()])"
+        self.assertTrue(TestChecker.test(input, expect, 495))
+    
+    def test_096_illegal_constant_expression(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Val x: Int = 1;
+                    Var y: Int = 1;
+                    Var z: Int = x + y;
+                    Val const: Int = x + y + z;
+                }
+            }
+        """
+        expect = "Illegal Constant Expression: BinaryOp(+,BinaryOp(+,Id(x),Id(y)),Id(z))"
+        self.assertTrue(TestChecker.test(input, expect, 496))
+    
+    def test_097_illegal_constant_expression_for_call_expression(self):
+        input = r"""
+            Class Program {
+                method() {
+                    Return 1;
+                }
+                main() {
+                    Val x: Int = Self.method();
+                }
+            }
+        """
+        expect = "Illegal Constant Expression: CallExpr(Self(),Id(method),[])"
+        self.assertTrue(TestChecker.test(input, expect, 497))
+    
+    def test_098_special_case_const_array(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var a: Int = 1;
+                    Val x: Array[Int, 5] = Array(1, 2, 3, 4, 5);
+                    Val y: Array[Int, 5] = Array(a, a, a, a, a);
+                    Val z: Array[Int, 5] = Array(x[0], y[0], x[0], y[0], x[0]);
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: CallExpr(Self(),Id(method),[])"
+        self.assertTrue(TestChecker.test(input, expect, 498))
     
 
 

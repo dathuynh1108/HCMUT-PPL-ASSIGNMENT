@@ -16,9 +16,8 @@
                 }
             }
             Class Program : Object {
-                sub_main() {
+                main() {
                     Self.o();
                 }
-                main() {}
             }
         

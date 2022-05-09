@@ -1,1 +1,1 @@
-Undeclared Identifier: x
+Undeclared Attribute: a

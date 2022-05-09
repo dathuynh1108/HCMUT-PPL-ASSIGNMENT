@@ -1,0 +1,1 @@
+Type Mismatch In Expression: CallExpr(Self(),Id(method),[NewExpr(Id(Object_1),[]),NullLiteral()])

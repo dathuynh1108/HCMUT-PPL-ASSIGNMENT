@@ -4,11 +4,14 @@
             Class Program  {
                 main() {
                     Var i : Int = 1;
+                    Var j: Float = 1;
                     Var f: Float = 1.2;
                     f = i; 
-
+                    
                     Var o : Object = New Object();
                     Var o_1: Object_1 = New Object_1();
+                    o = Null;
+                    o_1 = Null;
                     o = o_1;
 
                     o_1 = o;

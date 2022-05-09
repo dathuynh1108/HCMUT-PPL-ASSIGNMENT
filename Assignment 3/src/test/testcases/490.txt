@@ -17,6 +17,19 @@
             Class Animal : Object {}
             Class Dog : Animal {}
             Class Program : Object {
+                Var a: Int = 1;
+                Var b: Int = 1;
+                Constructor(a,b : Int) {}
+                method(a,b: Int) {
+                    Var o : Object = New Object(Self.a, Self.b);
+                    o = New Object(1, 1);
+                    o = New Object(1 + 1 - 1 *  1, 1 % 1);
+                    o = New Object(Self.a + Self.b - a - b, Self.a * Self.b % a % b);
+                    Return o;
+                }
+                method_float(a,b: Float) {
+                    Return a + b;
+                }
                 some_method() {
                     Var a: Int = 1;
                     Var b: Int = 1;

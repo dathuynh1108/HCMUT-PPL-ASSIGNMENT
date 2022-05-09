@@ -1,1 +1,1 @@
-Illegal Member Access: FieldAccess(Self(),Id(a))
+Illegal Member Access: FieldAccess(Self(),Id(x))

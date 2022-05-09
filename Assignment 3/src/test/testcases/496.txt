@@ -1,0 +1,10 @@
+
+            Class Program {
+                main() {
+                    Val x: Int = 1;
+                    Var y: Int = 1;
+                    Var z: Int = x + y;
+                    Val const: Int = x + y + z;
+                }
+            }
+        
