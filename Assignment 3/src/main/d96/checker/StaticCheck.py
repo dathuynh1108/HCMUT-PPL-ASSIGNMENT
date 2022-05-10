@@ -198,7 +198,9 @@ class StaticChecker(BaseVisitor):
         
         # Check type
         if ast.value:
-            if isinstance(init_type, D96_type): init_type = init_type.type
+            if isinstance(init_type, D96_type): 
+                if init_type.kind != "imutable" and init_type.kind != "constant": raise IllegalConstantExpression(ast.value)
+                init_type = init_type.type
             if not D96_utils.compare(init_type, decl_type) and not D96_utils.coercion(init_type, decl_type, self.inheritance): raise TypeMismatchInConstant(ast)
 
 
@@ -516,7 +518,7 @@ class StaticChecker(BaseVisitor):
         in_loop, scope = scope
         rhs_type = self.visit(ast.exp, scope)
         lhs_type = self.visit(ast.lhs, scope)
-        print(lhs_type, rhs_type)
+        #print(lhs_type, rhs_type)
         if isinstance(lhs_type, D96_type): 
             if lhs_type.kind == "imutable" or lhs_type.kind == "constant": raise CannotAssignToConstant(ast)
             lhs_type = lhs_type.type

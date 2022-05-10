@@ -1223,11 +1223,12 @@ class CheckerSuite(unittest.TestCase):
                     Var o: Object = New Object();
                     o = o.method().method().method().method().method();
                     Var a: Int = 1;
-                    a = o.method().method().a; ## Fail because Program class only see Object class's method ##
+                    a = o.method().method().a; 
+                    a = o.method().method().b;
                 }
             }
         """
-        expect = "Undeclared Attribute: a"
+        expect = "Undeclared Attribute: b"
         self.assertTrue(TestChecker.test(input, expect, 468))
     
     def test_069_chain_of_static_method_and_instance_method_call_expression_another_class(self):
@@ -1259,11 +1260,12 @@ class CheckerSuite(unittest.TestCase):
                     o = Object::$o;
                     o = Object::$method();
                     o = Object::$method().method().method().method();
-                    a = Object::$method().method().method().method().a; ## Fail because Program class only see Object class's method ##
+                    a = Object::$method().method().method().method().a; 
+                    a = Object::$method().method().method().method().b; 
                 }
             }
         """
-        expect = "Undeclared Attribute: a"
+        expect = "Undeclared Attribute: b"
         self.assertTrue(TestChecker.test(input, expect, 469))
     
     def test_070_call_instance_method_as_attribute(self):
@@ -1724,10 +1726,12 @@ class CheckerSuite(unittest.TestCase):
                             Var a: Int = 1;
                         }
                     }
+                    Var x: Int = 1;
+                    Val x: Int = 1;
                 }
             }
         """
-        expect = "[]"
+        expect = "Redeclared Constant: x"
         self.assertTrue(TestChecker.test(input, expect, 483)) 
     
     def test_084_if_statement(self):
@@ -2136,15 +2140,21 @@ class CheckerSuite(unittest.TestCase):
     def test_097_illegal_constant_expression_for_call_expression(self):
         input = r"""
             Class Program {
-                method() {
+                method_val() {
                     Return 1;
                 }
+                method_var() {
+                    Var a: Int = 1;
+                    Return a + 1;
+                }
                 main() {
-                    Val x: Int = Self.method();
+                    Val x: Int = Self.method_val();
+                    Val y: Int = Self.method_var();
+
                 }
             }
         """
-        expect = "Illegal Constant Expression: CallExpr(Self(),Id(method),[])"
+        expect = "Illegal Constant Expression: CallExpr(Self(),Id(method_var),[])"
         self.assertTrue(TestChecker.test(input, expect, 497))
     
     def test_098_special_case_const_array(self):
@@ -2155,25 +2165,14 @@ class CheckerSuite(unittest.TestCase):
                     Val x: Array[Int, 5] = Array(1, 2, 3, 4, 5);
                     Val y: Array[Int, 5] = Array(a, a, a, a, a);
                     Val z: Array[Int, 5] = Array(x[0], y[0], x[0], y[0], x[0]);
+                    Val t: Array[Array[Int ,3], 2] = Array(Array(1,2,1.2), Array(1,2,3)); ## Throw which array??? ##
                 }
             }
         """
-        expect = "Type Mismatch In Expression: CallExpr(Self(),Id(method),[])"
+        expect = "Illegal Array Literal: [IntLit(1),IntLit(2),FloatLit(1.2)]"
         self.assertTrue(TestChecker.test(input, expect, 498))
 
-    def test_098_special_case_const_array(self):
-        input = r"""
-            Class Program {
-                main() {
-                    Var a: Int = 1;
-                    Val x: Array[Int, 5] = Array(1, 2, 3, 4, 5);
-                    Val y: Array[Int, 5] = Array(a, a, a, a, a);
-                    Val z: Array[Int, 5] = Array(x[0], y[0], x[0], y[0], x[0]);
-                }
-            }
-        """
-        expect = "Type Mismatch In Expression: CallExpr(Self(),Id(method),[])"
-        self.assertTrue(TestChecker.test(input, expect, 498)) 
+
     
 
 
