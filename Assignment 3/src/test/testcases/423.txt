@@ -1,6 +1,33 @@
 
-            Class Object {main(){}}
             Class Program {
-                main(x: Int) {}
+                main() {
+                    If (True) {
+                        ## Raise this if ##
+                        If (!True) {
+                            If (True) {}
+                            Elseif (True) {}
+                            Else {}
+                        }
+                        Elseif (False) {
+                            If (True) {}
+                            Elseif (True) {}
+                            Else {}
+                        }
+                        Elseif (False) {
+                            If (True) {}
+                            Elseif (True) {}
+                            Else {}
+                        }
+                        Elseif (1) {
+                            If (True) {}
+                            Elseif (True) {}
+                            Else {}
+                        }
+                        ## ------------- ##
+                    }
+                    Elseif (True) {}
+                    Elseif (True) {}
+                    Elseif (True) {}
+                }
             }
         

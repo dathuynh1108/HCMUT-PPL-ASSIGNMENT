@@ -281,16 +281,6 @@ class CheckerSuite(unittest.TestCase):
         expect = "No Entry Point"
         self.assertTrue(TestChecker.test(input, expect, 422))
 
-    def test_023_no_entry_point_3(self):
-        input = r"""
-            Class Object {main(){}}
-            Class Program {
-                main(x: Int) {}
-            }
-        """
-        expect = "No Entry Point"
-        self.assertTrue(TestChecker.test(input, expect, 423))
-
     def test_024_unary_op_1(self):
         input = r"""
             Class Program {
@@ -2172,25 +2162,71 @@ class CheckerSuite(unittest.TestCase):
                 }
             }
         """
-        expect = "Illegal Array Literal: [IntLit(1),IntLit(2),FloatLit(1.2)]"
+        expect = "Illegal Array Literal: [[IntLit(1),IntLit(2),FloatLit(1.2)],[IntLit(1),IntLit(2),IntLit(3)]]"
         self.assertTrue(TestChecker.test(input, expect, 498))
     
-    def test_099_elseif_statement_fail(self):
+    def test_099_if_elseif_statement_fail(self):
         input = r"""
             Class Program {
                 main() {
                     If (True) {}
                     Elseif (True) {
-                        If (True) {}
+                        ## Need raise this if-elseif-else structure ##
+                        ## ---------------------------------------- ##
+                        If (!True) {
+                            If (True) {}
+                            Elseif (True) {}
+                            Elseif (False) {}
+                            Else {}
+                        }
                         Elseif (1) {}
+                        Elseif (2) {}
                         Else {}
+                        ## ---------------------------------------- ##
                     }
                     Else {}  
                 }
             }
         """
-        expect = "Illegal Array Literal: [IntLit(1),IntLit(2),FloatLit(1.2)]"
+        expect = "Type Mismatch In Statement: If(UnaryOp(!,BooleanLit(True)),Block([If(BooleanLit(True),Block([]),If(BooleanLit(True),Block([]),If(BooleanLit(False),Block([]),Block([]))))]),If(IntLit(1),Block([]),If(IntLit(2),Block([]),Block([]))))"
         self.assertTrue(TestChecker.test(input, expect, 499))
+
+    def test_023_if_elseif_statement_fail(self):
+        input = r"""
+            Class Program {
+                main() {
+                    If (True) {
+                        ## Raise this if ##
+                        If (!True) {
+                            If (True) {}
+                            Elseif (True) {}
+                            Else {}
+                        }
+                        Elseif (False) {
+                            If (True) {}
+                            Elseif (True) {}
+                            Else {}
+                        }
+                        Elseif (False) {
+                            If (True) {}
+                            Elseif (True) {}
+                            Else {}
+                        }
+                        Elseif (1) {
+                            If (True) {}
+                            Elseif (True) {}
+                            Else {}
+                        }
+                        ## ------------- ##
+                    }
+                    Elseif (True) {}
+                    Elseif (True) {}
+                    Elseif (True) {}
+                }
+            }
+        """
+        expect = "Type Mismatch In Statement: If(UnaryOp(!,BooleanLit(True)),Block([If(BooleanLit(True),Block([]),If(BooleanLit(True),Block([]),Block([])))]),If(BooleanLit(False),Block([If(BooleanLit(True),Block([]),If(BooleanLit(True),Block([]),Block([])))]),If(BooleanLit(False),Block([If(BooleanLit(True),Block([]),If(BooleanLit(True),Block([]),Block([])))]),If(IntLit(1),Block([If(BooleanLit(True),Block([]),If(BooleanLit(True),Block([]),Block([])))])))))"
+        self.assertTrue(TestChecker.test(input, expect, 423))
 
 
     

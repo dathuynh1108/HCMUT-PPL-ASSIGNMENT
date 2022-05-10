@@ -505,7 +505,10 @@ class StaticChecker(BaseVisitor):
         return ast
 
     def visitArrayLiteral(self, ast, scope):
-        type_of_element_list = [self.visit(value, scope) for value in ast.value]
+        try:
+            type_of_element_list = [self.visit(value, scope) for value in ast.value]
+        except IllegalArrayLiteral:
+            raise IllegalArrayLiteral(ast)
         for type_of_element in type_of_element_list: 
             if not D96_utils.compare(type_of_element, type_of_element_list[0]): raise IllegalArrayLiteral(ast)
         return ArrayType(len(type_of_element_list), type_of_element_list[0])
@@ -537,13 +540,35 @@ class StaticChecker(BaseVisitor):
 
     def visitIf(self, ast, scope): 
         param = scope
-        #in_loop, scope = scope
+        # ------------------------------------------------
+        # scope = scope[1]
+        # condition_type = self.visit(ast.expr, scope)
+        # if isinstance(condition_type, D96_type): condition_type = condition_type.type
+        # if type(condition_type) != BoolType: raise TypeMismatchInStatement(ast)
+        # self.visit(ast.thenStmt, param)
+        # if ast.elseStmt: self.visit(ast.elseStmt, param) 
+        # -------------------------------------------------
         scope = scope[1]
         condition_type = self.visit(ast.expr, scope)
         if isinstance(condition_type, D96_type): condition_type = condition_type.type
-        if type(condition_type) != BoolType: raise TypeMismatchInStatement(ast)
+        if type(condition_type) != BoolType: 
+            if self.top_level_if_statement: raise TypeMismatchInStatement(self.top_level_if_statement)
+            raise TypeMismatchInStatement(ast)
+        
+        # Reset when get in then statement, there is no top_if, after that restore value of top_if
+        save_top_level_if_statement = self.top_level_if_statement
+        self.top_level_if_statement = None
         self.visit(ast.thenStmt, param)
+        self.top_level_if_statement = save_top_level_if_statement
+
+        # save_top_level_if_statement = self.top_level_if_statement
+        if isinstance(ast.elseStmt, If):
+            # If Elsestmt is If --> Elseif branch --> If top_if is set, not change (This is not first elseif stmt)
+            # Else --> Get in new scope --> top_if = None
+            if self.top_level_if_statement is None: self.top_level_if_statement = ast
+        else: self.top_level_if_statement = None
         if ast.elseStmt: self.visit(ast.elseStmt, param) 
+        self.top_level_if_statement = save_top_level_if_statement
 
     def visitFor(self, ast, scope): 
         in_loop, scope = scope
