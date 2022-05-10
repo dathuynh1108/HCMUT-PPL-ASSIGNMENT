@@ -1,5 +1,8 @@
 *   File StaticCheck:
-    -   Constant array literal bỏ qua Illegal Constant Expression (Chưa sửa)
+    -   If Elseif ném nguyên cấu trúc if-elseif-else
+    -   Tính mutable / imutable cho call expression
+    -   Illegal Array Literal ném nguyên Array lớn
+    -   Constant array literal bỏ qua Illegal Constant Expression 
 *   File StaticCheck_Backup_1:
     -   Class scope: public tất cả các attribute và method
     -   Không xét kế thừa
@@ -12,7 +15,3 @@
     -   Suy diễn kiểu
 *   File StaticCheck_Backup_3:
     -   Method và attribute khác tên
-**  Problem:
-    -   Ném gì trong Elseif
-    -   Const array literal nhận phần tử mutable và call được không
-    -   Illegal Array ném nguyên array

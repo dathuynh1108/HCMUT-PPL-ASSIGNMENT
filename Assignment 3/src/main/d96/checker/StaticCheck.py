@@ -3,13 +3,13 @@
  * @author Huynh Thanh Dat
 """
 
-# from AST import *
-# from Visitor import *
-# from StaticError import *
-
-from main.d96.utils.AST import *
-from main.d96.utils.Visitor import *
+from AST import *
+from Visitor import *
 from StaticError import *
+
+# from main.d96.utils.AST import *
+# from main.d96.utils.Visitor import *
+# from StaticError import *
 
 class D96_type:
     # Type use for LHS Symbol: ID, Field Access, ArrayCell
@@ -145,10 +145,14 @@ class StaticChecker(BaseVisitor):
             if ast.parentname.name not in scope["global"]: raise Undeclared(Class(), ast.parentname.name)
             self.inheritance[ast.classname.name] = ast.parentname.name
         else: self.inheritance[ast.classname.name] = None
+        has_main_method = False
         for mem in ast.memlist: 
-            if ast.classname.name == "Program" and isinstance(mem, MethodDecl) and mem.name.name == "main" and mem.param != []: raise NoEntryPoint()
-            self.visit(mem, scope) 
-
+            self.visit(mem, scope)
+            if ast.classname.name == "Program" and isinstance(mem, MethodDecl) and mem.name.name == "main": 
+                if mem.param != []: raise NoEntryPoint()
+                else: has_main_method = True
+            
+        if ast.classname.name == "Program" and not has_main_method: raise NoEntryPoint()
         self.current_class = None
         
 
