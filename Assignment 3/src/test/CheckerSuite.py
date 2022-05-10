@@ -2160,6 +2160,20 @@ class CheckerSuite(unittest.TestCase):
         """
         expect = "Type Mismatch In Expression: CallExpr(Self(),Id(method),[])"
         self.assertTrue(TestChecker.test(input, expect, 498))
+
+    def test_098_special_case_const_array(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var a: Int = 1;
+                    Val x: Array[Int, 5] = Array(1, 2, 3, 4, 5);
+                    Val y: Array[Int, 5] = Array(a, a, a, a, a);
+                    Val z: Array[Int, 5] = Array(x[0], y[0], x[0], y[0], x[0]);
+                }
+            }
+        """
+        expect = "Type Mismatch In Expression: CallExpr(Self(),Id(method),[])"
+        self.assertTrue(TestChecker.test(input, expect, 498)) 
     
 
 
