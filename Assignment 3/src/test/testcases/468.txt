@@ -18,7 +18,8 @@
                     Var o: Object = New Object();
                     o = o.method().method().method().method().method();
                     Var a: Int = 1;
-                    a = o.method().method().a; ## Fail because Program class only see Object class's method ##
+                    a = o.method().method().a; 
+                    a = o.method().method().b;
                 }
             }
         

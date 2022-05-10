@@ -26,7 +26,8 @@
                     o = Object::$o;
                     o = Object::$method();
                     o = Object::$method().method().method().method();
-                    a = Object::$method().method().method().method().a; ## Fail because Program class only see Object class's method ##
+                    a = Object::$method().method().method().method().a; 
+                    a = Object::$method().method().method().method().b; 
                 }
             }
         

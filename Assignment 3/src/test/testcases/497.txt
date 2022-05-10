@@ -1,10 +1,16 @@
 
             Class Program {
-                method() {
+                method_val() {
                     Return 1;
                 }
+                method_var() {
+                    Var a: Int = 1;
+                    Return a + 1;
+                }
                 main() {
-                    Val x: Int = Self.method();
+                    Val x: Int = Self.method_val();
+                    Val y: Int = Self.method_var();
+
                 }
             }
         

@@ -1,13 +1,7 @@
 
-            Class Object {
-                Constructor(a,b : Int) {}
-            }
+            Class Object {main(){}}
             Class Program {
-
-                main() {
-                    Var a: Int = 1;
-                    Var b: Int = 1;
-                    Var o : Object = New Object(a,b);
-                }
+                main(x: Int) {}
+                main() {}
             }
         

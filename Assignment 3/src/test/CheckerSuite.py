@@ -273,7 +273,10 @@ class CheckerSuite(unittest.TestCase):
     def test_022_no_entry_point_2(self):
         input = r"""
             Class Object {main(){}}
-            Class Program {}
+            Class Program {
+                main(x: Int) {}
+                main() {}
+            }
         """
         expect = "No Entry Point"
         self.assertTrue(TestChecker.test(input, expect, 422))
@@ -2171,6 +2174,23 @@ class CheckerSuite(unittest.TestCase):
         """
         expect = "Illegal Array Literal: [IntLit(1),IntLit(2),FloatLit(1.2)]"
         self.assertTrue(TestChecker.test(input, expect, 498))
+    
+    def test_099_elseif_statement_fail(self):
+        input = r"""
+            Class Program {
+                main() {
+                    If (True) {}
+                    Elseif (True) {
+                        If (True) {}
+                        Elseif (1) {}
+                        Else {}
+                    }
+                    Else {}  
+                }
+            }
+        """
+        expect = "Illegal Array Literal: [IntLit(1),IntLit(2),FloatLit(1.2)]"
+        self.assertTrue(TestChecker.test(input, expect, 499))
 
 
     

@@ -8,6 +8,8 @@
                             Var a: Int = 1;
                         }
                     }
+                    Var x: Int = 1;
+                    Val x: Int = 1;
                 }
             }
         

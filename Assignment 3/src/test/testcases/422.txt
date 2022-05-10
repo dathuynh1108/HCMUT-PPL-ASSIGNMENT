@@ -1,4 +1,7 @@
 
             Class Object {main(){}}
-            Class Program {}
+            Class Program {
+                main(x: Int) {}
+                main() {}
+            }
         

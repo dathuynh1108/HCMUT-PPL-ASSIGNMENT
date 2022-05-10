@@ -118,6 +118,7 @@ class StaticChecker(BaseVisitor):
         self.inheritance = {}  # inheritance list, parent of each class
         self.current_method = None
         self.current_class = None
+        self.top_level_if_statement = None
     
     def check(self):
         return self.visit(self.ast, None)
@@ -128,9 +129,8 @@ class StaticChecker(BaseVisitor):
         scope["global"] = {}
         has_program_class = False
         for decl in ast.decl: 
-            entry_point_fail = self.visit(decl, scope)
+            self.visit(decl, scope)
             if decl.classname.name == "Program": has_program_class = True
-            if entry_point_fail: raise NoEntryPoint()
         if not has_program_class: raise NoEntryPoint()
         return []
     
@@ -145,14 +145,11 @@ class StaticChecker(BaseVisitor):
             if ast.parentname.name not in scope["global"]: raise Undeclared(Class(), ast.parentname.name)
             self.inheritance[ast.classname.name] = ast.parentname.name
         else: self.inheritance[ast.classname.name] = None
-        #print_scope(scope)
-        entry_point_fail = True if ast.classname.name == "Program" else False
         for mem in ast.memlist: 
+            if ast.classname.name == "Program" and isinstance(mem, MethodDecl) and mem.name.name == "main" and mem.param != []: raise NoEntryPoint()
             self.visit(mem, scope) 
-            if ast.classname.name == "Program" and isinstance(mem, MethodDecl) and mem.name.name == "main" and mem.param == []: entry_point_fail = False
-        
+
         self.current_class = None
-        return entry_point_fail
         
 
     def visitAttributeDecl(self, ast, scope):

@@ -1,1 +1,1 @@
-Illegal Constant Expression: [Id(a),Id(a),Id(a),Id(a),Id(a)]
+Illegal Array Literal: [IntLit(1),IntLit(2),FloatLit(1.2)]
