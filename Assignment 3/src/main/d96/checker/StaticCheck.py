@@ -188,11 +188,10 @@ class StaticChecker(BaseVisitor):
         if ast.value is None: raise IllegalConstantExpression(ast.value)
         decl_type = self.visit(ast.constType, scope)
         init_type = self.visit(ast.value, scope) if ast.value else None
-        print(ast.value, init_type)
         if "local" not in scope:  # attribute
             kind = "instance" if isinstance(kind, Instance) else "static"
             if scope["global"][self.current_class].find_attribute(ast.constant.name): raise Redeclared(Attribute(), ast.constant.name)
-            scope["global"][self.current_class].insert_attribute(ast.constant.name, D96_type("imutable", kind, decl_type))
+            scope["global"][self.current_class].insert_attribute(ast.constant.name, D96_type("immutable", kind, decl_type))
 
         if "local" in scope: # if not in class context because class context has been check
             if ast.constant.name in scope["local"][0]: raise Redeclared(kind, ast.constant.name)
@@ -201,7 +200,7 @@ class StaticChecker(BaseVisitor):
         # Check type
         if ast.value:
             if isinstance(init_type, D96_type): 
-                if init_type.kind != "imutable" and init_type.kind != "constant": raise IllegalConstantExpression(ast.value)
+                if init_type.kind != "immutable" and init_type.kind != "constant": raise IllegalConstantExpression(ast.value)
                 init_type = init_type.type
             if not D96_utils.compare(init_type, decl_type) and not D96_utils.coercion(init_type, decl_type, self.inheritance): raise TypeMismatchInConstant(ast)
 
@@ -232,11 +231,11 @@ class StaticChecker(BaseVisitor):
     
     # Expression: 
     def visitUnaryOp(self, ast, scope): 
-        expression_kind = "imutable"
+        expression_kind = "immutable"
         body_type = self.visit(ast.body, scope)
         # take the type
         if isinstance(body_type, D96_type): 
-            if body_type.kind != "imutable" and body_type.kind != "constant": expression_kind = "mutable"
+            if body_type.kind != "immutable" and body_type.kind != "constant": expression_kind = "mutable"
             body_type = body_type.type
         if ast.op == "-":
             if type(body_type) == IntType or type(body_type) == FloatType: return D96_type(expression_kind, None, body_type)
@@ -245,15 +244,15 @@ class StaticChecker(BaseVisitor):
         raise TypeMismatchInExpression(ast)
     
     def visitBinaryOp(self, ast, scope): 
-        expression_kind = "imutable"
+        expression_kind = "immutable"
         left_type = self.visit(ast.left, scope)
         right_type = self.visit(ast.right, scope)
         #print(left_type, right_type)
         if isinstance(left_type, D96_type): 
-            if left_type.kind != "imutable" and left_type.kind != "constant": expression_kind = "mutable"
+            if left_type.kind != "immutable" and left_type.kind != "constant": expression_kind = "mutable"
             left_type = left_type.type
         if isinstance(right_type, D96_type): 
-            if right_type.kind != "imutable" and right_type.kind != "constant": expression_kind = "mutable"
+            if right_type.kind != "immutable" and right_type.kind != "constant": expression_kind = "mutable"
             right_type = right_type.type
         
         if ast.op in ["+", "-", "*", "/"]:
@@ -304,7 +303,7 @@ class StaticChecker(BaseVisitor):
                 argument_type = [self.visit(param, scope) for param in ast.param]
                 if not D96_utils.check_param_type(class_constructor, argument_type, self.inheritance): raise TypeMismatchInExpression(ast)
             else: raise Undeclared(Method(), "Constructor")
-        return D96_type("imutable", None, return_type)
+        return D96_type("immutable", None, return_type)
 
     def visitArrayCell(self, ast, scope): 
         array_type = self.visit(ast.arr, scope)
@@ -379,10 +378,10 @@ class StaticChecker(BaseVisitor):
             if ast.obj.name in scope["global"]: raise IllegalMemberAccess(ast)
             raise Undeclared(Identifier(), ast.obj.name)
         
-        expression_kind = "imutable"
+        expression_kind = "immutable"
         obj_type = self.visit(ast.obj, scope)
         if isinstance(obj_type, D96_type): 
-            if obj_type.kind != "imutable": expression_kind = "mutable"
+            if obj_type.kind != "immutable": expression_kind = "mutable"
             obj_type = obj_type.type
         if type(obj_type) != ClassType: raise TypeMismatchInExpression(ast)
         # Class Scope: Current class can see instance attribute of it or it's parent
@@ -393,7 +392,7 @@ class StaticChecker(BaseVisitor):
         if field_name_type.kind == "method": raise Undeclared(Attribute(), ast.fieldname.name)
         if field_name_type.si_kind == "static": raise IllegalMemberAccess(ast)
         # if const_expresion and field_name_type.kind == "mutable": raise IllegalConstantExpression(const_expresion)
-        if field_name_type.kind != "imutable": expression_kind = "mutable"
+        if field_name_type.kind != "immutable": expression_kind = "mutable"
         return D96_type(expression_kind, None, field_name_type.type)
 
     def visitCallExpr(self, ast, scope):
@@ -525,7 +524,7 @@ class StaticChecker(BaseVisitor):
         lhs_type = self.visit(ast.lhs, scope)
         #print(lhs_type, rhs_type)
         if isinstance(lhs_type, D96_type): 
-            if lhs_type.kind == "imutable" or lhs_type.kind == "constant": raise CannotAssignToConstant(ast)
+            if lhs_type.kind == "immutable" or lhs_type.kind == "constant": raise CannotAssignToConstant(ast)
             lhs_type = lhs_type.type
         if isinstance(rhs_type, D96_type): rhs_type = rhs_type.type
         if not D96_utils.compare(lhs_type, rhs_type) and not D96_utils.coercion(rhs_type, lhs_type, self.inheritance): raise TypeMismatchInStatement(ast)
@@ -582,7 +581,7 @@ class StaticChecker(BaseVisitor):
         expr1_type = self.visit(ast.expr1, scope)
         expr2_type = self.visit(ast.expr2, scope)
         # "In the case of a for statement, just the assignment part in this statement is printed out in the error message."
-        if id_type.kind == "constant" or id_type.kind == "imutable": raise CannotAssignToConstant(Assign(ast.id, ast.expr1))
+        if id_type.kind == "constant" or id_type.kind == "immutable": raise CannotAssignToConstant(Assign(ast.id, ast.expr1))
         id_type = id_type.type
         if isinstance(expr1_type, D96_type): expr1_type = expr1_type.type
         if isinstance(expr2_type, D96_type): expr2_type = expr2_type.type
