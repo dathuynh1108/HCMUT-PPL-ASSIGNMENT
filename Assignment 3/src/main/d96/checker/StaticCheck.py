@@ -433,6 +433,7 @@ class StaticChecker(BaseVisitor):
             obj_type = D96_utils.find_local(ast.obj.name, scope["local"])
             if obj_type:
                 if isinstance(obj_type, D96_type): obj_type = obj_type.type
+                if type(obj_type) != ClassType: raise TypeMismatchInExpression(ast)
                 call_method = D96_utils.find_method(obj_type.classname.name, ast.method.name, scope["global"], self.inheritance)
                 if call_method is None: raise Undeclared(Method(), ast.method.name)
                 if call_method.kind != "method": raise Undeclared(Method(), ast.method.name)
@@ -657,6 +658,7 @@ class StaticChecker(BaseVisitor):
             obj_type = D96_utils.find_local(ast.obj.name, scope["local"])
             if obj_type:
                 if isinstance(obj_type, D96_type): obj_type = obj_type.type
+                if type(obj_type) != ClassType: raise TypeMismatchInStatement(ast)
                 call_method = D96_utils.find_method(obj_type.classname.name, ast.method.name, scope["global"], self.inheritance)
                 if call_method is None: raise Undeclared(Method(), ast.method.name)
                 if call_method.kind != "method": raise Undeclared(Method(), ast.method.name)
