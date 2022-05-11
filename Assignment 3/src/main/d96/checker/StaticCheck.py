@@ -235,7 +235,7 @@ class StaticChecker(BaseVisitor):
         body_type = self.visit(ast.body, scope)
         # take the type
         if isinstance(body_type, D96_type): 
-            if body_type.kind != "mutable" and body_type.kind != "constant": expression_kind = "mutable"
+            if body_type.kind != "imutable" and body_type.kind != "constant": expression_kind = "mutable"
             body_type = body_type.type
         if ast.op == "-":
             if type(body_type) == IntType or type(body_type) == FloatType: return D96_type(expression_kind, None, body_type)
@@ -249,10 +249,10 @@ class StaticChecker(BaseVisitor):
         right_type = self.visit(ast.right, scope)
         #print(left_type, right_type)
         if isinstance(left_type, D96_type): 
-            if left_type.kind != "mutable" and left_type.kind != "constant": expression_kind = "mutable"
+            if left_type.kind != "imutable" and left_type.kind != "constant": expression_kind = "mutable"
             left_type = left_type.type
         if isinstance(right_type, D96_type): 
-            if right_type.kind != "mutable" and right_type.kind != "constant": expression_kind = "mutable"
+            if right_type.kind != "imutable" and right_type.kind != "constant": expression_kind = "mutable"
             right_type = right_type.type
         
         if ast.op in ["+", "-", "*", "/"]:
@@ -303,7 +303,7 @@ class StaticChecker(BaseVisitor):
                 argument_type = [self.visit(param, scope) for param in ast.param]
                 if not D96_utils.check_param_type(class_constructor, argument_type, self.inheritance): raise TypeMismatchInExpression(ast)
             else: raise Undeclared(Method(), "Constructor")
-        return D96_type("mutable", None, return_type)
+        return D96_type("imutable", None, return_type)
 
     def visitArrayCell(self, ast, scope): 
         array_type = self.visit(ast.arr, scope)
