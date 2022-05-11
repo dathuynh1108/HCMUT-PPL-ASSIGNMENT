@@ -188,6 +188,7 @@ class StaticChecker(BaseVisitor):
         if ast.value is None: raise IllegalConstantExpression(ast.value)
         decl_type = self.visit(ast.constType, scope)
         init_type = self.visit(ast.value, scope) if ast.value else None
+        print(ast.value, init_type)
         if "local" not in scope:  # attribute
             kind = "instance" if isinstance(kind, Instance) else "static"
             if scope["global"][self.current_class].find_attribute(ast.constant.name): raise Redeclared(Attribute(), ast.constant.name)
@@ -261,8 +262,8 @@ class StaticChecker(BaseVisitor):
                 and 
                 (type(right_type) == IntType or type(right_type) == FloatType)
             ): raise TypeMismatchInExpression(ast)
-            if type(left_type) == FloatType or type(right_type) == FloatType: return FloatType()
-            return D96_type(expression_kind, None, FloatType()) if ast.op == "/" else D96_type(expression_kind, None,IntType())
+            if type(left_type) == FloatType or type(right_type) == FloatType: return D96_type(expression_kind, None, FloatType())
+            return D96_type(expression_kind, None, FloatType()) if ast.op == "/" else D96_type(expression_kind, None, IntType())
         
         if ast.op == "%":
             if type(left_type) == IntType and type(right_type) == IntType: return D96_type(expression_kind, None, left_type)

@@ -2227,6 +2227,9 @@ class CheckerSuite(unittest.TestCase):
         """
         expect = "Type Mismatch In Statement: If(UnaryOp(!,BooleanLit(True)),Block([If(BooleanLit(True),Block([]),If(BooleanLit(True),Block([]),Block([])))]),If(BooleanLit(False),Block([If(BooleanLit(True),Block([]),If(BooleanLit(True),Block([]),Block([])))]),If(BooleanLit(False),Block([If(BooleanLit(True),Block([]),If(BooleanLit(True),Block([]),Block([])))]),If(IntLit(1),Block([If(BooleanLit(True),Block([]),If(BooleanLit(True),Block([]),Block([])))])))))"
         self.assertTrue(TestChecker.test(input, expect, 423))
+    
+
+
 
 
     

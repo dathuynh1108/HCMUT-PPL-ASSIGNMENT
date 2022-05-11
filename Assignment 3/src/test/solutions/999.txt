@@ -1,1 +1,1 @@
-No Entry Point
+Illegal Constant Expression: BinaryOp(+,CallExpr(Self(),Id(func1),[]),Id(x))

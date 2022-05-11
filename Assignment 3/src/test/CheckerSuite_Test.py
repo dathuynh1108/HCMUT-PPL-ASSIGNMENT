@@ -4,11 +4,22 @@ from AST import *
 
 class CheckerSuite(unittest.TestCase):
     def test_999(self):
-        input = r"""
-            Class Object {main(){}}
+        input = """    
             Class Program {
-                main(x: Int) {}
-                main() {}
+                func1() {
+                    Return 1;
+                }
+                
+                func2() {
+                    Return 2.3;
+                }
+                
+                main() {
+                    Var x : Float = Self.func1();
+                    Val y : Float = Self.func2() + 1;
+                    Val z : Float = Self.func1() + Self.func2() / Self.func1() * Self.func2();
+                    Val m : Float = Self.func1() + x;
+                }
             }
         """
         expect = "Type Mismatch In Expression: BinaryOp(==.,Id(a),IntLit(1))"
