@@ -49,7 +49,7 @@
                 test_method () {
                     Var a: Float = Self.some_method();
                     Var b: Int = 1;
-                    b = Self.object_method(New Object(1,1), New Object());
+                    b = Self.object_method(New Object(1,1), New Object(1, 1));
                     b = Self.object_method(New Animal(), New Animal());
                     b = Self.object_method(New Dog(), New Dog());
                     Var d_1, d_2 : Animal = New Dog(), New Animal();

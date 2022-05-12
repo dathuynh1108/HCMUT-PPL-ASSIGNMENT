@@ -783,7 +783,7 @@ class CheckerSuite(unittest.TestCase):
                 }
             }
         """
-        expect = "Undeclared Method: Constructor"
+        expect = "Type Mismatch In Expression: NewExpr(Id(Object),[IntLit(1)])"
         self.assertTrue(TestChecker.test(input, expect, 448))
 
     def test_049_default_constructor_and_user_define_constructor(self):
@@ -794,13 +794,13 @@ class CheckerSuite(unittest.TestCase):
             Class Program {
                 main() {
                     Var a: Object = Null;
-                    Var b: Object = New Object();
                     Var c: Object = New Object(1);
+                    Var b: Object = New Object();
                     Var d: Object = New Object(1, 2);
                 }
             }
         """
-        expect = "Type Mismatch In Expression: NewExpr(Id(Object),[IntLit(1),IntLit(2)])"
+        expect = "Type Mismatch In Expression: NewExpr(Id(Object),[])"
         self.assertTrue(TestChecker.test(input, expect, 449))
 
     def test_050_array_cell_simple(self):
@@ -1951,7 +1951,7 @@ class CheckerSuite(unittest.TestCase):
                 test_method () {
                     Var a: Float = Self.some_method();
                     Var b: Int = 1;
-                    b = Self.object_method(New Object(1,1), New Object());
+                    b = Self.object_method(New Object(1,1), New Object(1, 1));
                     b = Self.object_method(New Animal(), New Animal());
                     b = Self.object_method(New Dog(), New Dog());
                     Var d_1, d_2 : Animal = New Dog(), New Animal();
@@ -1970,16 +1970,18 @@ class CheckerSuite(unittest.TestCase):
             Class Object {
                 Constructor(x: Int) {}
             }
+            Class Default {}
             Class Program {
                 main() {
                     Var x: Object;
-                    x = New Object();
                     x = New Object(1);
-                    x = New Object(1,2);
+                    Var y: Default;
+                    y = New Object();
+                    x = New Object();
                 }
             }
         """
-        expect = "Type Mismatch In Expression: NewExpr(Id(Object),[IntLit(1),IntLit(2)])"
+        expect = "Type Mismatch In Expression: NewExpr(Id(Object),[])"
         self.assertTrue(TestChecker.test(input, expect, 491))
     
     def test_092_call_statement(self):
@@ -2105,10 +2107,10 @@ class CheckerSuite(unittest.TestCase):
                 }
 
                 main() {
-                    Var x: Int = Self.method(New Object(), New Object());
+                    Var x: Int = Self.method(New Object(Null), New Object(Null));
                     x = Self.method(Null, Null);
-                    x = Self.method(New Object(New Object()), New Object(Null));
-                    x = Self.method(New Object(New Object(New Object())), New Object(New Object(Null)));
+                    x = Self.method(New Object(New Object(Null)), New Object(Null));
+                    x = Self.method(New Object(New Object(New Object(Null))), New Object(New Object(Null)));
                     x = Self.method(New Object_1(), Null);
                 }
             }

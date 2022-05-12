@@ -5,8 +5,8 @@
             Class Program {
                 main() {
                     Var a: Object = Null;
-                    Var b: Object = New Object();
                     Var c: Object = New Object(1);
+                    Var b: Object = New Object();
                     Var d: Object = New Object(1, 2);
                 }
             }

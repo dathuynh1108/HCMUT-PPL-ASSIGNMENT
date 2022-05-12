@@ -10,10 +10,10 @@
                 }
 
                 main() {
-                    Var x: Int = Self.method(New Object(), New Object());
+                    Var x: Int = Self.method(New Object(Null), New Object(Null));
                     x = Self.method(Null, Null);
-                    x = Self.method(New Object(New Object()), New Object(Null));
-                    x = Self.method(New Object(New Object(New Object())), New Object(New Object(Null)));
+                    x = Self.method(New Object(New Object(Null)), New Object(Null));
+                    x = Self.method(New Object(New Object(New Object(Null))), New Object(New Object(Null)));
                     x = Self.method(New Object_1(), Null);
                 }
             }

@@ -294,15 +294,13 @@ class StaticChecker(BaseVisitor):
             return D96_type(expression_kind, None, BoolType())
     
     def visitNewExpr(self, ast, scope):
-        if ast.classname.name in scope["global"]:
-            return_type = ClassType(ast.classname)
+        if ast.classname.name in scope["global"]: return_type = ClassType(ast.classname)
         else: raise Undeclared(Class(), ast.classname.name)
-        if len(ast.param) != 0: 
-            class_constructor = scope["global"][ast.classname.name].find_method("Constructor")
-            if class_constructor:
-                argument_type = [self.visit(param, scope) for param in ast.param]
-                if not D96_utils.check_param_type(class_constructor, argument_type, self.inheritance): raise TypeMismatchInExpression(ast)
-            else: raise Undeclared(Method(), "Constructor")
+        class_constructor = scope["global"][ast.classname.name].find_method("Constructor")
+        if class_constructor:
+            argument_type = [self.visit(param, scope) for param in ast.param]
+            if not D96_utils.check_param_type(class_constructor, argument_type, self.inheritance): raise TypeMismatchInExpression(ast)
+        elif len(ast.param) != 0: raise TypeMismatchInExpression(ast)
         return D96_type("immutable", None, return_type)
 
     def visitArrayCell(self, ast, scope): 

@@ -2,12 +2,14 @@
             Class Object {
                 Constructor(x: Int) {}
             }
+            Class Default {}
             Class Program {
                 main() {
                     Var x: Object;
-                    x = New Object();
                     x = New Object(1);
-                    x = New Object(1,2);
+                    Var y: Default;
+                    y = New Object();
+                    x = New Object();
                 }
             }
         

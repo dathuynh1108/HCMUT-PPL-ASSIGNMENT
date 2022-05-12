@@ -1,1 +1,1 @@
-Type Mismatch In Expression: NewExpr(Id(Object),[IntLit(1),IntLit(2)])
+Type Mismatch In Expression: NewExpr(Id(Object),[])
