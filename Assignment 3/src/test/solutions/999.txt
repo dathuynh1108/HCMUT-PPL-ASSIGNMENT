@@ -1,1 +1,1 @@
-Illegal Constant Expression: BinaryOp(+,CallExpr(Self(),Id(func1),[]),Id(x))
+Type Mismatch In Statement: Call(FieldAccess(Id(c),Id(obj_b)),Id(func),[])

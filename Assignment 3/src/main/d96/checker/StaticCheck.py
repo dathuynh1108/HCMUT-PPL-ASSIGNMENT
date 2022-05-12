@@ -521,7 +521,6 @@ class StaticChecker(BaseVisitor):
         in_loop, scope = scope
         rhs_type = self.visit(ast.exp, scope)
         lhs_type = self.visit(ast.lhs, scope)
-        #print(lhs_type, rhs_type)
         if isinstance(lhs_type, D96_type): 
             if lhs_type.kind == "immutable" or lhs_type.kind == "constant": raise CannotAssignToConstant(ast)
             lhs_type = lhs_type.type
@@ -675,7 +674,7 @@ class StaticChecker(BaseVisitor):
         obj_type = self.visit(ast.obj, scope)
         if isinstance(obj_type, D96_type): obj_type = obj_type.type
         if type(obj_type) != ClassType: raise TypeMismatchInStatement(ast)
-        call_method = D96_utils.find_attribute(obj_type.classname.name, ast.method.name, scope["global"], self.inheritance)
+        call_method = D96_utils.find_method(obj_type.classname.name, ast.method.name, scope["global"], self.inheritance)
         if call_method is None: raise Undeclared(Method(), ast.method.name)
         if call_method.kind != "method": raise Undeclared(Method(), ast.method.name)
         if call_method.si_kind == "static": raise IllegalMemberAccess(ast)

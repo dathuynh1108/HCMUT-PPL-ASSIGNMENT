@@ -4,21 +4,27 @@ from AST import *
 
 class CheckerSuite(unittest.TestCase):
     def test_999(self):
-        input = """    
+        input = """ 
+            Class A {
+                func() {
+                    Return;
+                }
+            }
+            Class B {
+                Var obj_a : A;
+                func() {
+                    Return New A();
+                }
+            }
+            Class C {
+                Var obj_b : B;
+            }
             Class Program {
-                func1() {
-                    Return 1;
-                }
-                
-                func2() {
-                    Return 2.3;
-                }
                 
                 main() {
-                    Var x : Float = Self.func1();
-                    Val y : Float = Self.func2() + 1;
-                    Val z : Float = Self.func1() + Self.func2() / Self.func1() * Self.func2();
-                    Val m : Float = Self.func1() + x;
+                    Var c : C;
+                    c.obj_b.func().func();      ## ok, return void ##
+                    c.obj_b.func();             ## error, return non-void ##
                 }
             }
         """
