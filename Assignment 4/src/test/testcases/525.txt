@@ -8,6 +8,7 @@
 
 
                 Var $a: Int = 1;
+                
                 method() {
                     Var a: Int = 1;
                     Val b: Int = 1;
@@ -30,7 +31,7 @@
                     io.putFloat(x + y);
                     io.putFloat(a + x);
                     io.putFloat(a + y);
-                    io.putFLoat(a + Self.x);
+                    io.putFloat(a + Self.x);
                     io.putFloat(a + Self.y);
                 }
                 main() {

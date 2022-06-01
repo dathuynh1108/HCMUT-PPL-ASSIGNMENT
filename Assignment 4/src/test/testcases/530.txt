@@ -1,0 +1,13 @@
+
+            Class D96Class {
+                Var x: Int = 1;
+                Var y: Float = 1;
+                Var $x: Int = 1;
+                Var $y: Float = 1;
+                Constructor(x: Int) {}
+                main() {
+                    Var x, y: D96Class = New D96Class(), New D96Class(1);
+                    io.putString("OK");
+                }
+            }
+        

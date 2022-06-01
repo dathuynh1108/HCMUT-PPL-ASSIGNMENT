@@ -1,0 +1,16 @@
+
+            Class D96Class {
+                Var $true: Boolean = True;
+                Var $false: Boolean = False;
+                main() {
+                    io.putBool(D96Class::$true && D96Class::$false);
+                    io.putBool(D96Class::$true && True);
+                    io.putBool(!D96Class::$true && D96Class::$false);
+                    io.putBool(!D96Class::$true && True);
+                    io.putBool(!D96Class::$true);
+                    io.putBool(!D96Class::$false);
+                    io.putBool(!D96Class::$true);
+                    io.putBool(!D96Class::$false);
+                }
+            }
+        

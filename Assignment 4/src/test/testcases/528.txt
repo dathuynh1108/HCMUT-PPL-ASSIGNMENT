@@ -1,0 +1,15 @@
+
+            Class D96Class {
+                main() {
+                    Var true: Boolean = True;
+                    Var false: Boolean = False;
+
+                    io.putBool(true && false);
+                    io.putBool(true && True);
+                    io.putBool(!true);
+                    io.putBool(!false);
+                    io.putBool(!True);
+                    io.putBool(!False);
+                }
+            }
+        

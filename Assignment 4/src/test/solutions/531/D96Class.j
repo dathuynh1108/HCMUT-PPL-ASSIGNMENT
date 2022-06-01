@@ -6,13 +6,35 @@
 .field static $x I
 .field static $y F
 
+.method public <init>(I)V
+.var 0 is this LD96Class; from Label0 to Label1
+.var 1 is x I from Label0 to Label1
+Label0:
+	aload_0
+	invokespecial java/lang/Object/<init>()V
+	aload_0
+	iconst_1
+	putfield D96Class.x I
+	aload_0
+	iconst_1
+	i2f
+	putfield D96Class.y F
+	aload_0
+	bipush 100
+	putfield D96Class/x I
+Label1:
+	return
+.limit stack 2
+.limit locals 2
+.end method
+
 .method public <init>()V
 .var 0 is this LD96Class; from Label0 to Label1
 Label0:
 	aload_0
 	invokespecial java/lang/Object/<init>()V
 	aload_0
-	bipush 123
+	iconst_1
 	putfield D96Class.x I
 	aload_0
 	iconst_1
@@ -37,39 +59,6 @@ Label1:
 .limit locals 0
 .end method
 
-.method public method_1()I
-.var 0 is this LD96Class; from Label0 to Label1
-Label0:
-	aload_0
-	getfield D96Class/x I
-	ireturn
-Label1:
-.limit stack 1
-.limit locals 1
-.end method
-
-.method public method_2()I
-.var 0 is this LD96Class; from Label0 to Label1
-Label0:
-	aload_0
-	invokevirtual D96Class/method_1()I
-	ireturn
-Label1:
-.limit stack 1
-.limit locals 1
-.end method
-
-.method public method_3()I
-.var 0 is this LD96Class; from Label0 to Label1
-Label0:
-	aload_0
-	invokevirtual D96Class/method_2()I
-	ireturn
-Label1:
-.limit stack 1
-.limit locals 1
-.end method
-
 .method public static main([Ljava/lang/String;)V
 .var 0 is args [Ljava/lang/String; from Label0 to Label1
 Label0:
@@ -78,11 +67,20 @@ Label0:
 	dup
 	invokespecial D96Class/<init>()V
 	astore_1
+.var 2 is y LD96Class; from Label0 to Label1
+	new D96Class
+	dup
+	iconst_1
+	invokespecial D96Class/<init>(I)V
+	astore_2
 	aload_1
-	invokevirtual D96Class/method_3()I
+	getfield D96Class/x I
+	invokestatic io/putInt(I)V
+	aload_2
+	getfield D96Class/x I
 	invokestatic io/putInt(I)V
 Label1:
 	return
-.limit stack 2
-.limit locals 2
+.limit stack 3
+.limit locals 3
 .end method
