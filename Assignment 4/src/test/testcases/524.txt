@@ -1,0 +1,10 @@
+
+            Class D96Class {
+                main() {
+                    Var a: Int = 2;
+                    Var b: Int = 10;
+                    io.putFloat(a-b+b/a * b + 0.1);
+                    io.putInt(a + b * a % b);
+                }
+            }
+        

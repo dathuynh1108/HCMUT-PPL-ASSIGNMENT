@@ -1,0 +1,41 @@
+
+            Class D96Class {
+                Var a: Int = 1;
+                Val b: Int = 1;
+
+                Var x: Float = 1;
+                Var y: Float = 2;
+
+
+                Var $a: Int = 1;
+                method() {
+                    Var a: Int = 1;
+                    Val b: Int = 1;
+
+                    Var x: Float = 1;
+                    Var y: Float = 2;
+                    
+                    io.putInt(a + b);
+                    io.putInt(a + a);
+                    io.putInt(b + b);
+                    io.putInt(a + Self.a);
+                    io.putInt(a + Self.b);
+
+                    io.putFloat(a + b);
+                    io.putFloat(a + a);
+                    io.putFloat(b + b);
+                    io.putFloat(a + Self.a);
+                    io.putFloat(a + Self.b);
+                    io.putFloat(Self. a + Self.b);
+                    io.putFloat(x + y);
+                    io.putFloat(a + x);
+                    io.putFloat(a + y);
+                    io.putFLoat(a + Self.x);
+                    io.putFloat(a + Self.y);
+                }
+                main() {
+                    Var d: D96Class = New D96Class();
+                    d.method();
+                }
+            }
+        

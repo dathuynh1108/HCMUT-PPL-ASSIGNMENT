@@ -378,6 +378,8 @@ class CodeGenVisitor(BaseVisitor):
                     instance_attribute.init_value, Access(
                         frame, self.env, False, False)
                 )
+                if type(instance_attribute.type) is FloatType and type(init_type) is IntType: 
+                    init_code += self.emitter.emitI2F(o.frame)
                 code += init_code
                 code += self.emitter.emitPUTFIELD(
                     self.class_name + "." + instance_attribute.name,
@@ -392,6 +394,8 @@ class CodeGenVisitor(BaseVisitor):
                     static_attribute.init_value, Access(
                         frame, self.env, False, False)
                 )
+                if type(static_attribute.type) is FloatType and type(init_type) is IntType: 
+                    init_code += self.emitter.emitI2F(o.frame)
                 code += init_code
                 code += self.emitter.emitPUTSTATIC(
                     self.class_name + "." + static_attribute.name,
@@ -434,7 +438,7 @@ class CodeGenVisitor(BaseVisitor):
 
     def visitConstDecl(self, ast, o):
         index = o.frame.getNewIndex()
-        o.env.insert_local(ast.constant.name, Local(ast.varType, index))
+        o.env.insert_local(ast.constant.name, Local(ast.constant.name, ast.constType, index))
         code = self.emitter.emitVAR(
             index,
             ast.constant.name,
@@ -789,7 +793,7 @@ class CodeGenVisitor(BaseVisitor):
     def visitCallStmt(self, ast, o):
         code = ""
         class_name = None
-        obj_code, obj_type = self.visit(ast.obj, o)
+        obj_code, obj_type = self.visit(ast.obj, Access(o.frame, o.env, False, True))
         if obj_code is None or obj_type is None:  # If it is not a local or expression --> A class name
             class_name = ast.obj.name
         else:
