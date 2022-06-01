@@ -1,0 +1,872 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one or more<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * contributor license agreements.  See the NOTICE file distributed with<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * this work for additional information regarding copyright ownership.<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * The ASF licenses this file to You under the Apache License, Version 2.0<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * (the "License"); you may not use this file except in compliance with<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * the License.  You may obtain a copy of the License at<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.apache.org/licenses/LICENSE-2.0<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *  Unless required by applicable law or agreed to in writing, software<a name="line.11"></a>
+<span class="sourceLineNo">012</span> *  distributed under the License is distributed on an "AS IS" BASIS,<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.13"></a>
+<span class="sourceLineNo">014</span> *  See the License for the specific language governing permissions and<a name="line.14"></a>
+<span class="sourceLineNo">015</span> *  limitations under the License.<a name="line.15"></a>
+<span class="sourceLineNo">016</span> *<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span>package org.apache.bcel.generic;<a name="line.18"></a>
+<span class="sourceLineNo">019</span><a name="line.19"></a>
+<span class="sourceLineNo">020</span>import org.apache.bcel.Const;<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>/**<a name="line.22"></a>
+<span class="sourceLineNo">023</span> * Instances of this class may be used, e.g., to generate typed<a name="line.23"></a>
+<span class="sourceLineNo">024</span> * versions of instructions. Its main purpose is to be used as the<a name="line.24"></a>
+<span class="sourceLineNo">025</span> * byte code generating backend of a compiler. You can subclass it to<a name="line.25"></a>
+<span class="sourceLineNo">026</span> * add your own create methods.<a name="line.26"></a>
+<span class="sourceLineNo">027</span> * &lt;p&gt;<a name="line.27"></a>
+<span class="sourceLineNo">028</span> * Note: The static createXXX methods return singleton instances<a name="line.28"></a>
+<span class="sourceLineNo">029</span> * from the {@link InstructionConst} class.<a name="line.29"></a>
+<span class="sourceLineNo">030</span> *<a name="line.30"></a>
+<span class="sourceLineNo">031</span> * @see Const<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * @see InstructionConst<a name="line.32"></a>
+<span class="sourceLineNo">033</span> */<a name="line.33"></a>
+<span class="sourceLineNo">034</span>public class InstructionFactory implements InstructionConstants {<a name="line.34"></a>
+<span class="sourceLineNo">035</span><a name="line.35"></a>
+<span class="sourceLineNo">036</span>    // N.N. These must agree with the order of Constants.T_CHAR through T_LONG<a name="line.36"></a>
+<span class="sourceLineNo">037</span>    private static final String[] short_names = {<a name="line.37"></a>
+<span class="sourceLineNo">038</span>            "C", "F", "D", "B", "S", "I", "L"<a name="line.38"></a>
+<span class="sourceLineNo">039</span>    };<a name="line.39"></a>
+<span class="sourceLineNo">040</span><a name="line.40"></a>
+<span class="sourceLineNo">041</span>    /**<a name="line.41"></a>
+<span class="sourceLineNo">042</span>     * @deprecated (since 6.0) will be made private; do not access directly, use getter/setter<a name="line.42"></a>
+<span class="sourceLineNo">043</span>     */<a name="line.43"></a>
+<span class="sourceLineNo">044</span>    @Deprecated<a name="line.44"></a>
+<span class="sourceLineNo">045</span>    protected ClassGen cg;<a name="line.45"></a>
+<span class="sourceLineNo">046</span><a name="line.46"></a>
+<span class="sourceLineNo">047</span>    /**<a name="line.47"></a>
+<span class="sourceLineNo">048</span>     * @deprecated (since 6.0) will be made private; do not access directly, use getter/setter<a name="line.48"></a>
+<span class="sourceLineNo">049</span>     */<a name="line.49"></a>
+<span class="sourceLineNo">050</span>    @Deprecated<a name="line.50"></a>
+<span class="sourceLineNo">051</span>    protected ConstantPoolGen cp;<a name="line.51"></a>
+<span class="sourceLineNo">052</span><a name="line.52"></a>
+<span class="sourceLineNo">053</span><a name="line.53"></a>
+<span class="sourceLineNo">054</span>    public InstructionFactory(final ClassGen cg, final ConstantPoolGen cp) {<a name="line.54"></a>
+<span class="sourceLineNo">055</span>        this.cg = cg;<a name="line.55"></a>
+<span class="sourceLineNo">056</span>        this.cp = cp;<a name="line.56"></a>
+<span class="sourceLineNo">057</span>    }<a name="line.57"></a>
+<span class="sourceLineNo">058</span><a name="line.58"></a>
+<span class="sourceLineNo">059</span><a name="line.59"></a>
+<span class="sourceLineNo">060</span>    /** Initialize with ClassGen object<a name="line.60"></a>
+<span class="sourceLineNo">061</span>     */<a name="line.61"></a>
+<span class="sourceLineNo">062</span>    public InstructionFactory(final ClassGen cg) {<a name="line.62"></a>
+<span class="sourceLineNo">063</span>        this(cg, cg.getConstantPool());<a name="line.63"></a>
+<span class="sourceLineNo">064</span>    }<a name="line.64"></a>
+<span class="sourceLineNo">065</span><a name="line.65"></a>
+<span class="sourceLineNo">066</span><a name="line.66"></a>
+<span class="sourceLineNo">067</span>    /** Initialize just with ConstantPoolGen object<a name="line.67"></a>
+<span class="sourceLineNo">068</span>     */<a name="line.68"></a>
+<span class="sourceLineNo">069</span>    public InstructionFactory(final ConstantPoolGen cp) {<a name="line.69"></a>
+<span class="sourceLineNo">070</span>        this(null, cp);<a name="line.70"></a>
+<span class="sourceLineNo">071</span>    }<a name="line.71"></a>
+<span class="sourceLineNo">072</span><a name="line.72"></a>
+<span class="sourceLineNo">073</span><a name="line.73"></a>
+<span class="sourceLineNo">074</span>    /** Create an invoke instruction. (Except for invokedynamic.)<a name="line.74"></a>
+<span class="sourceLineNo">075</span>     *<a name="line.75"></a>
+<span class="sourceLineNo">076</span>     * @param class_name name of the called class<a name="line.76"></a>
+<span class="sourceLineNo">077</span>     * @param name name of the called method<a name="line.77"></a>
+<span class="sourceLineNo">078</span>     * @param ret_type return type of method<a name="line.78"></a>
+<span class="sourceLineNo">079</span>     * @param arg_types argument types of method<a name="line.79"></a>
+<span class="sourceLineNo">080</span>     * @param kind how to invoke, i.e., INVOKEINTERFACE, INVOKESTATIC, INVOKEVIRTUAL,<a name="line.80"></a>
+<span class="sourceLineNo">081</span>     * or INVOKESPECIAL<a name="line.81"></a>
+<span class="sourceLineNo">082</span>     * @see Const<a name="line.82"></a>
+<span class="sourceLineNo">083</span>     */<a name="line.83"></a>
+<span class="sourceLineNo">084</span>    public InvokeInstruction createInvoke( final String class_name, final String name, final Type ret_type,<a name="line.84"></a>
+<span class="sourceLineNo">085</span>            final Type[] arg_types, final short kind ) {<a name="line.85"></a>
+<span class="sourceLineNo">086</span>        return createInvoke(class_name, name, ret_type, arg_types, kind, kind == Const.INVOKEINTERFACE);<a name="line.86"></a>
+<span class="sourceLineNo">087</span>    }<a name="line.87"></a>
+<span class="sourceLineNo">088</span><a name="line.88"></a>
+<span class="sourceLineNo">089</span>    /** Create an invoke instruction. (Except for invokedynamic.)<a name="line.89"></a>
+<span class="sourceLineNo">090</span>     *<a name="line.90"></a>
+<span class="sourceLineNo">091</span>     * @param class_name name of the called class<a name="line.91"></a>
+<span class="sourceLineNo">092</span>     * @param name name of the called method<a name="line.92"></a>
+<span class="sourceLineNo">093</span>     * @param ret_type return type of method<a name="line.93"></a>
+<span class="sourceLineNo">094</span>     * @param arg_types argument types of method<a name="line.94"></a>
+<span class="sourceLineNo">095</span>     * @param kind how to invoke: INVOKEINTERFACE, INVOKESTATIC, INVOKEVIRTUAL, or INVOKESPECIAL<a name="line.95"></a>
+<span class="sourceLineNo">096</span>     * @param use_interface force use of InterfaceMethodref<a name="line.96"></a>
+<span class="sourceLineNo">097</span>     * @return A new InvokeInstruction.<a name="line.97"></a>
+<span class="sourceLineNo">098</span>     * @since 6.5.0<a name="line.98"></a>
+<span class="sourceLineNo">099</span>     */<a name="line.99"></a>
+<span class="sourceLineNo">100</span>    public InvokeInstruction createInvoke( final String class_name, final String name, final Type ret_type,<a name="line.100"></a>
+<span class="sourceLineNo">101</span>        final Type[] arg_types, final short kind, final boolean use_interface) {<a name="line.101"></a>
+<span class="sourceLineNo">102</span>        if (kind != Const.INVOKESPECIAL &amp;&amp; kind != Const.INVOKEVIRTUAL &amp;&amp; kind != Const.INVOKESTATIC<a name="line.102"></a>
+<span class="sourceLineNo">103</span>            &amp;&amp; kind != Const.INVOKEINTERFACE &amp;&amp; kind != Const.INVOKEDYNAMIC) {<a name="line.103"></a>
+<span class="sourceLineNo">104</span>            throw new IllegalArgumentException("Unknown invoke kind: " + kind);<a name="line.104"></a>
+<span class="sourceLineNo">105</span>        }<a name="line.105"></a>
+<span class="sourceLineNo">106</span>        int index;<a name="line.106"></a>
+<span class="sourceLineNo">107</span>        int nargs = 0;<a name="line.107"></a>
+<span class="sourceLineNo">108</span>        final String signature = Type.getMethodSignature(ret_type, arg_types);<a name="line.108"></a>
+<span class="sourceLineNo">109</span>        for (final Type arg_type : arg_types) {<a name="line.109"></a>
+<span class="sourceLineNo">110</span>            nargs += arg_type.getSize();<a name="line.110"></a>
+<span class="sourceLineNo">111</span>        }<a name="line.111"></a>
+<span class="sourceLineNo">112</span>        if (use_interface) {<a name="line.112"></a>
+<span class="sourceLineNo">113</span>            index = cp.addInterfaceMethodref(class_name, name, signature);<a name="line.113"></a>
+<span class="sourceLineNo">114</span>        } else {<a name="line.114"></a>
+<span class="sourceLineNo">115</span>            index = cp.addMethodref(class_name, name, signature);<a name="line.115"></a>
+<span class="sourceLineNo">116</span>        }<a name="line.116"></a>
+<span class="sourceLineNo">117</span>        switch (kind) {<a name="line.117"></a>
+<span class="sourceLineNo">118</span>        case Const.INVOKESPECIAL:<a name="line.118"></a>
+<span class="sourceLineNo">119</span>            return new INVOKESPECIAL(index);<a name="line.119"></a>
+<span class="sourceLineNo">120</span>        case Const.INVOKEVIRTUAL:<a name="line.120"></a>
+<span class="sourceLineNo">121</span>            return new INVOKEVIRTUAL(index);<a name="line.121"></a>
+<span class="sourceLineNo">122</span>        case Const.INVOKESTATIC:<a name="line.122"></a>
+<span class="sourceLineNo">123</span>            return new INVOKESTATIC(index);<a name="line.123"></a>
+<span class="sourceLineNo">124</span>        case Const.INVOKEINTERFACE:<a name="line.124"></a>
+<span class="sourceLineNo">125</span>            return new INVOKEINTERFACE(index, nargs + 1);<a name="line.125"></a>
+<span class="sourceLineNo">126</span>        case Const.INVOKEDYNAMIC:<a name="line.126"></a>
+<span class="sourceLineNo">127</span>            return new INVOKEDYNAMIC(index);<a name="line.127"></a>
+<span class="sourceLineNo">128</span>        default:<a name="line.128"></a>
+<span class="sourceLineNo">129</span>            // Can't happen<a name="line.129"></a>
+<span class="sourceLineNo">130</span>            throw new IllegalStateException("Unknown invoke kind: " + kind);<a name="line.130"></a>
+<span class="sourceLineNo">131</span>        }<a name="line.131"></a>
+<span class="sourceLineNo">132</span>    }<a name="line.132"></a>
+<span class="sourceLineNo">133</span><a name="line.133"></a>
+<span class="sourceLineNo">134</span>    /** Create an invokedynamic instruction.<a name="line.134"></a>
+<span class="sourceLineNo">135</span>     *<a name="line.135"></a>
+<span class="sourceLineNo">136</span>     * @param bootstrap_index index into the bootstrap_methods array<a name="line.136"></a>
+<span class="sourceLineNo">137</span>     * @param name name of the called method<a name="line.137"></a>
+<span class="sourceLineNo">138</span>     * @param ret_type return type of method<a name="line.138"></a>
+<span class="sourceLineNo">139</span>     * @param arg_types argument types of method<a name="line.139"></a>
+<span class="sourceLineNo">140</span>     * @see Constants<a name="line.140"></a>
+<span class="sourceLineNo">141</span>     */<a name="line.141"></a>
+<span class="sourceLineNo">142</span>/*<a name="line.142"></a>
+<span class="sourceLineNo">143</span> * createInvokeDynamic only needed if instrumention code wants to generate<a name="line.143"></a>
+<span class="sourceLineNo">144</span> * a new invokedynamic instruction.  I don't think we need.  (markro)<a name="line.144"></a>
+<span class="sourceLineNo">145</span> *<a name="line.145"></a>
+<span class="sourceLineNo">146</span>    public InvokeInstruction createInvokeDynamic( int bootstrap_index, String name, Type ret_type,<a name="line.146"></a>
+<span class="sourceLineNo">147</span>            Type[] arg_types) {<a name="line.147"></a>
+<span class="sourceLineNo">148</span>        int index;<a name="line.148"></a>
+<span class="sourceLineNo">149</span>        int nargs = 0;<a name="line.149"></a>
+<span class="sourceLineNo">150</span>        String signature = Type.getMethodSignature(ret_type, arg_types);<a name="line.150"></a>
+<span class="sourceLineNo">151</span>        for (int i = 0; i &lt; arg_types.length; i++) {<a name="line.151"></a>
+<span class="sourceLineNo">152</span>            nargs += arg_types[i].getSize();<a name="line.152"></a>
+<span class="sourceLineNo">153</span>        }<a name="line.153"></a>
+<span class="sourceLineNo">154</span>        // UNDONE - needs to be added to ConstantPoolGen<a name="line.154"></a>
+<span class="sourceLineNo">155</span>        //index = cp.addInvokeDynamic(bootstrap_index, name, signature);<a name="line.155"></a>
+<span class="sourceLineNo">156</span>        index = 0;<a name="line.156"></a>
+<span class="sourceLineNo">157</span>        return new INVOKEDYNAMIC(index);<a name="line.157"></a>
+<span class="sourceLineNo">158</span>    }<a name="line.158"></a>
+<span class="sourceLineNo">159</span> */<a name="line.159"></a>
+<span class="sourceLineNo">160</span><a name="line.160"></a>
+<span class="sourceLineNo">161</span>    /** Create a call to the most popular System.out.println() method.<a name="line.161"></a>
+<span class="sourceLineNo">162</span>     *<a name="line.162"></a>
+<span class="sourceLineNo">163</span>     * @param s the string to print<a name="line.163"></a>
+<span class="sourceLineNo">164</span>     */<a name="line.164"></a>
+<span class="sourceLineNo">165</span>    public InstructionList createPrintln( final String s ) {<a name="line.165"></a>
+<span class="sourceLineNo">166</span>        final InstructionList il = new InstructionList();<a name="line.166"></a>
+<span class="sourceLineNo">167</span>        final int out = cp.addFieldref("java.lang.System", "out", "Ljava/io/PrintStream;");<a name="line.167"></a>
+<span class="sourceLineNo">168</span>        final int println = cp.addMethodref("java.io.PrintStream", "println", "(Ljava/lang/String;)V");<a name="line.168"></a>
+<span class="sourceLineNo">169</span>        il.append(new GETSTATIC(out));<a name="line.169"></a>
+<span class="sourceLineNo">170</span>        il.append(new PUSH(cp, s));<a name="line.170"></a>
+<span class="sourceLineNo">171</span>        il.append(new INVOKEVIRTUAL(println));<a name="line.171"></a>
+<span class="sourceLineNo">172</span>        return il;<a name="line.172"></a>
+<span class="sourceLineNo">173</span>    }<a name="line.173"></a>
+<span class="sourceLineNo">174</span><a name="line.174"></a>
+<span class="sourceLineNo">175</span><a name="line.175"></a>
+<span class="sourceLineNo">176</span>    /** Uses PUSH to push a constant value onto the stack.<a name="line.176"></a>
+<span class="sourceLineNo">177</span>     * @param value must be of type Number, Boolean, Character or String<a name="line.177"></a>
+<span class="sourceLineNo">178</span>     */<a name="line.178"></a>
+<span class="sourceLineNo">179</span>    public Instruction createConstant( final Object value ) {<a name="line.179"></a>
+<span class="sourceLineNo">180</span>        PUSH push;<a name="line.180"></a>
+<span class="sourceLineNo">181</span>        if (value instanceof Number) {<a name="line.181"></a>
+<span class="sourceLineNo">182</span>            push = new PUSH(cp, (Number) value);<a name="line.182"></a>
+<span class="sourceLineNo">183</span>        } else if (value instanceof String) {<a name="line.183"></a>
+<span class="sourceLineNo">184</span>            push = new PUSH(cp, (String) value);<a name="line.184"></a>
+<span class="sourceLineNo">185</span>        } else if (value instanceof Boolean) {<a name="line.185"></a>
+<span class="sourceLineNo">186</span>            push = new PUSH(cp, (Boolean) value);<a name="line.186"></a>
+<span class="sourceLineNo">187</span>        } else if (value instanceof Character) {<a name="line.187"></a>
+<span class="sourceLineNo">188</span>            push = new PUSH(cp, (Character) value);<a name="line.188"></a>
+<span class="sourceLineNo">189</span>        } else {<a name="line.189"></a>
+<span class="sourceLineNo">190</span>            throw new ClassGenException("Illegal type: " + value.getClass());<a name="line.190"></a>
+<span class="sourceLineNo">191</span>        }<a name="line.191"></a>
+<span class="sourceLineNo">192</span>        return push.getInstruction();<a name="line.192"></a>
+<span class="sourceLineNo">193</span>    }<a name="line.193"></a>
+<span class="sourceLineNo">194</span><a name="line.194"></a>
+<span class="sourceLineNo">195</span>    private static class MethodObject {<a name="line.195"></a>
+<span class="sourceLineNo">196</span><a name="line.196"></a>
+<span class="sourceLineNo">197</span>        final Type[] arg_types;<a name="line.197"></a>
+<span class="sourceLineNo">198</span>        final Type result_type;<a name="line.198"></a>
+<span class="sourceLineNo">199</span>        final String class_name;<a name="line.199"></a>
+<span class="sourceLineNo">200</span>        final String name;<a name="line.200"></a>
+<span class="sourceLineNo">201</span><a name="line.201"></a>
+<span class="sourceLineNo">202</span><a name="line.202"></a>
+<span class="sourceLineNo">203</span>        MethodObject(final String c, final String n, final Type r, final Type[] a) {<a name="line.203"></a>
+<span class="sourceLineNo">204</span>            class_name = c;<a name="line.204"></a>
+<span class="sourceLineNo">205</span>            name = n;<a name="line.205"></a>
+<span class="sourceLineNo">206</span>            result_type = r;<a name="line.206"></a>
+<span class="sourceLineNo">207</span>            arg_types = a;<a name="line.207"></a>
+<span class="sourceLineNo">208</span>        }<a name="line.208"></a>
+<span class="sourceLineNo">209</span>    }<a name="line.209"></a>
+<span class="sourceLineNo">210</span><a name="line.210"></a>
+<span class="sourceLineNo">211</span><a name="line.211"></a>
+<span class="sourceLineNo">212</span>    private InvokeInstruction createInvoke( final MethodObject m, final short kind ) {<a name="line.212"></a>
+<span class="sourceLineNo">213</span>        return createInvoke(m.class_name, m.name, m.result_type, m.arg_types, kind);<a name="line.213"></a>
+<span class="sourceLineNo">214</span>    }<a name="line.214"></a>
+<span class="sourceLineNo">215</span><a name="line.215"></a>
+<span class="sourceLineNo">216</span>    private static final MethodObject[] append_mos = {<a name="line.216"></a>
+<span class="sourceLineNo">217</span>            new MethodObject("java.lang.StringBuffer", "append", Type.STRINGBUFFER, new Type[] {<a name="line.217"></a>
+<span class="sourceLineNo">218</span>                Type.STRING<a name="line.218"></a>
+<span class="sourceLineNo">219</span>            }),<a name="line.219"></a>
+<span class="sourceLineNo">220</span>            new MethodObject("java.lang.StringBuffer", "append", Type.STRINGBUFFER, new Type[] {<a name="line.220"></a>
+<span class="sourceLineNo">221</span>                Type.OBJECT<a name="line.221"></a>
+<span class="sourceLineNo">222</span>            }),<a name="line.222"></a>
+<span class="sourceLineNo">223</span>            null,<a name="line.223"></a>
+<span class="sourceLineNo">224</span>            null, // indices 2, 3<a name="line.224"></a>
+<span class="sourceLineNo">225</span>            new MethodObject("java.lang.StringBuffer", "append", Type.STRINGBUFFER, new Type[] {<a name="line.225"></a>
+<span class="sourceLineNo">226</span>                Type.BOOLEAN<a name="line.226"></a>
+<span class="sourceLineNo">227</span>            }),<a name="line.227"></a>
+<span class="sourceLineNo">228</span>            new MethodObject("java.lang.StringBuffer", "append", Type.STRINGBUFFER, new Type[] {<a name="line.228"></a>
+<span class="sourceLineNo">229</span>                Type.CHAR<a name="line.229"></a>
+<span class="sourceLineNo">230</span>            }),<a name="line.230"></a>
+<span class="sourceLineNo">231</span>            new MethodObject("java.lang.StringBuffer", "append", Type.STRINGBUFFER, new Type[] {<a name="line.231"></a>
+<span class="sourceLineNo">232</span>                Type.FLOAT<a name="line.232"></a>
+<span class="sourceLineNo">233</span>            }),<a name="line.233"></a>
+<span class="sourceLineNo">234</span>            new MethodObject("java.lang.StringBuffer", "append", Type.STRINGBUFFER, new Type[] {<a name="line.234"></a>
+<span class="sourceLineNo">235</span>                Type.DOUBLE<a name="line.235"></a>
+<span class="sourceLineNo">236</span>            }),<a name="line.236"></a>
+<span class="sourceLineNo">237</span>            new MethodObject("java.lang.StringBuffer", "append", Type.STRINGBUFFER, new Type[] {<a name="line.237"></a>
+<span class="sourceLineNo">238</span>                Type.INT<a name="line.238"></a>
+<span class="sourceLineNo">239</span>            }),<a name="line.239"></a>
+<span class="sourceLineNo">240</span>            new MethodObject("java.lang.StringBuffer", "append", Type.STRINGBUFFER, // No append(byte)<a name="line.240"></a>
+<span class="sourceLineNo">241</span>                    new Type[] {<a name="line.241"></a>
+<span class="sourceLineNo">242</span>                        Type.INT<a name="line.242"></a>
+<span class="sourceLineNo">243</span>                    }),<a name="line.243"></a>
+<span class="sourceLineNo">244</span>            new MethodObject("java.lang.StringBuffer", "append", Type.STRINGBUFFER, // No append(short)<a name="line.244"></a>
+<span class="sourceLineNo">245</span>                    new Type[] {<a name="line.245"></a>
+<span class="sourceLineNo">246</span>                        Type.INT<a name="line.246"></a>
+<span class="sourceLineNo">247</span>                    }),<a name="line.247"></a>
+<span class="sourceLineNo">248</span>            new MethodObject("java.lang.StringBuffer", "append", Type.STRINGBUFFER, new Type[] {<a name="line.248"></a>
+<span class="sourceLineNo">249</span>                Type.LONG<a name="line.249"></a>
+<span class="sourceLineNo">250</span>            })<a name="line.250"></a>
+<span class="sourceLineNo">251</span>    };<a name="line.251"></a>
+<span class="sourceLineNo">252</span><a name="line.252"></a>
+<span class="sourceLineNo">253</span><a name="line.253"></a>
+<span class="sourceLineNo">254</span>    private static boolean isString( final Type type ) {<a name="line.254"></a>
+<span class="sourceLineNo">255</span>        return (type instanceof ObjectType) &amp;&amp;<a name="line.255"></a>
+<span class="sourceLineNo">256</span>              ((ObjectType) type).getClassName().equals("java.lang.String");<a name="line.256"></a>
+<span class="sourceLineNo">257</span>    }<a name="line.257"></a>
+<span class="sourceLineNo">258</span><a name="line.258"></a>
+<span class="sourceLineNo">259</span><a name="line.259"></a>
+<span class="sourceLineNo">260</span>    public Instruction createAppend( final Type type ) {<a name="line.260"></a>
+<span class="sourceLineNo">261</span>        final byte t = type.getType();<a name="line.261"></a>
+<span class="sourceLineNo">262</span>        if (isString(type)) {<a name="line.262"></a>
+<span class="sourceLineNo">263</span>            return createInvoke(append_mos[0], Const.INVOKEVIRTUAL);<a name="line.263"></a>
+<span class="sourceLineNo">264</span>        }<a name="line.264"></a>
+<span class="sourceLineNo">265</span>        switch (t) {<a name="line.265"></a>
+<span class="sourceLineNo">266</span>            case Const.T_BOOLEAN:<a name="line.266"></a>
+<span class="sourceLineNo">267</span>            case Const.T_CHAR:<a name="line.267"></a>
+<span class="sourceLineNo">268</span>            case Const.T_FLOAT:<a name="line.268"></a>
+<span class="sourceLineNo">269</span>            case Const.T_DOUBLE:<a name="line.269"></a>
+<span class="sourceLineNo">270</span>            case Const.T_BYTE:<a name="line.270"></a>
+<span class="sourceLineNo">271</span>            case Const.T_SHORT:<a name="line.271"></a>
+<span class="sourceLineNo">272</span>            case Const.T_INT:<a name="line.272"></a>
+<span class="sourceLineNo">273</span>            case Const.T_LONG:<a name="line.273"></a>
+<span class="sourceLineNo">274</span>                return createInvoke(append_mos[t], Const.INVOKEVIRTUAL);<a name="line.274"></a>
+<span class="sourceLineNo">275</span>            case Const.T_ARRAY:<a name="line.275"></a>
+<span class="sourceLineNo">276</span>            case Const.T_OBJECT:<a name="line.276"></a>
+<span class="sourceLineNo">277</span>                return createInvoke(append_mos[1], Const.INVOKEVIRTUAL);<a name="line.277"></a>
+<span class="sourceLineNo">278</span>            default:<a name="line.278"></a>
+<span class="sourceLineNo">279</span>                throw new IllegalArgumentException("No append for this type? " + type);<a name="line.279"></a>
+<span class="sourceLineNo">280</span>        }<a name="line.280"></a>
+<span class="sourceLineNo">281</span>    }<a name="line.281"></a>
+<span class="sourceLineNo">282</span><a name="line.282"></a>
+<span class="sourceLineNo">283</span><a name="line.283"></a>
+<span class="sourceLineNo">284</span>    /** Create a field instruction.<a name="line.284"></a>
+<span class="sourceLineNo">285</span>     *<a name="line.285"></a>
+<span class="sourceLineNo">286</span>     * @param class_name name of the accessed class<a name="line.286"></a>
+<span class="sourceLineNo">287</span>     * @param name name of the referenced field<a name="line.287"></a>
+<span class="sourceLineNo">288</span>     * @param type  type of field<a name="line.288"></a>
+<span class="sourceLineNo">289</span>     * @param kind how to access, i.e., GETFIELD, PUTFIELD, GETSTATIC, PUTSTATIC<a name="line.289"></a>
+<span class="sourceLineNo">290</span>     * @see Const<a name="line.290"></a>
+<span class="sourceLineNo">291</span>     */<a name="line.291"></a>
+<span class="sourceLineNo">292</span>    public FieldInstruction createFieldAccess( final String class_name, final String name, final Type type, final short kind ) {<a name="line.292"></a>
+<span class="sourceLineNo">293</span>        int index;<a name="line.293"></a>
+<span class="sourceLineNo">294</span>        final String signature = type.getSignature();<a name="line.294"></a>
+<span class="sourceLineNo">295</span>        index = cp.addFieldref(class_name, name, signature);<a name="line.295"></a>
+<span class="sourceLineNo">296</span>        switch (kind) {<a name="line.296"></a>
+<span class="sourceLineNo">297</span>            case Const.GETFIELD:<a name="line.297"></a>
+<span class="sourceLineNo">298</span>                return new GETFIELD(index);<a name="line.298"></a>
+<span class="sourceLineNo">299</span>            case Const.PUTFIELD:<a name="line.299"></a>
+<span class="sourceLineNo">300</span>                return new PUTFIELD(index);<a name="line.300"></a>
+<span class="sourceLineNo">301</span>            case Const.GETSTATIC:<a name="line.301"></a>
+<span class="sourceLineNo">302</span>                return new GETSTATIC(index);<a name="line.302"></a>
+<span class="sourceLineNo">303</span>            case Const.PUTSTATIC:<a name="line.303"></a>
+<span class="sourceLineNo">304</span>                return new PUTSTATIC(index);<a name="line.304"></a>
+<span class="sourceLineNo">305</span>            default:<a name="line.305"></a>
+<span class="sourceLineNo">306</span>                throw new IllegalArgumentException("Unknown getfield kind:" + kind);<a name="line.306"></a>
+<span class="sourceLineNo">307</span>        }<a name="line.307"></a>
+<span class="sourceLineNo">308</span>    }<a name="line.308"></a>
+<span class="sourceLineNo">309</span><a name="line.309"></a>
+<span class="sourceLineNo">310</span><a name="line.310"></a>
+<span class="sourceLineNo">311</span>    /** Create reference to `this'<a name="line.311"></a>
+<span class="sourceLineNo">312</span>     */<a name="line.312"></a>
+<span class="sourceLineNo">313</span>    public static Instruction createThis() {<a name="line.313"></a>
+<span class="sourceLineNo">314</span>        return new ALOAD(0);<a name="line.314"></a>
+<span class="sourceLineNo">315</span>    }<a name="line.315"></a>
+<span class="sourceLineNo">316</span><a name="line.316"></a>
+<span class="sourceLineNo">317</span><a name="line.317"></a>
+<span class="sourceLineNo">318</span>    /** Create typed return<a name="line.318"></a>
+<span class="sourceLineNo">319</span>     */<a name="line.319"></a>
+<span class="sourceLineNo">320</span>    public static ReturnInstruction createReturn( final Type type ) {<a name="line.320"></a>
+<span class="sourceLineNo">321</span>        switch (type.getType()) {<a name="line.321"></a>
+<span class="sourceLineNo">322</span>            case Const.T_ARRAY:<a name="line.322"></a>
+<span class="sourceLineNo">323</span>            case Const.T_OBJECT:<a name="line.323"></a>
+<span class="sourceLineNo">324</span>                return InstructionConst.ARETURN;<a name="line.324"></a>
+<span class="sourceLineNo">325</span>            case Const.T_INT:<a name="line.325"></a>
+<span class="sourceLineNo">326</span>            case Const.T_SHORT:<a name="line.326"></a>
+<span class="sourceLineNo">327</span>            case Const.T_BOOLEAN:<a name="line.327"></a>
+<span class="sourceLineNo">328</span>            case Const.T_CHAR:<a name="line.328"></a>
+<span class="sourceLineNo">329</span>            case Const.T_BYTE:<a name="line.329"></a>
+<span class="sourceLineNo">330</span>                return InstructionConst.IRETURN;<a name="line.330"></a>
+<span class="sourceLineNo">331</span>            case Const.T_FLOAT:<a name="line.331"></a>
+<span class="sourceLineNo">332</span>                return InstructionConst.FRETURN;<a name="line.332"></a>
+<span class="sourceLineNo">333</span>            case Const.T_DOUBLE:<a name="line.333"></a>
+<span class="sourceLineNo">334</span>                return InstructionConst.DRETURN;<a name="line.334"></a>
+<span class="sourceLineNo">335</span>            case Const.T_LONG:<a name="line.335"></a>
+<span class="sourceLineNo">336</span>                return InstructionConst.LRETURN;<a name="line.336"></a>
+<span class="sourceLineNo">337</span>            case Const.T_VOID:<a name="line.337"></a>
+<span class="sourceLineNo">338</span>                return InstructionConst.RETURN;<a name="line.338"></a>
+<span class="sourceLineNo">339</span>            default:<a name="line.339"></a>
+<span class="sourceLineNo">340</span>                throw new IllegalArgumentException("Invalid type: " + type);<a name="line.340"></a>
+<span class="sourceLineNo">341</span>        }<a name="line.341"></a>
+<span class="sourceLineNo">342</span>    }<a name="line.342"></a>
+<span class="sourceLineNo">343</span><a name="line.343"></a>
+<span class="sourceLineNo">344</span><a name="line.344"></a>
+<span class="sourceLineNo">345</span>    private static ArithmeticInstruction createBinaryIntOp( final char first, final String op ) {<a name="line.345"></a>
+<span class="sourceLineNo">346</span>        switch (first) {<a name="line.346"></a>
+<span class="sourceLineNo">347</span>            case '-':<a name="line.347"></a>
+<span class="sourceLineNo">348</span>                return InstructionConst.ISUB;<a name="line.348"></a>
+<span class="sourceLineNo">349</span>            case '+':<a name="line.349"></a>
+<span class="sourceLineNo">350</span>                return InstructionConst.IADD;<a name="line.350"></a>
+<span class="sourceLineNo">351</span>            case '%':<a name="line.351"></a>
+<span class="sourceLineNo">352</span>                return InstructionConst.IREM;<a name="line.352"></a>
+<span class="sourceLineNo">353</span>            case '*':<a name="line.353"></a>
+<span class="sourceLineNo">354</span>                return InstructionConst.IMUL;<a name="line.354"></a>
+<span class="sourceLineNo">355</span>            case '/':<a name="line.355"></a>
+<span class="sourceLineNo">356</span>                return InstructionConst.IDIV;<a name="line.356"></a>
+<span class="sourceLineNo">357</span>            case '&amp;':<a name="line.357"></a>
+<span class="sourceLineNo">358</span>                return InstructionConst.IAND;<a name="line.358"></a>
+<span class="sourceLineNo">359</span>            case '|':<a name="line.359"></a>
+<span class="sourceLineNo">360</span>                return InstructionConst.IOR;<a name="line.360"></a>
+<span class="sourceLineNo">361</span>            case '^':<a name="line.361"></a>
+<span class="sourceLineNo">362</span>                return InstructionConst.IXOR;<a name="line.362"></a>
+<span class="sourceLineNo">363</span>            case '&lt;':<a name="line.363"></a>
+<span class="sourceLineNo">364</span>                return InstructionConst.ISHL;<a name="line.364"></a>
+<span class="sourceLineNo">365</span>            case '&gt;':<a name="line.365"></a>
+<span class="sourceLineNo">366</span>                return op.equals("&gt;&gt;&gt;") ? InstructionConst.IUSHR : InstructionConst.ISHR;<a name="line.366"></a>
+<span class="sourceLineNo">367</span>            default:<a name="line.367"></a>
+<span class="sourceLineNo">368</span>                throw new IllegalArgumentException("Invalid operand " + op);<a name="line.368"></a>
+<span class="sourceLineNo">369</span>        }<a name="line.369"></a>
+<span class="sourceLineNo">370</span>    }<a name="line.370"></a>
+<span class="sourceLineNo">371</span><a name="line.371"></a>
+<span class="sourceLineNo">372</span><a name="line.372"></a>
+<span class="sourceLineNo">373</span>    private static ArithmeticInstruction createBinaryLongOp( final char first, final String op ) {<a name="line.373"></a>
+<span class="sourceLineNo">374</span>        switch (first) {<a name="line.374"></a>
+<span class="sourceLineNo">375</span>            case '-':<a name="line.375"></a>
+<span class="sourceLineNo">376</span>                return InstructionConst.LSUB;<a name="line.376"></a>
+<span class="sourceLineNo">377</span>            case '+':<a name="line.377"></a>
+<span class="sourceLineNo">378</span>                return InstructionConst.LADD;<a name="line.378"></a>
+<span class="sourceLineNo">379</span>            case '%':<a name="line.379"></a>
+<span class="sourceLineNo">380</span>                return InstructionConst.LREM;<a name="line.380"></a>
+<span class="sourceLineNo">381</span>            case '*':<a name="line.381"></a>
+<span class="sourceLineNo">382</span>                return InstructionConst.LMUL;<a name="line.382"></a>
+<span class="sourceLineNo">383</span>            case '/':<a name="line.383"></a>
+<span class="sourceLineNo">384</span>                return InstructionConst.LDIV;<a name="line.384"></a>
+<span class="sourceLineNo">385</span>            case '&amp;':<a name="line.385"></a>
+<span class="sourceLineNo">386</span>                return InstructionConst.LAND;<a name="line.386"></a>
+<span class="sourceLineNo">387</span>            case '|':<a name="line.387"></a>
+<span class="sourceLineNo">388</span>                return InstructionConst.LOR;<a name="line.388"></a>
+<span class="sourceLineNo">389</span>            case '^':<a name="line.389"></a>
+<span class="sourceLineNo">390</span>                return InstructionConst.LXOR;<a name="line.390"></a>
+<span class="sourceLineNo">391</span>            case '&lt;':<a name="line.391"></a>
+<span class="sourceLineNo">392</span>                return InstructionConst.LSHL;<a name="line.392"></a>
+<span class="sourceLineNo">393</span>            case '&gt;':<a name="line.393"></a>
+<span class="sourceLineNo">394</span>                return op.equals("&gt;&gt;&gt;") ? InstructionConst.LUSHR : InstructionConst.LSHR;<a name="line.394"></a>
+<span class="sourceLineNo">395</span>            default:<a name="line.395"></a>
+<span class="sourceLineNo">396</span>                throw new IllegalArgumentException("Invalid operand " + op);<a name="line.396"></a>
+<span class="sourceLineNo">397</span>        }<a name="line.397"></a>
+<span class="sourceLineNo">398</span>    }<a name="line.398"></a>
+<span class="sourceLineNo">399</span><a name="line.399"></a>
+<span class="sourceLineNo">400</span><a name="line.400"></a>
+<span class="sourceLineNo">401</span>    private static ArithmeticInstruction createBinaryFloatOp( final char op ) {<a name="line.401"></a>
+<span class="sourceLineNo">402</span>        switch (op) {<a name="line.402"></a>
+<span class="sourceLineNo">403</span>            case '-':<a name="line.403"></a>
+<span class="sourceLineNo">404</span>                return InstructionConst.FSUB;<a name="line.404"></a>
+<span class="sourceLineNo">405</span>            case '+':<a name="line.405"></a>
+<span class="sourceLineNo">406</span>                return InstructionConst.FADD;<a name="line.406"></a>
+<span class="sourceLineNo">407</span>            case '*':<a name="line.407"></a>
+<span class="sourceLineNo">408</span>                return InstructionConst.FMUL;<a name="line.408"></a>
+<span class="sourceLineNo">409</span>            case '/':<a name="line.409"></a>
+<span class="sourceLineNo">410</span>                return InstructionConst.FDIV;<a name="line.410"></a>
+<span class="sourceLineNo">411</span>            case '%':<a name="line.411"></a>
+<span class="sourceLineNo">412</span>                return InstructionConst.FREM;<a name="line.412"></a>
+<span class="sourceLineNo">413</span>            default:<a name="line.413"></a>
+<span class="sourceLineNo">414</span>                throw new IllegalArgumentException("Invalid operand " + op);<a name="line.414"></a>
+<span class="sourceLineNo">415</span>        }<a name="line.415"></a>
+<span class="sourceLineNo">416</span>    }<a name="line.416"></a>
+<span class="sourceLineNo">417</span><a name="line.417"></a>
+<span class="sourceLineNo">418</span><a name="line.418"></a>
+<span class="sourceLineNo">419</span>    private static ArithmeticInstruction createBinaryDoubleOp( final char op ) {<a name="line.419"></a>
+<span class="sourceLineNo">420</span>        switch (op) {<a name="line.420"></a>
+<span class="sourceLineNo">421</span>            case '-':<a name="line.421"></a>
+<span class="sourceLineNo">422</span>                return InstructionConst.DSUB;<a name="line.422"></a>
+<span class="sourceLineNo">423</span>            case '+':<a name="line.423"></a>
+<span class="sourceLineNo">424</span>                return InstructionConst.DADD;<a name="line.424"></a>
+<span class="sourceLineNo">425</span>            case '*':<a name="line.425"></a>
+<span class="sourceLineNo">426</span>                return InstructionConst.DMUL;<a name="line.426"></a>
+<span class="sourceLineNo">427</span>            case '/':<a name="line.427"></a>
+<span class="sourceLineNo">428</span>                return InstructionConst.DDIV;<a name="line.428"></a>
+<span class="sourceLineNo">429</span>            case '%':<a name="line.429"></a>
+<span class="sourceLineNo">430</span>                return InstructionConst.DREM;<a name="line.430"></a>
+<span class="sourceLineNo">431</span>            default:<a name="line.431"></a>
+<span class="sourceLineNo">432</span>                throw new IllegalArgumentException("Invalid operand " + op);<a name="line.432"></a>
+<span class="sourceLineNo">433</span>        }<a name="line.433"></a>
+<span class="sourceLineNo">434</span>    }<a name="line.434"></a>
+<span class="sourceLineNo">435</span><a name="line.435"></a>
+<span class="sourceLineNo">436</span><a name="line.436"></a>
+<span class="sourceLineNo">437</span>    /**<a name="line.437"></a>
+<span class="sourceLineNo">438</span>     * Create binary operation for simple basic types, such as int and float.<a name="line.438"></a>
+<span class="sourceLineNo">439</span>     *<a name="line.439"></a>
+<span class="sourceLineNo">440</span>     * @param op operation, such as "+", "*", "&amp;lt;&amp;lt;", etc.<a name="line.440"></a>
+<span class="sourceLineNo">441</span>     */<a name="line.441"></a>
+<span class="sourceLineNo">442</span>    public static ArithmeticInstruction createBinaryOperation( final String op, final Type type ) {<a name="line.442"></a>
+<span class="sourceLineNo">443</span>        final char first = op.charAt(0);<a name="line.443"></a>
+<span class="sourceLineNo">444</span>        switch (type.getType()) {<a name="line.444"></a>
+<span class="sourceLineNo">445</span>            case Const.T_BYTE:<a name="line.445"></a>
+<span class="sourceLineNo">446</span>            case Const.T_SHORT:<a name="line.446"></a>
+<span class="sourceLineNo">447</span>            case Const.T_INT:<a name="line.447"></a>
+<span class="sourceLineNo">448</span>            case Const.T_CHAR:<a name="line.448"></a>
+<span class="sourceLineNo">449</span>                return createBinaryIntOp(first, op);<a name="line.449"></a>
+<span class="sourceLineNo">450</span>            case Const.T_LONG:<a name="line.450"></a>
+<span class="sourceLineNo">451</span>                return createBinaryLongOp(first, op);<a name="line.451"></a>
+<span class="sourceLineNo">452</span>            case Const.T_FLOAT:<a name="line.452"></a>
+<span class="sourceLineNo">453</span>                return createBinaryFloatOp(first);<a name="line.453"></a>
+<span class="sourceLineNo">454</span>            case Const.T_DOUBLE:<a name="line.454"></a>
+<span class="sourceLineNo">455</span>                return createBinaryDoubleOp(first);<a name="line.455"></a>
+<span class="sourceLineNo">456</span>            default:<a name="line.456"></a>
+<span class="sourceLineNo">457</span>                throw new IllegalArgumentException("Invalid type " + type);<a name="line.457"></a>
+<span class="sourceLineNo">458</span>        }<a name="line.458"></a>
+<span class="sourceLineNo">459</span>    }<a name="line.459"></a>
+<span class="sourceLineNo">460</span><a name="line.460"></a>
+<span class="sourceLineNo">461</span><a name="line.461"></a>
+<span class="sourceLineNo">462</span>    /**<a name="line.462"></a>
+<span class="sourceLineNo">463</span>     * @param size size of operand, either 1 (int, e.g.) or 2 (double)<a name="line.463"></a>
+<span class="sourceLineNo">464</span>     */<a name="line.464"></a>
+<span class="sourceLineNo">465</span>    public static StackInstruction createPop( final int size ) {<a name="line.465"></a>
+<span class="sourceLineNo">466</span>        return (size == 2) ? InstructionConst.POP2 : InstructionConst.POP;<a name="line.466"></a>
+<span class="sourceLineNo">467</span>    }<a name="line.467"></a>
+<span class="sourceLineNo">468</span><a name="line.468"></a>
+<span class="sourceLineNo">469</span><a name="line.469"></a>
+<span class="sourceLineNo">470</span>    /**<a name="line.470"></a>
+<span class="sourceLineNo">471</span>     * @param size size of operand, either 1 (int, e.g.) or 2 (double)<a name="line.471"></a>
+<span class="sourceLineNo">472</span>     */<a name="line.472"></a>
+<span class="sourceLineNo">473</span>    public static StackInstruction createDup( final int size ) {<a name="line.473"></a>
+<span class="sourceLineNo">474</span>        return (size == 2) ? InstructionConst.DUP2 : InstructionConst.DUP;<a name="line.474"></a>
+<span class="sourceLineNo">475</span>    }<a name="line.475"></a>
+<span class="sourceLineNo">476</span><a name="line.476"></a>
+<span class="sourceLineNo">477</span><a name="line.477"></a>
+<span class="sourceLineNo">478</span>    /**<a name="line.478"></a>
+<span class="sourceLineNo">479</span>     * @param size size of operand, either 1 (int, e.g.) or 2 (double)<a name="line.479"></a>
+<span class="sourceLineNo">480</span>     */<a name="line.480"></a>
+<span class="sourceLineNo">481</span>    public static StackInstruction createDup_2( final int size ) {<a name="line.481"></a>
+<span class="sourceLineNo">482</span>        return (size == 2) ? InstructionConst.DUP2_X2 : InstructionConst.DUP_X2;<a name="line.482"></a>
+<span class="sourceLineNo">483</span>    }<a name="line.483"></a>
+<span class="sourceLineNo">484</span><a name="line.484"></a>
+<span class="sourceLineNo">485</span><a name="line.485"></a>
+<span class="sourceLineNo">486</span>    /**<a name="line.486"></a>
+<span class="sourceLineNo">487</span>     * @param size size of operand, either 1 (int, e.g.) or 2 (double)<a name="line.487"></a>
+<span class="sourceLineNo">488</span>     */<a name="line.488"></a>
+<span class="sourceLineNo">489</span>    public static StackInstruction createDup_1( final int size ) {<a name="line.489"></a>
+<span class="sourceLineNo">490</span>        return (size == 2) ? InstructionConst.DUP2_X1 : InstructionConst.DUP_X1;<a name="line.490"></a>
+<span class="sourceLineNo">491</span>    }<a name="line.491"></a>
+<span class="sourceLineNo">492</span><a name="line.492"></a>
+<span class="sourceLineNo">493</span><a name="line.493"></a>
+<span class="sourceLineNo">494</span>    /**<a name="line.494"></a>
+<span class="sourceLineNo">495</span>     * @param index index of local variable<a name="line.495"></a>
+<span class="sourceLineNo">496</span>     */<a name="line.496"></a>
+<span class="sourceLineNo">497</span>    public static LocalVariableInstruction createStore( final Type type, final int index ) {<a name="line.497"></a>
+<span class="sourceLineNo">498</span>        switch (type.getType()) {<a name="line.498"></a>
+<span class="sourceLineNo">499</span>            case Const.T_BOOLEAN:<a name="line.499"></a>
+<span class="sourceLineNo">500</span>            case Const.T_CHAR:<a name="line.500"></a>
+<span class="sourceLineNo">501</span>            case Const.T_BYTE:<a name="line.501"></a>
+<span class="sourceLineNo">502</span>            case Const.T_SHORT:<a name="line.502"></a>
+<span class="sourceLineNo">503</span>            case Const.T_INT:<a name="line.503"></a>
+<span class="sourceLineNo">504</span>                return new ISTORE(index);<a name="line.504"></a>
+<span class="sourceLineNo">505</span>            case Const.T_FLOAT:<a name="line.505"></a>
+<span class="sourceLineNo">506</span>                return new FSTORE(index);<a name="line.506"></a>
+<span class="sourceLineNo">507</span>            case Const.T_DOUBLE:<a name="line.507"></a>
+<span class="sourceLineNo">508</span>                return new DSTORE(index);<a name="line.508"></a>
+<span class="sourceLineNo">509</span>            case Const.T_LONG:<a name="line.509"></a>
+<span class="sourceLineNo">510</span>                return new LSTORE(index);<a name="line.510"></a>
+<span class="sourceLineNo">511</span>            case Const.T_ARRAY:<a name="line.511"></a>
+<span class="sourceLineNo">512</span>            case Const.T_OBJECT:<a name="line.512"></a>
+<span class="sourceLineNo">513</span>                return new ASTORE(index);<a name="line.513"></a>
+<span class="sourceLineNo">514</span>            default:<a name="line.514"></a>
+<span class="sourceLineNo">515</span>                throw new IllegalArgumentException("Invalid type " + type);<a name="line.515"></a>
+<span class="sourceLineNo">516</span>        }<a name="line.516"></a>
+<span class="sourceLineNo">517</span>    }<a name="line.517"></a>
+<span class="sourceLineNo">518</span><a name="line.518"></a>
+<span class="sourceLineNo">519</span><a name="line.519"></a>
+<span class="sourceLineNo">520</span>    /**<a name="line.520"></a>
+<span class="sourceLineNo">521</span>     * @param index index of local variable<a name="line.521"></a>
+<span class="sourceLineNo">522</span>     */<a name="line.522"></a>
+<span class="sourceLineNo">523</span>    public static LocalVariableInstruction createLoad( final Type type, final int index ) {<a name="line.523"></a>
+<span class="sourceLineNo">524</span>        switch (type.getType()) {<a name="line.524"></a>
+<span class="sourceLineNo">525</span>            case Const.T_BOOLEAN:<a name="line.525"></a>
+<span class="sourceLineNo">526</span>            case Const.T_CHAR:<a name="line.526"></a>
+<span class="sourceLineNo">527</span>            case Const.T_BYTE:<a name="line.527"></a>
+<span class="sourceLineNo">528</span>            case Const.T_SHORT:<a name="line.528"></a>
+<span class="sourceLineNo">529</span>            case Const.T_INT:<a name="line.529"></a>
+<span class="sourceLineNo">530</span>                return new ILOAD(index);<a name="line.530"></a>
+<span class="sourceLineNo">531</span>            case Const.T_FLOAT:<a name="line.531"></a>
+<span class="sourceLineNo">532</span>                return new FLOAD(index);<a name="line.532"></a>
+<span class="sourceLineNo">533</span>            case Const.T_DOUBLE:<a name="line.533"></a>
+<span class="sourceLineNo">534</span>                return new DLOAD(index);<a name="line.534"></a>
+<span class="sourceLineNo">535</span>            case Const.T_LONG:<a name="line.535"></a>
+<span class="sourceLineNo">536</span>                return new LLOAD(index);<a name="line.536"></a>
+<span class="sourceLineNo">537</span>            case Const.T_ARRAY:<a name="line.537"></a>
+<span class="sourceLineNo">538</span>            case Const.T_OBJECT:<a name="line.538"></a>
+<span class="sourceLineNo">539</span>                return new ALOAD(index);<a name="line.539"></a>
+<span class="sourceLineNo">540</span>            default:<a name="line.540"></a>
+<span class="sourceLineNo">541</span>                throw new IllegalArgumentException("Invalid type " + type);<a name="line.541"></a>
+<span class="sourceLineNo">542</span>        }<a name="line.542"></a>
+<span class="sourceLineNo">543</span>    }<a name="line.543"></a>
+<span class="sourceLineNo">544</span><a name="line.544"></a>
+<span class="sourceLineNo">545</span><a name="line.545"></a>
+<span class="sourceLineNo">546</span>    /**<a name="line.546"></a>
+<span class="sourceLineNo">547</span>     * @param type type of elements of array, i.e., array.getElementType()<a name="line.547"></a>
+<span class="sourceLineNo">548</span>     */<a name="line.548"></a>
+<span class="sourceLineNo">549</span>    public static ArrayInstruction createArrayLoad( final Type type ) {<a name="line.549"></a>
+<span class="sourceLineNo">550</span>        switch (type.getType()) {<a name="line.550"></a>
+<span class="sourceLineNo">551</span>            case Const.T_BOOLEAN:<a name="line.551"></a>
+<span class="sourceLineNo">552</span>            case Const.T_BYTE:<a name="line.552"></a>
+<span class="sourceLineNo">553</span>                return InstructionConst.BALOAD;<a name="line.553"></a>
+<span class="sourceLineNo">554</span>            case Const.T_CHAR:<a name="line.554"></a>
+<span class="sourceLineNo">555</span>                return InstructionConst.CALOAD;<a name="line.555"></a>
+<span class="sourceLineNo">556</span>            case Const.T_SHORT:<a name="line.556"></a>
+<span class="sourceLineNo">557</span>                return InstructionConst.SALOAD;<a name="line.557"></a>
+<span class="sourceLineNo">558</span>            case Const.T_INT:<a name="line.558"></a>
+<span class="sourceLineNo">559</span>                return InstructionConst.IALOAD;<a name="line.559"></a>
+<span class="sourceLineNo">560</span>            case Const.T_FLOAT:<a name="line.560"></a>
+<span class="sourceLineNo">561</span>                return InstructionConst.FALOAD;<a name="line.561"></a>
+<span class="sourceLineNo">562</span>            case Const.T_DOUBLE:<a name="line.562"></a>
+<span class="sourceLineNo">563</span>                return InstructionConst.DALOAD;<a name="line.563"></a>
+<span class="sourceLineNo">564</span>            case Const.T_LONG:<a name="line.564"></a>
+<span class="sourceLineNo">565</span>                return InstructionConst.LALOAD;<a name="line.565"></a>
+<span class="sourceLineNo">566</span>            case Const.T_ARRAY:<a name="line.566"></a>
+<span class="sourceLineNo">567</span>            case Const.T_OBJECT:<a name="line.567"></a>
+<span class="sourceLineNo">568</span>                return InstructionConst.AALOAD;<a name="line.568"></a>
+<span class="sourceLineNo">569</span>            default:<a name="line.569"></a>
+<span class="sourceLineNo">570</span>                throw new IllegalArgumentException("Invalid type " + type);<a name="line.570"></a>
+<span class="sourceLineNo">571</span>        }<a name="line.571"></a>
+<span class="sourceLineNo">572</span>    }<a name="line.572"></a>
+<span class="sourceLineNo">573</span><a name="line.573"></a>
+<span class="sourceLineNo">574</span><a name="line.574"></a>
+<span class="sourceLineNo">575</span>    /**<a name="line.575"></a>
+<span class="sourceLineNo">576</span>     * @param type type of elements of array, i.e., array.getElementType()<a name="line.576"></a>
+<span class="sourceLineNo">577</span>     */<a name="line.577"></a>
+<span class="sourceLineNo">578</span>    public static ArrayInstruction createArrayStore( final Type type ) {<a name="line.578"></a>
+<span class="sourceLineNo">579</span>        switch (type.getType()) {<a name="line.579"></a>
+<span class="sourceLineNo">580</span>            case Const.T_BOOLEAN:<a name="line.580"></a>
+<span class="sourceLineNo">581</span>            case Const.T_BYTE:<a name="line.581"></a>
+<span class="sourceLineNo">582</span>                return InstructionConst.BASTORE;<a name="line.582"></a>
+<span class="sourceLineNo">583</span>            case Const.T_CHAR:<a name="line.583"></a>
+<span class="sourceLineNo">584</span>                return InstructionConst.CASTORE;<a name="line.584"></a>
+<span class="sourceLineNo">585</span>            case Const.T_SHORT:<a name="line.585"></a>
+<span class="sourceLineNo">586</span>                return InstructionConst.SASTORE;<a name="line.586"></a>
+<span class="sourceLineNo">587</span>            case Const.T_INT:<a name="line.587"></a>
+<span class="sourceLineNo">588</span>                return InstructionConst.IASTORE;<a name="line.588"></a>
+<span class="sourceLineNo">589</span>            case Const.T_FLOAT:<a name="line.589"></a>
+<span class="sourceLineNo">590</span>                return InstructionConst.FASTORE;<a name="line.590"></a>
+<span class="sourceLineNo">591</span>            case Const.T_DOUBLE:<a name="line.591"></a>
+<span class="sourceLineNo">592</span>                return InstructionConst.DASTORE;<a name="line.592"></a>
+<span class="sourceLineNo">593</span>            case Const.T_LONG:<a name="line.593"></a>
+<span class="sourceLineNo">594</span>                return InstructionConst.LASTORE;<a name="line.594"></a>
+<span class="sourceLineNo">595</span>            case Const.T_ARRAY:<a name="line.595"></a>
+<span class="sourceLineNo">596</span>            case Const.T_OBJECT:<a name="line.596"></a>
+<span class="sourceLineNo">597</span>                return InstructionConst.AASTORE;<a name="line.597"></a>
+<span class="sourceLineNo">598</span>            default:<a name="line.598"></a>
+<span class="sourceLineNo">599</span>                throw new IllegalArgumentException("Invalid type " + type);<a name="line.599"></a>
+<span class="sourceLineNo">600</span>        }<a name="line.600"></a>
+<span class="sourceLineNo">601</span>    }<a name="line.601"></a>
+<span class="sourceLineNo">602</span><a name="line.602"></a>
+<span class="sourceLineNo">603</span><a name="line.603"></a>
+<span class="sourceLineNo">604</span>    /** Create conversion operation for two stack operands, this may be an I2C, instruction, e.g.,<a name="line.604"></a>
+<span class="sourceLineNo">605</span>     * if the operands are basic types and CHECKCAST if they are reference types.<a name="line.605"></a>
+<span class="sourceLineNo">606</span>     */<a name="line.606"></a>
+<span class="sourceLineNo">607</span>    public Instruction createCast( final Type src_type, final Type dest_type ) {<a name="line.607"></a>
+<span class="sourceLineNo">608</span>        if ((src_type instanceof BasicType) &amp;&amp; (dest_type instanceof BasicType)) {<a name="line.608"></a>
+<span class="sourceLineNo">609</span>            final byte dest = dest_type.getType();<a name="line.609"></a>
+<span class="sourceLineNo">610</span>            byte src = src_type.getType();<a name="line.610"></a>
+<span class="sourceLineNo">611</span>            if (dest == Const.T_LONG<a name="line.611"></a>
+<span class="sourceLineNo">612</span>                    &amp;&amp; (src == Const.T_CHAR || src == Const.T_BYTE || src == Const.T_SHORT)) {<a name="line.612"></a>
+<span class="sourceLineNo">613</span>                src = Const.T_INT;<a name="line.613"></a>
+<span class="sourceLineNo">614</span>            }<a name="line.614"></a>
+<span class="sourceLineNo">615</span>            final String name = "org.apache.bcel.generic." + short_names[src - Const.T_CHAR] + "2"<a name="line.615"></a>
+<span class="sourceLineNo">616</span>                    + short_names[dest - Const.T_CHAR];<a name="line.616"></a>
+<span class="sourceLineNo">617</span>            Instruction i = null;<a name="line.617"></a>
+<span class="sourceLineNo">618</span>            try {<a name="line.618"></a>
+<span class="sourceLineNo">619</span>                i = (Instruction) java.lang.Class.forName(name).newInstance();<a name="line.619"></a>
+<span class="sourceLineNo">620</span>            } catch (final Exception e) {<a name="line.620"></a>
+<span class="sourceLineNo">621</span>                throw new IllegalArgumentException("Could not find instruction: " + name, e);<a name="line.621"></a>
+<span class="sourceLineNo">622</span>            }<a name="line.622"></a>
+<span class="sourceLineNo">623</span>            return i;<a name="line.623"></a>
+<span class="sourceLineNo">624</span>        } else if ((src_type instanceof ReferenceType) &amp;&amp; (dest_type instanceof ReferenceType)) {<a name="line.624"></a>
+<span class="sourceLineNo">625</span>            if (dest_type instanceof ArrayType) {<a name="line.625"></a>
+<span class="sourceLineNo">626</span>                return new CHECKCAST(cp.addArrayClass((ArrayType) dest_type));<a name="line.626"></a>
+<span class="sourceLineNo">627</span>            }<a name="line.627"></a>
+<span class="sourceLineNo">628</span>            return new CHECKCAST(cp.addClass(((ObjectType) dest_type).getClassName()));<a name="line.628"></a>
+<span class="sourceLineNo">629</span>        } else {<a name="line.629"></a>
+<span class="sourceLineNo">630</span>            throw new IllegalArgumentException("Cannot cast " + src_type + " to " + dest_type);<a name="line.630"></a>
+<span class="sourceLineNo">631</span>        }<a name="line.631"></a>
+<span class="sourceLineNo">632</span>    }<a name="line.632"></a>
+<span class="sourceLineNo">633</span><a name="line.633"></a>
+<span class="sourceLineNo">634</span><a name="line.634"></a>
+<span class="sourceLineNo">635</span>    public GETFIELD createGetField( final String class_name, final String name, final Type t ) {<a name="line.635"></a>
+<span class="sourceLineNo">636</span>        return new GETFIELD(cp.addFieldref(class_name, name, t.getSignature()));<a name="line.636"></a>
+<span class="sourceLineNo">637</span>    }<a name="line.637"></a>
+<span class="sourceLineNo">638</span><a name="line.638"></a>
+<span class="sourceLineNo">639</span><a name="line.639"></a>
+<span class="sourceLineNo">640</span>    public GETSTATIC createGetStatic( final String class_name, final String name, final Type t ) {<a name="line.640"></a>
+<span class="sourceLineNo">641</span>        return new GETSTATIC(cp.addFieldref(class_name, name, t.getSignature()));<a name="line.641"></a>
+<span class="sourceLineNo">642</span>    }<a name="line.642"></a>
+<span class="sourceLineNo">643</span><a name="line.643"></a>
+<span class="sourceLineNo">644</span><a name="line.644"></a>
+<span class="sourceLineNo">645</span>    public PUTFIELD createPutField( final String class_name, final String name, final Type t ) {<a name="line.645"></a>
+<span class="sourceLineNo">646</span>        return new PUTFIELD(cp.addFieldref(class_name, name, t.getSignature()));<a name="line.646"></a>
+<span class="sourceLineNo">647</span>    }<a name="line.647"></a>
+<span class="sourceLineNo">648</span><a name="line.648"></a>
+<span class="sourceLineNo">649</span><a name="line.649"></a>
+<span class="sourceLineNo">650</span>    public PUTSTATIC createPutStatic( final String class_name, final String name, final Type t ) {<a name="line.650"></a>
+<span class="sourceLineNo">651</span>        return new PUTSTATIC(cp.addFieldref(class_name, name, t.getSignature()));<a name="line.651"></a>
+<span class="sourceLineNo">652</span>    }<a name="line.652"></a>
+<span class="sourceLineNo">653</span><a name="line.653"></a>
+<span class="sourceLineNo">654</span><a name="line.654"></a>
+<span class="sourceLineNo">655</span>    public CHECKCAST createCheckCast( final ReferenceType t ) {<a name="line.655"></a>
+<span class="sourceLineNo">656</span>        if (t instanceof ArrayType) {<a name="line.656"></a>
+<span class="sourceLineNo">657</span>            return new CHECKCAST(cp.addArrayClass((ArrayType) t));<a name="line.657"></a>
+<span class="sourceLineNo">658</span>        }<a name="line.658"></a>
+<span class="sourceLineNo">659</span>        return new CHECKCAST(cp.addClass((ObjectType) t));<a name="line.659"></a>
+<span class="sourceLineNo">660</span>    }<a name="line.660"></a>
+<span class="sourceLineNo">661</span><a name="line.661"></a>
+<span class="sourceLineNo">662</span><a name="line.662"></a>
+<span class="sourceLineNo">663</span>    public INSTANCEOF createInstanceOf( final ReferenceType t ) {<a name="line.663"></a>
+<span class="sourceLineNo">664</span>        if (t instanceof ArrayType) {<a name="line.664"></a>
+<span class="sourceLineNo">665</span>            return new INSTANCEOF(cp.addArrayClass((ArrayType) t));<a name="line.665"></a>
+<span class="sourceLineNo">666</span>        }<a name="line.666"></a>
+<span class="sourceLineNo">667</span>        return new INSTANCEOF(cp.addClass((ObjectType) t));<a name="line.667"></a>
+<span class="sourceLineNo">668</span>    }<a name="line.668"></a>
+<span class="sourceLineNo">669</span><a name="line.669"></a>
+<span class="sourceLineNo">670</span><a name="line.670"></a>
+<span class="sourceLineNo">671</span>    public NEW createNew( final ObjectType t ) {<a name="line.671"></a>
+<span class="sourceLineNo">672</span>        return new NEW(cp.addClass(t));<a name="line.672"></a>
+<span class="sourceLineNo">673</span>    }<a name="line.673"></a>
+<span class="sourceLineNo">674</span><a name="line.674"></a>
+<span class="sourceLineNo">675</span><a name="line.675"></a>
+<span class="sourceLineNo">676</span>    public NEW createNew( final String s ) {<a name="line.676"></a>
+<span class="sourceLineNo">677</span>        return createNew(ObjectType.getInstance(s));<a name="line.677"></a>
+<span class="sourceLineNo">678</span>    }<a name="line.678"></a>
+<span class="sourceLineNo">679</span><a name="line.679"></a>
+<span class="sourceLineNo">680</span><a name="line.680"></a>
+<span class="sourceLineNo">681</span>    /** Create new array of given size and type.<a name="line.681"></a>
+<span class="sourceLineNo">682</span>     * @return an instruction that creates the corresponding array at runtime, i.e. is an AllocationInstruction<a name="line.682"></a>
+<span class="sourceLineNo">683</span>     */<a name="line.683"></a>
+<span class="sourceLineNo">684</span>    public Instruction createNewArray( final Type t, final short dim ) {<a name="line.684"></a>
+<span class="sourceLineNo">685</span>        if (dim == 1) {<a name="line.685"></a>
+<span class="sourceLineNo">686</span>            if (t instanceof ObjectType) {<a name="line.686"></a>
+<span class="sourceLineNo">687</span>                return new ANEWARRAY(cp.addClass((ObjectType) t));<a name="line.687"></a>
+<span class="sourceLineNo">688</span>            } else if (t instanceof ArrayType) {<a name="line.688"></a>
+<span class="sourceLineNo">689</span>                return new ANEWARRAY(cp.addArrayClass((ArrayType) t));<a name="line.689"></a>
+<span class="sourceLineNo">690</span>            } else {<a name="line.690"></a>
+<span class="sourceLineNo">691</span>                return new NEWARRAY(t.getType());<a name="line.691"></a>
+<span class="sourceLineNo">692</span>            }<a name="line.692"></a>
+<span class="sourceLineNo">693</span>        }<a name="line.693"></a>
+<span class="sourceLineNo">694</span>        ArrayType at;<a name="line.694"></a>
+<span class="sourceLineNo">695</span>        if (t instanceof ArrayType) {<a name="line.695"></a>
+<span class="sourceLineNo">696</span>            at = (ArrayType) t;<a name="line.696"></a>
+<span class="sourceLineNo">697</span>        } else {<a name="line.697"></a>
+<span class="sourceLineNo">698</span>            at = new ArrayType(t, dim);<a name="line.698"></a>
+<span class="sourceLineNo">699</span>        }<a name="line.699"></a>
+<span class="sourceLineNo">700</span>        return new MULTIANEWARRAY(cp.addArrayClass(at), dim);<a name="line.700"></a>
+<span class="sourceLineNo">701</span>    }<a name="line.701"></a>
+<span class="sourceLineNo">702</span><a name="line.702"></a>
+<span class="sourceLineNo">703</span><a name="line.703"></a>
+<span class="sourceLineNo">704</span>    /** Create "null" value for reference types, 0 for basic types like int<a name="line.704"></a>
+<span class="sourceLineNo">705</span>     */<a name="line.705"></a>
+<span class="sourceLineNo">706</span>    public static Instruction createNull( final Type type ) {<a name="line.706"></a>
+<span class="sourceLineNo">707</span>        switch (type.getType()) {<a name="line.707"></a>
+<span class="sourceLineNo">708</span>            case Const.T_ARRAY:<a name="line.708"></a>
+<span class="sourceLineNo">709</span>            case Const.T_OBJECT:<a name="line.709"></a>
+<span class="sourceLineNo">710</span>                return InstructionConst.ACONST_NULL;<a name="line.710"></a>
+<span class="sourceLineNo">711</span>            case Const.T_INT:<a name="line.711"></a>
+<span class="sourceLineNo">712</span>            case Const.T_SHORT:<a name="line.712"></a>
+<span class="sourceLineNo">713</span>            case Const.T_BOOLEAN:<a name="line.713"></a>
+<span class="sourceLineNo">714</span>            case Const.T_CHAR:<a name="line.714"></a>
+<span class="sourceLineNo">715</span>            case Const.T_BYTE:<a name="line.715"></a>
+<span class="sourceLineNo">716</span>                return InstructionConst.ICONST_0;<a name="line.716"></a>
+<span class="sourceLineNo">717</span>            case Const.T_FLOAT:<a name="line.717"></a>
+<span class="sourceLineNo">718</span>                return InstructionConst.FCONST_0;<a name="line.718"></a>
+<span class="sourceLineNo">719</span>            case Const.T_DOUBLE:<a name="line.719"></a>
+<span class="sourceLineNo">720</span>                return InstructionConst.DCONST_0;<a name="line.720"></a>
+<span class="sourceLineNo">721</span>            case Const.T_LONG:<a name="line.721"></a>
+<span class="sourceLineNo">722</span>                return InstructionConst.LCONST_0;<a name="line.722"></a>
+<span class="sourceLineNo">723</span>            case Const.T_VOID:<a name="line.723"></a>
+<span class="sourceLineNo">724</span>                return InstructionConst.NOP;<a name="line.724"></a>
+<span class="sourceLineNo">725</span>            default:<a name="line.725"></a>
+<span class="sourceLineNo">726</span>                throw new IllegalArgumentException("Invalid type: " + type);<a name="line.726"></a>
+<span class="sourceLineNo">727</span>        }<a name="line.727"></a>
+<span class="sourceLineNo">728</span>    }<a name="line.728"></a>
+<span class="sourceLineNo">729</span><a name="line.729"></a>
+<span class="sourceLineNo">730</span><a name="line.730"></a>
+<span class="sourceLineNo">731</span>    /** Create branch instruction by given opcode, except LOOKUPSWITCH and TABLESWITCH.<a name="line.731"></a>
+<span class="sourceLineNo">732</span>     * For those you should use the SWITCH compound instruction.<a name="line.732"></a>
+<span class="sourceLineNo">733</span>     */<a name="line.733"></a>
+<span class="sourceLineNo">734</span>    public static BranchInstruction createBranchInstruction( final short opcode, final InstructionHandle target ) {<a name="line.734"></a>
+<span class="sourceLineNo">735</span>        switch (opcode) {<a name="line.735"></a>
+<span class="sourceLineNo">736</span>            case Const.IFEQ:<a name="line.736"></a>
+<span class="sourceLineNo">737</span>                return new IFEQ(target);<a name="line.737"></a>
+<span class="sourceLineNo">738</span>            case Const.IFNE:<a name="line.738"></a>
+<span class="sourceLineNo">739</span>                return new IFNE(target);<a name="line.739"></a>
+<span class="sourceLineNo">740</span>            case Const.IFLT:<a name="line.740"></a>
+<span class="sourceLineNo">741</span>                return new IFLT(target);<a name="line.741"></a>
+<span class="sourceLineNo">742</span>            case Const.IFGE:<a name="line.742"></a>
+<span class="sourceLineNo">743</span>                return new IFGE(target);<a name="line.743"></a>
+<span class="sourceLineNo">744</span>            case Const.IFGT:<a name="line.744"></a>
+<span class="sourceLineNo">745</span>                return new IFGT(target);<a name="line.745"></a>
+<span class="sourceLineNo">746</span>            case Const.IFLE:<a name="line.746"></a>
+<span class="sourceLineNo">747</span>                return new IFLE(target);<a name="line.747"></a>
+<span class="sourceLineNo">748</span>            case Const.IF_ICMPEQ:<a name="line.748"></a>
+<span class="sourceLineNo">749</span>                return new IF_ICMPEQ(target);<a name="line.749"></a>
+<span class="sourceLineNo">750</span>            case Const.IF_ICMPNE:<a name="line.750"></a>
+<span class="sourceLineNo">751</span>                return new IF_ICMPNE(target);<a name="line.751"></a>
+<span class="sourceLineNo">752</span>            case Const.IF_ICMPLT:<a name="line.752"></a>
+<span class="sourceLineNo">753</span>                return new IF_ICMPLT(target);<a name="line.753"></a>
+<span class="sourceLineNo">754</span>            case Const.IF_ICMPGE:<a name="line.754"></a>
+<span class="sourceLineNo">755</span>                return new IF_ICMPGE(target);<a name="line.755"></a>
+<span class="sourceLineNo">756</span>            case Const.IF_ICMPGT:<a name="line.756"></a>
+<span class="sourceLineNo">757</span>                return new IF_ICMPGT(target);<a name="line.757"></a>
+<span class="sourceLineNo">758</span>            case Const.IF_ICMPLE:<a name="line.758"></a>
+<span class="sourceLineNo">759</span>                return new IF_ICMPLE(target);<a name="line.759"></a>
+<span class="sourceLineNo">760</span>            case Const.IF_ACMPEQ:<a name="line.760"></a>
+<span class="sourceLineNo">761</span>                return new IF_ACMPEQ(target);<a name="line.761"></a>
+<span class="sourceLineNo">762</span>            case Const.IF_ACMPNE:<a name="line.762"></a>
+<span class="sourceLineNo">763</span>                return new IF_ACMPNE(target);<a name="line.763"></a>
+<span class="sourceLineNo">764</span>            case Const.GOTO:<a name="line.764"></a>
+<span class="sourceLineNo">765</span>                return new GOTO(target);<a name="line.765"></a>
+<span class="sourceLineNo">766</span>            case Const.JSR:<a name="line.766"></a>
+<span class="sourceLineNo">767</span>                return new JSR(target);<a name="line.767"></a>
+<span class="sourceLineNo">768</span>            case Const.IFNULL:<a name="line.768"></a>
+<span class="sourceLineNo">769</span>                return new IFNULL(target);<a name="line.769"></a>
+<span class="sourceLineNo">770</span>            case Const.IFNONNULL:<a name="line.770"></a>
+<span class="sourceLineNo">771</span>                return new IFNONNULL(target);<a name="line.771"></a>
+<span class="sourceLineNo">772</span>            case Const.GOTO_W:<a name="line.772"></a>
+<span class="sourceLineNo">773</span>                return new GOTO_W(target);<a name="line.773"></a>
+<span class="sourceLineNo">774</span>            case Const.JSR_W:<a name="line.774"></a>
+<span class="sourceLineNo">775</span>                return new JSR_W(target);<a name="line.775"></a>
+<span class="sourceLineNo">776</span>            default:<a name="line.776"></a>
+<span class="sourceLineNo">777</span>                throw new IllegalArgumentException("Invalid opcode: " + opcode);<a name="line.777"></a>
+<span class="sourceLineNo">778</span>        }<a name="line.778"></a>
+<span class="sourceLineNo">779</span>    }<a name="line.779"></a>
+<span class="sourceLineNo">780</span><a name="line.780"></a>
+<span class="sourceLineNo">781</span><a name="line.781"></a>
+<span class="sourceLineNo">782</span>    public void setClassGen( final ClassGen c ) {<a name="line.782"></a>
+<span class="sourceLineNo">783</span>        cg = c;<a name="line.783"></a>
+<span class="sourceLineNo">784</span>    }<a name="line.784"></a>
+<span class="sourceLineNo">785</span><a name="line.785"></a>
+<span class="sourceLineNo">786</span><a name="line.786"></a>
+<span class="sourceLineNo">787</span>    public ClassGen getClassGen() {<a name="line.787"></a>
+<span class="sourceLineNo">788</span>        return cg;<a name="line.788"></a>
+<span class="sourceLineNo">789</span>    }<a name="line.789"></a>
+<span class="sourceLineNo">790</span><a name="line.790"></a>
+<span class="sourceLineNo">791</span><a name="line.791"></a>
+<span class="sourceLineNo">792</span>    public void setConstantPool( final ConstantPoolGen c ) {<a name="line.792"></a>
+<span class="sourceLineNo">793</span>        cp = c;<a name="line.793"></a>
+<span class="sourceLineNo">794</span>    }<a name="line.794"></a>
+<span class="sourceLineNo">795</span><a name="line.795"></a>
+<span class="sourceLineNo">796</span><a name="line.796"></a>
+<span class="sourceLineNo">797</span>    public ConstantPoolGen getConstantPool() {<a name="line.797"></a>
+<span class="sourceLineNo">798</span>        return cp;<a name="line.798"></a>
+<span class="sourceLineNo">799</span>    }<a name="line.799"></a>
+<span class="sourceLineNo">800</span>}<a name="line.800"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

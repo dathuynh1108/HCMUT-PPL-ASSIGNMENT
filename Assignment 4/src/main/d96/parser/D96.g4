@@ -1,4 +1,9 @@
-// Student ID: 1910110 Name: Huynh Thanh Dat
+/* Student ID: 1910110 Name: Huynh Thanh Dat 
+    @author: Huynh Thanh Dat
+    HCMUT
+    Principle Of Program Language
+    Assignment 1
+*/
 grammar D96;
 
 @lexer::header {

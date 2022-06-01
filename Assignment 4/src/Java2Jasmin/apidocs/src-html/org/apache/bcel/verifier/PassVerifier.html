@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one or more<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * contributor license agreements.  See the NOTICE file distributed with<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * this work for additional information regarding copyright ownership.<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * The ASF licenses this file to You under the Apache License, Version 2.0<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * (the "License"); you may not use this file except in compliance with<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * the License.  You may obtain a copy of the License at<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.apache.org/licenses/LICENSE-2.0<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *  Unless required by applicable law or agreed to in writing, software<a name="line.11"></a>
+<span class="sourceLineNo">012</span> *  distributed under the License is distributed on an "AS IS" BASIS,<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.13"></a>
+<span class="sourceLineNo">014</span> *  See the License for the specific language governing permissions and<a name="line.14"></a>
+<span class="sourceLineNo">015</span> *  limitations under the License.<a name="line.15"></a>
+<span class="sourceLineNo">016</span> *<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span>package org.apache.bcel.verifier;<a name="line.18"></a>
+<span class="sourceLineNo">019</span><a name="line.19"></a>
+<span class="sourceLineNo">020</span>import java.util.ArrayList;<a name="line.20"></a>
+<span class="sourceLineNo">021</span>import java.util.List;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>/**<a name="line.23"></a>
+<span class="sourceLineNo">024</span> * A PassVerifier actually verifies a class file; it is instantiated<a name="line.24"></a>
+<span class="sourceLineNo">025</span> * by a Verifier.<a name="line.25"></a>
+<span class="sourceLineNo">026</span> * The verification should conform with a certain pass as described<a name="line.26"></a>
+<span class="sourceLineNo">027</span> * in The Java Virtual Machine Specification, 2nd edition.<a name="line.27"></a>
+<span class="sourceLineNo">028</span> * This book describes four passes. Pass one means loading the<a name="line.28"></a>
+<span class="sourceLineNo">029</span> * class and verifying a few static constraints. Pass two actually<a name="line.29"></a>
+<span class="sourceLineNo">030</span> * verifies some other constraints that could enforce loading in<a name="line.30"></a>
+<span class="sourceLineNo">031</span> * referenced class files. Pass three is the first pass that actually<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * checks constraints in the code array of a method in the class file;<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * it has two parts with the first verifying static constraints and<a name="line.33"></a>
+<span class="sourceLineNo">034</span> * the second part verifying structural constraints (where a data flow<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * analysis is used for). The fourth pass, finally, performs checks<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * that can only be done at run-time.<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * JustIce does not have a run-time pass, but certain constraints that<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * are usually delayed until run-time for performance reasons are also<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * checked during the second part of pass three.<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * PassVerifier instances perform caching.<a name="line.40"></a>
+<span class="sourceLineNo">041</span> * That means, if you really want a new verification run of a certain<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * pass you must use a new instance of a given PassVerifier.<a name="line.42"></a>
+<span class="sourceLineNo">043</span> *<a name="line.43"></a>
+<span class="sourceLineNo">044</span> * @see Verifier<a name="line.44"></a>
+<span class="sourceLineNo">045</span> * @see #verify()<a name="line.45"></a>
+<span class="sourceLineNo">046</span> */<a name="line.46"></a>
+<span class="sourceLineNo">047</span>public abstract class PassVerifier {<a name="line.47"></a>
+<span class="sourceLineNo">048</span><a name="line.48"></a>
+<span class="sourceLineNo">049</span>    /** The (warning) messages. */<a name="line.49"></a>
+<span class="sourceLineNo">050</span>    private final List&lt;String&gt; messages = new ArrayList&lt;&gt;();<a name="line.50"></a>
+<span class="sourceLineNo">051</span>    /** The VerificationResult cache. */<a name="line.51"></a>
+<span class="sourceLineNo">052</span>    private VerificationResult verificationResult = null;<a name="line.52"></a>
+<span class="sourceLineNo">053</span><a name="line.53"></a>
+<span class="sourceLineNo">054</span><a name="line.54"></a>
+<span class="sourceLineNo">055</span>    /**<a name="line.55"></a>
+<span class="sourceLineNo">056</span>     * This method runs a verification pass conforming to the<a name="line.56"></a>
+<span class="sourceLineNo">057</span>     * Java Virtual Machine Specification, 2nd edition, on a<a name="line.57"></a>
+<span class="sourceLineNo">058</span>     * class file.<a name="line.58"></a>
+<span class="sourceLineNo">059</span>     * PassVerifier instances perform caching;<a name="line.59"></a>
+<span class="sourceLineNo">060</span>     * i.e. if the verify() method once determined a VerificationResult,<a name="line.60"></a>
+<span class="sourceLineNo">061</span>     * then this result may be returned after every invocation of this<a name="line.61"></a>
+<span class="sourceLineNo">062</span>     * method instead of running the verification pass anew; likewise with<a name="line.62"></a>
+<span class="sourceLineNo">063</span>     * the result of getMessages().<a name="line.63"></a>
+<span class="sourceLineNo">064</span>     *<a name="line.64"></a>
+<span class="sourceLineNo">065</span>     * @see #getMessages()<a name="line.65"></a>
+<span class="sourceLineNo">066</span>     * @see #addMessage(String)<a name="line.66"></a>
+<span class="sourceLineNo">067</span>     */<a name="line.67"></a>
+<span class="sourceLineNo">068</span>    public VerificationResult verify() {<a name="line.68"></a>
+<span class="sourceLineNo">069</span>        if (verificationResult == null) {<a name="line.69"></a>
+<span class="sourceLineNo">070</span>            verificationResult = do_verify();<a name="line.70"></a>
+<span class="sourceLineNo">071</span>        }<a name="line.71"></a>
+<span class="sourceLineNo">072</span>        return verificationResult;<a name="line.72"></a>
+<span class="sourceLineNo">073</span>    }<a name="line.73"></a>
+<span class="sourceLineNo">074</span><a name="line.74"></a>
+<span class="sourceLineNo">075</span><a name="line.75"></a>
+<span class="sourceLineNo">076</span>    /** Does the real verification work, uncached. */<a name="line.76"></a>
+<span class="sourceLineNo">077</span>    public abstract VerificationResult do_verify();<a name="line.77"></a>
+<span class="sourceLineNo">078</span><a name="line.78"></a>
+<span class="sourceLineNo">079</span><a name="line.79"></a>
+<span class="sourceLineNo">080</span>    /**<a name="line.80"></a>
+<span class="sourceLineNo">081</span>     * This method adds a (warning) message to the message pool of this<a name="line.81"></a>
+<span class="sourceLineNo">082</span>     * PassVerifier. This method is normally only internally used by<a name="line.82"></a>
+<span class="sourceLineNo">083</span>     * BCEL's class file verifier "JustIce" and should not be used from<a name="line.83"></a>
+<span class="sourceLineNo">084</span>     * the outside.<a name="line.84"></a>
+<span class="sourceLineNo">085</span>     *<a name="line.85"></a>
+<span class="sourceLineNo">086</span>     * @see #getMessages()<a name="line.86"></a>
+<span class="sourceLineNo">087</span>     */<a name="line.87"></a>
+<span class="sourceLineNo">088</span>    public void addMessage( final String message ) {<a name="line.88"></a>
+<span class="sourceLineNo">089</span>        messages.add(message);<a name="line.89"></a>
+<span class="sourceLineNo">090</span>    }<a name="line.90"></a>
+<span class="sourceLineNo">091</span><a name="line.91"></a>
+<span class="sourceLineNo">092</span><a name="line.92"></a>
+<span class="sourceLineNo">093</span>    /**<a name="line.93"></a>
+<span class="sourceLineNo">094</span>     * Returns the (warning) messages that this PassVerifier accumulated<a name="line.94"></a>
+<span class="sourceLineNo">095</span>     * during its do_verify()ing work.<a name="line.95"></a>
+<span class="sourceLineNo">096</span>     *<a name="line.96"></a>
+<span class="sourceLineNo">097</span>     * @see #addMessage(String)<a name="line.97"></a>
+<span class="sourceLineNo">098</span>     * @see #do_verify()<a name="line.98"></a>
+<span class="sourceLineNo">099</span>     */<a name="line.99"></a>
+<span class="sourceLineNo">100</span>    public String[] getMessages() {<a name="line.100"></a>
+<span class="sourceLineNo">101</span>        verify(); // create messages if not already done (cached!)<a name="line.101"></a>
+<span class="sourceLineNo">102</span>        return messages.toArray(new String[messages.size()]);<a name="line.102"></a>
+<span class="sourceLineNo">103</span>    }<a name="line.103"></a>
+<span class="sourceLineNo">104</span>}<a name="line.104"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

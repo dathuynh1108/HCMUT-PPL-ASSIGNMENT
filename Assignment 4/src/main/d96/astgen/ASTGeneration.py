@@ -1,3 +1,9 @@
+"""
+    @author: Huynh Thanh Dat
+    HCMUT
+    Principle Of Program Language
+    Assignment 2
+"""
 from D96Visitor import D96Visitor
 from D96Parser import D96Parser
 from AST import *

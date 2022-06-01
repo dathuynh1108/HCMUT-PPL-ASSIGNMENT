@@ -1,0 +1,271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one or more<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * contributor license agreements.  See the NOTICE file distributed with<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * this work for additional information regarding copyright ownership.<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * The ASF licenses this file to You under the Apache License, Version 2.0<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * (the "License"); you may not use this file except in compliance with<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * the License.  You may obtain a copy of the License at<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.apache.org/licenses/LICENSE-2.0<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *  Unless required by applicable law or agreed to in writing, software<a name="line.11"></a>
+<span class="sourceLineNo">012</span> *  distributed under the License is distributed on an "AS IS" BASIS,<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.13"></a>
+<span class="sourceLineNo">014</span> *  See the License for the specific language governing permissions and<a name="line.14"></a>
+<span class="sourceLineNo">015</span> *  limitations under the License.<a name="line.15"></a>
+<span class="sourceLineNo">016</span> *<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span>package org.apache.bcel.verifier.statics;<a name="line.18"></a>
+<span class="sourceLineNo">019</span><a name="line.19"></a>
+<span class="sourceLineNo">020</span><a name="line.20"></a>
+<span class="sourceLineNo">021</span>import org.apache.bcel.Repository;<a name="line.21"></a>
+<span class="sourceLineNo">022</span>import org.apache.bcel.classfile.ClassFormatException;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.apache.bcel.classfile.JavaClass;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.apache.bcel.verifier.PassVerifier;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.apache.bcel.verifier.VerificationResult;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.apache.bcel.verifier.Verifier;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.apache.bcel.verifier.exc.LoadingException;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.apache.bcel.verifier.exc.Utility;<a name="line.28"></a>
+<span class="sourceLineNo">029</span><a name="line.29"></a>
+<span class="sourceLineNo">030</span>/**<a name="line.30"></a>
+<span class="sourceLineNo">031</span> * This PassVerifier verifies a class file according to pass 1 as<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * described in The Java Virtual Machine Specification, 2nd edition.<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * More detailed information is to be found at the do_verify() method's<a name="line.33"></a>
+<span class="sourceLineNo">034</span> * documentation.<a name="line.34"></a>
+<span class="sourceLineNo">035</span> *<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * @see #do_verify()<a name="line.36"></a>
+<span class="sourceLineNo">037</span> */<a name="line.37"></a>
+<span class="sourceLineNo">038</span>public final class Pass1Verifier extends PassVerifier{<a name="line.38"></a>
+<span class="sourceLineNo">039</span>    /**<a name="line.39"></a>
+<span class="sourceLineNo">040</span>     * DON'T USE THIS EVEN PRIVATELY! USE getJavaClass() INSTEAD.<a name="line.40"></a>
+<span class="sourceLineNo">041</span>     * @see #getJavaClass()<a name="line.41"></a>
+<span class="sourceLineNo">042</span>     */<a name="line.42"></a>
+<span class="sourceLineNo">043</span>    private JavaClass jc;<a name="line.43"></a>
+<span class="sourceLineNo">044</span><a name="line.44"></a>
+<span class="sourceLineNo">045</span>    /**<a name="line.45"></a>
+<span class="sourceLineNo">046</span>     * The Verifier that created this.<a name="line.46"></a>
+<span class="sourceLineNo">047</span>     */<a name="line.47"></a>
+<span class="sourceLineNo">048</span>    private final Verifier myOwner;<a name="line.48"></a>
+<span class="sourceLineNo">049</span><a name="line.49"></a>
+<span class="sourceLineNo">050</span>    /**<a name="line.50"></a>
+<span class="sourceLineNo">051</span>     * Used to load in and return the myOwner-matching JavaClass object when needed.<a name="line.51"></a>
+<span class="sourceLineNo">052</span>     * Avoids loading in a class file when it's not really needed!<a name="line.52"></a>
+<span class="sourceLineNo">053</span>     */<a name="line.53"></a>
+<span class="sourceLineNo">054</span>    private JavaClass getJavaClass() {<a name="line.54"></a>
+<span class="sourceLineNo">055</span>        if (jc == null) {<a name="line.55"></a>
+<span class="sourceLineNo">056</span>            try {<a name="line.56"></a>
+<span class="sourceLineNo">057</span>                jc = Repository.lookupClass(myOwner.getClassName());<a name="line.57"></a>
+<span class="sourceLineNo">058</span>            } catch (final ClassNotFoundException e) {<a name="line.58"></a>
+<span class="sourceLineNo">059</span>                // FIXME: currently, Pass1Verifier treats jc == null as a special<a name="line.59"></a>
+<span class="sourceLineNo">060</span>                // case, so we don't need to do anything here.  A better solution<a name="line.60"></a>
+<span class="sourceLineNo">061</span>                // would be to simply throw the ClassNotFoundException<a name="line.61"></a>
+<span class="sourceLineNo">062</span>                // out of this method.<a name="line.62"></a>
+<span class="sourceLineNo">063</span>            }<a name="line.63"></a>
+<span class="sourceLineNo">064</span>        }<a name="line.64"></a>
+<span class="sourceLineNo">065</span>        return jc;<a name="line.65"></a>
+<span class="sourceLineNo">066</span>    }<a name="line.66"></a>
+<span class="sourceLineNo">067</span><a name="line.67"></a>
+<span class="sourceLineNo">068</span>    /**<a name="line.68"></a>
+<span class="sourceLineNo">069</span>     * Should only be instantiated by a Verifier.<a name="line.69"></a>
+<span class="sourceLineNo">070</span>     *<a name="line.70"></a>
+<span class="sourceLineNo">071</span>     * @see Verifier<a name="line.71"></a>
+<span class="sourceLineNo">072</span>     */<a name="line.72"></a>
+<span class="sourceLineNo">073</span>    public Pass1Verifier(final Verifier owner) {<a name="line.73"></a>
+<span class="sourceLineNo">074</span>        myOwner = owner;<a name="line.74"></a>
+<span class="sourceLineNo">075</span>    }<a name="line.75"></a>
+<span class="sourceLineNo">076</span><a name="line.76"></a>
+<span class="sourceLineNo">077</span>    /**<a name="line.77"></a>
+<span class="sourceLineNo">078</span>     * Pass-one verification basically means loading in a class file.<a name="line.78"></a>
+<span class="sourceLineNo">079</span>     * The Java Virtual Machine Specification is not too precise about<a name="line.79"></a>
+<span class="sourceLineNo">080</span>     * what makes the difference between passes one and two.<a name="line.80"></a>
+<span class="sourceLineNo">081</span>     * The answer is that only pass one is performed on a class file as<a name="line.81"></a>
+<span class="sourceLineNo">082</span>     * long as its resolution is not requested; whereas pass two and<a name="line.82"></a>
+<span class="sourceLineNo">083</span>     * pass three are performed during the resolution process.<a name="line.83"></a>
+<span class="sourceLineNo">084</span>     * Only four constraints to be checked are explicitly stated by<a name="line.84"></a>
+<span class="sourceLineNo">085</span>     * The Java Virtual Machine Specification, 2nd edition:<a name="line.85"></a>
+<span class="sourceLineNo">086</span>     * &lt;UL&gt;<a name="line.86"></a>
+<span class="sourceLineNo">087</span>     *  &lt;LI&gt;The first four bytes must contain the right magic number (0xCAFEBABE).<a name="line.87"></a>
+<span class="sourceLineNo">088</span>     *  &lt;LI&gt;All recognized attributes must be of the proper length.<a name="line.88"></a>
+<span class="sourceLineNo">089</span>     *  &lt;LI&gt;The class file must not be truncated or have extra bytes at the end.<a name="line.89"></a>
+<span class="sourceLineNo">090</span>     *  &lt;LI&gt;The constant pool must not contain any superficially unrecognizable information.<a name="line.90"></a>
+<span class="sourceLineNo">091</span>     * &lt;/UL&gt;<a name="line.91"></a>
+<span class="sourceLineNo">092</span>     * A more in-depth documentation of what pass one should do was written by<a name="line.92"></a>
+<span class="sourceLineNo">093</span>     * &lt;A HREF=mailto:pwfong@cs.sfu.ca&gt;Philip W. L. Fong&lt;/A&gt;:<a name="line.93"></a>
+<span class="sourceLineNo">094</span>     * &lt;UL&gt;<a name="line.94"></a>
+<span class="sourceLineNo">095</span>     *  &lt;LI&gt; the file should not be truncated.<a name="line.95"></a>
+<span class="sourceLineNo">096</span>     *  &lt;LI&gt; the file should not have extra bytes at the end.<a name="line.96"></a>
+<span class="sourceLineNo">097</span>     *  &lt;LI&gt; all variable-length structures should be well-formatted:<a name="line.97"></a>
+<span class="sourceLineNo">098</span>     *  &lt;UL&gt;<a name="line.98"></a>
+<span class="sourceLineNo">099</span>     *   &lt;LI&gt; there should only be constant_pool_count-1 many entries in the constant pool.<a name="line.99"></a>
+<span class="sourceLineNo">100</span>     *   &lt;LI&gt; all constant pool entries should have size the same as indicated by their type tag.<a name="line.100"></a>
+<span class="sourceLineNo">101</span>     *   &lt;LI&gt; there are exactly interfaces_count many entries in the interfaces array of the class file.<a name="line.101"></a>
+<span class="sourceLineNo">102</span>     *   &lt;LI&gt; there are exactly fields_count many entries in the fields array of the class file.<a name="line.102"></a>
+<span class="sourceLineNo">103</span>     *   &lt;LI&gt; there are exactly methods_count many entries in the methods array of the class file.<a name="line.103"></a>
+<span class="sourceLineNo">104</span>     *   &lt;LI&gt; there are exactly attributes_count many entries in the attributes array of the class file,<a name="line.104"></a>
+<span class="sourceLineNo">105</span>     *        fields, methods, and code attribute.<a name="line.105"></a>
+<span class="sourceLineNo">106</span>     *   &lt;LI&gt; there should be exactly attribute_length many bytes in each attribute.<a name="line.106"></a>
+<span class="sourceLineNo">107</span>     *        Inconsistency between attribute_length and the actually size of the attribute content should be uncovered.<a name="line.107"></a>
+<span class="sourceLineNo">108</span>     *        For example, in an Exceptions attribute, the actual number of exceptions as required by the number_of_exceptions field<a name="line.108"></a>
+<span class="sourceLineNo">109</span>     *        might yeild an attribute size that doesn't match the attribute_length. Such an anomaly should be detected.<a name="line.109"></a>
+<span class="sourceLineNo">110</span>     *   &lt;LI&gt; all attributes should have proper length. In particular, under certain context (e.g. while parsing method_info),<a name="line.110"></a>
+<span class="sourceLineNo">111</span>     *        recognizable attributes (e.g. "Code" attribute) should have correct format (e.g. attribute_length is 2).<a name="line.111"></a>
+<span class="sourceLineNo">112</span>     *  &lt;/UL&gt;<a name="line.112"></a>
+<span class="sourceLineNo">113</span>     *  &lt;LI&gt; Also, certain constant values are checked for validity:<a name="line.113"></a>
+<span class="sourceLineNo">114</span>     *  &lt;UL&gt;<a name="line.114"></a>
+<span class="sourceLineNo">115</span>     *   &lt;LI&gt; The magic number should be 0xCAFEBABE.<a name="line.115"></a>
+<span class="sourceLineNo">116</span>     *   &lt;LI&gt; The major and minor version numbers are valid.<a name="line.116"></a>
+<span class="sourceLineNo">117</span>     *   &lt;LI&gt; All the constant pool type tags are recognizable.<a name="line.117"></a>
+<span class="sourceLineNo">118</span>     *   &lt;LI&gt; All undocumented access flags are masked off before use. Strictly speaking, this is not really a check.<a name="line.118"></a>
+<span class="sourceLineNo">119</span>     *   &lt;LI&gt; The field this_class should point to a string that represents a legal non-array class name,<a name="line.119"></a>
+<span class="sourceLineNo">120</span>     *        and this name should be the same as the class file being loaded.<a name="line.120"></a>
+<span class="sourceLineNo">121</span>     *   &lt;LI&gt; the field super_class should point to a string that represents a legal non-array class name.<a name="line.121"></a>
+<span class="sourceLineNo">122</span>     *   &lt;LI&gt; Because some of the above checks require cross referencing the constant pool entries,<a name="line.122"></a>
+<span class="sourceLineNo">123</span>     *        guards are set up to make sure that the referenced entries are of the right type and the indices<a name="line.123"></a>
+<span class="sourceLineNo">124</span>     *        are within the legal range (0 &amp;lt; index &amp;lt; constant_pool_count).<a name="line.124"></a>
+<span class="sourceLineNo">125</span>     *  &lt;/UL&gt;<a name="line.125"></a>
+<span class="sourceLineNo">126</span>     *  &lt;LI&gt; Extra checks done in pass 1:<a name="line.126"></a>
+<span class="sourceLineNo">127</span>     *  &lt;UL&gt;<a name="line.127"></a>
+<span class="sourceLineNo">128</span>     *   &lt;LI&gt; the constant values of static fields should have the same type as the fields.<a name="line.128"></a>
+<span class="sourceLineNo">129</span>     *   &lt;LI&gt; the number of words in a parameter list does not exceed 255 and locals_max.<a name="line.129"></a>
+<span class="sourceLineNo">130</span>     *   &lt;LI&gt; the name and signature of fields and methods are verified to be of legal format.<a name="line.130"></a>
+<span class="sourceLineNo">131</span>     *  &lt;/UL&gt;<a name="line.131"></a>
+<span class="sourceLineNo">132</span>     * &lt;/UL&gt;<a name="line.132"></a>
+<span class="sourceLineNo">133</span>     * (From the Paper &lt;A HREF="http://www.cs.sfu.ca/people/GradStudents/pwfong/personal/JVM/pass1/"&gt;<a name="line.133"></a>
+<span class="sourceLineNo">134</span>     * The Mysterious Pass One, first draft, September 2, 1997&lt;/A&gt;.)<a name="line.134"></a>
+<span class="sourceLineNo">135</span>     *<a name="line.135"></a>
+<span class="sourceLineNo">136</span>     * &lt;P&gt;However, most of this is done by parsing a class file or generating a class file into BCEL's internal data structure.<a name="line.136"></a>
+<span class="sourceLineNo">137</span>     * &lt;B&gt;Therefore, all that is really done here is look up the class file from BCEL's repository.&lt;/B&gt;<a name="line.137"></a>
+<span class="sourceLineNo">138</span>     * This is also motivated by the fact that some omitted things<a name="line.138"></a>
+<span class="sourceLineNo">139</span>     * (like the check for extra bytes at the end of the class file) are handy when actually using BCEL to repair a class file<a name="line.139"></a>
+<span class="sourceLineNo">140</span>     * (otherwise you would not be able to load it into BCEL).&lt;/P&gt;<a name="line.140"></a>
+<span class="sourceLineNo">141</span>     *<a name="line.141"></a>
+<span class="sourceLineNo">142</span>     * @see org.apache.bcel.Repository<a name="line.142"></a>
+<span class="sourceLineNo">143</span>     * @see org.apache.bcel.Const#JVM_CLASSFILE_MAGIC<a name="line.143"></a>
+<span class="sourceLineNo">144</span>     */<a name="line.144"></a>
+<span class="sourceLineNo">145</span>    @Override<a name="line.145"></a>
+<span class="sourceLineNo">146</span>    public VerificationResult do_verify() {<a name="line.146"></a>
+<span class="sourceLineNo">147</span>        JavaClass jc;<a name="line.147"></a>
+<span class="sourceLineNo">148</span>        try{<a name="line.148"></a>
+<span class="sourceLineNo">149</span>            jc = getJavaClass();    //loads in the class file if not already done.<a name="line.149"></a>
+<span class="sourceLineNo">150</span><a name="line.150"></a>
+<span class="sourceLineNo">151</span>            if (jc != null) {<a name="line.151"></a>
+<span class="sourceLineNo">152</span>                /* If we find more constraints to check, we should do this in an own method. */<a name="line.152"></a>
+<span class="sourceLineNo">153</span>                if (! myOwner.getClassName().equals(jc.getClassName())) {<a name="line.153"></a>
+<span class="sourceLineNo">154</span>                    // This should maybe caught by BCEL: In case of renamed .class files we get wrong<a name="line.154"></a>
+<span class="sourceLineNo">155</span>                    // JavaClass objects here.<a name="line.155"></a>
+<span class="sourceLineNo">156</span>                    throw new LoadingException("Wrong name: the internal name of the .class file '"+jc.getClassName()+<a name="line.156"></a>
+<span class="sourceLineNo">157</span>                        "' does not match the file's name '"+myOwner.getClassName()+"'.");<a name="line.157"></a>
+<span class="sourceLineNo">158</span>                }<a name="line.158"></a>
+<span class="sourceLineNo">159</span>            }<a name="line.159"></a>
+<span class="sourceLineNo">160</span><a name="line.160"></a>
+<span class="sourceLineNo">161</span>        }<a name="line.161"></a>
+<span class="sourceLineNo">162</span>        catch(final LoadingException e) {<a name="line.162"></a>
+<span class="sourceLineNo">163</span>            return new VerificationResult(VerificationResult.VERIFIED_REJECTED, e.getMessage());<a name="line.163"></a>
+<span class="sourceLineNo">164</span>        }<a name="line.164"></a>
+<span class="sourceLineNo">165</span>        catch(final ClassFormatException e) {<a name="line.165"></a>
+<span class="sourceLineNo">166</span>            return new VerificationResult(VerificationResult.VERIFIED_REJECTED, e.getMessage());<a name="line.166"></a>
+<span class="sourceLineNo">167</span>        }<a name="line.167"></a>
+<span class="sourceLineNo">168</span>        catch(final RuntimeException e) {<a name="line.168"></a>
+<span class="sourceLineNo">169</span>            // BCEL does not catch every possible RuntimeException; e.g. if<a name="line.169"></a>
+<span class="sourceLineNo">170</span>            // a constant pool index is referenced that does not exist.<a name="line.170"></a>
+<span class="sourceLineNo">171</span>            return new VerificationResult(VerificationResult.VERIFIED_REJECTED, "Parsing via BCEL did not succeed. "+<a name="line.171"></a>
+<span class="sourceLineNo">172</span>                e.getClass().getName()+" occured:\n"+Utility.getStackTrace(e));<a name="line.172"></a>
+<span class="sourceLineNo">173</span>        }<a name="line.173"></a>
+<span class="sourceLineNo">174</span><a name="line.174"></a>
+<span class="sourceLineNo">175</span>        if (jc != null) {<a name="line.175"></a>
+<span class="sourceLineNo">176</span>            return VerificationResult.VR_OK;<a name="line.176"></a>
+<span class="sourceLineNo">177</span>        }<a name="line.177"></a>
+<span class="sourceLineNo">178</span>        //TODO: Maybe change Repository's behavior to throw a LoadingException instead of just returning "null"<a name="line.178"></a>
+<span class="sourceLineNo">179</span>        //      if a class file cannot be found or in another way be looked up.<a name="line.179"></a>
+<span class="sourceLineNo">180</span>        return new VerificationResult(VerificationResult.VERIFIED_REJECTED, "Repository.lookup() failed. FILE NOT FOUND?");<a name="line.180"></a>
+<span class="sourceLineNo">181</span>    }<a name="line.181"></a>
+<span class="sourceLineNo">182</span><a name="line.182"></a>
+<span class="sourceLineNo">183</span>    /**<a name="line.183"></a>
+<span class="sourceLineNo">184</span>     * Currently this returns an empty array of String.<a name="line.184"></a>
+<span class="sourceLineNo">185</span>     * One could parse the error messages of BCEL<a name="line.185"></a>
+<span class="sourceLineNo">186</span>     * (written to java.lang.System.err) when loading<a name="line.186"></a>
+<span class="sourceLineNo">187</span>     * a class file such as detecting unknown attributes<a name="line.187"></a>
+<span class="sourceLineNo">188</span>     * or trailing garbage at the end of a class file.<a name="line.188"></a>
+<span class="sourceLineNo">189</span>     * However, Markus Dahm does not like the idea so this<a name="line.189"></a>
+<span class="sourceLineNo">190</span>     * method is currently useless and therefore marked as<a name="line.190"></a>
+<span class="sourceLineNo">191</span>     * &lt;B&gt;TODO&lt;/B&gt;.<a name="line.191"></a>
+<span class="sourceLineNo">192</span>     */<a name="line.192"></a>
+<span class="sourceLineNo">193</span>    @Override<a name="line.193"></a>
+<span class="sourceLineNo">194</span>    public String[] getMessages() {<a name="line.194"></a>
+<span class="sourceLineNo">195</span>        // This method is only here to override the javadoc-comment.<a name="line.195"></a>
+<span class="sourceLineNo">196</span>        return super.getMessages();<a name="line.196"></a>
+<span class="sourceLineNo">197</span>    }<a name="line.197"></a>
+<span class="sourceLineNo">198</span><a name="line.198"></a>
+<span class="sourceLineNo">199</span>}<a name="line.199"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

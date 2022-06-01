@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one or more<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * contributor license agreements.  See the NOTICE file distributed with<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * this work for additional information regarding copyright ownership.<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * The ASF licenses this file to You under the Apache License, Version 2.0<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * (the "License"); you may not use this file except in compliance with<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * the License.  You may obtain a copy of the License at<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.apache.org/licenses/LICENSE-2.0<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *  Unless required by applicable law or agreed to in writing, software<a name="line.11"></a>
+<span class="sourceLineNo">012</span> *  distributed under the License is distributed on an "AS IS" BASIS,<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.13"></a>
+<span class="sourceLineNo">014</span> *  See the License for the specific language governing permissions and<a name="line.14"></a>
+<span class="sourceLineNo">015</span> *  limitations under the License.<a name="line.15"></a>
+<span class="sourceLineNo">016</span> *<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span>package org.apache.bcel.verifier.exc;<a name="line.18"></a>
+<span class="sourceLineNo">019</span><a name="line.19"></a>
+<span class="sourceLineNo">020</span>/**<a name="line.20"></a>
+<span class="sourceLineNo">021</span> * Instances of this class are thrown by BCEL's class file verifier "JustIce" when<a name="line.21"></a>
+<span class="sourceLineNo">022</span> * a class file to verify does not pass the verification pass 3 because of a violation<a name="line.22"></a>
+<span class="sourceLineNo">023</span> * of a constraint that is usually only verified at run-time (pass 4).<a name="line.23"></a>
+<span class="sourceLineNo">024</span> * The Java Virtual Machine Specification, 2nd edition, states that certain constraints<a name="line.24"></a>
+<span class="sourceLineNo">025</span> * are usually verified at run-time for performance reasons (the verification of those<a name="line.25"></a>
+<span class="sourceLineNo">026</span> * constraints requires loading in and recursively verifying referenced classes) that<a name="line.26"></a>
+<span class="sourceLineNo">027</span> * conceptually belong to pass 3; to be precise, that conceptually belong to the<a name="line.27"></a>
+<span class="sourceLineNo">028</span> * data flow analysis of pass 3 (called pass 3b in JustIce).<a name="line.28"></a>
+<span class="sourceLineNo">029</span> * These are the checks necessary for resolution: Compare pages 142-143 ("4.9.1 The<a name="line.29"></a>
+<span class="sourceLineNo">030</span> * Verification Process") and pages 50-51 ("2.17.3 Linking: Verification, Preparation,<a name="line.30"></a>
+<span class="sourceLineNo">031</span> * and Resolution") of the above mentioned book.<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * &lt;B&gt;TODO: At this time, this class is not used in JustIce.&lt;/B&gt;<a name="line.32"></a>
+<span class="sourceLineNo">033</span> *<a name="line.33"></a>
+<span class="sourceLineNo">034</span> */<a name="line.34"></a>
+<span class="sourceLineNo">035</span>public class LinkingConstraintException extends StructuralCodeConstraintException{<a name="line.35"></a>
+<span class="sourceLineNo">036</span><a name="line.36"></a>
+<span class="sourceLineNo">037</span>    private static final long serialVersionUID = -5239226345026321126L;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>}<a name="line.38"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

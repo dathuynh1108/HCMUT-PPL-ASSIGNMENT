@@ -1,0 +1,17 @@
+
+            Class D96Class {
+                main() {
+                    Var a: Array[Int, 5] = Array(1,2,3,4,5); 
+                    a[0] = 5;
+                    a[1] = 4;
+                    a[2] = 3;
+                    a[3] = 2;
+                    a[4] = 1;
+                    io.putInt(a[0]);
+                    io.putInt(a[1]);
+                    io.putInt(a[2]);
+                    io.putInt(a[3]);
+                    io.putInt(a[4]);
+                }
+            }
+        

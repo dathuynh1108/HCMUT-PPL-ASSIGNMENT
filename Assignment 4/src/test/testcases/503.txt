@@ -1,0 +1,40 @@
+
+            Class D96Class {
+                main() {
+                    io.putBool(True);
+                    io.putBoolLn(False);
+                    io.putBool(True);
+                    io.putBoolLn(False);
+
+                    io.putBool(True && True);
+                    io.putBool(True && False);
+                    io.putBool(False && True);
+                    io.putBool(False && False);
+                    io.putBool(True || True);
+                    io.putBool(True || False);
+                    io.putBool(False || True);
+                    io.putBool(False || False);
+        
+                    io.putBool(1 > 2);
+                    io.putBool(1 >= 2);
+                    io.putBool(1 < 2);
+                    io.putBool(1 <= 2);
+                    io.putBool(1 == 2);
+                    io.putBool(1 != 2);
+
+                    io.putBool(1.1 > 2);
+                    io.putBool(1.1 >= 2);
+                    io.putBool(1.1 < 2);
+                    io.putBool(1.1 <= 2);
+                    io.putBool(1.1 == 2);
+                    io.putBool(1.1 != 2);    
+
+                    io.putBool(1.1 > 2.1);
+                    io.putBool(1.1 >= 2.1);
+                    io.putBool(1.1 < 2.1);
+                    io.putBool(1.1 <= 2.1);
+                    io.putBool(1.1 == 2.1);
+                    io.putBool(1.1 != 2.1);    
+                }
+            }
+        

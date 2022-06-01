@@ -1,0 +1,1769 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one or more<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * contributor license agreements.  See the NOTICE file distributed with<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * this work for additional information regarding copyright ownership.<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * The ASF licenses this file to You under the Apache License, Version 2.0<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * (the "License"); you may not use this file except in compliance with<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * the License.  You may obtain a copy of the License at<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.apache.org/licenses/LICENSE-2.0<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *  Unless required by applicable law or agreed to in writing, software<a name="line.11"></a>
+<span class="sourceLineNo">012</span> *  distributed under the License is distributed on an "AS IS" BASIS,<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.13"></a>
+<span class="sourceLineNo">014</span> *  See the License for the specific language governing permissions and<a name="line.14"></a>
+<span class="sourceLineNo">015</span> *  limitations under the License.<a name="line.15"></a>
+<span class="sourceLineNo">016</span> *<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span>package org.apache.bcel;<a name="line.18"></a>
+<span class="sourceLineNo">019</span><a name="line.19"></a>
+<span class="sourceLineNo">020</span>/**<a name="line.20"></a>
+<span class="sourceLineNo">021</span> * Constants for the project, mostly defined in the JVM specification.<a name="line.21"></a>
+<span class="sourceLineNo">022</span> *<a name="line.22"></a>
+<span class="sourceLineNo">023</span> * @deprecated (since 6.0) DO NOT USE - use Const instead<a name="line.23"></a>
+<span class="sourceLineNo">024</span> */<a name="line.24"></a>
+<span class="sourceLineNo">025</span>@Deprecated<a name="line.25"></a>
+<span class="sourceLineNo">026</span>public interface Constants {<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>  /** Major version number of class files for Java 1.1.<a name="line.28"></a>
+<span class="sourceLineNo">029</span>   *  @see #MINOR_1_1<a name="line.29"></a>
+<span class="sourceLineNo">030</span>   *  */<a name="line.30"></a>
+<span class="sourceLineNo">031</span>  short MAJOR_1_1 = 45;<a name="line.31"></a>
+<span class="sourceLineNo">032</span><a name="line.32"></a>
+<span class="sourceLineNo">033</span>  /** Minor version number of class files for Java 1.1.<a name="line.33"></a>
+<span class="sourceLineNo">034</span>   *  @see #MAJOR_1_1<a name="line.34"></a>
+<span class="sourceLineNo">035</span>   *  */<a name="line.35"></a>
+<span class="sourceLineNo">036</span>  short MINOR_1_1 = 3;<a name="line.36"></a>
+<span class="sourceLineNo">037</span><a name="line.37"></a>
+<span class="sourceLineNo">038</span>  /** Major version number of class files for Java 1.2.<a name="line.38"></a>
+<span class="sourceLineNo">039</span>   *  @see #MINOR_1_2<a name="line.39"></a>
+<span class="sourceLineNo">040</span>   *  */<a name="line.40"></a>
+<span class="sourceLineNo">041</span>  short MAJOR_1_2 = 46;<a name="line.41"></a>
+<span class="sourceLineNo">042</span><a name="line.42"></a>
+<span class="sourceLineNo">043</span>  /** Minor version number of class files for Java 1.2.<a name="line.43"></a>
+<span class="sourceLineNo">044</span>   *  @see #MAJOR_1_2<a name="line.44"></a>
+<span class="sourceLineNo">045</span>   *  */<a name="line.45"></a>
+<span class="sourceLineNo">046</span>  short MINOR_1_2 = 0;<a name="line.46"></a>
+<span class="sourceLineNo">047</span><a name="line.47"></a>
+<span class="sourceLineNo">048</span>  /** Major version number of class files for Java 1.2.<a name="line.48"></a>
+<span class="sourceLineNo">049</span>   *  @see #MINOR_1_2<a name="line.49"></a>
+<span class="sourceLineNo">050</span>   *  */<a name="line.50"></a>
+<span class="sourceLineNo">051</span>  short MAJOR_1_3 = 47;<a name="line.51"></a>
+<span class="sourceLineNo">052</span><a name="line.52"></a>
+<span class="sourceLineNo">053</span>  /** Minor version number of class files for Java 1.3.<a name="line.53"></a>
+<span class="sourceLineNo">054</span>   *  @see #MAJOR_1_3<a name="line.54"></a>
+<span class="sourceLineNo">055</span>   *  */<a name="line.55"></a>
+<span class="sourceLineNo">056</span>  short MINOR_1_3 = 0;<a name="line.56"></a>
+<span class="sourceLineNo">057</span><a name="line.57"></a>
+<span class="sourceLineNo">058</span>  /** Major version number of class files for Java 1.3.<a name="line.58"></a>
+<span class="sourceLineNo">059</span>   *  @see #MINOR_1_3<a name="line.59"></a>
+<span class="sourceLineNo">060</span>   *  */<a name="line.60"></a>
+<span class="sourceLineNo">061</span>  short MAJOR_1_4 = 48;<a name="line.61"></a>
+<span class="sourceLineNo">062</span><a name="line.62"></a>
+<span class="sourceLineNo">063</span>  /** Minor version number of class files for Java 1.4.<a name="line.63"></a>
+<span class="sourceLineNo">064</span>   *  @see #MAJOR_1_4<a name="line.64"></a>
+<span class="sourceLineNo">065</span>   *  */<a name="line.65"></a>
+<span class="sourceLineNo">066</span>  short MINOR_1_4 = 0;<a name="line.66"></a>
+<span class="sourceLineNo">067</span><a name="line.67"></a>
+<span class="sourceLineNo">068</span>  /** Major version number of class files for Java 1.4.<a name="line.68"></a>
+<span class="sourceLineNo">069</span>   *  @see #MINOR_1_4<a name="line.69"></a>
+<span class="sourceLineNo">070</span>   *  */<a name="line.70"></a>
+<span class="sourceLineNo">071</span>  short MAJOR_1_5 = 49;<a name="line.71"></a>
+<span class="sourceLineNo">072</span><a name="line.72"></a>
+<span class="sourceLineNo">073</span>  /** Minor version number of class files for Java 1.5.<a name="line.73"></a>
+<span class="sourceLineNo">074</span>   *  @see #MAJOR_1_5<a name="line.74"></a>
+<span class="sourceLineNo">075</span>   *  */<a name="line.75"></a>
+<span class="sourceLineNo">076</span>  short MINOR_1_5 = 0;<a name="line.76"></a>
+<span class="sourceLineNo">077</span><a name="line.77"></a>
+<span class="sourceLineNo">078</span><a name="line.78"></a>
+<span class="sourceLineNo">079</span>  /** Default major version number.  Class file is for Java 1.1.<a name="line.79"></a>
+<span class="sourceLineNo">080</span>   *  @see #MAJOR_1_1<a name="line.80"></a>
+<span class="sourceLineNo">081</span>   *  */<a name="line.81"></a>
+<span class="sourceLineNo">082</span>  short MAJOR = MAJOR_1_1;<a name="line.82"></a>
+<span class="sourceLineNo">083</span><a name="line.83"></a>
+<span class="sourceLineNo">084</span>  /** Default major version number.  Class file is for Java 1.1.<a name="line.84"></a>
+<span class="sourceLineNo">085</span>   *  @see #MAJOR_1_1<a name="line.85"></a>
+<span class="sourceLineNo">086</span>   *  */<a name="line.86"></a>
+<span class="sourceLineNo">087</span>  short MINOR     = MINOR_1_1;<a name="line.87"></a>
+<span class="sourceLineNo">088</span><a name="line.88"></a>
+<span class="sourceLineNo">089</span>  /** Maximum value for an unsigned short.<a name="line.89"></a>
+<span class="sourceLineNo">090</span>   */<a name="line.90"></a>
+<span class="sourceLineNo">091</span>  int MAX_SHORT = 65535; // 2^16 - 1<a name="line.91"></a>
+<span class="sourceLineNo">092</span><a name="line.92"></a>
+<span class="sourceLineNo">093</span>  /** Maximum value for an unsigned byte.<a name="line.93"></a>
+<span class="sourceLineNo">094</span>   */<a name="line.94"></a>
+<span class="sourceLineNo">095</span>  int MAX_BYTE  = 255; // 2^8 - 1<a name="line.95"></a>
+<span class="sourceLineNo">096</span><a name="line.96"></a>
+<span class="sourceLineNo">097</span>  /** One of the access flags for fields, methods, or classes.<a name="line.97"></a>
+<span class="sourceLineNo">098</span>   *<a name="line.98"></a>
+<span class="sourceLineNo">099</span>   *  @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.5"&gt;<a name="line.99"></a>
+<span class="sourceLineNo">100</span>   *  Flag definitions for Fields in the Java Virtual Machine Specification (Java SE 8 Edition).&lt;/a&gt;<a name="line.100"></a>
+<span class="sourceLineNo">101</span>   *  @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.6"&gt;<a name="line.101"></a>
+<span class="sourceLineNo">102</span>   *  Flag definitions for Methods in the Java Virtual Machine Specification (Java SE 8 Edition).&lt;/a&gt;<a name="line.102"></a>
+<span class="sourceLineNo">103</span>   *  @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.6-300-D.1-D.1"&gt;<a name="line.103"></a>
+<span class="sourceLineNo">104</span>   *  Flag definitions for Classes in the Java Virtual Machine Specification (Java SE 8 Edition).&lt;/a&gt;<a name="line.104"></a>
+<span class="sourceLineNo">105</span>   */<a name="line.105"></a>
+<span class="sourceLineNo">106</span>  short ACC_PUBLIC       = 0x0001;<a name="line.106"></a>
+<span class="sourceLineNo">107</span><a name="line.107"></a>
+<span class="sourceLineNo">108</span>  /** One of the access flags for fields, methods, or classes.<a name="line.108"></a>
+<span class="sourceLineNo">109</span>   *  @see #ACC_PUBLIC<a name="line.109"></a>
+<span class="sourceLineNo">110</span>   */<a name="line.110"></a>
+<span class="sourceLineNo">111</span>  short ACC_PRIVATE      = 0x0002;<a name="line.111"></a>
+<span class="sourceLineNo">112</span><a name="line.112"></a>
+<span class="sourceLineNo">113</span>  /** One of the access flags for fields, methods, or classes.<a name="line.113"></a>
+<span class="sourceLineNo">114</span>   *  @see #ACC_PUBLIC<a name="line.114"></a>
+<span class="sourceLineNo">115</span>   */<a name="line.115"></a>
+<span class="sourceLineNo">116</span>  short ACC_PROTECTED    = 0x0004;<a name="line.116"></a>
+<span class="sourceLineNo">117</span><a name="line.117"></a>
+<span class="sourceLineNo">118</span>  /** One of the access flags for fields, methods, or classes.<a name="line.118"></a>
+<span class="sourceLineNo">119</span>   *  @see #ACC_PUBLIC<a name="line.119"></a>
+<span class="sourceLineNo">120</span>   */<a name="line.120"></a>
+<span class="sourceLineNo">121</span>  short ACC_STATIC       = 0x0008;<a name="line.121"></a>
+<span class="sourceLineNo">122</span><a name="line.122"></a>
+<span class="sourceLineNo">123</span>  /** One of the access flags for fields, methods, or classes.<a name="line.123"></a>
+<span class="sourceLineNo">124</span>   *  @see #ACC_PUBLIC<a name="line.124"></a>
+<span class="sourceLineNo">125</span>   */<a name="line.125"></a>
+<span class="sourceLineNo">126</span>  short ACC_FINAL        = 0x0010;<a name="line.126"></a>
+<span class="sourceLineNo">127</span><a name="line.127"></a>
+<span class="sourceLineNo">128</span>  /** One of the access flags for fields, methods, or classes.<a name="line.128"></a>
+<span class="sourceLineNo">129</span>   *  @see #ACC_PUBLIC<a name="line.129"></a>
+<span class="sourceLineNo">130</span>   */<a name="line.130"></a>
+<span class="sourceLineNo">131</span>  short ACC_SYNCHRONIZED = 0x0020;<a name="line.131"></a>
+<span class="sourceLineNo">132</span><a name="line.132"></a>
+<span class="sourceLineNo">133</span>  /** One of the access flags for fields, methods, or classes.<a name="line.133"></a>
+<span class="sourceLineNo">134</span>   *  @see #ACC_PUBLIC<a name="line.134"></a>
+<span class="sourceLineNo">135</span>   */<a name="line.135"></a>
+<span class="sourceLineNo">136</span>  short ACC_VOLATILE     = 0x0040;<a name="line.136"></a>
+<span class="sourceLineNo">137</span><a name="line.137"></a>
+<span class="sourceLineNo">138</span>  /** One of the access flags for fields, methods, or classes.<a name="line.138"></a>
+<span class="sourceLineNo">139</span>   *  @see #ACC_PUBLIC<a name="line.139"></a>
+<span class="sourceLineNo">140</span>   */<a name="line.140"></a>
+<span class="sourceLineNo">141</span>  short ACC_BRIDGE       = 0x0040;<a name="line.141"></a>
+<span class="sourceLineNo">142</span><a name="line.142"></a>
+<span class="sourceLineNo">143</span>  /** One of the access flags for fields, methods, or classes.<a name="line.143"></a>
+<span class="sourceLineNo">144</span>   *  @see #ACC_PUBLIC<a name="line.144"></a>
+<span class="sourceLineNo">145</span>   */<a name="line.145"></a>
+<span class="sourceLineNo">146</span>  short ACC_TRANSIENT    = 0x0080;<a name="line.146"></a>
+<span class="sourceLineNo">147</span><a name="line.147"></a>
+<span class="sourceLineNo">148</span>  /** One of the access flags for fields, methods, or classes.<a name="line.148"></a>
+<span class="sourceLineNo">149</span>   *  @see #ACC_PUBLIC<a name="line.149"></a>
+<span class="sourceLineNo">150</span>   */<a name="line.150"></a>
+<span class="sourceLineNo">151</span>  short ACC_VARARGS      = 0x0080;<a name="line.151"></a>
+<span class="sourceLineNo">152</span><a name="line.152"></a>
+<span class="sourceLineNo">153</span>  /** One of the access flags for fields, methods, or classes.<a name="line.153"></a>
+<span class="sourceLineNo">154</span>   *  @see #ACC_PUBLIC<a name="line.154"></a>
+<span class="sourceLineNo">155</span>   */<a name="line.155"></a>
+<span class="sourceLineNo">156</span>  short ACC_NATIVE       = 0x0100;<a name="line.156"></a>
+<span class="sourceLineNo">157</span><a name="line.157"></a>
+<span class="sourceLineNo">158</span>  /** One of the access flags for fields, methods, or classes.<a name="line.158"></a>
+<span class="sourceLineNo">159</span>   *  @see #ACC_PUBLIC<a name="line.159"></a>
+<span class="sourceLineNo">160</span>   */<a name="line.160"></a>
+<span class="sourceLineNo">161</span>  short ACC_INTERFACE    = 0x0200;<a name="line.161"></a>
+<span class="sourceLineNo">162</span><a name="line.162"></a>
+<span class="sourceLineNo">163</span>  /** One of the access flags for fields, methods, or classes.<a name="line.163"></a>
+<span class="sourceLineNo">164</span>   *  @see #ACC_PUBLIC<a name="line.164"></a>
+<span class="sourceLineNo">165</span>   */<a name="line.165"></a>
+<span class="sourceLineNo">166</span>  short ACC_ABSTRACT     = 0x0400;<a name="line.166"></a>
+<span class="sourceLineNo">167</span><a name="line.167"></a>
+<span class="sourceLineNo">168</span>  /** One of the access flags for fields, methods, or classes.<a name="line.168"></a>
+<span class="sourceLineNo">169</span>   *  @see #ACC_PUBLIC<a name="line.169"></a>
+<span class="sourceLineNo">170</span>   */<a name="line.170"></a>
+<span class="sourceLineNo">171</span>  short ACC_STRICT       = 0x0800;<a name="line.171"></a>
+<span class="sourceLineNo">172</span><a name="line.172"></a>
+<span class="sourceLineNo">173</span>  /** One of the access flags for fields, methods, or classes.<a name="line.173"></a>
+<span class="sourceLineNo">174</span>   *  @see #ACC_PUBLIC<a name="line.174"></a>
+<span class="sourceLineNo">175</span>   */<a name="line.175"></a>
+<span class="sourceLineNo">176</span>  short ACC_SYNTHETIC    = 0x1000;<a name="line.176"></a>
+<span class="sourceLineNo">177</span><a name="line.177"></a>
+<span class="sourceLineNo">178</span>  /** One of the access flags for fields, methods, or classes.<a name="line.178"></a>
+<span class="sourceLineNo">179</span>   *  @see #ACC_PUBLIC<a name="line.179"></a>
+<span class="sourceLineNo">180</span>   */<a name="line.180"></a>
+<span class="sourceLineNo">181</span>  short ACC_ANNOTATION   = 0x2000;<a name="line.181"></a>
+<span class="sourceLineNo">182</span><a name="line.182"></a>
+<span class="sourceLineNo">183</span>  /** One of the access flags for fields, methods, or classes.<a name="line.183"></a>
+<span class="sourceLineNo">184</span>   *  @see #ACC_PUBLIC<a name="line.184"></a>
+<span class="sourceLineNo">185</span>   */<a name="line.185"></a>
+<span class="sourceLineNo">186</span>  short ACC_ENUM         = 0x4000;<a name="line.186"></a>
+<span class="sourceLineNo">187</span><a name="line.187"></a>
+<span class="sourceLineNo">188</span>  // Applies to classes compiled by new compilers only<a name="line.188"></a>
+<span class="sourceLineNo">189</span>  /** One of the access flags for fields, methods, or classes.<a name="line.189"></a>
+<span class="sourceLineNo">190</span>   *  @see #ACC_PUBLIC<a name="line.190"></a>
+<span class="sourceLineNo">191</span>   */<a name="line.191"></a>
+<span class="sourceLineNo">192</span>  short ACC_SUPER        = 0x0020;<a name="line.192"></a>
+<span class="sourceLineNo">193</span><a name="line.193"></a>
+<span class="sourceLineNo">194</span>  /** One of the access flags for fields, methods, or classes.<a name="line.194"></a>
+<span class="sourceLineNo">195</span>   *  @see #ACC_PUBLIC<a name="line.195"></a>
+<span class="sourceLineNo">196</span>   */<a name="line.196"></a>
+<span class="sourceLineNo">197</span>  short MAX_ACC_FLAG     = ACC_ENUM;<a name="line.197"></a>
+<span class="sourceLineNo">198</span><a name="line.198"></a>
+<span class="sourceLineNo">199</span>  /** The names of the access flags. */<a name="line.199"></a>
+<span class="sourceLineNo">200</span>  String[] ACCESS_NAMES = {<a name="line.200"></a>
+<span class="sourceLineNo">201</span>    "public", "private", "protected", "static", "final", "synchronized",<a name="line.201"></a>
+<span class="sourceLineNo">202</span>    "volatile", "transient", "native", "interface", "abstract", "strictfp",<a name="line.202"></a>
+<span class="sourceLineNo">203</span>    "synthetic", "annotation", "enum"<a name="line.203"></a>
+<span class="sourceLineNo">204</span>  };<a name="line.204"></a>
+<span class="sourceLineNo">205</span><a name="line.205"></a>
+<span class="sourceLineNo">206</span>  /** Marks a constant pool entry as type UTF-8.  */<a name="line.206"></a>
+<span class="sourceLineNo">207</span>  byte CONSTANT_Utf8               = 1;<a name="line.207"></a>
+<span class="sourceLineNo">208</span><a name="line.208"></a>
+<span class="sourceLineNo">209</span>  /** Marks a constant pool entry as type Integer.  */<a name="line.209"></a>
+<span class="sourceLineNo">210</span>  byte CONSTANT_Integer            = 3;<a name="line.210"></a>
+<span class="sourceLineNo">211</span><a name="line.211"></a>
+<span class="sourceLineNo">212</span>  /** Marks a constant pool entry as type Float.  */<a name="line.212"></a>
+<span class="sourceLineNo">213</span>  byte CONSTANT_Float              = 4;<a name="line.213"></a>
+<span class="sourceLineNo">214</span><a name="line.214"></a>
+<span class="sourceLineNo">215</span>  /** Marks a constant pool entry as type Long.  */<a name="line.215"></a>
+<span class="sourceLineNo">216</span>  byte CONSTANT_Long               = 5;<a name="line.216"></a>
+<span class="sourceLineNo">217</span><a name="line.217"></a>
+<span class="sourceLineNo">218</span>  /** Marks a constant pool entry as type Double.  */<a name="line.218"></a>
+<span class="sourceLineNo">219</span>  byte CONSTANT_Double             = 6;<a name="line.219"></a>
+<span class="sourceLineNo">220</span><a name="line.220"></a>
+<span class="sourceLineNo">221</span>  /** Marks a constant pool entry as a Class.  */<a name="line.221"></a>
+<span class="sourceLineNo">222</span>  byte CONSTANT_Class              = 7;<a name="line.222"></a>
+<span class="sourceLineNo">223</span><a name="line.223"></a>
+<span class="sourceLineNo">224</span>  /** Marks a constant pool entry as a Field Reference.  */<a name="line.224"></a>
+<span class="sourceLineNo">225</span>  byte CONSTANT_Fieldref           = 9;<a name="line.225"></a>
+<span class="sourceLineNo">226</span><a name="line.226"></a>
+<span class="sourceLineNo">227</span>  /** Marks a constant pool entry as type String.  */<a name="line.227"></a>
+<span class="sourceLineNo">228</span>  byte CONSTANT_String             = 8;<a name="line.228"></a>
+<span class="sourceLineNo">229</span><a name="line.229"></a>
+<span class="sourceLineNo">230</span>  /** Marks a constant pool entry as a Method Reference.  */<a name="line.230"></a>
+<span class="sourceLineNo">231</span>  byte CONSTANT_Methodref          = 10;<a name="line.231"></a>
+<span class="sourceLineNo">232</span><a name="line.232"></a>
+<span class="sourceLineNo">233</span>  /** Marks a constant pool entry as an Interface Method Reference.  */<a name="line.233"></a>
+<span class="sourceLineNo">234</span>  byte CONSTANT_InterfaceMethodref = 11;<a name="line.234"></a>
+<span class="sourceLineNo">235</span><a name="line.235"></a>
+<span class="sourceLineNo">236</span>  /** Marks a constant pool entry as a name and type.  */<a name="line.236"></a>
+<span class="sourceLineNo">237</span>  byte CONSTANT_NameAndType        = 12;<a name="line.237"></a>
+<span class="sourceLineNo">238</span><a name="line.238"></a>
+<span class="sourceLineNo">239</span>  /** The names of the types of entries in a constant pool. */<a name="line.239"></a>
+<span class="sourceLineNo">240</span>  String[] CONSTANT_NAMES = {<a name="line.240"></a>
+<span class="sourceLineNo">241</span>    "", "CONSTANT_Utf8", "", "CONSTANT_Integer",<a name="line.241"></a>
+<span class="sourceLineNo">242</span>    "CONSTANT_Float", "CONSTANT_Long", "CONSTANT_Double",<a name="line.242"></a>
+<span class="sourceLineNo">243</span>    "CONSTANT_Class", "CONSTANT_String", "CONSTANT_Fieldref",<a name="line.243"></a>
+<span class="sourceLineNo">244</span>    "CONSTANT_Methodref", "CONSTANT_InterfaceMethodref",<a name="line.244"></a>
+<span class="sourceLineNo">245</span>    "CONSTANT_NameAndType" };<a name="line.245"></a>
+<span class="sourceLineNo">246</span><a name="line.246"></a>
+<span class="sourceLineNo">247</span>  /** The name of the static initializer, also called &amp;quot;class<a name="line.247"></a>
+<span class="sourceLineNo">248</span>   *  initialization method&amp;quot; or &amp;quot;interface initialization<a name="line.248"></a>
+<span class="sourceLineNo">249</span>   *   method&amp;quot;. This is &amp;quot;&amp;lt;clinit&amp;gt;&amp;quot;.<a name="line.249"></a>
+<span class="sourceLineNo">250</span>   */<a name="line.250"></a>
+<span class="sourceLineNo">251</span>  String STATIC_INITIALIZER_NAME = "&lt;clinit&gt;";<a name="line.251"></a>
+<span class="sourceLineNo">252</span><a name="line.252"></a>
+<span class="sourceLineNo">253</span>  /** The name of every constructor method in a class, also called<a name="line.253"></a>
+<span class="sourceLineNo">254</span>   * &amp;quot;instance initialization method&amp;quot;. This is &amp;quot;&amp;lt;init&amp;gt;&amp;quot;.<a name="line.254"></a>
+<span class="sourceLineNo">255</span>   */<a name="line.255"></a>
+<span class="sourceLineNo">256</span>  String CONSTRUCTOR_NAME = "&lt;init&gt;";<a name="line.256"></a>
+<span class="sourceLineNo">257</span><a name="line.257"></a>
+<span class="sourceLineNo">258</span>  /** The names of the interfaces implemented by arrays */<a name="line.258"></a>
+<span class="sourceLineNo">259</span>  String[] INTERFACES_IMPLEMENTED_BY_ARRAYS = {"java.lang.Cloneable", "java.io.Serializable"};<a name="line.259"></a>
+<span class="sourceLineNo">260</span><a name="line.260"></a>
+<span class="sourceLineNo">261</span>  /**<a name="line.261"></a>
+<span class="sourceLineNo">262</span>   * One of the limitations of the Java Virtual Machine.<a name="line.262"></a>
+<span class="sourceLineNo">263</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.11"&gt;<a name="line.263"></a>
+<span class="sourceLineNo">264</span>   * The Java Virtual Machine Specification, Second Edition, page 152, chapter 4.10.&lt;/a&gt;<a name="line.264"></a>
+<span class="sourceLineNo">265</span>   */<a name="line.265"></a>
+<span class="sourceLineNo">266</span>  int MAX_CP_ENTRIES     = 65535;<a name="line.266"></a>
+<span class="sourceLineNo">267</span><a name="line.267"></a>
+<span class="sourceLineNo">268</span>  /**<a name="line.268"></a>
+<span class="sourceLineNo">269</span>   * One of the limitations of the Java Virtual Machine.<a name="line.269"></a>
+<span class="sourceLineNo">270</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.11"&gt;<a name="line.270"></a>
+<span class="sourceLineNo">271</span>   * The Java Virtual Machine Specification, Second Edition, page 152, chapter 4.10.&lt;/a&gt;<a name="line.271"></a>
+<span class="sourceLineNo">272</span>   */<a name="line.272"></a>
+<span class="sourceLineNo">273</span>  int MAX_CODE_SIZE      = 65536; //bytes<a name="line.273"></a>
+<span class="sourceLineNo">274</span><a name="line.274"></a>
+<span class="sourceLineNo">275</span>  /** Java VM opcode.<a name="line.275"></a>
+<span class="sourceLineNo">276</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.276"></a>
+<span class="sourceLineNo">277</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.277"></a>
+<span class="sourceLineNo">278</span>  short NOP              = 0;<a name="line.278"></a>
+<span class="sourceLineNo">279</span><a name="line.279"></a>
+<span class="sourceLineNo">280</span>  /** Java VM opcode.<a name="line.280"></a>
+<span class="sourceLineNo">281</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.281"></a>
+<span class="sourceLineNo">282</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.282"></a>
+<span class="sourceLineNo">283</span>  short ACONST_NULL      = 1;<a name="line.283"></a>
+<span class="sourceLineNo">284</span><a name="line.284"></a>
+<span class="sourceLineNo">285</span>  /** Java VM opcode.<a name="line.285"></a>
+<span class="sourceLineNo">286</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.286"></a>
+<span class="sourceLineNo">287</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.287"></a>
+<span class="sourceLineNo">288</span>  short ICONST_M1        = 2;<a name="line.288"></a>
+<span class="sourceLineNo">289</span>  /** Java VM opcode.<a name="line.289"></a>
+<span class="sourceLineNo">290</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.290"></a>
+<span class="sourceLineNo">291</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.291"></a>
+<span class="sourceLineNo">292</span>  short ICONST_0         = 3;<a name="line.292"></a>
+<span class="sourceLineNo">293</span>  /** Java VM opcode.<a name="line.293"></a>
+<span class="sourceLineNo">294</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.294"></a>
+<span class="sourceLineNo">295</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.295"></a>
+<span class="sourceLineNo">296</span>  short ICONST_1         = 4;<a name="line.296"></a>
+<span class="sourceLineNo">297</span>  /** Java VM opcode.<a name="line.297"></a>
+<span class="sourceLineNo">298</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.298"></a>
+<span class="sourceLineNo">299</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.299"></a>
+<span class="sourceLineNo">300</span>  short ICONST_2         = 5;<a name="line.300"></a>
+<span class="sourceLineNo">301</span>  /** Java VM opcode.<a name="line.301"></a>
+<span class="sourceLineNo">302</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.302"></a>
+<span class="sourceLineNo">303</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.303"></a>
+<span class="sourceLineNo">304</span>  short ICONST_3         = 6;<a name="line.304"></a>
+<span class="sourceLineNo">305</span>  /** Java VM opcode.<a name="line.305"></a>
+<span class="sourceLineNo">306</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.306"></a>
+<span class="sourceLineNo">307</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.307"></a>
+<span class="sourceLineNo">308</span>  short ICONST_4         = 7;<a name="line.308"></a>
+<span class="sourceLineNo">309</span>  /** Java VM opcode.<a name="line.309"></a>
+<span class="sourceLineNo">310</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.310"></a>
+<span class="sourceLineNo">311</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.311"></a>
+<span class="sourceLineNo">312</span>  short ICONST_5         = 8;<a name="line.312"></a>
+<span class="sourceLineNo">313</span>  /** Java VM opcode.<a name="line.313"></a>
+<span class="sourceLineNo">314</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.314"></a>
+<span class="sourceLineNo">315</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.315"></a>
+<span class="sourceLineNo">316</span>  short LCONST_0         = 9;<a name="line.316"></a>
+<span class="sourceLineNo">317</span>  /** Java VM opcode.<a name="line.317"></a>
+<span class="sourceLineNo">318</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.318"></a>
+<span class="sourceLineNo">319</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.319"></a>
+<span class="sourceLineNo">320</span>  short LCONST_1         = 10;<a name="line.320"></a>
+<span class="sourceLineNo">321</span>  /** Java VM opcode.<a name="line.321"></a>
+<span class="sourceLineNo">322</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.322"></a>
+<span class="sourceLineNo">323</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.323"></a>
+<span class="sourceLineNo">324</span>  short FCONST_0         = 11;<a name="line.324"></a>
+<span class="sourceLineNo">325</span>  /** Java VM opcode.<a name="line.325"></a>
+<span class="sourceLineNo">326</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.326"></a>
+<span class="sourceLineNo">327</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.327"></a>
+<span class="sourceLineNo">328</span>  short FCONST_1         = 12;<a name="line.328"></a>
+<span class="sourceLineNo">329</span>  /** Java VM opcode.<a name="line.329"></a>
+<span class="sourceLineNo">330</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.330"></a>
+<span class="sourceLineNo">331</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.331"></a>
+<span class="sourceLineNo">332</span>  short FCONST_2         = 13;<a name="line.332"></a>
+<span class="sourceLineNo">333</span>  /** Java VM opcode.<a name="line.333"></a>
+<span class="sourceLineNo">334</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.334"></a>
+<span class="sourceLineNo">335</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.335"></a>
+<span class="sourceLineNo">336</span>  short DCONST_0         = 14;<a name="line.336"></a>
+<span class="sourceLineNo">337</span>  /** Java VM opcode.<a name="line.337"></a>
+<span class="sourceLineNo">338</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.338"></a>
+<span class="sourceLineNo">339</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.339"></a>
+<span class="sourceLineNo">340</span>  short DCONST_1         = 15;<a name="line.340"></a>
+<span class="sourceLineNo">341</span>  /** Java VM opcode.<a name="line.341"></a>
+<span class="sourceLineNo">342</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.342"></a>
+<span class="sourceLineNo">343</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.343"></a>
+<span class="sourceLineNo">344</span>  short BIPUSH           = 16;<a name="line.344"></a>
+<span class="sourceLineNo">345</span>  /** Java VM opcode.<a name="line.345"></a>
+<span class="sourceLineNo">346</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.346"></a>
+<span class="sourceLineNo">347</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.347"></a>
+<span class="sourceLineNo">348</span>  short SIPUSH           = 17;<a name="line.348"></a>
+<span class="sourceLineNo">349</span>  /** Java VM opcode.<a name="line.349"></a>
+<span class="sourceLineNo">350</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.350"></a>
+<span class="sourceLineNo">351</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.351"></a>
+<span class="sourceLineNo">352</span>  short LDC              = 18;<a name="line.352"></a>
+<span class="sourceLineNo">353</span>  /** Java VM opcode.<a name="line.353"></a>
+<span class="sourceLineNo">354</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.354"></a>
+<span class="sourceLineNo">355</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.355"></a>
+<span class="sourceLineNo">356</span>  short LDC_W            = 19;<a name="line.356"></a>
+<span class="sourceLineNo">357</span>  /** Java VM opcode.<a name="line.357"></a>
+<span class="sourceLineNo">358</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.358"></a>
+<span class="sourceLineNo">359</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.359"></a>
+<span class="sourceLineNo">360</span>  short LDC2_W           = 20;<a name="line.360"></a>
+<span class="sourceLineNo">361</span>  /** Java VM opcode.<a name="line.361"></a>
+<span class="sourceLineNo">362</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.362"></a>
+<span class="sourceLineNo">363</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.363"></a>
+<span class="sourceLineNo">364</span>  short ILOAD            = 21;<a name="line.364"></a>
+<span class="sourceLineNo">365</span>  /** Java VM opcode.<a name="line.365"></a>
+<span class="sourceLineNo">366</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.366"></a>
+<span class="sourceLineNo">367</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.367"></a>
+<span class="sourceLineNo">368</span>  short LLOAD            = 22;<a name="line.368"></a>
+<span class="sourceLineNo">369</span>  /** Java VM opcode.<a name="line.369"></a>
+<span class="sourceLineNo">370</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.370"></a>
+<span class="sourceLineNo">371</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.371"></a>
+<span class="sourceLineNo">372</span>  short FLOAD            = 23;<a name="line.372"></a>
+<span class="sourceLineNo">373</span>  /** Java VM opcode.<a name="line.373"></a>
+<span class="sourceLineNo">374</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.374"></a>
+<span class="sourceLineNo">375</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.375"></a>
+<span class="sourceLineNo">376</span>  short DLOAD            = 24;<a name="line.376"></a>
+<span class="sourceLineNo">377</span>  /** Java VM opcode.<a name="line.377"></a>
+<span class="sourceLineNo">378</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.378"></a>
+<span class="sourceLineNo">379</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.379"></a>
+<span class="sourceLineNo">380</span>  short ALOAD            = 25;<a name="line.380"></a>
+<span class="sourceLineNo">381</span>  /** Java VM opcode.<a name="line.381"></a>
+<span class="sourceLineNo">382</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.382"></a>
+<span class="sourceLineNo">383</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.383"></a>
+<span class="sourceLineNo">384</span>  short ILOAD_0          = 26;<a name="line.384"></a>
+<span class="sourceLineNo">385</span>  /** Java VM opcode.<a name="line.385"></a>
+<span class="sourceLineNo">386</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.386"></a>
+<span class="sourceLineNo">387</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.387"></a>
+<span class="sourceLineNo">388</span>  short ILOAD_1          = 27;<a name="line.388"></a>
+<span class="sourceLineNo">389</span>  /** Java VM opcode.<a name="line.389"></a>
+<span class="sourceLineNo">390</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.390"></a>
+<span class="sourceLineNo">391</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.391"></a>
+<span class="sourceLineNo">392</span>  short ILOAD_2          = 28;<a name="line.392"></a>
+<span class="sourceLineNo">393</span>  /** Java VM opcode.<a name="line.393"></a>
+<span class="sourceLineNo">394</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.394"></a>
+<span class="sourceLineNo">395</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.395"></a>
+<span class="sourceLineNo">396</span>  short ILOAD_3          = 29;<a name="line.396"></a>
+<span class="sourceLineNo">397</span>  /** Java VM opcode.<a name="line.397"></a>
+<span class="sourceLineNo">398</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.398"></a>
+<span class="sourceLineNo">399</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.399"></a>
+<span class="sourceLineNo">400</span>  short LLOAD_0          = 30;<a name="line.400"></a>
+<span class="sourceLineNo">401</span>  /** Java VM opcode.<a name="line.401"></a>
+<span class="sourceLineNo">402</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.402"></a>
+<span class="sourceLineNo">403</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.403"></a>
+<span class="sourceLineNo">404</span>  short LLOAD_1          = 31;<a name="line.404"></a>
+<span class="sourceLineNo">405</span>  /** Java VM opcode.<a name="line.405"></a>
+<span class="sourceLineNo">406</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.406"></a>
+<span class="sourceLineNo">407</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.407"></a>
+<span class="sourceLineNo">408</span>  short LLOAD_2          = 32;<a name="line.408"></a>
+<span class="sourceLineNo">409</span>  /** Java VM opcode.<a name="line.409"></a>
+<span class="sourceLineNo">410</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.410"></a>
+<span class="sourceLineNo">411</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.411"></a>
+<span class="sourceLineNo">412</span>  short LLOAD_3          = 33;<a name="line.412"></a>
+<span class="sourceLineNo">413</span>  /** Java VM opcode.<a name="line.413"></a>
+<span class="sourceLineNo">414</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.414"></a>
+<span class="sourceLineNo">415</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.415"></a>
+<span class="sourceLineNo">416</span>  short FLOAD_0          = 34;<a name="line.416"></a>
+<span class="sourceLineNo">417</span>  /** Java VM opcode.<a name="line.417"></a>
+<span class="sourceLineNo">418</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.418"></a>
+<span class="sourceLineNo">419</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.419"></a>
+<span class="sourceLineNo">420</span>  short FLOAD_1          = 35;<a name="line.420"></a>
+<span class="sourceLineNo">421</span>  /** Java VM opcode.<a name="line.421"></a>
+<span class="sourceLineNo">422</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.422"></a>
+<span class="sourceLineNo">423</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.423"></a>
+<span class="sourceLineNo">424</span>  short FLOAD_2          = 36;<a name="line.424"></a>
+<span class="sourceLineNo">425</span>  /** Java VM opcode.<a name="line.425"></a>
+<span class="sourceLineNo">426</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.426"></a>
+<span class="sourceLineNo">427</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.427"></a>
+<span class="sourceLineNo">428</span>  short FLOAD_3          = 37;<a name="line.428"></a>
+<span class="sourceLineNo">429</span>  /** Java VM opcode.<a name="line.429"></a>
+<span class="sourceLineNo">430</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.430"></a>
+<span class="sourceLineNo">431</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.431"></a>
+<span class="sourceLineNo">432</span>  short DLOAD_0          = 38;<a name="line.432"></a>
+<span class="sourceLineNo">433</span>  /** Java VM opcode.<a name="line.433"></a>
+<span class="sourceLineNo">434</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.434"></a>
+<span class="sourceLineNo">435</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.435"></a>
+<span class="sourceLineNo">436</span>  short DLOAD_1          = 39;<a name="line.436"></a>
+<span class="sourceLineNo">437</span>  /** Java VM opcode.<a name="line.437"></a>
+<span class="sourceLineNo">438</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.438"></a>
+<span class="sourceLineNo">439</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.439"></a>
+<span class="sourceLineNo">440</span>  short DLOAD_2          = 40;<a name="line.440"></a>
+<span class="sourceLineNo">441</span>  /** Java VM opcode.<a name="line.441"></a>
+<span class="sourceLineNo">442</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.442"></a>
+<span class="sourceLineNo">443</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.443"></a>
+<span class="sourceLineNo">444</span>  short DLOAD_3          = 41;<a name="line.444"></a>
+<span class="sourceLineNo">445</span>  /** Java VM opcode.<a name="line.445"></a>
+<span class="sourceLineNo">446</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.446"></a>
+<span class="sourceLineNo">447</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.447"></a>
+<span class="sourceLineNo">448</span>  short ALOAD_0          = 42;<a name="line.448"></a>
+<span class="sourceLineNo">449</span>  /** Java VM opcode.<a name="line.449"></a>
+<span class="sourceLineNo">450</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.450"></a>
+<span class="sourceLineNo">451</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.451"></a>
+<span class="sourceLineNo">452</span>  short ALOAD_1          = 43;<a name="line.452"></a>
+<span class="sourceLineNo">453</span>  /** Java VM opcode.<a name="line.453"></a>
+<span class="sourceLineNo">454</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.454"></a>
+<span class="sourceLineNo">455</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.455"></a>
+<span class="sourceLineNo">456</span>  short ALOAD_2          = 44;<a name="line.456"></a>
+<span class="sourceLineNo">457</span>  /** Java VM opcode.<a name="line.457"></a>
+<span class="sourceLineNo">458</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.458"></a>
+<span class="sourceLineNo">459</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.459"></a>
+<span class="sourceLineNo">460</span>  short ALOAD_3          = 45;<a name="line.460"></a>
+<span class="sourceLineNo">461</span>  /** Java VM opcode.<a name="line.461"></a>
+<span class="sourceLineNo">462</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.462"></a>
+<span class="sourceLineNo">463</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.463"></a>
+<span class="sourceLineNo">464</span>  short IALOAD           = 46;<a name="line.464"></a>
+<span class="sourceLineNo">465</span>  /** Java VM opcode.<a name="line.465"></a>
+<span class="sourceLineNo">466</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.466"></a>
+<span class="sourceLineNo">467</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.467"></a>
+<span class="sourceLineNo">468</span>  short LALOAD           = 47;<a name="line.468"></a>
+<span class="sourceLineNo">469</span>  /** Java VM opcode.<a name="line.469"></a>
+<span class="sourceLineNo">470</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.470"></a>
+<span class="sourceLineNo">471</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.471"></a>
+<span class="sourceLineNo">472</span>  short FALOAD           = 48;<a name="line.472"></a>
+<span class="sourceLineNo">473</span>  /** Java VM opcode.<a name="line.473"></a>
+<span class="sourceLineNo">474</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.474"></a>
+<span class="sourceLineNo">475</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.475"></a>
+<span class="sourceLineNo">476</span>  short DALOAD           = 49;<a name="line.476"></a>
+<span class="sourceLineNo">477</span>  /** Java VM opcode.<a name="line.477"></a>
+<span class="sourceLineNo">478</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.478"></a>
+<span class="sourceLineNo">479</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.479"></a>
+<span class="sourceLineNo">480</span>  short AALOAD           = 50;<a name="line.480"></a>
+<span class="sourceLineNo">481</span>  /** Java VM opcode.<a name="line.481"></a>
+<span class="sourceLineNo">482</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.482"></a>
+<span class="sourceLineNo">483</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.483"></a>
+<span class="sourceLineNo">484</span>  short BALOAD           = 51;<a name="line.484"></a>
+<span class="sourceLineNo">485</span>  /** Java VM opcode.<a name="line.485"></a>
+<span class="sourceLineNo">486</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.486"></a>
+<span class="sourceLineNo">487</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.487"></a>
+<span class="sourceLineNo">488</span>  short CALOAD           = 52;<a name="line.488"></a>
+<span class="sourceLineNo">489</span>  /** Java VM opcode.<a name="line.489"></a>
+<span class="sourceLineNo">490</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.490"></a>
+<span class="sourceLineNo">491</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.491"></a>
+<span class="sourceLineNo">492</span>  short SALOAD           = 53;<a name="line.492"></a>
+<span class="sourceLineNo">493</span>  /** Java VM opcode.<a name="line.493"></a>
+<span class="sourceLineNo">494</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.494"></a>
+<span class="sourceLineNo">495</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.495"></a>
+<span class="sourceLineNo">496</span>  short ISTORE           = 54;<a name="line.496"></a>
+<span class="sourceLineNo">497</span>  /** Java VM opcode.<a name="line.497"></a>
+<span class="sourceLineNo">498</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.498"></a>
+<span class="sourceLineNo">499</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.499"></a>
+<span class="sourceLineNo">500</span>  short LSTORE           = 55;<a name="line.500"></a>
+<span class="sourceLineNo">501</span>  /** Java VM opcode.<a name="line.501"></a>
+<span class="sourceLineNo">502</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.502"></a>
+<span class="sourceLineNo">503</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.503"></a>
+<span class="sourceLineNo">504</span>  short FSTORE           = 56;<a name="line.504"></a>
+<span class="sourceLineNo">505</span>  /** Java VM opcode.<a name="line.505"></a>
+<span class="sourceLineNo">506</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.506"></a>
+<span class="sourceLineNo">507</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.507"></a>
+<span class="sourceLineNo">508</span>  short DSTORE           = 57;<a name="line.508"></a>
+<span class="sourceLineNo">509</span>  /** Java VM opcode.<a name="line.509"></a>
+<span class="sourceLineNo">510</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.510"></a>
+<span class="sourceLineNo">511</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.511"></a>
+<span class="sourceLineNo">512</span>  short ASTORE           = 58;<a name="line.512"></a>
+<span class="sourceLineNo">513</span>  /** Java VM opcode.<a name="line.513"></a>
+<span class="sourceLineNo">514</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.514"></a>
+<span class="sourceLineNo">515</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.515"></a>
+<span class="sourceLineNo">516</span>  short ISTORE_0         = 59;<a name="line.516"></a>
+<span class="sourceLineNo">517</span>  /** Java VM opcode.<a name="line.517"></a>
+<span class="sourceLineNo">518</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.518"></a>
+<span class="sourceLineNo">519</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.519"></a>
+<span class="sourceLineNo">520</span>  short ISTORE_1         = 60;<a name="line.520"></a>
+<span class="sourceLineNo">521</span>  /** Java VM opcode.<a name="line.521"></a>
+<span class="sourceLineNo">522</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.522"></a>
+<span class="sourceLineNo">523</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.523"></a>
+<span class="sourceLineNo">524</span>  short ISTORE_2         = 61;<a name="line.524"></a>
+<span class="sourceLineNo">525</span>  /** Java VM opcode.<a name="line.525"></a>
+<span class="sourceLineNo">526</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.526"></a>
+<span class="sourceLineNo">527</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.527"></a>
+<span class="sourceLineNo">528</span>  short ISTORE_3         = 62;<a name="line.528"></a>
+<span class="sourceLineNo">529</span>  /** Java VM opcode.<a name="line.529"></a>
+<span class="sourceLineNo">530</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.530"></a>
+<span class="sourceLineNo">531</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.531"></a>
+<span class="sourceLineNo">532</span>  short LSTORE_0         = 63;<a name="line.532"></a>
+<span class="sourceLineNo">533</span>  /** Java VM opcode.<a name="line.533"></a>
+<span class="sourceLineNo">534</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.534"></a>
+<span class="sourceLineNo">535</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.535"></a>
+<span class="sourceLineNo">536</span>  short LSTORE_1         = 64;<a name="line.536"></a>
+<span class="sourceLineNo">537</span>  /** Java VM opcode.<a name="line.537"></a>
+<span class="sourceLineNo">538</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.538"></a>
+<span class="sourceLineNo">539</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.539"></a>
+<span class="sourceLineNo">540</span>  short LSTORE_2         = 65;<a name="line.540"></a>
+<span class="sourceLineNo">541</span>  /** Java VM opcode.<a name="line.541"></a>
+<span class="sourceLineNo">542</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.542"></a>
+<span class="sourceLineNo">543</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.543"></a>
+<span class="sourceLineNo">544</span>  short LSTORE_3         = 66;<a name="line.544"></a>
+<span class="sourceLineNo">545</span>  /** Java VM opcode.<a name="line.545"></a>
+<span class="sourceLineNo">546</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.546"></a>
+<span class="sourceLineNo">547</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.547"></a>
+<span class="sourceLineNo">548</span>  short FSTORE_0         = 67;<a name="line.548"></a>
+<span class="sourceLineNo">549</span>  /** Java VM opcode.<a name="line.549"></a>
+<span class="sourceLineNo">550</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.550"></a>
+<span class="sourceLineNo">551</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.551"></a>
+<span class="sourceLineNo">552</span>  short FSTORE_1         = 68;<a name="line.552"></a>
+<span class="sourceLineNo">553</span>  /** Java VM opcode.<a name="line.553"></a>
+<span class="sourceLineNo">554</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.554"></a>
+<span class="sourceLineNo">555</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.555"></a>
+<span class="sourceLineNo">556</span>  short FSTORE_2         = 69;<a name="line.556"></a>
+<span class="sourceLineNo">557</span>  /** Java VM opcode.<a name="line.557"></a>
+<span class="sourceLineNo">558</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.558"></a>
+<span class="sourceLineNo">559</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.559"></a>
+<span class="sourceLineNo">560</span>  short FSTORE_3         = 70;<a name="line.560"></a>
+<span class="sourceLineNo">561</span>  /** Java VM opcode.<a name="line.561"></a>
+<span class="sourceLineNo">562</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.562"></a>
+<span class="sourceLineNo">563</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.563"></a>
+<span class="sourceLineNo">564</span>  short DSTORE_0         = 71;<a name="line.564"></a>
+<span class="sourceLineNo">565</span>  /** Java VM opcode.<a name="line.565"></a>
+<span class="sourceLineNo">566</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.566"></a>
+<span class="sourceLineNo">567</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.567"></a>
+<span class="sourceLineNo">568</span>  short DSTORE_1         = 72;<a name="line.568"></a>
+<span class="sourceLineNo">569</span>  /** Java VM opcode.<a name="line.569"></a>
+<span class="sourceLineNo">570</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.570"></a>
+<span class="sourceLineNo">571</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.571"></a>
+<span class="sourceLineNo">572</span>  short DSTORE_2         = 73;<a name="line.572"></a>
+<span class="sourceLineNo">573</span>  /** Java VM opcode.<a name="line.573"></a>
+<span class="sourceLineNo">574</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.574"></a>
+<span class="sourceLineNo">575</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.575"></a>
+<span class="sourceLineNo">576</span>  short DSTORE_3         = 74;<a name="line.576"></a>
+<span class="sourceLineNo">577</span>  /** Java VM opcode.<a name="line.577"></a>
+<span class="sourceLineNo">578</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.578"></a>
+<span class="sourceLineNo">579</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.579"></a>
+<span class="sourceLineNo">580</span>  short ASTORE_0         = 75;<a name="line.580"></a>
+<span class="sourceLineNo">581</span>  /** Java VM opcode.<a name="line.581"></a>
+<span class="sourceLineNo">582</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.582"></a>
+<span class="sourceLineNo">583</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.583"></a>
+<span class="sourceLineNo">584</span>  short ASTORE_1         = 76;<a name="line.584"></a>
+<span class="sourceLineNo">585</span>  /** Java VM opcode.<a name="line.585"></a>
+<span class="sourceLineNo">586</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.586"></a>
+<span class="sourceLineNo">587</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.587"></a>
+<span class="sourceLineNo">588</span>  short ASTORE_2         = 77;<a name="line.588"></a>
+<span class="sourceLineNo">589</span>  /** Java VM opcode.<a name="line.589"></a>
+<span class="sourceLineNo">590</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.590"></a>
+<span class="sourceLineNo">591</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.591"></a>
+<span class="sourceLineNo">592</span>  short ASTORE_3         = 78;<a name="line.592"></a>
+<span class="sourceLineNo">593</span>  /** Java VM opcode.<a name="line.593"></a>
+<span class="sourceLineNo">594</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.594"></a>
+<span class="sourceLineNo">595</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.595"></a>
+<span class="sourceLineNo">596</span>  short IASTORE          = 79;<a name="line.596"></a>
+<span class="sourceLineNo">597</span>  /** Java VM opcode.<a name="line.597"></a>
+<span class="sourceLineNo">598</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.598"></a>
+<span class="sourceLineNo">599</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.599"></a>
+<span class="sourceLineNo">600</span>  short LASTORE          = 80;<a name="line.600"></a>
+<span class="sourceLineNo">601</span>  /** Java VM opcode.<a name="line.601"></a>
+<span class="sourceLineNo">602</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.602"></a>
+<span class="sourceLineNo">603</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.603"></a>
+<span class="sourceLineNo">604</span>  short FASTORE          = 81;<a name="line.604"></a>
+<span class="sourceLineNo">605</span>  /** Java VM opcode.<a name="line.605"></a>
+<span class="sourceLineNo">606</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.606"></a>
+<span class="sourceLineNo">607</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.607"></a>
+<span class="sourceLineNo">608</span>  short DASTORE          = 82;<a name="line.608"></a>
+<span class="sourceLineNo">609</span>  /** Java VM opcode.<a name="line.609"></a>
+<span class="sourceLineNo">610</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.610"></a>
+<span class="sourceLineNo">611</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.611"></a>
+<span class="sourceLineNo">612</span>  short AASTORE          = 83;<a name="line.612"></a>
+<span class="sourceLineNo">613</span>  /** Java VM opcode.<a name="line.613"></a>
+<span class="sourceLineNo">614</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.614"></a>
+<span class="sourceLineNo">615</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.615"></a>
+<span class="sourceLineNo">616</span>  short BASTORE          = 84;<a name="line.616"></a>
+<span class="sourceLineNo">617</span>  /** Java VM opcode.<a name="line.617"></a>
+<span class="sourceLineNo">618</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.618"></a>
+<span class="sourceLineNo">619</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.619"></a>
+<span class="sourceLineNo">620</span>  short CASTORE          = 85;<a name="line.620"></a>
+<span class="sourceLineNo">621</span>  /** Java VM opcode.<a name="line.621"></a>
+<span class="sourceLineNo">622</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.622"></a>
+<span class="sourceLineNo">623</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.623"></a>
+<span class="sourceLineNo">624</span>  short SASTORE          = 86;<a name="line.624"></a>
+<span class="sourceLineNo">625</span>  /** Java VM opcode.<a name="line.625"></a>
+<span class="sourceLineNo">626</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.626"></a>
+<span class="sourceLineNo">627</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.627"></a>
+<span class="sourceLineNo">628</span>  short POP              = 87;<a name="line.628"></a>
+<span class="sourceLineNo">629</span>  /** Java VM opcode.<a name="line.629"></a>
+<span class="sourceLineNo">630</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.630"></a>
+<span class="sourceLineNo">631</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.631"></a>
+<span class="sourceLineNo">632</span>  short POP2             = 88;<a name="line.632"></a>
+<span class="sourceLineNo">633</span>  /** Java VM opcode.<a name="line.633"></a>
+<span class="sourceLineNo">634</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.634"></a>
+<span class="sourceLineNo">635</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.635"></a>
+<span class="sourceLineNo">636</span>  short DUP              = 89;<a name="line.636"></a>
+<span class="sourceLineNo">637</span>  /** Java VM opcode.<a name="line.637"></a>
+<span class="sourceLineNo">638</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.638"></a>
+<span class="sourceLineNo">639</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.639"></a>
+<span class="sourceLineNo">640</span>  short DUP_X1           = 90;<a name="line.640"></a>
+<span class="sourceLineNo">641</span>  /** Java VM opcode.<a name="line.641"></a>
+<span class="sourceLineNo">642</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.642"></a>
+<span class="sourceLineNo">643</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.643"></a>
+<span class="sourceLineNo">644</span>  short DUP_X2           = 91;<a name="line.644"></a>
+<span class="sourceLineNo">645</span>  /** Java VM opcode.<a name="line.645"></a>
+<span class="sourceLineNo">646</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.646"></a>
+<span class="sourceLineNo">647</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.647"></a>
+<span class="sourceLineNo">648</span>  short DUP2             = 92;<a name="line.648"></a>
+<span class="sourceLineNo">649</span>  /** Java VM opcode.<a name="line.649"></a>
+<span class="sourceLineNo">650</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.650"></a>
+<span class="sourceLineNo">651</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.651"></a>
+<span class="sourceLineNo">652</span>  short DUP2_X1          = 93;<a name="line.652"></a>
+<span class="sourceLineNo">653</span>  /** Java VM opcode.<a name="line.653"></a>
+<span class="sourceLineNo">654</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.654"></a>
+<span class="sourceLineNo">655</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.655"></a>
+<span class="sourceLineNo">656</span>  short DUP2_X2          = 94;<a name="line.656"></a>
+<span class="sourceLineNo">657</span>  /** Java VM opcode.<a name="line.657"></a>
+<span class="sourceLineNo">658</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.658"></a>
+<span class="sourceLineNo">659</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.659"></a>
+<span class="sourceLineNo">660</span>  short SWAP             = 95;<a name="line.660"></a>
+<span class="sourceLineNo">661</span>  /** Java VM opcode.<a name="line.661"></a>
+<span class="sourceLineNo">662</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.662"></a>
+<span class="sourceLineNo">663</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.663"></a>
+<span class="sourceLineNo">664</span>  short IADD             = 96;<a name="line.664"></a>
+<span class="sourceLineNo">665</span>  /** Java VM opcode.<a name="line.665"></a>
+<span class="sourceLineNo">666</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.666"></a>
+<span class="sourceLineNo">667</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.667"></a>
+<span class="sourceLineNo">668</span>  short LADD             = 97;<a name="line.668"></a>
+<span class="sourceLineNo">669</span>  /** Java VM opcode.<a name="line.669"></a>
+<span class="sourceLineNo">670</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.670"></a>
+<span class="sourceLineNo">671</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.671"></a>
+<span class="sourceLineNo">672</span>  short FADD             = 98;<a name="line.672"></a>
+<span class="sourceLineNo">673</span>  /** Java VM opcode.<a name="line.673"></a>
+<span class="sourceLineNo">674</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.674"></a>
+<span class="sourceLineNo">675</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.675"></a>
+<span class="sourceLineNo">676</span>  short DADD             = 99;<a name="line.676"></a>
+<span class="sourceLineNo">677</span>  /** Java VM opcode.<a name="line.677"></a>
+<span class="sourceLineNo">678</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.678"></a>
+<span class="sourceLineNo">679</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.679"></a>
+<span class="sourceLineNo">680</span>  short ISUB             = 100;<a name="line.680"></a>
+<span class="sourceLineNo">681</span>  /** Java VM opcode.<a name="line.681"></a>
+<span class="sourceLineNo">682</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.682"></a>
+<span class="sourceLineNo">683</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.683"></a>
+<span class="sourceLineNo">684</span>  short LSUB             = 101;<a name="line.684"></a>
+<span class="sourceLineNo">685</span>  /** Java VM opcode.<a name="line.685"></a>
+<span class="sourceLineNo">686</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.686"></a>
+<span class="sourceLineNo">687</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.687"></a>
+<span class="sourceLineNo">688</span>  short FSUB             = 102;<a name="line.688"></a>
+<span class="sourceLineNo">689</span>  /** Java VM opcode.<a name="line.689"></a>
+<span class="sourceLineNo">690</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.690"></a>
+<span class="sourceLineNo">691</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.691"></a>
+<span class="sourceLineNo">692</span>  short DSUB             = 103;<a name="line.692"></a>
+<span class="sourceLineNo">693</span>  /** Java VM opcode.<a name="line.693"></a>
+<span class="sourceLineNo">694</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.694"></a>
+<span class="sourceLineNo">695</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.695"></a>
+<span class="sourceLineNo">696</span>  short IMUL             = 104;<a name="line.696"></a>
+<span class="sourceLineNo">697</span>  /** Java VM opcode.<a name="line.697"></a>
+<span class="sourceLineNo">698</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.698"></a>
+<span class="sourceLineNo">699</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.699"></a>
+<span class="sourceLineNo">700</span>  short LMUL             = 105;<a name="line.700"></a>
+<span class="sourceLineNo">701</span>  /** Java VM opcode.<a name="line.701"></a>
+<span class="sourceLineNo">702</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.702"></a>
+<span class="sourceLineNo">703</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.703"></a>
+<span class="sourceLineNo">704</span>  short FMUL             = 106;<a name="line.704"></a>
+<span class="sourceLineNo">705</span>  /** Java VM opcode.<a name="line.705"></a>
+<span class="sourceLineNo">706</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.706"></a>
+<span class="sourceLineNo">707</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.707"></a>
+<span class="sourceLineNo">708</span>  short DMUL             = 107;<a name="line.708"></a>
+<span class="sourceLineNo">709</span>  /** Java VM opcode.<a name="line.709"></a>
+<span class="sourceLineNo">710</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.710"></a>
+<span class="sourceLineNo">711</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.711"></a>
+<span class="sourceLineNo">712</span>  short IDIV             = 108;<a name="line.712"></a>
+<span class="sourceLineNo">713</span>  /** Java VM opcode.<a name="line.713"></a>
+<span class="sourceLineNo">714</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.714"></a>
+<span class="sourceLineNo">715</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.715"></a>
+<span class="sourceLineNo">716</span>  short LDIV             = 109;<a name="line.716"></a>
+<span class="sourceLineNo">717</span>  /** Java VM opcode.<a name="line.717"></a>
+<span class="sourceLineNo">718</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.718"></a>
+<span class="sourceLineNo">719</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.719"></a>
+<span class="sourceLineNo">720</span>  short FDIV             = 110;<a name="line.720"></a>
+<span class="sourceLineNo">721</span>  /** Java VM opcode.<a name="line.721"></a>
+<span class="sourceLineNo">722</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.722"></a>
+<span class="sourceLineNo">723</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.723"></a>
+<span class="sourceLineNo">724</span>  short DDIV             = 111;<a name="line.724"></a>
+<span class="sourceLineNo">725</span>  /** Java VM opcode.<a name="line.725"></a>
+<span class="sourceLineNo">726</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.726"></a>
+<span class="sourceLineNo">727</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.727"></a>
+<span class="sourceLineNo">728</span>  short IREM             = 112;<a name="line.728"></a>
+<span class="sourceLineNo">729</span>  /** Java VM opcode.<a name="line.729"></a>
+<span class="sourceLineNo">730</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.730"></a>
+<span class="sourceLineNo">731</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.731"></a>
+<span class="sourceLineNo">732</span>  short LREM             = 113;<a name="line.732"></a>
+<span class="sourceLineNo">733</span>  /** Java VM opcode.<a name="line.733"></a>
+<span class="sourceLineNo">734</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.734"></a>
+<span class="sourceLineNo">735</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.735"></a>
+<span class="sourceLineNo">736</span>  short FREM             = 114;<a name="line.736"></a>
+<span class="sourceLineNo">737</span>  /** Java VM opcode.<a name="line.737"></a>
+<span class="sourceLineNo">738</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.738"></a>
+<span class="sourceLineNo">739</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.739"></a>
+<span class="sourceLineNo">740</span>  short DREM             = 115;<a name="line.740"></a>
+<span class="sourceLineNo">741</span>  /** Java VM opcode.<a name="line.741"></a>
+<span class="sourceLineNo">742</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.742"></a>
+<span class="sourceLineNo">743</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.743"></a>
+<span class="sourceLineNo">744</span>  short INEG             = 116;<a name="line.744"></a>
+<span class="sourceLineNo">745</span>  /** Java VM opcode.<a name="line.745"></a>
+<span class="sourceLineNo">746</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.746"></a>
+<span class="sourceLineNo">747</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.747"></a>
+<span class="sourceLineNo">748</span>  short LNEG             = 117;<a name="line.748"></a>
+<span class="sourceLineNo">749</span>  /** Java VM opcode.<a name="line.749"></a>
+<span class="sourceLineNo">750</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.750"></a>
+<span class="sourceLineNo">751</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.751"></a>
+<span class="sourceLineNo">752</span>  short FNEG             = 118;<a name="line.752"></a>
+<span class="sourceLineNo">753</span>  /** Java VM opcode.<a name="line.753"></a>
+<span class="sourceLineNo">754</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.754"></a>
+<span class="sourceLineNo">755</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.755"></a>
+<span class="sourceLineNo">756</span>  short DNEG             = 119;<a name="line.756"></a>
+<span class="sourceLineNo">757</span>  /** Java VM opcode.<a name="line.757"></a>
+<span class="sourceLineNo">758</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.758"></a>
+<span class="sourceLineNo">759</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.759"></a>
+<span class="sourceLineNo">760</span>  short ISHL             = 120;<a name="line.760"></a>
+<span class="sourceLineNo">761</span>  /** Java VM opcode.<a name="line.761"></a>
+<span class="sourceLineNo">762</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.762"></a>
+<span class="sourceLineNo">763</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.763"></a>
+<span class="sourceLineNo">764</span>  short LSHL             = 121;<a name="line.764"></a>
+<span class="sourceLineNo">765</span>  /** Java VM opcode.<a name="line.765"></a>
+<span class="sourceLineNo">766</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.766"></a>
+<span class="sourceLineNo">767</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.767"></a>
+<span class="sourceLineNo">768</span>  short ISHR             = 122;<a name="line.768"></a>
+<span class="sourceLineNo">769</span>  /** Java VM opcode.<a name="line.769"></a>
+<span class="sourceLineNo">770</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.770"></a>
+<span class="sourceLineNo">771</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.771"></a>
+<span class="sourceLineNo">772</span>  short LSHR             = 123;<a name="line.772"></a>
+<span class="sourceLineNo">773</span>  /** Java VM opcode.<a name="line.773"></a>
+<span class="sourceLineNo">774</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.774"></a>
+<span class="sourceLineNo">775</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.775"></a>
+<span class="sourceLineNo">776</span>  short IUSHR            = 124;<a name="line.776"></a>
+<span class="sourceLineNo">777</span>  /** Java VM opcode.<a name="line.777"></a>
+<span class="sourceLineNo">778</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.778"></a>
+<span class="sourceLineNo">779</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.779"></a>
+<span class="sourceLineNo">780</span>  short LUSHR            = 125;<a name="line.780"></a>
+<span class="sourceLineNo">781</span>  /** Java VM opcode.<a name="line.781"></a>
+<span class="sourceLineNo">782</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.782"></a>
+<span class="sourceLineNo">783</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.783"></a>
+<span class="sourceLineNo">784</span>  short IAND             = 126;<a name="line.784"></a>
+<span class="sourceLineNo">785</span>  /** Java VM opcode.<a name="line.785"></a>
+<span class="sourceLineNo">786</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.786"></a>
+<span class="sourceLineNo">787</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.787"></a>
+<span class="sourceLineNo">788</span>  short LAND             = 127;<a name="line.788"></a>
+<span class="sourceLineNo">789</span>  /** Java VM opcode.<a name="line.789"></a>
+<span class="sourceLineNo">790</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.790"></a>
+<span class="sourceLineNo">791</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.791"></a>
+<span class="sourceLineNo">792</span>  short IOR              = 128;<a name="line.792"></a>
+<span class="sourceLineNo">793</span>  /** Java VM opcode.<a name="line.793"></a>
+<span class="sourceLineNo">794</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.794"></a>
+<span class="sourceLineNo">795</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.795"></a>
+<span class="sourceLineNo">796</span>  short LOR              = 129;<a name="line.796"></a>
+<span class="sourceLineNo">797</span>  /** Java VM opcode.<a name="line.797"></a>
+<span class="sourceLineNo">798</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.798"></a>
+<span class="sourceLineNo">799</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.799"></a>
+<span class="sourceLineNo">800</span>  short IXOR             = 130;<a name="line.800"></a>
+<span class="sourceLineNo">801</span>  /** Java VM opcode.<a name="line.801"></a>
+<span class="sourceLineNo">802</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.802"></a>
+<span class="sourceLineNo">803</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.803"></a>
+<span class="sourceLineNo">804</span>  short LXOR             = 131;<a name="line.804"></a>
+<span class="sourceLineNo">805</span>  /** Java VM opcode.<a name="line.805"></a>
+<span class="sourceLineNo">806</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.806"></a>
+<span class="sourceLineNo">807</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.807"></a>
+<span class="sourceLineNo">808</span>  short IINC             = 132;<a name="line.808"></a>
+<span class="sourceLineNo">809</span>  /** Java VM opcode.<a name="line.809"></a>
+<span class="sourceLineNo">810</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.810"></a>
+<span class="sourceLineNo">811</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.811"></a>
+<span class="sourceLineNo">812</span>  short I2L              = 133;<a name="line.812"></a>
+<span class="sourceLineNo">813</span>  /** Java VM opcode.<a name="line.813"></a>
+<span class="sourceLineNo">814</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.814"></a>
+<span class="sourceLineNo">815</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.815"></a>
+<span class="sourceLineNo">816</span>  short I2F              = 134;<a name="line.816"></a>
+<span class="sourceLineNo">817</span>  /** Java VM opcode.<a name="line.817"></a>
+<span class="sourceLineNo">818</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.818"></a>
+<span class="sourceLineNo">819</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.819"></a>
+<span class="sourceLineNo">820</span>  short I2D              = 135;<a name="line.820"></a>
+<span class="sourceLineNo">821</span>  /** Java VM opcode.<a name="line.821"></a>
+<span class="sourceLineNo">822</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.822"></a>
+<span class="sourceLineNo">823</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.823"></a>
+<span class="sourceLineNo">824</span>  short L2I              = 136;<a name="line.824"></a>
+<span class="sourceLineNo">825</span>  /** Java VM opcode.<a name="line.825"></a>
+<span class="sourceLineNo">826</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.826"></a>
+<span class="sourceLineNo">827</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.827"></a>
+<span class="sourceLineNo">828</span>  short L2F              = 137;<a name="line.828"></a>
+<span class="sourceLineNo">829</span>  /** Java VM opcode.<a name="line.829"></a>
+<span class="sourceLineNo">830</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.830"></a>
+<span class="sourceLineNo">831</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.831"></a>
+<span class="sourceLineNo">832</span>  short L2D              = 138;<a name="line.832"></a>
+<span class="sourceLineNo">833</span>  /** Java VM opcode.<a name="line.833"></a>
+<span class="sourceLineNo">834</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.834"></a>
+<span class="sourceLineNo">835</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.835"></a>
+<span class="sourceLineNo">836</span>  short F2I              = 139;<a name="line.836"></a>
+<span class="sourceLineNo">837</span>  /** Java VM opcode.<a name="line.837"></a>
+<span class="sourceLineNo">838</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.838"></a>
+<span class="sourceLineNo">839</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.839"></a>
+<span class="sourceLineNo">840</span>  short F2L              = 140;<a name="line.840"></a>
+<span class="sourceLineNo">841</span>  /** Java VM opcode.<a name="line.841"></a>
+<span class="sourceLineNo">842</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.842"></a>
+<span class="sourceLineNo">843</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.843"></a>
+<span class="sourceLineNo">844</span>  short F2D              = 141;<a name="line.844"></a>
+<span class="sourceLineNo">845</span>  /** Java VM opcode.<a name="line.845"></a>
+<span class="sourceLineNo">846</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.846"></a>
+<span class="sourceLineNo">847</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.847"></a>
+<span class="sourceLineNo">848</span>  short D2I              = 142;<a name="line.848"></a>
+<span class="sourceLineNo">849</span>  /** Java VM opcode.<a name="line.849"></a>
+<span class="sourceLineNo">850</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.850"></a>
+<span class="sourceLineNo">851</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.851"></a>
+<span class="sourceLineNo">852</span>  short D2L              = 143;<a name="line.852"></a>
+<span class="sourceLineNo">853</span>  /** Java VM opcode.<a name="line.853"></a>
+<span class="sourceLineNo">854</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.854"></a>
+<span class="sourceLineNo">855</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.855"></a>
+<span class="sourceLineNo">856</span>  short D2F              = 144;<a name="line.856"></a>
+<span class="sourceLineNo">857</span>  /** Java VM opcode.<a name="line.857"></a>
+<span class="sourceLineNo">858</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.858"></a>
+<span class="sourceLineNo">859</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.859"></a>
+<span class="sourceLineNo">860</span>  short I2B              = 145;<a name="line.860"></a>
+<span class="sourceLineNo">861</span>  /** Java VM opcode.<a name="line.861"></a>
+<span class="sourceLineNo">862</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.862"></a>
+<span class="sourceLineNo">863</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.863"></a>
+<span class="sourceLineNo">864</span>  short INT2BYTE         = 145; // Old notion<a name="line.864"></a>
+<span class="sourceLineNo">865</span>  /** Java VM opcode.<a name="line.865"></a>
+<span class="sourceLineNo">866</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.866"></a>
+<span class="sourceLineNo">867</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.867"></a>
+<span class="sourceLineNo">868</span>  short I2C              = 146;<a name="line.868"></a>
+<span class="sourceLineNo">869</span>  /** Java VM opcode.<a name="line.869"></a>
+<span class="sourceLineNo">870</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.870"></a>
+<span class="sourceLineNo">871</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.871"></a>
+<span class="sourceLineNo">872</span>  short INT2CHAR         = 146; // Old notion<a name="line.872"></a>
+<span class="sourceLineNo">873</span>  /** Java VM opcode.<a name="line.873"></a>
+<span class="sourceLineNo">874</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.874"></a>
+<span class="sourceLineNo">875</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.875"></a>
+<span class="sourceLineNo">876</span>  short I2S              = 147;<a name="line.876"></a>
+<span class="sourceLineNo">877</span>  /** Java VM opcode.<a name="line.877"></a>
+<span class="sourceLineNo">878</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.878"></a>
+<span class="sourceLineNo">879</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.879"></a>
+<span class="sourceLineNo">880</span>  short INT2SHORT        = 147; // Old notion<a name="line.880"></a>
+<span class="sourceLineNo">881</span>  /** Java VM opcode.<a name="line.881"></a>
+<span class="sourceLineNo">882</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.882"></a>
+<span class="sourceLineNo">883</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.883"></a>
+<span class="sourceLineNo">884</span>  short LCMP             = 148;<a name="line.884"></a>
+<span class="sourceLineNo">885</span>  /** Java VM opcode.<a name="line.885"></a>
+<span class="sourceLineNo">886</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.886"></a>
+<span class="sourceLineNo">887</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.887"></a>
+<span class="sourceLineNo">888</span>  short FCMPL            = 149;<a name="line.888"></a>
+<span class="sourceLineNo">889</span>  /** Java VM opcode.<a name="line.889"></a>
+<span class="sourceLineNo">890</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.890"></a>
+<span class="sourceLineNo">891</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.891"></a>
+<span class="sourceLineNo">892</span>  short FCMPG            = 150;<a name="line.892"></a>
+<span class="sourceLineNo">893</span>  /** Java VM opcode.<a name="line.893"></a>
+<span class="sourceLineNo">894</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.894"></a>
+<span class="sourceLineNo">895</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.895"></a>
+<span class="sourceLineNo">896</span>  short DCMPL            = 151;<a name="line.896"></a>
+<span class="sourceLineNo">897</span>  /** Java VM opcode.<a name="line.897"></a>
+<span class="sourceLineNo">898</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.898"></a>
+<span class="sourceLineNo">899</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.899"></a>
+<span class="sourceLineNo">900</span>  short DCMPG            = 152;<a name="line.900"></a>
+<span class="sourceLineNo">901</span>  /** Java VM opcode.<a name="line.901"></a>
+<span class="sourceLineNo">902</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.902"></a>
+<span class="sourceLineNo">903</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.903"></a>
+<span class="sourceLineNo">904</span>  short IFEQ             = 153;<a name="line.904"></a>
+<span class="sourceLineNo">905</span>  /** Java VM opcode.<a name="line.905"></a>
+<span class="sourceLineNo">906</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.906"></a>
+<span class="sourceLineNo">907</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.907"></a>
+<span class="sourceLineNo">908</span>  short IFNE             = 154;<a name="line.908"></a>
+<span class="sourceLineNo">909</span>  /** Java VM opcode.<a name="line.909"></a>
+<span class="sourceLineNo">910</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.910"></a>
+<span class="sourceLineNo">911</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.911"></a>
+<span class="sourceLineNo">912</span>  short IFLT             = 155;<a name="line.912"></a>
+<span class="sourceLineNo">913</span>  /** Java VM opcode.<a name="line.913"></a>
+<span class="sourceLineNo">914</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.914"></a>
+<span class="sourceLineNo">915</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.915"></a>
+<span class="sourceLineNo">916</span>  short IFGE             = 156;<a name="line.916"></a>
+<span class="sourceLineNo">917</span>  /** Java VM opcode.<a name="line.917"></a>
+<span class="sourceLineNo">918</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.918"></a>
+<span class="sourceLineNo">919</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.919"></a>
+<span class="sourceLineNo">920</span>  short IFGT             = 157;<a name="line.920"></a>
+<span class="sourceLineNo">921</span>  /** Java VM opcode.<a name="line.921"></a>
+<span class="sourceLineNo">922</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.922"></a>
+<span class="sourceLineNo">923</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.923"></a>
+<span class="sourceLineNo">924</span>  short IFLE             = 158;<a name="line.924"></a>
+<span class="sourceLineNo">925</span>  /** Java VM opcode.<a name="line.925"></a>
+<span class="sourceLineNo">926</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.926"></a>
+<span class="sourceLineNo">927</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.927"></a>
+<span class="sourceLineNo">928</span>  short IF_ICMPEQ        = 159;<a name="line.928"></a>
+<span class="sourceLineNo">929</span>  /** Java VM opcode.<a name="line.929"></a>
+<span class="sourceLineNo">930</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.930"></a>
+<span class="sourceLineNo">931</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.931"></a>
+<span class="sourceLineNo">932</span>  short IF_ICMPNE        = 160;<a name="line.932"></a>
+<span class="sourceLineNo">933</span>  /** Java VM opcode.<a name="line.933"></a>
+<span class="sourceLineNo">934</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.934"></a>
+<span class="sourceLineNo">935</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.935"></a>
+<span class="sourceLineNo">936</span>  short IF_ICMPLT        = 161;<a name="line.936"></a>
+<span class="sourceLineNo">937</span>  /** Java VM opcode.<a name="line.937"></a>
+<span class="sourceLineNo">938</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.938"></a>
+<span class="sourceLineNo">939</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.939"></a>
+<span class="sourceLineNo">940</span>  short IF_ICMPGE        = 162;<a name="line.940"></a>
+<span class="sourceLineNo">941</span>  /** Java VM opcode.<a name="line.941"></a>
+<span class="sourceLineNo">942</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.942"></a>
+<span class="sourceLineNo">943</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.943"></a>
+<span class="sourceLineNo">944</span>  short IF_ICMPGT        = 163;<a name="line.944"></a>
+<span class="sourceLineNo">945</span>  /** Java VM opcode.<a name="line.945"></a>
+<span class="sourceLineNo">946</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.946"></a>
+<span class="sourceLineNo">947</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.947"></a>
+<span class="sourceLineNo">948</span>  short IF_ICMPLE        = 164;<a name="line.948"></a>
+<span class="sourceLineNo">949</span>  /** Java VM opcode.<a name="line.949"></a>
+<span class="sourceLineNo">950</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.950"></a>
+<span class="sourceLineNo">951</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.951"></a>
+<span class="sourceLineNo">952</span>  short IF_ACMPEQ        = 165;<a name="line.952"></a>
+<span class="sourceLineNo">953</span>  /** Java VM opcode.<a name="line.953"></a>
+<span class="sourceLineNo">954</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.954"></a>
+<span class="sourceLineNo">955</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.955"></a>
+<span class="sourceLineNo">956</span>  short IF_ACMPNE        = 166;<a name="line.956"></a>
+<span class="sourceLineNo">957</span>  /** Java VM opcode.<a name="line.957"></a>
+<span class="sourceLineNo">958</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.958"></a>
+<span class="sourceLineNo">959</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.959"></a>
+<span class="sourceLineNo">960</span>  short GOTO             = 167;<a name="line.960"></a>
+<span class="sourceLineNo">961</span>  /** Java VM opcode.<a name="line.961"></a>
+<span class="sourceLineNo">962</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.962"></a>
+<span class="sourceLineNo">963</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.963"></a>
+<span class="sourceLineNo">964</span>  short JSR              = 168;<a name="line.964"></a>
+<span class="sourceLineNo">965</span>  /** Java VM opcode.<a name="line.965"></a>
+<span class="sourceLineNo">966</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.966"></a>
+<span class="sourceLineNo">967</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.967"></a>
+<span class="sourceLineNo">968</span>  short RET              = 169;<a name="line.968"></a>
+<span class="sourceLineNo">969</span>  /** Java VM opcode.<a name="line.969"></a>
+<span class="sourceLineNo">970</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.970"></a>
+<span class="sourceLineNo">971</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.971"></a>
+<span class="sourceLineNo">972</span>  short TABLESWITCH      = 170;<a name="line.972"></a>
+<span class="sourceLineNo">973</span>  /** Java VM opcode.<a name="line.973"></a>
+<span class="sourceLineNo">974</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.974"></a>
+<span class="sourceLineNo">975</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.975"></a>
+<span class="sourceLineNo">976</span>  short LOOKUPSWITCH     = 171;<a name="line.976"></a>
+<span class="sourceLineNo">977</span>  /** Java VM opcode.<a name="line.977"></a>
+<span class="sourceLineNo">978</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.978"></a>
+<span class="sourceLineNo">979</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.979"></a>
+<span class="sourceLineNo">980</span>  short IRETURN          = 172;<a name="line.980"></a>
+<span class="sourceLineNo">981</span>  /** Java VM opcode.<a name="line.981"></a>
+<span class="sourceLineNo">982</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.982"></a>
+<span class="sourceLineNo">983</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.983"></a>
+<span class="sourceLineNo">984</span>  short LRETURN          = 173;<a name="line.984"></a>
+<span class="sourceLineNo">985</span>  /** Java VM opcode.<a name="line.985"></a>
+<span class="sourceLineNo">986</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.986"></a>
+<span class="sourceLineNo">987</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.987"></a>
+<span class="sourceLineNo">988</span>  short FRETURN          = 174;<a name="line.988"></a>
+<span class="sourceLineNo">989</span>  /** Java VM opcode.<a name="line.989"></a>
+<span class="sourceLineNo">990</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.990"></a>
+<span class="sourceLineNo">991</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.991"></a>
+<span class="sourceLineNo">992</span>  short DRETURN          = 175;<a name="line.992"></a>
+<span class="sourceLineNo">993</span>  /** Java VM opcode.<a name="line.993"></a>
+<span class="sourceLineNo">994</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.994"></a>
+<span class="sourceLineNo">995</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.995"></a>
+<span class="sourceLineNo">996</span>  short ARETURN          = 176;<a name="line.996"></a>
+<span class="sourceLineNo">997</span>  /** Java VM opcode.<a name="line.997"></a>
+<span class="sourceLineNo">998</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.998"></a>
+<span class="sourceLineNo">999</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.999"></a>
+<span class="sourceLineNo">1000</span>  short RETURN           = 177;<a name="line.1000"></a>
+<span class="sourceLineNo">1001</span>  /** Java VM opcode.<a name="line.1001"></a>
+<span class="sourceLineNo">1002</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1002"></a>
+<span class="sourceLineNo">1003</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1003"></a>
+<span class="sourceLineNo">1004</span>  short GETSTATIC        = 178;<a name="line.1004"></a>
+<span class="sourceLineNo">1005</span>  /** Java VM opcode.<a name="line.1005"></a>
+<span class="sourceLineNo">1006</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1006"></a>
+<span class="sourceLineNo">1007</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1007"></a>
+<span class="sourceLineNo">1008</span>  short PUTSTATIC        = 179;<a name="line.1008"></a>
+<span class="sourceLineNo">1009</span>  /** Java VM opcode.<a name="line.1009"></a>
+<span class="sourceLineNo">1010</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1010"></a>
+<span class="sourceLineNo">1011</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1011"></a>
+<span class="sourceLineNo">1012</span>  short GETFIELD         = 180;<a name="line.1012"></a>
+<span class="sourceLineNo">1013</span>  /** Java VM opcode.<a name="line.1013"></a>
+<span class="sourceLineNo">1014</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1014"></a>
+<span class="sourceLineNo">1015</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1015"></a>
+<span class="sourceLineNo">1016</span>  short PUTFIELD         = 181;<a name="line.1016"></a>
+<span class="sourceLineNo">1017</span>  /** Java VM opcode.<a name="line.1017"></a>
+<span class="sourceLineNo">1018</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1018"></a>
+<span class="sourceLineNo">1019</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1019"></a>
+<span class="sourceLineNo">1020</span>  short INVOKEVIRTUAL    = 182;<a name="line.1020"></a>
+<span class="sourceLineNo">1021</span>  /** Java VM opcode.<a name="line.1021"></a>
+<span class="sourceLineNo">1022</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1022"></a>
+<span class="sourceLineNo">1023</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1023"></a>
+<span class="sourceLineNo">1024</span>  short INVOKESPECIAL    = 183;<a name="line.1024"></a>
+<span class="sourceLineNo">1025</span>  /** Java VM opcode.<a name="line.1025"></a>
+<span class="sourceLineNo">1026</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1026"></a>
+<span class="sourceLineNo">1027</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1027"></a>
+<span class="sourceLineNo">1028</span>  short INVOKENONVIRTUAL = 183; // Old name in JDK 1.0<a name="line.1028"></a>
+<span class="sourceLineNo">1029</span>  /** Java VM opcode.<a name="line.1029"></a>
+<span class="sourceLineNo">1030</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1030"></a>
+<span class="sourceLineNo">1031</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1031"></a>
+<span class="sourceLineNo">1032</span>  short INVOKESTATIC     = 184;<a name="line.1032"></a>
+<span class="sourceLineNo">1033</span>  /** Java VM opcode.<a name="line.1033"></a>
+<span class="sourceLineNo">1034</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1034"></a>
+<span class="sourceLineNo">1035</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1035"></a>
+<span class="sourceLineNo">1036</span>  short INVOKEINTERFACE  = 185;<a name="line.1036"></a>
+<span class="sourceLineNo">1037</span>  /** Java VM opcode.<a name="line.1037"></a>
+<span class="sourceLineNo">1038</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1038"></a>
+<span class="sourceLineNo">1039</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1039"></a>
+<span class="sourceLineNo">1040</span>  short INVOKEDYNAMIC   = 186;<a name="line.1040"></a>
+<span class="sourceLineNo">1041</span>  /** Java VM opcode.<a name="line.1041"></a>
+<span class="sourceLineNo">1042</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1042"></a>
+<span class="sourceLineNo">1043</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1043"></a>
+<span class="sourceLineNo">1044</span>  short NEW              = 187;<a name="line.1044"></a>
+<span class="sourceLineNo">1045</span>  /** Java VM opcode.<a name="line.1045"></a>
+<span class="sourceLineNo">1046</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1046"></a>
+<span class="sourceLineNo">1047</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1047"></a>
+<span class="sourceLineNo">1048</span>  short NEWARRAY         = 188;<a name="line.1048"></a>
+<span class="sourceLineNo">1049</span>  /** Java VM opcode.<a name="line.1049"></a>
+<span class="sourceLineNo">1050</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1050"></a>
+<span class="sourceLineNo">1051</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1051"></a>
+<span class="sourceLineNo">1052</span>  short ANEWARRAY        = 189;<a name="line.1052"></a>
+<span class="sourceLineNo">1053</span>  /** Java VM opcode.<a name="line.1053"></a>
+<span class="sourceLineNo">1054</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1054"></a>
+<span class="sourceLineNo">1055</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1055"></a>
+<span class="sourceLineNo">1056</span>  short ARRAYLENGTH      = 190;<a name="line.1056"></a>
+<span class="sourceLineNo">1057</span>  /** Java VM opcode.<a name="line.1057"></a>
+<span class="sourceLineNo">1058</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1058"></a>
+<span class="sourceLineNo">1059</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1059"></a>
+<span class="sourceLineNo">1060</span>  short ATHROW           = 191;<a name="line.1060"></a>
+<span class="sourceLineNo">1061</span>  /** Java VM opcode.<a name="line.1061"></a>
+<span class="sourceLineNo">1062</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1062"></a>
+<span class="sourceLineNo">1063</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1063"></a>
+<span class="sourceLineNo">1064</span>  short CHECKCAST        = 192;<a name="line.1064"></a>
+<span class="sourceLineNo">1065</span>  /** Java VM opcode.<a name="line.1065"></a>
+<span class="sourceLineNo">1066</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1066"></a>
+<span class="sourceLineNo">1067</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1067"></a>
+<span class="sourceLineNo">1068</span>  short INSTANCEOF       = 193;<a name="line.1068"></a>
+<span class="sourceLineNo">1069</span>  /** Java VM opcode.<a name="line.1069"></a>
+<span class="sourceLineNo">1070</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1070"></a>
+<span class="sourceLineNo">1071</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1071"></a>
+<span class="sourceLineNo">1072</span>  short MONITORENTER     = 194;<a name="line.1072"></a>
+<span class="sourceLineNo">1073</span>  /** Java VM opcode.<a name="line.1073"></a>
+<span class="sourceLineNo">1074</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1074"></a>
+<span class="sourceLineNo">1075</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1075"></a>
+<span class="sourceLineNo">1076</span>  short MONITOREXIT      = 195;<a name="line.1076"></a>
+<span class="sourceLineNo">1077</span>  /** Java VM opcode.<a name="line.1077"></a>
+<span class="sourceLineNo">1078</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1078"></a>
+<span class="sourceLineNo">1079</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1079"></a>
+<span class="sourceLineNo">1080</span>  short WIDE             = 196;<a name="line.1080"></a>
+<span class="sourceLineNo">1081</span>  /** Java VM opcode.<a name="line.1081"></a>
+<span class="sourceLineNo">1082</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1082"></a>
+<span class="sourceLineNo">1083</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1083"></a>
+<span class="sourceLineNo">1084</span>  short MULTIANEWARRAY   = 197;<a name="line.1084"></a>
+<span class="sourceLineNo">1085</span>  /** Java VM opcode.<a name="line.1085"></a>
+<span class="sourceLineNo">1086</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1086"></a>
+<span class="sourceLineNo">1087</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1087"></a>
+<span class="sourceLineNo">1088</span>  short IFNULL           = 198;<a name="line.1088"></a>
+<span class="sourceLineNo">1089</span>  /** Java VM opcode.<a name="line.1089"></a>
+<span class="sourceLineNo">1090</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1090"></a>
+<span class="sourceLineNo">1091</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1091"></a>
+<span class="sourceLineNo">1092</span>  short IFNONNULL        = 199;<a name="line.1092"></a>
+<span class="sourceLineNo">1093</span>  /** Java VM opcode.<a name="line.1093"></a>
+<span class="sourceLineNo">1094</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1094"></a>
+<span class="sourceLineNo">1095</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1095"></a>
+<span class="sourceLineNo">1096</span>  short GOTO_W           = 200;<a name="line.1096"></a>
+<span class="sourceLineNo">1097</span>  /** Java VM opcode.<a name="line.1097"></a>
+<span class="sourceLineNo">1098</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5"&gt;<a name="line.1098"></a>
+<span class="sourceLineNo">1099</span>   * Opcode definitions in The Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1099"></a>
+<span class="sourceLineNo">1100</span>  short JSR_W            = 201;<a name="line.1100"></a>
+<span class="sourceLineNo">1101</span><a name="line.1101"></a>
+<span class="sourceLineNo">1102</span>  /** JVM internal opcode.<a name="line.1102"></a>
+<span class="sourceLineNo">1103</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.2"&gt;<a name="line.1103"></a>
+<span class="sourceLineNo">1104</span>   * Reserved opcodes in the Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1104"></a>
+<span class="sourceLineNo">1105</span>  short BREAKPOINT                = 202;<a name="line.1105"></a>
+<span class="sourceLineNo">1106</span>  /** JVM internal opcode.<a name="line.1106"></a>
+<span class="sourceLineNo">1107</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1107"></a>
+<span class="sourceLineNo">1108</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1108"></a>
+<span class="sourceLineNo">1109</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1109"></a>
+<span class="sourceLineNo">1110</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1110"></a>
+<span class="sourceLineNo">1111</span>  short LDC_QUICK                 = 203;<a name="line.1111"></a>
+<span class="sourceLineNo">1112</span>  /** JVM internal opcode.<a name="line.1112"></a>
+<span class="sourceLineNo">1113</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1113"></a>
+<span class="sourceLineNo">1114</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1114"></a>
+<span class="sourceLineNo">1115</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1115"></a>
+<span class="sourceLineNo">1116</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1116"></a>
+<span class="sourceLineNo">1117</span>  short LDC_W_QUICK               = 204;<a name="line.1117"></a>
+<span class="sourceLineNo">1118</span>  /** JVM internal opcode.<a name="line.1118"></a>
+<span class="sourceLineNo">1119</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1119"></a>
+<span class="sourceLineNo">1120</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1120"></a>
+<span class="sourceLineNo">1121</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1121"></a>
+<span class="sourceLineNo">1122</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1122"></a>
+<span class="sourceLineNo">1123</span>  short LDC2_W_QUICK              = 205;<a name="line.1123"></a>
+<span class="sourceLineNo">1124</span>  /** JVM internal opcode.<a name="line.1124"></a>
+<span class="sourceLineNo">1125</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1125"></a>
+<span class="sourceLineNo">1126</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1126"></a>
+<span class="sourceLineNo">1127</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1127"></a>
+<span class="sourceLineNo">1128</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1128"></a>
+<span class="sourceLineNo">1129</span>  short GETFIELD_QUICK            = 206;<a name="line.1129"></a>
+<span class="sourceLineNo">1130</span>  /** JVM internal opcode.<a name="line.1130"></a>
+<span class="sourceLineNo">1131</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1131"></a>
+<span class="sourceLineNo">1132</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1132"></a>
+<span class="sourceLineNo">1133</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1133"></a>
+<span class="sourceLineNo">1134</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1134"></a>
+<span class="sourceLineNo">1135</span>  short PUTFIELD_QUICK            = 207;<a name="line.1135"></a>
+<span class="sourceLineNo">1136</span>  /** JVM internal opcode.<a name="line.1136"></a>
+<span class="sourceLineNo">1137</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1137"></a>
+<span class="sourceLineNo">1138</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1138"></a>
+<span class="sourceLineNo">1139</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1139"></a>
+<span class="sourceLineNo">1140</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1140"></a>
+<span class="sourceLineNo">1141</span>  short GETFIELD2_QUICK           = 208;<a name="line.1141"></a>
+<span class="sourceLineNo">1142</span>  /** JVM internal opcode.<a name="line.1142"></a>
+<span class="sourceLineNo">1143</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1143"></a>
+<span class="sourceLineNo">1144</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1144"></a>
+<span class="sourceLineNo">1145</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1145"></a>
+<span class="sourceLineNo">1146</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1146"></a>
+<span class="sourceLineNo">1147</span>  short PUTFIELD2_QUICK           = 209;<a name="line.1147"></a>
+<span class="sourceLineNo">1148</span>  /** JVM internal opcode.<a name="line.1148"></a>
+<span class="sourceLineNo">1149</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1149"></a>
+<span class="sourceLineNo">1150</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1150"></a>
+<span class="sourceLineNo">1151</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1151"></a>
+<span class="sourceLineNo">1152</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1152"></a>
+<span class="sourceLineNo">1153</span>  short GETSTATIC_QUICK           = 210;<a name="line.1153"></a>
+<span class="sourceLineNo">1154</span>  /** JVM internal opcode.<a name="line.1154"></a>
+<span class="sourceLineNo">1155</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1155"></a>
+<span class="sourceLineNo">1156</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1156"></a>
+<span class="sourceLineNo">1157</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1157"></a>
+<span class="sourceLineNo">1158</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1158"></a>
+<span class="sourceLineNo">1159</span>  short PUTSTATIC_QUICK           = 211;<a name="line.1159"></a>
+<span class="sourceLineNo">1160</span>  /** JVM internal opcode.<a name="line.1160"></a>
+<span class="sourceLineNo">1161</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1161"></a>
+<span class="sourceLineNo">1162</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1162"></a>
+<span class="sourceLineNo">1163</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1163"></a>
+<span class="sourceLineNo">1164</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1164"></a>
+<span class="sourceLineNo">1165</span>  short GETSTATIC2_QUICK          = 212;<a name="line.1165"></a>
+<span class="sourceLineNo">1166</span>  /** JVM internal opcode.<a name="line.1166"></a>
+<span class="sourceLineNo">1167</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1167"></a>
+<span class="sourceLineNo">1168</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1168"></a>
+<span class="sourceLineNo">1169</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1169"></a>
+<span class="sourceLineNo">1170</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1170"></a>
+<span class="sourceLineNo">1171</span>  short PUTSTATIC2_QUICK          = 213;<a name="line.1171"></a>
+<span class="sourceLineNo">1172</span>  /** JVM internal opcode.<a name="line.1172"></a>
+<span class="sourceLineNo">1173</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1173"></a>
+<span class="sourceLineNo">1174</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1174"></a>
+<span class="sourceLineNo">1175</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1175"></a>
+<span class="sourceLineNo">1176</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1176"></a>
+<span class="sourceLineNo">1177</span>  short INVOKEVIRTUAL_QUICK       = 214;<a name="line.1177"></a>
+<span class="sourceLineNo">1178</span>  /** JVM internal opcode.<a name="line.1178"></a>
+<span class="sourceLineNo">1179</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1179"></a>
+<span class="sourceLineNo">1180</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1180"></a>
+<span class="sourceLineNo">1181</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1181"></a>
+<span class="sourceLineNo">1182</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1182"></a>
+<span class="sourceLineNo">1183</span>  short INVOKENONVIRTUAL_QUICK    = 215;<a name="line.1183"></a>
+<span class="sourceLineNo">1184</span>  /** JVM internal opcode.<a name="line.1184"></a>
+<span class="sourceLineNo">1185</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1185"></a>
+<span class="sourceLineNo">1186</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1186"></a>
+<span class="sourceLineNo">1187</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1187"></a>
+<span class="sourceLineNo">1188</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1188"></a>
+<span class="sourceLineNo">1189</span>  short INVOKESUPER_QUICK         = 216;<a name="line.1189"></a>
+<span class="sourceLineNo">1190</span>  /** JVM internal opcode.<a name="line.1190"></a>
+<span class="sourceLineNo">1191</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1191"></a>
+<span class="sourceLineNo">1192</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1192"></a>
+<span class="sourceLineNo">1193</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1193"></a>
+<span class="sourceLineNo">1194</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1194"></a>
+<span class="sourceLineNo">1195</span>  short INVOKESTATIC_QUICK        = 217;<a name="line.1195"></a>
+<span class="sourceLineNo">1196</span>  /** JVM internal opcode.<a name="line.1196"></a>
+<span class="sourceLineNo">1197</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1197"></a>
+<span class="sourceLineNo">1198</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1198"></a>
+<span class="sourceLineNo">1199</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1199"></a>
+<span class="sourceLineNo">1200</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1200"></a>
+<span class="sourceLineNo">1201</span>  short INVOKEINTERFACE_QUICK     = 218;<a name="line.1201"></a>
+<span class="sourceLineNo">1202</span>  /** JVM internal opcode.<a name="line.1202"></a>
+<span class="sourceLineNo">1203</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1203"></a>
+<span class="sourceLineNo">1204</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1204"></a>
+<span class="sourceLineNo">1205</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1205"></a>
+<span class="sourceLineNo">1206</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1206"></a>
+<span class="sourceLineNo">1207</span>  short INVOKEVIRTUALOBJECT_QUICK = 219;<a name="line.1207"></a>
+<span class="sourceLineNo">1208</span>  /** JVM internal opcode.<a name="line.1208"></a>
+<span class="sourceLineNo">1209</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1209"></a>
+<span class="sourceLineNo">1210</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1210"></a>
+<span class="sourceLineNo">1211</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1211"></a>
+<span class="sourceLineNo">1212</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1212"></a>
+<span class="sourceLineNo">1213</span>  short NEW_QUICK                 = 221;<a name="line.1213"></a>
+<span class="sourceLineNo">1214</span>  /** JVM internal opcode.<a name="line.1214"></a>
+<span class="sourceLineNo">1215</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1215"></a>
+<span class="sourceLineNo">1216</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1216"></a>
+<span class="sourceLineNo">1217</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1217"></a>
+<span class="sourceLineNo">1218</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1218"></a>
+<span class="sourceLineNo">1219</span>  short ANEWARRAY_QUICK           = 222;<a name="line.1219"></a>
+<span class="sourceLineNo">1220</span>  /** JVM internal opcode.<a name="line.1220"></a>
+<span class="sourceLineNo">1221</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1221"></a>
+<span class="sourceLineNo">1222</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1222"></a>
+<span class="sourceLineNo">1223</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1223"></a>
+<span class="sourceLineNo">1224</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1224"></a>
+<span class="sourceLineNo">1225</span>  short MULTIANEWARRAY_QUICK      = 223;<a name="line.1225"></a>
+<span class="sourceLineNo">1226</span>  /** JVM internal opcode.<a name="line.1226"></a>
+<span class="sourceLineNo">1227</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1227"></a>
+<span class="sourceLineNo">1228</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1228"></a>
+<span class="sourceLineNo">1229</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1229"></a>
+<span class="sourceLineNo">1230</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1230"></a>
+<span class="sourceLineNo">1231</span>  short CHECKCAST_QUICK           = 224;<a name="line.1231"></a>
+<span class="sourceLineNo">1232</span>  /** JVM internal opcode.<a name="line.1232"></a>
+<span class="sourceLineNo">1233</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1233"></a>
+<span class="sourceLineNo">1234</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1234"></a>
+<span class="sourceLineNo">1235</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1235"></a>
+<span class="sourceLineNo">1236</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1236"></a>
+<span class="sourceLineNo">1237</span>  short INSTANCEOF_QUICK          = 225;<a name="line.1237"></a>
+<span class="sourceLineNo">1238</span>  /** JVM internal opcode.<a name="line.1238"></a>
+<span class="sourceLineNo">1239</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1239"></a>
+<span class="sourceLineNo">1240</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1240"></a>
+<span class="sourceLineNo">1241</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1241"></a>
+<span class="sourceLineNo">1242</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1242"></a>
+<span class="sourceLineNo">1243</span>  short INVOKEVIRTUAL_QUICK_W     = 226;<a name="line.1243"></a>
+<span class="sourceLineNo">1244</span>  /** JVM internal opcode.<a name="line.1244"></a>
+<span class="sourceLineNo">1245</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1245"></a>
+<span class="sourceLineNo">1246</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1246"></a>
+<span class="sourceLineNo">1247</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1247"></a>
+<span class="sourceLineNo">1248</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1248"></a>
+<span class="sourceLineNo">1249</span>  short GETFIELD_QUICK_W          = 227;<a name="line.1249"></a>
+<span class="sourceLineNo">1250</span>  /** JVM internal opcode.<a name="line.1250"></a>
+<span class="sourceLineNo">1251</span>   * @see &lt;a href="https://web.archive.org/web/20120108031230/http://java.sun.com/docs/books/jvms/first_edition/html/Quick.doc.html"&gt;<a name="line.1251"></a>
+<span class="sourceLineNo">1252</span>   * Specification of _quick opcodes in the Java Virtual Machine Specification (version 1)&lt;/a&gt;<a name="line.1252"></a>
+<span class="sourceLineNo">1253</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se5.0/html/ChangesAppendix.doc.html#448885"&gt;<a name="line.1253"></a>
+<span class="sourceLineNo">1254</span>   * Why the _quick opcodes were removed from the second version of the Java Virtual Machine Specification.&lt;/a&gt; */<a name="line.1254"></a>
+<span class="sourceLineNo">1255</span>  short PUTFIELD_QUICK_W          = 228;<a name="line.1255"></a>
+<span class="sourceLineNo">1256</span>  /** JVM internal opcode.<a name="line.1256"></a>
+<span class="sourceLineNo">1257</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.2"&gt;<a name="line.1257"></a>
+<span class="sourceLineNo">1258</span>   * Reserved opcodes in the Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1258"></a>
+<span class="sourceLineNo">1259</span>  short IMPDEP1                   = 254;<a name="line.1259"></a>
+<span class="sourceLineNo">1260</span>  /** JVM internal opcode.<a name="line.1260"></a>
+<span class="sourceLineNo">1261</span>   * @see &lt;a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.2"&gt;<a name="line.1261"></a>
+<span class="sourceLineNo">1262</span>   * Reserved opcodes in the Java Virtual Machine Specification&lt;/a&gt; */<a name="line.1262"></a>
+<span class="sourceLineNo">1263</span>  short IMPDEP2                   = 255;<a name="line.1263"></a>
+<span class="sourceLineNo">1264</span><a name="line.1264"></a>
+<span class="sourceLineNo">1265</span>  /**<a name="line.1265"></a>
+<span class="sourceLineNo">1266</span>   * BCEL virtual instruction for pushing an arbitrary data type onto the stack.  Will be converted to the appropriate JVM<a name="line.1266"></a>
+<span class="sourceLineNo">1267</span>   * opcode when the class is dumped.<a name="line.1267"></a>
+<span class="sourceLineNo">1268</span>   */<a name="line.1268"></a>
+<span class="sourceLineNo">1269</span>  short PUSH             = 4711;<a name="line.1269"></a>
+<span class="sourceLineNo">1270</span>  /**<a name="line.1270"></a>
+<span class="sourceLineNo">1271</span>   * BCEL virtual instruction for either LOOKUPSWITCH or TABLESWITCH.  Will be converted to the appropriate JVM<a name="line.1271"></a>
+<span class="sourceLineNo">1272</span>   * opcode when the class is dumped.<a name="line.1272"></a>
+<span class="sourceLineNo">1273</span>   */<a name="line.1273"></a>
+<span class="sourceLineNo">1274</span>  short SWITCH           = 4712;<a name="line.1274"></a>
+<span class="sourceLineNo">1275</span><a name="line.1275"></a>
+<span class="sourceLineNo">1276</span>  /** Illegal opcode. */<a name="line.1276"></a>
+<span class="sourceLineNo">1277</span>  short  UNDEFINED      = -1;<a name="line.1277"></a>
+<span class="sourceLineNo">1278</span>  /** Illegal opcode. */<a name="line.1278"></a>
+<span class="sourceLineNo">1279</span>  short  UNPREDICTABLE  = -2;<a name="line.1279"></a>
+<span class="sourceLineNo">1280</span>  /** Illegal opcode. */<a name="line.1280"></a>
+<span class="sourceLineNo">1281</span>  short  RESERVED       = -3;<a name="line.1281"></a>
+<span class="sourceLineNo">1282</span>  /** Mnemonic for an illegal opcode. */<a name="line.1282"></a>
+<span class="sourceLineNo">1283</span>  String ILLEGAL_OPCODE = "&lt;illegal opcode&gt;";<a name="line.1283"></a>
+<span class="sourceLineNo">1284</span>  /** Mnemonic for an illegal type. */<a name="line.1284"></a>
+<span class="sourceLineNo">1285</span>  String ILLEGAL_TYPE   = "&lt;illegal type&gt;";<a name="line.1285"></a>
+<span class="sourceLineNo">1286</span><a name="line.1286"></a>
+<span class="sourceLineNo">1287</span>  /** Boolean data type. */<a name="line.1287"></a>
+<span class="sourceLineNo">1288</span>  byte T_BOOLEAN = 4;<a name="line.1288"></a>
+<span class="sourceLineNo">1289</span>  /** Char data type. */<a name="line.1289"></a>
+<span class="sourceLineNo">1290</span>  byte T_CHAR    = 5;<a name="line.1290"></a>
+<span class="sourceLineNo">1291</span>  /** Float data type. */<a name="line.1291"></a>
+<span class="sourceLineNo">1292</span>  byte T_FLOAT   = 6;<a name="line.1292"></a>
+<span class="sourceLineNo">1293</span>  /** Double data type. */<a name="line.1293"></a>
+<span class="sourceLineNo">1294</span>  byte T_DOUBLE  = 7;<a name="line.1294"></a>
+<span class="sourceLineNo">1295</span>  /** Byte data type. */<a name="line.1295"></a>
+<span class="sourceLineNo">1296</span>  byte T_BYTE    = 8;<a name="line.1296"></a>
+<span class="sourceLineNo">1297</span>  /** Short data type. */<a name="line.1297"></a>
+<span class="sourceLineNo">1298</span>  byte T_SHORT   = 9;<a name="line.1298"></a>
+<span class="sourceLineNo">1299</span>  /** Int data type. */<a name="line.1299"></a>
+<span class="sourceLineNo">1300</span>  byte T_INT     = 10;<a name="line.1300"></a>
+<span class="sourceLineNo">1301</span>  /** Long data type. */<a name="line.1301"></a>
+<span class="sourceLineNo">1302</span>  byte T_LONG    = 11;<a name="line.1302"></a>
+<span class="sourceLineNo">1303</span><a name="line.1303"></a>
+<span class="sourceLineNo">1304</span>  /** Void data type (non-standard). */<a name="line.1304"></a>
+<span class="sourceLineNo">1305</span>  byte T_VOID      = 12; // Non-standard<a name="line.1305"></a>
+<span class="sourceLineNo">1306</span>  /** Array data type. */<a name="line.1306"></a>
+<span class="sourceLineNo">1307</span>  byte T_ARRAY     = 13;<a name="line.1307"></a>
+<span class="sourceLineNo">1308</span>  /** Object data type. */<a name="line.1308"></a>
+<span class="sourceLineNo">1309</span>  byte T_OBJECT    = 14;<a name="line.1309"></a>
+<span class="sourceLineNo">1310</span>  /** Reference data type (deprecated). */<a name="line.1310"></a>
+<span class="sourceLineNo">1311</span>  byte T_REFERENCE = 14; // Deprecated<a name="line.1311"></a>
+<span class="sourceLineNo">1312</span>  /** Unknown data type. */<a name="line.1312"></a>
+<span class="sourceLineNo">1313</span>  byte T_UNKNOWN   = 15;<a name="line.1313"></a>
+<span class="sourceLineNo">1314</span>  /** Address data type. */<a name="line.1314"></a>
+<span class="sourceLineNo">1315</span>  byte T_ADDRESS   = 16;<a name="line.1315"></a>
+<span class="sourceLineNo">1316</span><a name="line.1316"></a>
+<span class="sourceLineNo">1317</span>  /** The primitive type names corresponding to the T_XX constants,<a name="line.1317"></a>
+<span class="sourceLineNo">1318</span>   * e.g., TYPE_NAMES[T_INT] = "int"<a name="line.1318"></a>
+<span class="sourceLineNo">1319</span>   */<a name="line.1319"></a>
+<span class="sourceLineNo">1320</span>  String[] TYPE_NAMES = {<a name="line.1320"></a>
+<span class="sourceLineNo">1321</span>    ILLEGAL_TYPE, ILLEGAL_TYPE,  ILLEGAL_TYPE, ILLEGAL_TYPE,<a name="line.1321"></a>
+<span class="sourceLineNo">1322</span>    "boolean", "char", "float", "double", "byte", "short", "int", "long",<a name="line.1322"></a>
+<span class="sourceLineNo">1323</span>    "void", "array", "object", "unknown", "address"<a name="line.1323"></a>
+<span class="sourceLineNo">1324</span>  };<a name="line.1324"></a>
+<span class="sourceLineNo">1325</span><a name="line.1325"></a>
+<span class="sourceLineNo">1326</span>  /** The primitive class names corresponding to the T_XX constants,<a name="line.1326"></a>
+<span class="sourceLineNo">1327</span>   * e.g., CLASS_TYPE_NAMES[T_INT] = "java.lang.Integer"<a name="line.1327"></a>
+<span class="sourceLineNo">1328</span>   */<a name="line.1328"></a>
+<span class="sourceLineNo">1329</span>  String[] CLASS_TYPE_NAMES = {<a name="line.1329"></a>
+<span class="sourceLineNo">1330</span>    ILLEGAL_TYPE, ILLEGAL_TYPE,  ILLEGAL_TYPE, ILLEGAL_TYPE,<a name="line.1330"></a>
+<span class="sourceLineNo">1331</span>    "java.lang.Boolean", "java.lang.Character", "java.lang.Float",<a name="line.1331"></a>
+<span class="sourceLineNo">1332</span>    "java.lang.Double", "java.lang.Byte", "java.lang.Short",<a name="line.1332"></a>
+<span class="sourceLineNo">1333</span>    "java.lang.Integer", "java.lang.Long", "java.lang.Void",<a name="line.1333"></a>
+<span class="sourceLineNo">1334</span>    ILLEGAL_TYPE, ILLEGAL_TYPE,  ILLEGAL_TYPE,  ILLEGAL_TYPE<a name="line.1334"></a>
+<span class="sourceLineNo">1335</span>  };<a name="line.1335"></a>
+<span class="sourceLineNo">1336</span><a name="line.1336"></a>
+<span class="sourceLineNo">1337</span>  /** The signature characters corresponding to primitive types,<a name="line.1337"></a>
+<span class="sourceLineNo">1338</span>   * e.g., SHORT_TYPE_NAMES[T_INT] = "I"<a name="line.1338"></a>
+<span class="sourceLineNo">1339</span>   */<a name="line.1339"></a>
+<span class="sourceLineNo">1340</span>  String[] SHORT_TYPE_NAMES = {<a name="line.1340"></a>
+<span class="sourceLineNo">1341</span>    ILLEGAL_TYPE, ILLEGAL_TYPE,  ILLEGAL_TYPE, ILLEGAL_TYPE,<a name="line.1341"></a>
+<span class="sourceLineNo">1342</span>    "Z", "C", "F", "D", "B", "S", "I", "J",<a name="line.1342"></a>
+<span class="sourceLineNo">1343</span>    "V", ILLEGAL_TYPE, ILLEGAL_TYPE, ILLEGAL_TYPE<a name="line.1343"></a>
+<span class="sourceLineNo">1344</span>  };<a name="line.1344"></a>
+<span class="sourceLineNo">1345</span><a name="line.1345"></a>
+<span class="sourceLineNo">1346</span>  /**<a name="line.1346"></a>
+<span class="sourceLineNo">1347</span>   * Number of byte code operands for each opcode, i.e., number of bytes after the tag byte<a name="line.1347"></a>
+<span class="sourceLineNo">1348</span>   * itself.  Indexed by opcode, so NO_OF_OPERANDS[BIPUSH] = the number of operands for a bipush<a name="line.1348"></a>
+<span class="sourceLineNo">1349</span>   * instruction.<a name="line.1349"></a>
+<span class="sourceLineNo">1350</span>   */<a name="line.1350"></a>
+<span class="sourceLineNo">1351</span>  short[] NO_OF_OPERANDS = {<a name="line.1351"></a>
+<span class="sourceLineNo">1352</span>    0/*nop*/, 0/*aconst_null*/, 0/*iconst_m1*/, 0/*iconst_0*/,<a name="line.1352"></a>
+<span class="sourceLineNo">1353</span>    0/*iconst_1*/, 0/*iconst_2*/, 0/*iconst_3*/, 0/*iconst_4*/,<a name="line.1353"></a>
+<span class="sourceLineNo">1354</span>    0/*iconst_5*/, 0/*lconst_0*/, 0/*lconst_1*/, 0/*fconst_0*/,<a name="line.1354"></a>
+<span class="sourceLineNo">1355</span>    0/*fconst_1*/, 0/*fconst_2*/, 0/*dconst_0*/, 0/*dconst_1*/,<a name="line.1355"></a>
+<span class="sourceLineNo">1356</span>    1/*bipush*/, 2/*sipush*/, 1/*ldc*/, 2/*ldc_w*/, 2/*ldc2_w*/,<a name="line.1356"></a>
+<span class="sourceLineNo">1357</span>    1/*iload*/, 1/*lload*/, 1/*fload*/, 1/*dload*/, 1/*aload*/,<a name="line.1357"></a>
+<span class="sourceLineNo">1358</span>    0/*iload_0*/, 0/*iload_1*/, 0/*iload_2*/, 0/*iload_3*/,<a name="line.1358"></a>
+<span class="sourceLineNo">1359</span>    0/*lload_0*/, 0/*lload_1*/, 0/*lload_2*/, 0/*lload_3*/,<a name="line.1359"></a>
+<span class="sourceLineNo">1360</span>    0/*fload_0*/, 0/*fload_1*/, 0/*fload_2*/, 0/*fload_3*/,<a name="line.1360"></a>
+<span class="sourceLineNo">1361</span>    0/*dload_0*/, 0/*dload_1*/, 0/*dload_2*/, 0/*dload_3*/,<a name="line.1361"></a>
+<span class="sourceLineNo">1362</span>    0/*aload_0*/, 0/*aload_1*/, 0/*aload_2*/, 0/*aload_3*/,<a name="line.1362"></a>
+<span class="sourceLineNo">1363</span>    0/*iaload*/, 0/*laload*/, 0/*faload*/, 0/*daload*/,<a name="line.1363"></a>
+<span class="sourceLineNo">1364</span>    0/*aaload*/, 0/*baload*/, 0/*caload*/, 0/*saload*/,<a name="line.1364"></a>
+<span class="sourceLineNo">1365</span>    1/*istore*/, 1/*lstore*/, 1/*fstore*/, 1/*dstore*/,<a name="line.1365"></a>
+<span class="sourceLineNo">1366</span>    1/*astore*/, 0/*istore_0*/, 0/*istore_1*/, 0/*istore_2*/,<a name="line.1366"></a>
+<span class="sourceLineNo">1367</span>    0/*istore_3*/, 0/*lstore_0*/, 0/*lstore_1*/, 0/*lstore_2*/,<a name="line.1367"></a>
+<span class="sourceLineNo">1368</span>    0/*lstore_3*/, 0/*fstore_0*/, 0/*fstore_1*/, 0/*fstore_2*/,<a name="line.1368"></a>
+<span class="sourceLineNo">1369</span>    0/*fstore_3*/, 0/*dstore_0*/, 0/*dstore_1*/, 0/*dstore_2*/,<a name="line.1369"></a>
+<span class="sourceLineNo">1370</span>    0/*dstore_3*/, 0/*astore_0*/, 0/*astore_1*/, 0/*astore_2*/,<a name="line.1370"></a>
+<span class="sourceLineNo">1371</span>    0/*astore_3*/, 0/*iastore*/, 0/*lastore*/, 0/*fastore*/,<a name="line.1371"></a>
+<span class="sourceLineNo">1372</span>    0/*dastore*/, 0/*aastore*/, 0/*bastore*/, 0/*castore*/,<a name="line.1372"></a>
+<span class="sourceLineNo">1373</span>    0/*sastore*/, 0/*pop*/, 0/*pop2*/, 0/*dup*/, 0/*dup_x1*/,<a name="line.1373"></a>
+<span class="sourceLineNo">1374</span>    0/*dup_x2*/, 0/*dup2*/, 0/*dup2_x1*/, 0/*dup2_x2*/, 0/*swap*/,<a name="line.1374"></a>
+<span class="sourceLineNo">1375</span>    0/*iadd*/, 0/*ladd*/, 0/*fadd*/, 0/*dadd*/, 0/*isub*/,<a name="line.1375"></a>
+<span class="sourceLineNo">1376</span>    0/*lsub*/, 0/*fsub*/, 0/*dsub*/, 0/*imul*/, 0/*lmul*/,<a name="line.1376"></a>
+<span class="sourceLineNo">1377</span>    0/*fmul*/, 0/*dmul*/, 0/*idiv*/, 0/*ldiv*/, 0/*fdiv*/,<a name="line.1377"></a>
+<span class="sourceLineNo">1378</span>    0/*ddiv*/, 0/*irem*/, 0/*lrem*/, 0/*frem*/, 0/*drem*/,<a name="line.1378"></a>
+<span class="sourceLineNo">1379</span>    0/*ineg*/, 0/*lneg*/, 0/*fneg*/, 0/*dneg*/, 0/*ishl*/,<a name="line.1379"></a>
+<span class="sourceLineNo">1380</span>    0/*lshl*/, 0/*ishr*/, 0/*lshr*/, 0/*iushr*/, 0/*lushr*/,<a name="line.1380"></a>
+<span class="sourceLineNo">1381</span>    0/*iand*/, 0/*land*/, 0/*ior*/, 0/*lor*/, 0/*ixor*/, 0/*lxor*/,<a name="line.1381"></a>
+<span class="sourceLineNo">1382</span>    2/*iinc*/, 0/*i2l*/, 0/*i2f*/, 0/*i2d*/, 0/*l2i*/, 0/*l2f*/,<a name="line.1382"></a>
+<span class="sourceLineNo">1383</span>    0/*l2d*/, 0/*f2i*/, 0/*f2l*/, 0/*f2d*/, 0/*d2i*/, 0/*d2l*/,<a name="line.1383"></a>
+<span class="sourceLineNo">1384</span>    0/*d2f*/, 0/*i2b*/, 0/*i2c*/, 0/*i2s*/, 0/*lcmp*/, 0/*fcmpl*/,<a name="line.1384"></a>
+<span class="sourceLineNo">1385</span>    0/*fcmpg*/, 0/*dcmpl*/, 0/*dcmpg*/, 2/*ifeq*/, 2/*ifne*/,<a name="line.1385"></a>
+<span class="sourceLineNo">1386</span>    2/*iflt*/, 2/*ifge*/, 2/*ifgt*/, 2/*ifle*/, 2/*if_icmpeq*/,<a name="line.1386"></a>
+<span class="sourceLineNo">1387</span>    2/*if_icmpne*/, 2/*if_icmplt*/, 2/*if_icmpge*/, 2/*if_icmpgt*/,<a name="line.1387"></a>
+<span class="sourceLineNo">1388</span>    2/*if_icmple*/, 2/*if_acmpeq*/, 2/*if_acmpne*/, 2/*goto*/,<a name="line.1388"></a>
+<span class="sourceLineNo">1389</span>    2/*jsr*/, 1/*ret*/, UNPREDICTABLE/*tableswitch*/, UNPREDICTABLE/*lookupswitch*/,<a name="line.1389"></a>
+<span class="sourceLineNo">1390</span>    0/*ireturn*/, 0/*lreturn*/, 0/*freturn*/,<a name="line.1390"></a>
+<span class="sourceLineNo">1391</span>    0/*dreturn*/, 0/*areturn*/, 0/*return*/,<a name="line.1391"></a>
+<span class="sourceLineNo">1392</span>    2/*getstatic*/, 2/*putstatic*/, 2/*getfield*/,<a name="line.1392"></a>
+<span class="sourceLineNo">1393</span>    2/*putfield*/, 2/*invokevirtual*/, 2/*invokespecial*/, 2/*invokestatic*/,<a name="line.1393"></a>
+<span class="sourceLineNo">1394</span>    4/*invokeinterface*/, 4/*invokedynamic*/, 2/*new*/,<a name="line.1394"></a>
+<span class="sourceLineNo">1395</span>    1/*newarray*/, 2/*anewarray*/,<a name="line.1395"></a>
+<span class="sourceLineNo">1396</span>    0/*arraylength*/, 0/*athrow*/, 2/*checkcast*/,<a name="line.1396"></a>
+<span class="sourceLineNo">1397</span>    2/*instanceof*/, 0/*monitorenter*/,<a name="line.1397"></a>
+<span class="sourceLineNo">1398</span>    0/*monitorexit*/, UNPREDICTABLE/*wide*/, 3/*multianewarray*/,<a name="line.1398"></a>
+<span class="sourceLineNo">1399</span>    2/*ifnull*/, 2/*ifnonnull*/, 4/*goto_w*/,<a name="line.1399"></a>
+<span class="sourceLineNo">1400</span>    4/*jsr_w*/, 0/*breakpoint*/, UNDEFINED,<a name="line.1400"></a>
+<span class="sourceLineNo">1401</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1401"></a>
+<span class="sourceLineNo">1402</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1402"></a>
+<span class="sourceLineNo">1403</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1403"></a>
+<span class="sourceLineNo">1404</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1404"></a>
+<span class="sourceLineNo">1405</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1405"></a>
+<span class="sourceLineNo">1406</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1406"></a>
+<span class="sourceLineNo">1407</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1407"></a>
+<span class="sourceLineNo">1408</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1408"></a>
+<span class="sourceLineNo">1409</span>    UNDEFINED, UNDEFINED, RESERVED/*impdep1*/, RESERVED/*impdep2*/<a name="line.1409"></a>
+<span class="sourceLineNo">1410</span>  };<a name="line.1410"></a>
+<span class="sourceLineNo">1411</span><a name="line.1411"></a>
+<span class="sourceLineNo">1412</span>  /**<a name="line.1412"></a>
+<span class="sourceLineNo">1413</span>   * How the byte code operands are to be interpreted for each opcode.<a name="line.1413"></a>
+<span class="sourceLineNo">1414</span>   * Indexed by opcode.  TYPE_OF_OPERANDS[ILOAD] = an array of shorts<a name="line.1414"></a>
+<span class="sourceLineNo">1415</span>   * describing the data types for the instruction.<a name="line.1415"></a>
+<span class="sourceLineNo">1416</span>   */<a name="line.1416"></a>
+<span class="sourceLineNo">1417</span>  short[][] TYPE_OF_OPERANDS = {<a name="line.1417"></a>
+<span class="sourceLineNo">1418</span>    {}/*nop*/, {}/*aconst_null*/, {}/*iconst_m1*/, {}/*iconst_0*/,<a name="line.1418"></a>
+<span class="sourceLineNo">1419</span>    {}/*iconst_1*/, {}/*iconst_2*/, {}/*iconst_3*/, {}/*iconst_4*/,<a name="line.1419"></a>
+<span class="sourceLineNo">1420</span>    {}/*iconst_5*/, {}/*lconst_0*/, {}/*lconst_1*/, {}/*fconst_0*/,<a name="line.1420"></a>
+<span class="sourceLineNo">1421</span>    {}/*fconst_1*/, {}/*fconst_2*/, {}/*dconst_0*/, {}/*dconst_1*/,<a name="line.1421"></a>
+<span class="sourceLineNo">1422</span>    {T_BYTE}/*bipush*/, {T_SHORT}/*sipush*/, {T_BYTE}/*ldc*/,<a name="line.1422"></a>
+<span class="sourceLineNo">1423</span>    {T_SHORT}/*ldc_w*/, {T_SHORT}/*ldc2_w*/,<a name="line.1423"></a>
+<span class="sourceLineNo">1424</span>    {T_BYTE}/*iload*/, {T_BYTE}/*lload*/, {T_BYTE}/*fload*/,<a name="line.1424"></a>
+<span class="sourceLineNo">1425</span>    {T_BYTE}/*dload*/, {T_BYTE}/*aload*/, {}/*iload_0*/,<a name="line.1425"></a>
+<span class="sourceLineNo">1426</span>    {}/*iload_1*/, {}/*iload_2*/, {}/*iload_3*/, {}/*lload_0*/,<a name="line.1426"></a>
+<span class="sourceLineNo">1427</span>    {}/*lload_1*/, {}/*lload_2*/, {}/*lload_3*/, {}/*fload_0*/,<a name="line.1427"></a>
+<span class="sourceLineNo">1428</span>    {}/*fload_1*/, {}/*fload_2*/, {}/*fload_3*/, {}/*dload_0*/,<a name="line.1428"></a>
+<span class="sourceLineNo">1429</span>    {}/*dload_1*/, {}/*dload_2*/, {}/*dload_3*/, {}/*aload_0*/,<a name="line.1429"></a>
+<span class="sourceLineNo">1430</span>    {}/*aload_1*/, {}/*aload_2*/, {}/*aload_3*/, {}/*iaload*/,<a name="line.1430"></a>
+<span class="sourceLineNo">1431</span>    {}/*laload*/, {}/*faload*/, {}/*daload*/, {}/*aaload*/,<a name="line.1431"></a>
+<span class="sourceLineNo">1432</span>    {}/*baload*/, {}/*caload*/, {}/*saload*/, {T_BYTE}/*istore*/,<a name="line.1432"></a>
+<span class="sourceLineNo">1433</span>    {T_BYTE}/*lstore*/, {T_BYTE}/*fstore*/, {T_BYTE}/*dstore*/,<a name="line.1433"></a>
+<span class="sourceLineNo">1434</span>    {T_BYTE}/*astore*/, {}/*istore_0*/, {}/*istore_1*/,<a name="line.1434"></a>
+<span class="sourceLineNo">1435</span>    {}/*istore_2*/, {}/*istore_3*/, {}/*lstore_0*/, {}/*lstore_1*/,<a name="line.1435"></a>
+<span class="sourceLineNo">1436</span>    {}/*lstore_2*/, {}/*lstore_3*/, {}/*fstore_0*/, {}/*fstore_1*/,<a name="line.1436"></a>
+<span class="sourceLineNo">1437</span>    {}/*fstore_2*/, {}/*fstore_3*/, {}/*dstore_0*/, {}/*dstore_1*/,<a name="line.1437"></a>
+<span class="sourceLineNo">1438</span>    {}/*dstore_2*/, {}/*dstore_3*/, {}/*astore_0*/, {}/*astore_1*/,<a name="line.1438"></a>
+<span class="sourceLineNo">1439</span>    {}/*astore_2*/, {}/*astore_3*/, {}/*iastore*/, {}/*lastore*/,<a name="line.1439"></a>
+<span class="sourceLineNo">1440</span>    {}/*fastore*/, {}/*dastore*/, {}/*aastore*/, {}/*bastore*/,<a name="line.1440"></a>
+<span class="sourceLineNo">1441</span>    {}/*castore*/, {}/*sastore*/, {}/*pop*/, {}/*pop2*/, {}/*dup*/,<a name="line.1441"></a>
+<span class="sourceLineNo">1442</span>    {}/*dup_x1*/, {}/*dup_x2*/, {}/*dup2*/, {}/*dup2_x1*/,<a name="line.1442"></a>
+<span class="sourceLineNo">1443</span>    {}/*dup2_x2*/, {}/*swap*/, {}/*iadd*/, {}/*ladd*/, {}/*fadd*/,<a name="line.1443"></a>
+<span class="sourceLineNo">1444</span>    {}/*dadd*/, {}/*isub*/, {}/*lsub*/, {}/*fsub*/, {}/*dsub*/,<a name="line.1444"></a>
+<span class="sourceLineNo">1445</span>    {}/*imul*/, {}/*lmul*/, {}/*fmul*/, {}/*dmul*/, {}/*idiv*/,<a name="line.1445"></a>
+<span class="sourceLineNo">1446</span>    {}/*ldiv*/, {}/*fdiv*/, {}/*ddiv*/, {}/*irem*/, {}/*lrem*/,<a name="line.1446"></a>
+<span class="sourceLineNo">1447</span>    {}/*frem*/, {}/*drem*/, {}/*ineg*/, {}/*lneg*/, {}/*fneg*/,<a name="line.1447"></a>
+<span class="sourceLineNo">1448</span>    {}/*dneg*/, {}/*ishl*/, {}/*lshl*/, {}/*ishr*/, {}/*lshr*/,<a name="line.1448"></a>
+<span class="sourceLineNo">1449</span>    {}/*iushr*/, {}/*lushr*/, {}/*iand*/, {}/*land*/, {}/*ior*/,<a name="line.1449"></a>
+<span class="sourceLineNo">1450</span>    {}/*lor*/, {}/*ixor*/, {}/*lxor*/, {T_BYTE, T_BYTE}/*iinc*/,<a name="line.1450"></a>
+<span class="sourceLineNo">1451</span>    {}/*i2l*/, {}/*i2f*/, {}/*i2d*/, {}/*l2i*/, {}/*l2f*/, {}/*l2d*/,<a name="line.1451"></a>
+<span class="sourceLineNo">1452</span>    {}/*f2i*/, {}/*f2l*/, {}/*f2d*/, {}/*d2i*/, {}/*d2l*/, {}/*d2f*/,<a name="line.1452"></a>
+<span class="sourceLineNo">1453</span>    {}/*i2b*/, {}/*i2c*/,{}/*i2s*/, {}/*lcmp*/, {}/*fcmpl*/,<a name="line.1453"></a>
+<span class="sourceLineNo">1454</span>    {}/*fcmpg*/, {}/*dcmpl*/, {}/*dcmpg*/, {T_SHORT}/*ifeq*/,<a name="line.1454"></a>
+<span class="sourceLineNo">1455</span>    {T_SHORT}/*ifne*/, {T_SHORT}/*iflt*/, {T_SHORT}/*ifge*/,<a name="line.1455"></a>
+<span class="sourceLineNo">1456</span>    {T_SHORT}/*ifgt*/, {T_SHORT}/*ifle*/, {T_SHORT}/*if_icmpeq*/,<a name="line.1456"></a>
+<span class="sourceLineNo">1457</span>    {T_SHORT}/*if_icmpne*/, {T_SHORT}/*if_icmplt*/,<a name="line.1457"></a>
+<span class="sourceLineNo">1458</span>    {T_SHORT}/*if_icmpge*/, {T_SHORT}/*if_icmpgt*/,<a name="line.1458"></a>
+<span class="sourceLineNo">1459</span>    {T_SHORT}/*if_icmple*/, {T_SHORT}/*if_acmpeq*/,<a name="line.1459"></a>
+<span class="sourceLineNo">1460</span>    {T_SHORT}/*if_acmpne*/, {T_SHORT}/*goto*/, {T_SHORT}/*jsr*/,<a name="line.1460"></a>
+<span class="sourceLineNo">1461</span>    {T_BYTE}/*ret*/, {}/*tableswitch*/, {}/*lookupswitch*/,<a name="line.1461"></a>
+<span class="sourceLineNo">1462</span>    {}/*ireturn*/, {}/*lreturn*/, {}/*freturn*/, {}/*dreturn*/,<a name="line.1462"></a>
+<span class="sourceLineNo">1463</span>    {}/*areturn*/, {}/*return*/, {T_SHORT}/*getstatic*/,<a name="line.1463"></a>
+<span class="sourceLineNo">1464</span>    {T_SHORT}/*putstatic*/, {T_SHORT}/*getfield*/,<a name="line.1464"></a>
+<span class="sourceLineNo">1465</span>    {T_SHORT}/*putfield*/, {T_SHORT}/*invokevirtual*/,<a name="line.1465"></a>
+<span class="sourceLineNo">1466</span>    {T_SHORT}/*invokespecial*/, {T_SHORT}/*invokestatic*/,<a name="line.1466"></a>
+<span class="sourceLineNo">1467</span>    {T_SHORT, T_BYTE, T_BYTE}/*invokeinterface*/, {T_SHORT, T_BYTE, T_BYTE}/*invokedynamic*/,<a name="line.1467"></a>
+<span class="sourceLineNo">1468</span>    {T_SHORT}/*new*/, {T_BYTE}/*newarray*/,<a name="line.1468"></a>
+<span class="sourceLineNo">1469</span>    {T_SHORT}/*anewarray*/, {}/*arraylength*/, {}/*athrow*/,<a name="line.1469"></a>
+<span class="sourceLineNo">1470</span>    {T_SHORT}/*checkcast*/, {T_SHORT}/*instanceof*/,<a name="line.1470"></a>
+<span class="sourceLineNo">1471</span>    {}/*monitorenter*/, {}/*monitorexit*/, {T_BYTE}/*wide*/,<a name="line.1471"></a>
+<span class="sourceLineNo">1472</span>    {T_SHORT, T_BYTE}/*multianewarray*/, {T_SHORT}/*ifnull*/,<a name="line.1472"></a>
+<span class="sourceLineNo">1473</span>    {T_SHORT}/*ifnonnull*/, {T_INT}/*goto_w*/, {T_INT}/*jsr_w*/,<a name="line.1473"></a>
+<span class="sourceLineNo">1474</span>    {}/*breakpoint*/, {}, {}, {}, {}, {}, {}, {},<a name="line.1474"></a>
+<span class="sourceLineNo">1475</span>    {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},<a name="line.1475"></a>
+<span class="sourceLineNo">1476</span>    {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},<a name="line.1476"></a>
+<span class="sourceLineNo">1477</span>    {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},<a name="line.1477"></a>
+<span class="sourceLineNo">1478</span>    {}/*impdep1*/, {}/*impdep2*/<a name="line.1478"></a>
+<span class="sourceLineNo">1479</span>  };<a name="line.1479"></a>
+<span class="sourceLineNo">1480</span><a name="line.1480"></a>
+<span class="sourceLineNo">1481</span>  /**<a name="line.1481"></a>
+<span class="sourceLineNo">1482</span>   * Names of opcodes.  Indexed by opcode.  OPCODE_NAMES[ALOAD] = "aload".<a name="line.1482"></a>
+<span class="sourceLineNo">1483</span>   */<a name="line.1483"></a>
+<span class="sourceLineNo">1484</span>  String[] OPCODE_NAMES = {<a name="line.1484"></a>
+<span class="sourceLineNo">1485</span>    "nop", "aconst_null", "iconst_m1", "iconst_0", "iconst_1",<a name="line.1485"></a>
+<span class="sourceLineNo">1486</span>    "iconst_2", "iconst_3", "iconst_4", "iconst_5", "lconst_0",<a name="line.1486"></a>
+<span class="sourceLineNo">1487</span>    "lconst_1", "fconst_0", "fconst_1", "fconst_2", "dconst_0",<a name="line.1487"></a>
+<span class="sourceLineNo">1488</span>    "dconst_1", "bipush", "sipush", "ldc", "ldc_w", "ldc2_w", "iload",<a name="line.1488"></a>
+<span class="sourceLineNo">1489</span>    "lload", "fload", "dload", "aload", "iload_0", "iload_1", "iload_2",<a name="line.1489"></a>
+<span class="sourceLineNo">1490</span>    "iload_3", "lload_0", "lload_1", "lload_2", "lload_3", "fload_0",<a name="line.1490"></a>
+<span class="sourceLineNo">1491</span>    "fload_1", "fload_2", "fload_3", "dload_0", "dload_1", "dload_2",<a name="line.1491"></a>
+<span class="sourceLineNo">1492</span>    "dload_3", "aload_0", "aload_1", "aload_2", "aload_3", "iaload",<a name="line.1492"></a>
+<span class="sourceLineNo">1493</span>    "laload", "faload", "daload", "aaload", "baload", "caload", "saload",<a name="line.1493"></a>
+<span class="sourceLineNo">1494</span>    "istore", "lstore", "fstore", "dstore", "astore", "istore_0",<a name="line.1494"></a>
+<span class="sourceLineNo">1495</span>    "istore_1", "istore_2", "istore_3", "lstore_0", "lstore_1",<a name="line.1495"></a>
+<span class="sourceLineNo">1496</span>    "lstore_2", "lstore_3", "fstore_0", "fstore_1", "fstore_2",<a name="line.1496"></a>
+<span class="sourceLineNo">1497</span>    "fstore_3", "dstore_0", "dstore_1", "dstore_2", "dstore_3",<a name="line.1497"></a>
+<span class="sourceLineNo">1498</span>    "astore_0", "astore_1", "astore_2", "astore_3", "iastore", "lastore",<a name="line.1498"></a>
+<span class="sourceLineNo">1499</span>    "fastore", "dastore", "aastore", "bastore", "castore", "sastore",<a name="line.1499"></a>
+<span class="sourceLineNo">1500</span>    "pop", "pop2", "dup", "dup_x1", "dup_x2", "dup2", "dup2_x1",<a name="line.1500"></a>
+<span class="sourceLineNo">1501</span>    "dup2_x2", "swap", "iadd", "ladd", "fadd", "dadd", "isub", "lsub",<a name="line.1501"></a>
+<span class="sourceLineNo">1502</span>    "fsub", "dsub", "imul", "lmul", "fmul", "dmul", "idiv", "ldiv",<a name="line.1502"></a>
+<span class="sourceLineNo">1503</span>    "fdiv", "ddiv", "irem", "lrem", "frem", "drem", "ineg", "lneg",<a name="line.1503"></a>
+<span class="sourceLineNo">1504</span>    "fneg", "dneg", "ishl", "lshl", "ishr", "lshr", "iushr", "lushr",<a name="line.1504"></a>
+<span class="sourceLineNo">1505</span>    "iand", "land", "ior", "lor", "ixor", "lxor", "iinc", "i2l", "i2f",<a name="line.1505"></a>
+<span class="sourceLineNo">1506</span>    "i2d", "l2i", "l2f", "l2d", "f2i", "f2l", "f2d", "d2i", "d2l", "d2f",<a name="line.1506"></a>
+<span class="sourceLineNo">1507</span>    "i2b", "i2c", "i2s", "lcmp", "fcmpl", "fcmpg",<a name="line.1507"></a>
+<span class="sourceLineNo">1508</span>    "dcmpl", "dcmpg", "ifeq", "ifne", "iflt", "ifge", "ifgt", "ifle",<a name="line.1508"></a>
+<span class="sourceLineNo">1509</span>    "if_icmpeq", "if_icmpne", "if_icmplt", "if_icmpge", "if_icmpgt",<a name="line.1509"></a>
+<span class="sourceLineNo">1510</span>    "if_icmple", "if_acmpeq", "if_acmpne", "goto", "jsr", "ret",<a name="line.1510"></a>
+<span class="sourceLineNo">1511</span>    "tableswitch", "lookupswitch", "ireturn", "lreturn", "freturn",<a name="line.1511"></a>
+<span class="sourceLineNo">1512</span>    "dreturn", "areturn", "return", "getstatic", "putstatic", "getfield",<a name="line.1512"></a>
+<span class="sourceLineNo">1513</span>    "putfield", "invokevirtual", "invokespecial", "invokestatic",<a name="line.1513"></a>
+<span class="sourceLineNo">1514</span>    "invokeinterface", "invokedynamic", "new", "newarray", "anewarray",<a name="line.1514"></a>
+<span class="sourceLineNo">1515</span>    "arraylength", "athrow", "checkcast", "instanceof", "monitorenter",<a name="line.1515"></a>
+<span class="sourceLineNo">1516</span>    "monitorexit", "wide", "multianewarray", "ifnull", "ifnonnull",<a name="line.1516"></a>
+<span class="sourceLineNo">1517</span>    "goto_w", "jsr_w", "breakpoint", ILLEGAL_OPCODE, ILLEGAL_OPCODE,<a name="line.1517"></a>
+<span class="sourceLineNo">1518</span>    ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE,<a name="line.1518"></a>
+<span class="sourceLineNo">1519</span>    ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE,<a name="line.1519"></a>
+<span class="sourceLineNo">1520</span>    ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE,<a name="line.1520"></a>
+<span class="sourceLineNo">1521</span>    ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE,<a name="line.1521"></a>
+<span class="sourceLineNo">1522</span>    ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE,<a name="line.1522"></a>
+<span class="sourceLineNo">1523</span>    ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE,<a name="line.1523"></a>
+<span class="sourceLineNo">1524</span>    ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE,<a name="line.1524"></a>
+<span class="sourceLineNo">1525</span>    ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE,<a name="line.1525"></a>
+<span class="sourceLineNo">1526</span>    ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE,<a name="line.1526"></a>
+<span class="sourceLineNo">1527</span>    ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE,<a name="line.1527"></a>
+<span class="sourceLineNo">1528</span>    ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE,<a name="line.1528"></a>
+<span class="sourceLineNo">1529</span>    ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE, ILLEGAL_OPCODE,<a name="line.1529"></a>
+<span class="sourceLineNo">1530</span>    ILLEGAL_OPCODE, "impdep1", "impdep2"<a name="line.1530"></a>
+<span class="sourceLineNo">1531</span>  };<a name="line.1531"></a>
+<span class="sourceLineNo">1532</span><a name="line.1532"></a>
+<span class="sourceLineNo">1533</span>  /**<a name="line.1533"></a>
+<span class="sourceLineNo">1534</span>   * Number of words consumed on operand stack by instructions.<a name="line.1534"></a>
+<span class="sourceLineNo">1535</span>   * Indexed by opcode.  CONSUME_STACK[FALOAD] = number of words<a name="line.1535"></a>
+<span class="sourceLineNo">1536</span>   * consumed from the stack by a faload instruction.<a name="line.1536"></a>
+<span class="sourceLineNo">1537</span>   */<a name="line.1537"></a>
+<span class="sourceLineNo">1538</span>  int[] CONSUME_STACK = {<a name="line.1538"></a>
+<span class="sourceLineNo">1539</span>    0/*nop*/, 0/*aconst_null*/, 0/*iconst_m1*/, 0/*iconst_0*/, 0/*iconst_1*/,<a name="line.1539"></a>
+<span class="sourceLineNo">1540</span>    0/*iconst_2*/, 0/*iconst_3*/, 0/*iconst_4*/, 0/*iconst_5*/, 0/*lconst_0*/,<a name="line.1540"></a>
+<span class="sourceLineNo">1541</span>    0/*lconst_1*/, 0/*fconst_0*/, 0/*fconst_1*/, 0/*fconst_2*/, 0/*dconst_0*/,<a name="line.1541"></a>
+<span class="sourceLineNo">1542</span>    0/*dconst_1*/, 0/*bipush*/, 0/*sipush*/, 0/*ldc*/, 0/*ldc_w*/, 0/*ldc2_w*/, 0/*iload*/,<a name="line.1542"></a>
+<span class="sourceLineNo">1543</span>    0/*lload*/, 0/*fload*/, 0/*dload*/, 0/*aload*/, 0/*iload_0*/, 0/*iload_1*/, 0/*iload_2*/,<a name="line.1543"></a>
+<span class="sourceLineNo">1544</span>    0/*iload_3*/, 0/*lload_0*/, 0/*lload_1*/, 0/*lload_2*/, 0/*lload_3*/, 0/*fload_0*/,<a name="line.1544"></a>
+<span class="sourceLineNo">1545</span>    0/*fload_1*/, 0/*fload_2*/, 0/*fload_3*/, 0/*dload_0*/, 0/*dload_1*/, 0/*dload_2*/,<a name="line.1545"></a>
+<span class="sourceLineNo">1546</span>    0/*dload_3*/, 0/*aload_0*/, 0/*aload_1*/, 0/*aload_2*/, 0/*aload_3*/, 2/*iaload*/,<a name="line.1546"></a>
+<span class="sourceLineNo">1547</span>    2/*laload*/, 2/*faload*/, 2/*daload*/, 2/*aaload*/, 2/*baload*/, 2/*caload*/, 2/*saload*/,<a name="line.1547"></a>
+<span class="sourceLineNo">1548</span>    1/*istore*/, 2/*lstore*/, 1/*fstore*/, 2/*dstore*/, 1/*astore*/, 1/*istore_0*/,<a name="line.1548"></a>
+<span class="sourceLineNo">1549</span>    1/*istore_1*/, 1/*istore_2*/, 1/*istore_3*/, 2/*lstore_0*/, 2/*lstore_1*/,<a name="line.1549"></a>
+<span class="sourceLineNo">1550</span>    2/*lstore_2*/, 2/*lstore_3*/, 1/*fstore_0*/, 1/*fstore_1*/, 1/*fstore_2*/,<a name="line.1550"></a>
+<span class="sourceLineNo">1551</span>    1/*fstore_3*/, 2/*dstore_0*/, 2/*dstore_1*/, 2/*dstore_2*/, 2/*dstore_3*/,<a name="line.1551"></a>
+<span class="sourceLineNo">1552</span>    1/*astore_0*/, 1/*astore_1*/, 1/*astore_2*/, 1/*astore_3*/, 3/*iastore*/, 4/*lastore*/,<a name="line.1552"></a>
+<span class="sourceLineNo">1553</span>    3/*fastore*/, 4/*dastore*/, 3/*aastore*/, 3/*bastore*/, 3/*castore*/, 3/*sastore*/,<a name="line.1553"></a>
+<span class="sourceLineNo">1554</span>    1/*pop*/, 2/*pop2*/, 1/*dup*/, 2/*dup_x1*/, 3/*dup_x2*/, 2/*dup2*/, 3/*dup2_x1*/,<a name="line.1554"></a>
+<span class="sourceLineNo">1555</span>    4/*dup2_x2*/, 2/*swap*/, 2/*iadd*/, 4/*ladd*/, 2/*fadd*/, 4/*dadd*/, 2/*isub*/, 4/*lsub*/,<a name="line.1555"></a>
+<span class="sourceLineNo">1556</span>    2/*fsub*/, 4/*dsub*/, 2/*imul*/, 4/*lmul*/, 2/*fmul*/, 4/*dmul*/, 2/*idiv*/, 4/*ldiv*/,<a name="line.1556"></a>
+<span class="sourceLineNo">1557</span>    2/*fdiv*/, 4/*ddiv*/, 2/*irem*/, 4/*lrem*/, 2/*frem*/, 4/*drem*/, 1/*ineg*/, 2/*lneg*/,<a name="line.1557"></a>
+<span class="sourceLineNo">1558</span>    1/*fneg*/, 2/*dneg*/, 2/*ishl*/, 3/*lshl*/, 2/*ishr*/, 3/*lshr*/, 2/*iushr*/, 3/*lushr*/,<a name="line.1558"></a>
+<span class="sourceLineNo">1559</span>    2/*iand*/, 4/*land*/, 2/*ior*/, 4/*lor*/, 2/*ixor*/, 4/*lxor*/, 0/*iinc*/,<a name="line.1559"></a>
+<span class="sourceLineNo">1560</span>    1/*i2l*/, 1/*i2f*/, 1/*i2d*/, 2/*l2i*/, 2/*l2f*/, 2/*l2d*/, 1/*f2i*/, 1/*f2l*/,<a name="line.1560"></a>
+<span class="sourceLineNo">1561</span>    1/*f2d*/, 2/*d2i*/, 2/*d2l*/, 2/*d2f*/, 1/*i2b*/, 1/*i2c*/, 1/*i2s*/,<a name="line.1561"></a>
+<span class="sourceLineNo">1562</span>    4/*lcmp*/, 2/*fcmpl*/, 2/*fcmpg*/, 4/*dcmpl*/, 4/*dcmpg*/, 1/*ifeq*/, 1/*ifne*/,<a name="line.1562"></a>
+<span class="sourceLineNo">1563</span>    1/*iflt*/, 1/*ifge*/, 1/*ifgt*/, 1/*ifle*/, 2/*if_icmpeq*/, 2/*if_icmpne*/, 2/*if_icmplt*/,<a name="line.1563"></a>
+<span class="sourceLineNo">1564</span>    2 /*if_icmpge*/, 2/*if_icmpgt*/, 2/*if_icmple*/, 2/*if_acmpeq*/, 2/*if_acmpne*/,<a name="line.1564"></a>
+<span class="sourceLineNo">1565</span>    0/*goto*/, 0/*jsr*/, 0/*ret*/, 1/*tableswitch*/, 1/*lookupswitch*/, 1/*ireturn*/,<a name="line.1565"></a>
+<span class="sourceLineNo">1566</span>    2/*lreturn*/, 1/*freturn*/, 2/*dreturn*/, 1/*areturn*/, 0/*return*/, 0/*getstatic*/,<a name="line.1566"></a>
+<span class="sourceLineNo">1567</span>    UNPREDICTABLE/*putstatic*/, 1/*getfield*/, UNPREDICTABLE/*putfield*/,<a name="line.1567"></a>
+<span class="sourceLineNo">1568</span>    UNPREDICTABLE/*invokevirtual*/, UNPREDICTABLE/*invokespecial*/,<a name="line.1568"></a>
+<span class="sourceLineNo">1569</span>    UNPREDICTABLE/*invokestatic*/,<a name="line.1569"></a>
+<span class="sourceLineNo">1570</span>    UNPREDICTABLE/*invokeinterface*/, UNPREDICTABLE/*invokedynamic*/, 0/*new*/, 1/*newarray*/, 1/*anewarray*/,<a name="line.1570"></a>
+<span class="sourceLineNo">1571</span>    1/*arraylength*/, 1/*athrow*/, 1/*checkcast*/, 1/*instanceof*/, 1/*monitorenter*/,<a name="line.1571"></a>
+<span class="sourceLineNo">1572</span>    1/*monitorexit*/, 0/*wide*/, UNPREDICTABLE/*multianewarray*/, 1/*ifnull*/, 1/*ifnonnull*/,<a name="line.1572"></a>
+<span class="sourceLineNo">1573</span>    0/*goto_w*/, 0/*jsr_w*/, 0/*breakpoint*/, UNDEFINED, UNDEFINED,<a name="line.1573"></a>
+<span class="sourceLineNo">1574</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1574"></a>
+<span class="sourceLineNo">1575</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1575"></a>
+<span class="sourceLineNo">1576</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1576"></a>
+<span class="sourceLineNo">1577</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1577"></a>
+<span class="sourceLineNo">1578</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1578"></a>
+<span class="sourceLineNo">1579</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1579"></a>
+<span class="sourceLineNo">1580</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1580"></a>
+<span class="sourceLineNo">1581</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1581"></a>
+<span class="sourceLineNo">1582</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1582"></a>
+<span class="sourceLineNo">1583</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1583"></a>
+<span class="sourceLineNo">1584</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1584"></a>
+<span class="sourceLineNo">1585</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1585"></a>
+<span class="sourceLineNo">1586</span>    UNDEFINED, UNPREDICTABLE/*impdep1*/, UNPREDICTABLE/*impdep2*/<a name="line.1586"></a>
+<span class="sourceLineNo">1587</span>  };<a name="line.1587"></a>
+<span class="sourceLineNo">1588</span><a name="line.1588"></a>
+<span class="sourceLineNo">1589</span>  /**<a name="line.1589"></a>
+<span class="sourceLineNo">1590</span>   * Number of words produced onto operand stack by instructions.<a name="line.1590"></a>
+<span class="sourceLineNo">1591</span>   * Indexed by opcode.  CONSUME_STACK[DALOAD] = number of words<a name="line.1591"></a>
+<span class="sourceLineNo">1592</span>   * consumed from the stack by a daload instruction.<a name="line.1592"></a>
+<span class="sourceLineNo">1593</span>   */<a name="line.1593"></a>
+<span class="sourceLineNo">1594</span>  int[] PRODUCE_STACK = {<a name="line.1594"></a>
+<span class="sourceLineNo">1595</span>    0/*nop*/, 1/*aconst_null*/, 1/*iconst_m1*/, 1/*iconst_0*/, 1/*iconst_1*/,<a name="line.1595"></a>
+<span class="sourceLineNo">1596</span>    1/*iconst_2*/, 1/*iconst_3*/, 1/*iconst_4*/, 1/*iconst_5*/, 2/*lconst_0*/,<a name="line.1596"></a>
+<span class="sourceLineNo">1597</span>    2/*lconst_1*/, 1/*fconst_0*/, 1/*fconst_1*/, 1/*fconst_2*/, 2/*dconst_0*/,<a name="line.1597"></a>
+<span class="sourceLineNo">1598</span>    2/*dconst_1*/, 1/*bipush*/, 1/*sipush*/, 1/*ldc*/, 1/*ldc_w*/, 2/*ldc2_w*/, 1/*iload*/,<a name="line.1598"></a>
+<span class="sourceLineNo">1599</span>    2/*lload*/, 1/*fload*/, 2/*dload*/, 1/*aload*/, 1/*iload_0*/, 1/*iload_1*/, 1/*iload_2*/,<a name="line.1599"></a>
+<span class="sourceLineNo">1600</span>    1/*iload_3*/, 2/*lload_0*/, 2/*lload_1*/, 2/*lload_2*/, 2/*lload_3*/, 1/*fload_0*/,<a name="line.1600"></a>
+<span class="sourceLineNo">1601</span>    1/*fload_1*/, 1/*fload_2*/, 1/*fload_3*/, 2/*dload_0*/, 2/*dload_1*/, 2/*dload_2*/,<a name="line.1601"></a>
+<span class="sourceLineNo">1602</span>    2/*dload_3*/, 1/*aload_0*/, 1/*aload_1*/, 1/*aload_2*/, 1/*aload_3*/, 1/*iaload*/,<a name="line.1602"></a>
+<span class="sourceLineNo">1603</span>    2/*laload*/, 1/*faload*/, 2/*daload*/, 1/*aaload*/, 1/*baload*/, 1/*caload*/, 1/*saload*/,<a name="line.1603"></a>
+<span class="sourceLineNo">1604</span>    0/*istore*/, 0/*lstore*/, 0/*fstore*/, 0/*dstore*/, 0/*astore*/, 0/*istore_0*/,<a name="line.1604"></a>
+<span class="sourceLineNo">1605</span>    0/*istore_1*/, 0/*istore_2*/, 0/*istore_3*/, 0/*lstore_0*/, 0/*lstore_1*/,<a name="line.1605"></a>
+<span class="sourceLineNo">1606</span>    0/*lstore_2*/, 0/*lstore_3*/, 0/*fstore_0*/, 0/*fstore_1*/, 0/*fstore_2*/,<a name="line.1606"></a>
+<span class="sourceLineNo">1607</span>    0/*fstore_3*/, 0/*dstore_0*/, 0/*dstore_1*/, 0/*dstore_2*/, 0/*dstore_3*/,<a name="line.1607"></a>
+<span class="sourceLineNo">1608</span>    0/*astore_0*/, 0/*astore_1*/, 0/*astore_2*/, 0/*astore_3*/, 0/*iastore*/, 0/*lastore*/,<a name="line.1608"></a>
+<span class="sourceLineNo">1609</span>    0/*fastore*/, 0/*dastore*/, 0/*aastore*/, 0/*bastore*/, 0/*castore*/, 0/*sastore*/,<a name="line.1609"></a>
+<span class="sourceLineNo">1610</span>    0/*pop*/, 0/*pop2*/, 2/*dup*/, 3/*dup_x1*/, 4/*dup_x2*/, 4/*dup2*/, 5/*dup2_x1*/,<a name="line.1610"></a>
+<span class="sourceLineNo">1611</span>    6/*dup2_x2*/, 2/*swap*/, 1/*iadd*/, 2/*ladd*/, 1/*fadd*/, 2/*dadd*/, 1/*isub*/, 2/*lsub*/,<a name="line.1611"></a>
+<span class="sourceLineNo">1612</span>    1/*fsub*/, 2/*dsub*/, 1/*imul*/, 2/*lmul*/, 1/*fmul*/, 2/*dmul*/, 1/*idiv*/, 2/*ldiv*/,<a name="line.1612"></a>
+<span class="sourceLineNo">1613</span>    1/*fdiv*/, 2/*ddiv*/, 1/*irem*/, 2/*lrem*/, 1/*frem*/, 2/*drem*/, 1/*ineg*/, 2/*lneg*/,<a name="line.1613"></a>
+<span class="sourceLineNo">1614</span>    1/*fneg*/, 2/*dneg*/, 1/*ishl*/, 2/*lshl*/, 1/*ishr*/, 2/*lshr*/, 1/*iushr*/, 2/*lushr*/,<a name="line.1614"></a>
+<span class="sourceLineNo">1615</span>    1/*iand*/, 2/*land*/, 1/*ior*/, 2/*lor*/, 1/*ixor*/, 2/*lxor*/,<a name="line.1615"></a>
+<span class="sourceLineNo">1616</span>    0/*iinc*/, 2/*i2l*/, 1/*i2f*/, 2/*i2d*/, 1/*l2i*/, 1/*l2f*/, 2/*l2d*/, 1/*f2i*/,<a name="line.1616"></a>
+<span class="sourceLineNo">1617</span>    2/*f2l*/, 2/*f2d*/, 1/*d2i*/, 2/*d2l*/, 1/*d2f*/,<a name="line.1617"></a>
+<span class="sourceLineNo">1618</span>    1/*i2b*/, 1/*i2c*/, 1/*i2s*/, 1/*lcmp*/, 1/*fcmpl*/, 1/*fcmpg*/,<a name="line.1618"></a>
+<span class="sourceLineNo">1619</span>    1/*dcmpl*/, 1/*dcmpg*/, 0/*ifeq*/, 0/*ifne*/, 0/*iflt*/, 0/*ifge*/, 0/*ifgt*/, 0/*ifle*/,<a name="line.1619"></a>
+<span class="sourceLineNo">1620</span>    0/*if_icmpeq*/, 0/*if_icmpne*/, 0/*if_icmplt*/, 0/*if_icmpge*/, 0/*if_icmpgt*/,<a name="line.1620"></a>
+<span class="sourceLineNo">1621</span>    0/*if_icmple*/, 0/*if_acmpeq*/, 0/*if_acmpne*/, 0/*goto*/, 1/*jsr*/, 0/*ret*/,<a name="line.1621"></a>
+<span class="sourceLineNo">1622</span>    0/*tableswitch*/, 0/*lookupswitch*/, 0/*ireturn*/, 0/*lreturn*/, 0/*freturn*/,<a name="line.1622"></a>
+<span class="sourceLineNo">1623</span>    0/*dreturn*/, 0/*areturn*/, 0/*return*/, UNPREDICTABLE/*getstatic*/, 0/*putstatic*/,<a name="line.1623"></a>
+<span class="sourceLineNo">1624</span>    UNPREDICTABLE/*getfield*/, 0/*putfield*/, UNPREDICTABLE/*invokevirtual*/,<a name="line.1624"></a>
+<span class="sourceLineNo">1625</span>    UNPREDICTABLE/*invokespecial*/, UNPREDICTABLE/*invokestatic*/,<a name="line.1625"></a>
+<span class="sourceLineNo">1626</span>    UNPREDICTABLE/*invokeinterface*/, UNPREDICTABLE/*invokedynamic*/, 1/*new*/, 1/*newarray*/, 1/*anewarray*/,<a name="line.1626"></a>
+<span class="sourceLineNo">1627</span>    1/*arraylength*/, 1/*athrow*/, 1/*checkcast*/, 1/*instanceof*/, 0/*monitorenter*/,<a name="line.1627"></a>
+<span class="sourceLineNo">1628</span>    0/*monitorexit*/, 0/*wide*/, 1/*multianewarray*/, 0/*ifnull*/, 0/*ifnonnull*/,<a name="line.1628"></a>
+<span class="sourceLineNo">1629</span>    0/*goto_w*/, 1/*jsr_w*/, 0/*breakpoint*/, UNDEFINED, UNDEFINED,<a name="line.1629"></a>
+<span class="sourceLineNo">1630</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1630"></a>
+<span class="sourceLineNo">1631</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1631"></a>
+<span class="sourceLineNo">1632</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1632"></a>
+<span class="sourceLineNo">1633</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1633"></a>
+<span class="sourceLineNo">1634</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1634"></a>
+<span class="sourceLineNo">1635</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1635"></a>
+<span class="sourceLineNo">1636</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1636"></a>
+<span class="sourceLineNo">1637</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1637"></a>
+<span class="sourceLineNo">1638</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1638"></a>
+<span class="sourceLineNo">1639</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1639"></a>
+<span class="sourceLineNo">1640</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1640"></a>
+<span class="sourceLineNo">1641</span>    UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED,<a name="line.1641"></a>
+<span class="sourceLineNo">1642</span>    UNDEFINED, UNPREDICTABLE/*impdep1*/, UNPREDICTABLE/*impdep2*/<a name="line.1642"></a>
+<span class="sourceLineNo">1643</span>  };<a name="line.1643"></a>
+<span class="sourceLineNo">1644</span><a name="line.1644"></a>
+<span class="sourceLineNo">1645</span>  /** Attributes and their corresponding names.<a name="line.1645"></a>
+<span class="sourceLineNo">1646</span>   */<a name="line.1646"></a>
+<span class="sourceLineNo">1647</span>  byte ATTR_UNKNOWN                                 = -1;<a name="line.1647"></a>
+<span class="sourceLineNo">1648</span>  byte ATTR_SOURCE_FILE                             = 0;<a name="line.1648"></a>
+<span class="sourceLineNo">1649</span>  byte ATTR_CONSTANT_VALUE                          = 1;<a name="line.1649"></a>
+<span class="sourceLineNo">1650</span>  byte ATTR_CODE                                    = 2;<a name="line.1650"></a>
+<span class="sourceLineNo">1651</span>  byte ATTR_EXCEPTIONS                              = 3;<a name="line.1651"></a>
+<span class="sourceLineNo">1652</span>  byte ATTR_LINE_NUMBER_TABLE                       = 4;<a name="line.1652"></a>
+<span class="sourceLineNo">1653</span>  byte ATTR_LOCAL_VARIABLE_TABLE                    = 5;<a name="line.1653"></a>
+<span class="sourceLineNo">1654</span>  byte ATTR_INNER_CLASSES                           = 6;<a name="line.1654"></a>
+<span class="sourceLineNo">1655</span>  byte ATTR_SYNTHETIC                               = 7;<a name="line.1655"></a>
+<span class="sourceLineNo">1656</span>  byte ATTR_DEPRECATED                              = 8;<a name="line.1656"></a>
+<span class="sourceLineNo">1657</span>  byte ATTR_PMG                                     = 9;<a name="line.1657"></a>
+<span class="sourceLineNo">1658</span>  byte ATTR_SIGNATURE                               = 10;<a name="line.1658"></a>
+<span class="sourceLineNo">1659</span>  byte ATTR_STACK_MAP                               = 11;<a name="line.1659"></a>
+<span class="sourceLineNo">1660</span>  byte ATTR_RUNTIMEVISIBLE_ANNOTATIONS              = 12;<a name="line.1660"></a>
+<span class="sourceLineNo">1661</span>  byte ATTR_RUNTIMEINVISIBLE_ANNOTATIONS            = 13;<a name="line.1661"></a>
+<span class="sourceLineNo">1662</span>  byte ATTR_RUNTIMEVISIBLE_PARAMETER_ANNOTATIONS    = 14;<a name="line.1662"></a>
+<span class="sourceLineNo">1663</span>  byte ATTR_RUNTIMEINVISIBLE_PARAMETER_ANNOTATIONS  = 15;<a name="line.1663"></a>
+<span class="sourceLineNo">1664</span>  byte ATTR_ANNOTATION_DEFAULT                      = 16;<a name="line.1664"></a>
+<span class="sourceLineNo">1665</span><a name="line.1665"></a>
+<span class="sourceLineNo">1666</span>  short KNOWN_ATTRIBUTES = 12;//should be 17<a name="line.1666"></a>
+<span class="sourceLineNo">1667</span><a name="line.1667"></a>
+<span class="sourceLineNo">1668</span><a name="line.1668"></a>
+<span class="sourceLineNo">1669</span>  // TODO: mutable public array!!<a name="line.1669"></a>
+<span class="sourceLineNo">1670</span>  String[] ATTRIBUTE_NAMES = {<a name="line.1670"></a>
+<span class="sourceLineNo">1671</span>    "SourceFile", "ConstantValue", "Code", "Exceptions",<a name="line.1671"></a>
+<span class="sourceLineNo">1672</span>    "LineNumberTable", "LocalVariableTable",<a name="line.1672"></a>
+<span class="sourceLineNo">1673</span>    "InnerClasses", "Synthetic", "Deprecated",<a name="line.1673"></a>
+<span class="sourceLineNo">1674</span>    "PMGClass", "Signature", "StackMap",<a name="line.1674"></a>
+<span class="sourceLineNo">1675</span>    "RuntimeVisibleAnnotations", "RuntimeInvisibleAnnotations",<a name="line.1675"></a>
+<span class="sourceLineNo">1676</span>    "RuntimeVisibleParameterAnnotations", "RuntimeInvisibleParameterAnnotations",<a name="line.1676"></a>
+<span class="sourceLineNo">1677</span>    "AnnotationDefault"<a name="line.1677"></a>
+<span class="sourceLineNo">1678</span>  };<a name="line.1678"></a>
+<span class="sourceLineNo">1679</span><a name="line.1679"></a>
+<span class="sourceLineNo">1680</span>  /** Constants used in the StackMap attribute.<a name="line.1680"></a>
+<span class="sourceLineNo">1681</span>   */<a name="line.1681"></a>
+<span class="sourceLineNo">1682</span>  byte ITEM_Bogus      = 0;<a name="line.1682"></a>
+<span class="sourceLineNo">1683</span>  byte ITEM_Integer    = 1;<a name="line.1683"></a>
+<span class="sourceLineNo">1684</span>  byte ITEM_Float      = 2;<a name="line.1684"></a>
+<span class="sourceLineNo">1685</span>  byte ITEM_Double     = 3;<a name="line.1685"></a>
+<span class="sourceLineNo">1686</span>  byte ITEM_Long       = 4;<a name="line.1686"></a>
+<span class="sourceLineNo">1687</span>  byte ITEM_Null       = 5;<a name="line.1687"></a>
+<span class="sourceLineNo">1688</span>  byte ITEM_InitObject = 6;<a name="line.1688"></a>
+<span class="sourceLineNo">1689</span>  byte ITEM_Object     = 7;<a name="line.1689"></a>
+<span class="sourceLineNo">1690</span>  byte ITEM_NewObject  = 8;<a name="line.1690"></a>
+<span class="sourceLineNo">1691</span><a name="line.1691"></a>
+<span class="sourceLineNo">1692</span>  String[] ITEM_NAMES = {<a name="line.1692"></a>
+<span class="sourceLineNo">1693</span>    "Bogus", "Integer", "Float", "Double", "Long",<a name="line.1693"></a>
+<span class="sourceLineNo">1694</span>    "Null", "InitObject", "Object", "NewObject"<a name="line.1694"></a>
+<span class="sourceLineNo">1695</span>  };<a name="line.1695"></a>
+<span class="sourceLineNo">1696</span><a name="line.1696"></a>
+<span class="sourceLineNo">1697</span>}<a name="line.1697"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

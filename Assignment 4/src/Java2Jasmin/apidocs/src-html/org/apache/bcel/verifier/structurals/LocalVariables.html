@@ -1,0 +1,304 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one or more<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * contributor license agreements.  See the NOTICE file distributed with<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * this work for additional information regarding copyright ownership.<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * The ASF licenses this file to You under the Apache License, Version 2.0<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * (the "License"); you may not use this file except in compliance with<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * the License.  You may obtain a copy of the License at<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.apache.org/licenses/LICENSE-2.0<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *  Unless required by applicable law or agreed to in writing, software<a name="line.11"></a>
+<span class="sourceLineNo">012</span> *  distributed under the License is distributed on an "AS IS" BASIS,<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.13"></a>
+<span class="sourceLineNo">014</span> *  See the License for the specific language governing permissions and<a name="line.14"></a>
+<span class="sourceLineNo">015</span> *  limitations under the License.<a name="line.15"></a>
+<span class="sourceLineNo">016</span> *<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span>package org.apache.bcel.verifier.structurals;<a name="line.18"></a>
+<span class="sourceLineNo">019</span><a name="line.19"></a>
+<span class="sourceLineNo">020</span><a name="line.20"></a>
+<span class="sourceLineNo">021</span>import org.apache.bcel.generic.ReferenceType;<a name="line.21"></a>
+<span class="sourceLineNo">022</span>import org.apache.bcel.generic.Type;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.apache.bcel.verifier.exc.AssertionViolatedException;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.apache.bcel.verifier.exc.StructuralCodeConstraintException;<a name="line.24"></a>
+<span class="sourceLineNo">025</span><a name="line.25"></a>
+<span class="sourceLineNo">026</span>/**<a name="line.26"></a>
+<span class="sourceLineNo">027</span> * This class implements an array of local variables used for symbolic JVM<a name="line.27"></a>
+<span class="sourceLineNo">028</span> * simulation.<a name="line.28"></a>
+<span class="sourceLineNo">029</span> */<a name="line.29"></a>
+<span class="sourceLineNo">030</span>public class LocalVariables implements Cloneable {<a name="line.30"></a>
+<span class="sourceLineNo">031</span><a name="line.31"></a>
+<span class="sourceLineNo">032</span>    /** The Type[] containing the local variable slots. */<a name="line.32"></a>
+<span class="sourceLineNo">033</span>    private final Type[] locals;<a name="line.33"></a>
+<span class="sourceLineNo">034</span><a name="line.34"></a>
+<span class="sourceLineNo">035</span>    /**<a name="line.35"></a>
+<span class="sourceLineNo">036</span>     * Creates a new LocalVariables object.<a name="line.36"></a>
+<span class="sourceLineNo">037</span>     *<a name="line.37"></a>
+<span class="sourceLineNo">038</span>     * @param localVariableCount local variable count.<a name="line.38"></a>
+<span class="sourceLineNo">039</span>     */<a name="line.39"></a>
+<span class="sourceLineNo">040</span>    public LocalVariables(final int localVariableCount) {<a name="line.40"></a>
+<span class="sourceLineNo">041</span>        locals = new Type[localVariableCount];<a name="line.41"></a>
+<span class="sourceLineNo">042</span>        for (int i=0; i&lt;localVariableCount; i++) {<a name="line.42"></a>
+<span class="sourceLineNo">043</span>            locals[i] = Type.UNKNOWN;<a name="line.43"></a>
+<span class="sourceLineNo">044</span>        }<a name="line.44"></a>
+<span class="sourceLineNo">045</span>    }<a name="line.45"></a>
+<span class="sourceLineNo">046</span><a name="line.46"></a>
+<span class="sourceLineNo">047</span>    /**<a name="line.47"></a>
+<span class="sourceLineNo">048</span>     * Returns a deep copy of this object; i.e. the clone<a name="line.48"></a>
+<span class="sourceLineNo">049</span>     * operates on a new local variable array.<a name="line.49"></a>
+<span class="sourceLineNo">050</span>     * However, the Type objects in the array are shared.<a name="line.50"></a>
+<span class="sourceLineNo">051</span>     */<a name="line.51"></a>
+<span class="sourceLineNo">052</span>    @Override<a name="line.52"></a>
+<span class="sourceLineNo">053</span>    public Object clone() {<a name="line.53"></a>
+<span class="sourceLineNo">054</span>        final LocalVariables lvs = new LocalVariables(locals.length);<a name="line.54"></a>
+<span class="sourceLineNo">055</span>        for (int i=0; i&lt;locals.length; i++) {<a name="line.55"></a>
+<span class="sourceLineNo">056</span>            lvs.locals[i] = this.locals[i];<a name="line.56"></a>
+<span class="sourceLineNo">057</span>        }<a name="line.57"></a>
+<span class="sourceLineNo">058</span>        return lvs;<a name="line.58"></a>
+<span class="sourceLineNo">059</span>    }<a name="line.59"></a>
+<span class="sourceLineNo">060</span><a name="line.60"></a>
+<span class="sourceLineNo">061</span>    /**<a name="line.61"></a>
+<span class="sourceLineNo">062</span>     * Returns the type of the local variable slot index.<a name="line.62"></a>
+<span class="sourceLineNo">063</span>     *<a name="line.63"></a>
+<span class="sourceLineNo">064</span>     * @param slotIndex Slot to look up.<a name="line.64"></a>
+<span class="sourceLineNo">065</span>     * @return the type of the local variable slot index.<a name="line.65"></a>
+<span class="sourceLineNo">066</span>     */<a name="line.66"></a>
+<span class="sourceLineNo">067</span>    public Type get(final int slotIndex) {<a name="line.67"></a>
+<span class="sourceLineNo">068</span>        return locals[slotIndex];<a name="line.68"></a>
+<span class="sourceLineNo">069</span>    }<a name="line.69"></a>
+<span class="sourceLineNo">070</span><a name="line.70"></a>
+<span class="sourceLineNo">071</span>    /**<a name="line.71"></a>
+<span class="sourceLineNo">072</span>     * Returns a (correctly typed) clone of this object.<a name="line.72"></a>
+<span class="sourceLineNo">073</span>     * This is equivalent to ((LocalVariables) this.clone()).<a name="line.73"></a>
+<span class="sourceLineNo">074</span>     *<a name="line.74"></a>
+<span class="sourceLineNo">075</span>     * @return a (correctly typed) clone of this object.<a name="line.75"></a>
+<span class="sourceLineNo">076</span>     */<a name="line.76"></a>
+<span class="sourceLineNo">077</span>    public LocalVariables getClone() {<a name="line.77"></a>
+<span class="sourceLineNo">078</span>        return (LocalVariables) this.clone();<a name="line.78"></a>
+<span class="sourceLineNo">079</span>    }<a name="line.79"></a>
+<span class="sourceLineNo">080</span><a name="line.80"></a>
+<span class="sourceLineNo">081</span>    /**<a name="line.81"></a>
+<span class="sourceLineNo">082</span>     * Returns the number of local variable slots.<a name="line.82"></a>
+<span class="sourceLineNo">083</span>     *<a name="line.83"></a>
+<span class="sourceLineNo">084</span>     * @return the number of local variable slots.<a name="line.84"></a>
+<span class="sourceLineNo">085</span>     */<a name="line.85"></a>
+<span class="sourceLineNo">086</span>    public int maxLocals() {<a name="line.86"></a>
+<span class="sourceLineNo">087</span>        return locals.length;<a name="line.87"></a>
+<span class="sourceLineNo">088</span>    }<a name="line.88"></a>
+<span class="sourceLineNo">089</span><a name="line.89"></a>
+<span class="sourceLineNo">090</span>    /**<a name="line.90"></a>
+<span class="sourceLineNo">091</span>     * Sets a new Type for the given local variable slot.<a name="line.91"></a>
+<span class="sourceLineNo">092</span>     *<a name="line.92"></a>
+<span class="sourceLineNo">093</span>     * @param slotIndex Target slot index.<a name="line.93"></a>
+<span class="sourceLineNo">094</span>     * @param type Type to save at the given slot index.<a name="line.94"></a>
+<span class="sourceLineNo">095</span>     */<a name="line.95"></a>
+<span class="sourceLineNo">096</span>    public void set(final int slotIndex, final Type type) { // TODO could be package-protected?<a name="line.96"></a>
+<span class="sourceLineNo">097</span>        if (type == Type.BYTE || type == Type.SHORT || type == Type.BOOLEAN || type == Type.CHAR) {<a name="line.97"></a>
+<span class="sourceLineNo">098</span>            throw new AssertionViolatedException("LocalVariables do not know about '"+type+"'. Use Type.INT instead.");<a name="line.98"></a>
+<span class="sourceLineNo">099</span>        }<a name="line.99"></a>
+<span class="sourceLineNo">100</span>        locals[slotIndex] = type;<a name="line.100"></a>
+<span class="sourceLineNo">101</span>    }<a name="line.101"></a>
+<span class="sourceLineNo">102</span><a name="line.102"></a>
+<span class="sourceLineNo">103</span>    /** @return a hash code value for the object.<a name="line.103"></a>
+<span class="sourceLineNo">104</span>     */<a name="line.104"></a>
+<span class="sourceLineNo">105</span>    @Override<a name="line.105"></a>
+<span class="sourceLineNo">106</span>    public int hashCode() { return locals.length; }<a name="line.106"></a>
+<span class="sourceLineNo">107</span><a name="line.107"></a>
+<span class="sourceLineNo">108</span>    /*<a name="line.108"></a>
+<span class="sourceLineNo">109</span>     * Fulfills the general contract of Object.equals().<a name="line.109"></a>
+<span class="sourceLineNo">110</span>     */<a name="line.110"></a>
+<span class="sourceLineNo">111</span>    @Override<a name="line.111"></a>
+<span class="sourceLineNo">112</span>    public boolean equals(final Object o) {<a name="line.112"></a>
+<span class="sourceLineNo">113</span>        if (!(o instanceof LocalVariables)) {<a name="line.113"></a>
+<span class="sourceLineNo">114</span>            return false;<a name="line.114"></a>
+<span class="sourceLineNo">115</span>        }<a name="line.115"></a>
+<span class="sourceLineNo">116</span>        final LocalVariables lv = (LocalVariables) o;<a name="line.116"></a>
+<span class="sourceLineNo">117</span>        if (this.locals.length != lv.locals.length) {<a name="line.117"></a>
+<span class="sourceLineNo">118</span>            return false;<a name="line.118"></a>
+<span class="sourceLineNo">119</span>        }<a name="line.119"></a>
+<span class="sourceLineNo">120</span>        for (int i=0; i&lt;this.locals.length; i++) {<a name="line.120"></a>
+<span class="sourceLineNo">121</span>            if (!this.locals[i].equals(lv.locals[i])) {<a name="line.121"></a>
+<span class="sourceLineNo">122</span>                //System.out.println(this.locals[i]+" is not "+lv.locals[i]);<a name="line.122"></a>
+<span class="sourceLineNo">123</span>                return false;<a name="line.123"></a>
+<span class="sourceLineNo">124</span>            }<a name="line.124"></a>
+<span class="sourceLineNo">125</span>        }<a name="line.125"></a>
+<span class="sourceLineNo">126</span>        return true;<a name="line.126"></a>
+<span class="sourceLineNo">127</span>    }<a name="line.127"></a>
+<span class="sourceLineNo">128</span><a name="line.128"></a>
+<span class="sourceLineNo">129</span>    /**<a name="line.129"></a>
+<span class="sourceLineNo">130</span>     * Merges two local variables sets as described in the Java Virtual Machine Specification,<a name="line.130"></a>
+<span class="sourceLineNo">131</span>     * Second Edition, section 4.9.2, page 146.<a name="line.131"></a>
+<span class="sourceLineNo">132</span>     *<a name="line.132"></a>
+<span class="sourceLineNo">133</span>     * @param localVariable other local variable.<a name="line.133"></a>
+<span class="sourceLineNo">134</span>     */<a name="line.134"></a>
+<span class="sourceLineNo">135</span>    public void merge(final LocalVariables localVariable) {<a name="line.135"></a>
+<span class="sourceLineNo">136</span><a name="line.136"></a>
+<span class="sourceLineNo">137</span>        if (this.locals.length != localVariable.locals.length) {<a name="line.137"></a>
+<span class="sourceLineNo">138</span>            throw new AssertionViolatedException("Merging LocalVariables of different size?!? From different methods or what?!?");<a name="line.138"></a>
+<span class="sourceLineNo">139</span>        }<a name="line.139"></a>
+<span class="sourceLineNo">140</span><a name="line.140"></a>
+<span class="sourceLineNo">141</span>        for (int i=0; i&lt;locals.length; i++) {<a name="line.141"></a>
+<span class="sourceLineNo">142</span>            merge(localVariable, i);<a name="line.142"></a>
+<span class="sourceLineNo">143</span>        }<a name="line.143"></a>
+<span class="sourceLineNo">144</span>    }<a name="line.144"></a>
+<span class="sourceLineNo">145</span><a name="line.145"></a>
+<span class="sourceLineNo">146</span>    /**<a name="line.146"></a>
+<span class="sourceLineNo">147</span>     * Merges a single local variable.<a name="line.147"></a>
+<span class="sourceLineNo">148</span>     *<a name="line.148"></a>
+<span class="sourceLineNo">149</span>     * @see #merge(LocalVariables)<a name="line.149"></a>
+<span class="sourceLineNo">150</span>     */<a name="line.150"></a>
+<span class="sourceLineNo">151</span>    private void merge(final LocalVariables lv, final int i) {<a name="line.151"></a>
+<span class="sourceLineNo">152</span>        try {<a name="line.152"></a>
+<span class="sourceLineNo">153</span><a name="line.153"></a>
+<span class="sourceLineNo">154</span>        // We won't accept an unitialized object if we know it was initialized;<a name="line.154"></a>
+<span class="sourceLineNo">155</span>        // compare vmspec2, 4.9.4, last paragraph.<a name="line.155"></a>
+<span class="sourceLineNo">156</span>        if ( (!(locals[i] instanceof UninitializedObjectType)) &amp;&amp; (lv.locals[i] instanceof UninitializedObjectType) ) {<a name="line.156"></a>
+<span class="sourceLineNo">157</span>            throw new StructuralCodeConstraintException(<a name="line.157"></a>
+<span class="sourceLineNo">158</span>                "Backwards branch with an uninitialized object in the local variables detected.");<a name="line.158"></a>
+<span class="sourceLineNo">159</span>        }<a name="line.159"></a>
+<span class="sourceLineNo">160</span>        // Even harder, what about _different_ uninitialized object types?!<a name="line.160"></a>
+<span class="sourceLineNo">161</span>        if ( (!(locals[i].equals(lv.locals[i]))) &amp;&amp; (locals[i] instanceof UninitializedObjectType) &amp;&amp;<a name="line.161"></a>
+<span class="sourceLineNo">162</span>                (lv.locals[i] instanceof UninitializedObjectType) ) {<a name="line.162"></a>
+<span class="sourceLineNo">163</span>            throw new StructuralCodeConstraintException(<a name="line.163"></a>
+<span class="sourceLineNo">164</span>                "Backwards branch with an uninitialized object in the local variables detected.");<a name="line.164"></a>
+<span class="sourceLineNo">165</span>        }<a name="line.165"></a>
+<span class="sourceLineNo">166</span>        // If we just didn't know that it was initialized, we have now learned.<a name="line.166"></a>
+<span class="sourceLineNo">167</span>        if (locals[i] instanceof UninitializedObjectType) {<a name="line.167"></a>
+<span class="sourceLineNo">168</span>            if (! (lv.locals[i] instanceof UninitializedObjectType)) {<a name="line.168"></a>
+<span class="sourceLineNo">169</span>                locals[i] = ((UninitializedObjectType) locals[i]).getInitialized();<a name="line.169"></a>
+<span class="sourceLineNo">170</span>            }<a name="line.170"></a>
+<span class="sourceLineNo">171</span>        }<a name="line.171"></a>
+<span class="sourceLineNo">172</span>        if ((locals[i] instanceof ReferenceType) &amp;&amp; (lv.locals[i] instanceof ReferenceType)) {<a name="line.172"></a>
+<span class="sourceLineNo">173</span>            if (! locals[i].equals(lv.locals[i])) { // needed in case of two UninitializedObjectType instances<a name="line.173"></a>
+<span class="sourceLineNo">174</span>                final Type sup = ((ReferenceType) locals[i]).getFirstCommonSuperclass((ReferenceType) (lv.locals[i]));<a name="line.174"></a>
+<span class="sourceLineNo">175</span><a name="line.175"></a>
+<span class="sourceLineNo">176</span>                if (sup != null) {<a name="line.176"></a>
+<span class="sourceLineNo">177</span>                    locals[i] = sup;<a name="line.177"></a>
+<span class="sourceLineNo">178</span>                }<a name="line.178"></a>
+<span class="sourceLineNo">179</span>                else{<a name="line.179"></a>
+<span class="sourceLineNo">180</span>                    // We should have checked this in Pass2!<a name="line.180"></a>
+<span class="sourceLineNo">181</span>                    throw new AssertionViolatedException(<a name="line.181"></a>
+<span class="sourceLineNo">182</span>                        "Could not load all the super classes of '"+locals[i]+"' and '"+lv.locals[i]+"'.");<a name="line.182"></a>
+<span class="sourceLineNo">183</span>                }<a name="line.183"></a>
+<span class="sourceLineNo">184</span>            }<a name="line.184"></a>
+<span class="sourceLineNo">185</span>        }<a name="line.185"></a>
+<span class="sourceLineNo">186</span>        else{<a name="line.186"></a>
+<span class="sourceLineNo">187</span>            if (! (locals[i].equals(lv.locals[i])) ) {<a name="line.187"></a>
+<span class="sourceLineNo">188</span>/*TODO<a name="line.188"></a>
+<span class="sourceLineNo">189</span>                if ((locals[i] instanceof org.apache.bcel.generic.ReturnaddressType) &amp;&amp;<a name="line.189"></a>
+<span class="sourceLineNo">190</span>                    (lv.locals[i] instanceof org.apache.bcel.generic.ReturnaddressType)) {<a name="line.190"></a>
+<span class="sourceLineNo">191</span>                    //System.err.println("merging "+locals[i]+" and "+lv.locals[i]);<a name="line.191"></a>
+<span class="sourceLineNo">192</span>                    throw new AssertionViolatedException("Merging different ReturnAddresses: '"+locals[i]+"' and '"+lv.locals[i]+"'.");<a name="line.192"></a>
+<span class="sourceLineNo">193</span>                }<a name="line.193"></a>
+<span class="sourceLineNo">194</span>*/<a name="line.194"></a>
+<span class="sourceLineNo">195</span>                locals[i] = Type.UNKNOWN;<a name="line.195"></a>
+<span class="sourceLineNo">196</span>            }<a name="line.196"></a>
+<span class="sourceLineNo">197</span>        }<a name="line.197"></a>
+<span class="sourceLineNo">198</span>        } catch (final ClassNotFoundException e) {<a name="line.198"></a>
+<span class="sourceLineNo">199</span>        // FIXME: maybe not the best way to handle this<a name="line.199"></a>
+<span class="sourceLineNo">200</span>        throw new AssertionViolatedException("Missing class: " + e, e);<a name="line.200"></a>
+<span class="sourceLineNo">201</span>        }<a name="line.201"></a>
+<span class="sourceLineNo">202</span>    }<a name="line.202"></a>
+<span class="sourceLineNo">203</span><a name="line.203"></a>
+<span class="sourceLineNo">204</span>    /**<a name="line.204"></a>
+<span class="sourceLineNo">205</span>     * Returns a String representation of this object.<a name="line.205"></a>
+<span class="sourceLineNo">206</span>     */<a name="line.206"></a>
+<span class="sourceLineNo">207</span>    @Override<a name="line.207"></a>
+<span class="sourceLineNo">208</span>    public String toString() {<a name="line.208"></a>
+<span class="sourceLineNo">209</span>        final StringBuilder sb = new StringBuilder();<a name="line.209"></a>
+<span class="sourceLineNo">210</span>        for (int i=0; i&lt;locals.length; i++) {<a name="line.210"></a>
+<span class="sourceLineNo">211</span>            sb.append(Integer.toString(i));<a name="line.211"></a>
+<span class="sourceLineNo">212</span>            sb.append(": ");<a name="line.212"></a>
+<span class="sourceLineNo">213</span>            sb.append(locals[i]);<a name="line.213"></a>
+<span class="sourceLineNo">214</span>            sb.append("\n");<a name="line.214"></a>
+<span class="sourceLineNo">215</span>        }<a name="line.215"></a>
+<span class="sourceLineNo">216</span>        return sb.toString();<a name="line.216"></a>
+<span class="sourceLineNo">217</span>    }<a name="line.217"></a>
+<span class="sourceLineNo">218</span><a name="line.218"></a>
+<span class="sourceLineNo">219</span>    /**<a name="line.219"></a>
+<span class="sourceLineNo">220</span>     * Replaces all occurrences of {@code uninitializedObjectType} in this local variables set<a name="line.220"></a>
+<span class="sourceLineNo">221</span>     * with an "initialized" ObjectType.<a name="line.221"></a>
+<span class="sourceLineNo">222</span>     *<a name="line.222"></a>
+<span class="sourceLineNo">223</span>     * @param uninitializedObjectType the object to match.<a name="line.223"></a>
+<span class="sourceLineNo">224</span>     */<a name="line.224"></a>
+<span class="sourceLineNo">225</span>    public void initializeObject(final UninitializedObjectType uninitializedObjectType) {<a name="line.225"></a>
+<span class="sourceLineNo">226</span>        for (int i=0; i&lt;locals.length; i++) {<a name="line.226"></a>
+<span class="sourceLineNo">227</span>            if (locals[i] == uninitializedObjectType) {<a name="line.227"></a>
+<span class="sourceLineNo">228</span>                locals[i] = uninitializedObjectType.getInitialized();<a name="line.228"></a>
+<span class="sourceLineNo">229</span>            }<a name="line.229"></a>
+<span class="sourceLineNo">230</span>        }<a name="line.230"></a>
+<span class="sourceLineNo">231</span>    }<a name="line.231"></a>
+<span class="sourceLineNo">232</span>}<a name="line.232"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+
+            Class D96Class {
+                main() {
+                    io.putInt(1);
+                    io.putIntLn(1);
+                    io.putIntLn(1 + 1);
+                    io.putIntLn(1 - 1);
+                    io.putIntLn(1 * 1);
+                }
+            }
+        

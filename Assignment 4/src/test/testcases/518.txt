@@ -1,0 +1,10 @@
+
+            Class D96Class {
+                main() {
+                    Var i : Int = 1000;
+                    Foreach (i In 10 .. 1 By 2) {
+                        io.putInt(i);
+                    }
+                }
+            }
+        

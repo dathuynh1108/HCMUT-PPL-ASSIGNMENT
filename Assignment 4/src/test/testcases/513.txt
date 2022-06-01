@@ -1,0 +1,12 @@
+
+            Class D96Class {
+                main() {
+                    If (1 > 2) {
+                        io.putString("False");
+                    }
+                    Else {
+                        io.putString("True");
+                    }
+                }
+            }
+        
