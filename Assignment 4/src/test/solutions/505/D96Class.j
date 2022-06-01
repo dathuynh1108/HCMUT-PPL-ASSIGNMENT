@@ -17,13 +17,12 @@ Label1:
 .limit locals 1
 .end method
 
-.method public <clinit>()V
-.var 0 is this LD96Class; from Label0 to Label1
+.method public static <clinit>()V
 Label0:
 Label1:
 	return
 .limit stack 0
-.limit locals 1
+.limit locals 0
 .end method
 
 .method public static main([Ljava/lang/String;)V

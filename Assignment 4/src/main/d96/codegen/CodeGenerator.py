@@ -24,16 +24,18 @@ from CodeGenError import *
 
 
 class Attribute:
-    def __init__(self, name, type, init_value=None):
+    def __init__(self, name, type, is_static, init_value=None):
         self.name = name
         self.type = type
+        self.is_static = is_static
         self.init_value = init_value
 
 
 class Method:
-    def __init__(self, name, type):
+    def __init__(self, name, type, is_static):
         self.name = name
         self.type = type
+        self.is_static = is_static
 
 
 class Local:
@@ -158,18 +160,18 @@ class CodeGenerator:
             "io": Class_scope(
                 {},
                 {
-                    "getInt":       Method("getInt", MType([], IntType())),
-                    "putInt":       Method("putInt", MType([IntType()], VoidType())),
-                    "putIntLn":     Method("putIntLn", MType([IntType()], VoidType())),
-                    "getFloat":     Method("getFloat", MType([], FloatType())),
-                    "putFloat":     Method("putFloat", MType([FloatType()], VoidType())),
-                    "putFloatLn":   Method("putFloatLn", MType([FloatType()], VoidType())),
-                    "getBool":      Method("getBool", MType([], BoolType())),
-                    "putBool":      Method("putBool", MType([BoolType()], VoidType())),
-                    "putBoolLn":    Method("putBoolLn", MType([BoolType()], VoidType())),
-                    "putString":    Method("putString", MType([StringType()], VoidType())),
-                    "putStringLn":  Method("putStringLn", MType([StringType()], VoidType())),
-                    "putLn":        Method("putLn", MType([], VoidType())),
+                    "getInt":       Method("getInt", MType([], IntType()), True),
+                    "putInt":       Method("putInt", MType([IntType()], VoidType()), True),
+                    "putIntLn":     Method("putIntLn", MType([IntType()], VoidType()), True),
+                    "getFloat":     Method("getFloat", MType([], FloatType()), True),
+                    "putFloat":     Method("putFloat", MType([FloatType()], VoidType()), True),
+                    "putFloatLn":   Method("putFloatLn", MType([FloatType()], VoidType()), True),
+                    "getBool":      Method("getBool", MType([], BoolType()), True),
+                    "putBool":      Method("putBool", MType([BoolType()], VoidType()), True),
+                    "putBoolLn":    Method("putBoolLn", MType([BoolType()], VoidType()), True),
+                    "putString":    Method("putString", MType([StringType()], VoidType()), True),
+                    "putStringLn":  Method("putStringLn", MType([StringType()], VoidType()), True),
+                    "putLn":        Method("putLn", MType([], VoidType()), True),
                 },
             )
         }
@@ -259,7 +261,7 @@ class CodeGenVisitor(BaseVisitor):
         o.enter_scope()
         frame = Frame("<clinit>", VoidType())
         self.gen_method(
-            MethodDecl(Instance(), Id("<clinit>"), [], Block([])),
+            MethodDecl(Static(), Id("<clinit>"), [], Block([])),
             Scope(frame, o),
             frame,
         )
@@ -293,7 +295,8 @@ class CodeGenVisitor(BaseVisitor):
                     attribute_name, attribute_type, is_final, init_value
                 )
             )
-        attribute = Attribute(attribute_name, attribute_type, init_value)
+        attribute = Attribute(
+            attribute_name, attribute_type, is_static, init_value)
         if is_static:
             self.static_attribute_list.append(attribute)
         else:
@@ -303,6 +306,7 @@ class CodeGenVisitor(BaseVisitor):
     def visitMethodDecl(self, ast, o):
         if ast.name.name == "Constructor":
             ast.name.name = "<init>"
+        is_static = True if isinstance(ast.kind, Static) else False
         frame = Frame(ast.name.name, None)
         o.enter_scope()
         self.gen_method(ast, Scope(frame, o), frame)
@@ -316,6 +320,7 @@ class CodeGenVisitor(BaseVisitor):
                     [param.varType for param in ast.param],
                     self.current_method_return_type,
                 ),
+                is_static
             ),
         )
         o.exit_scope()
@@ -556,27 +561,16 @@ class CodeGenVisitor(BaseVisitor):
             value = o[1]
             o = o[0]
         code = ""
-        is_static = False
         class_name = None
         obj_code, obj_type = self.visit(
             ast.obj, Access(o.frame, o.env, False, False))
-        if type(ast.obj) is Id:
-            if "$" in ast.fieldname.name:
-                is_static = True
-                class_name = ast.obj.name
-            elif obj_code is None or obj_type is None:  # Not a ID
-                is_static = True
-                class_name = ast.obj.name
-            else:  # A local ID
-                is_static = False
-                class_name = obj_type.classname.name
-                code += obj_code
-        else:  # Self literal or expression
-            is_static = False
-            class_name = obj_type.classname.name
-            code += obj_code
-        # Find attribute type
+        if obj_code is None or obj_type is None:  # If it is not a local or expression --> A class name
+            class_name = ast.obj.name
+        else:
+            class_name = obj_type.classname.name  # Type of expression
+        # Find attribute
         attribute = o.env.find_attribute(class_name, ast.fieldname.name)
+
         if attribute is None:
             raise IllegalRuntimeException("Cannot find attribute!")
 
@@ -584,26 +578,23 @@ class CodeGenVisitor(BaseVisitor):
             value_code, value_type = self.visit(
                 value, Access(o.frame, o.env, False, True)
             )
-            code += value_code
-            code += (
-                self.emitter.emitPUTSTATIC(
+            if attribute.is_static:
+                code = value_code + self.emitter.emitPUTSTATIC(
                     class_name + "/" + ast.fieldname.name, attribute.type, o.frame
                 )
-                if is_static
-                else self.emitter.emitPUTFIELD(
+            else:
+                code = obj_code + value_code + self.emitter.emitPUTFIELD(
                     class_name + "/" + ast.fieldname.name, attribute.type, o.frame
                 )
-            )
         else:
-            code += (
-                self.emitter.emitGETSTATIC(
+            if attribute.is_static:
+                code = self.emitter.emitGETSTATIC(
                     class_name + "/" + ast.fieldname.name, attribute.type, o.frame
                 )
-                if is_static
-                else self.emitter.emitGETFIELD(
+            else:
+                code = obj_code + self.emitter.emitGETFIELD(
                     class_name + "/" + ast.fieldname.name, attribute.type, o.frame
                 )
-            )
         return code, attribute.type
 
     def visitArrayCell(self, ast, o):
@@ -761,26 +752,15 @@ class CodeGenVisitor(BaseVisitor):
 
     def visitCallExpr(self, ast, o):
         code = ""
-        is_static = False
         class_name = None
         obj_code, obj_type = self.visit(ast.obj, o)
-        if type(ast.obj) is Id:
-            if "$" in ast.method.name:
-                is_static = True
-                class_name = ast.obj.name
-            elif obj_code is None or obj_type is None:  # Not a ID
-                is_static = True
-                class_name = ast.obj.name
-            else:  # A local ID
-                is_static = False
-                class_name = obj_type.classname.name
-                code += obj_code
-        else:  # Self literal or expression
-            is_static = False
-            class_name = obj_type.classname.name
-            code += obj_code
 
-        # Find return type
+        if obj_code is None or obj_type is None:  # If it is not a local or expression --> A class name
+            class_name = ast.obj.name
+        else:
+            class_name = obj_type.classname.name  # Type of expression
+
+        # Find method
         method = o.env.find_method(class_name, ast.method.name)
         if method is None:
             raise IllegalRuntimeException("Cannot find method!")
@@ -795,40 +775,27 @@ class CodeGenVisitor(BaseVisitor):
                 and type(method.type.partype[i]) is FloatType
             ):
                 code += self.emitter.emitI2F(o.frame)
-
-        code += (
-            self.emitter.emitINVOKESTATIC(
+        
+        if method.is_static:
+            code += self.emitter.emitINVOKESTATIC(
                 class_name + "/" + ast.method.name, method.type, o.frame
             )
-            if is_static
-            else self.emitter.emitINVOKEVIRTUAL(
+        else:
+            code = obj_code + code + self.emitter.emitINVOKEVIRTUAL(
                 class_name + "/" + ast.method.name, method.type, o.frame
             )
-        )
         return code, method.type.rettype
 
     def visitCallStmt(self, ast, o):
         code = ""
-        is_static = False
         class_name = None
         obj_code, obj_type = self.visit(ast.obj, o)
-        if type(ast.obj) is Id:
-            if "$" in ast.method.name:
-                is_static = True
-                class_name = ast.obj.name
-            elif obj_code is None or obj_type is None:  # Not a ID
-                is_static = True
-                class_name = ast.obj.name
-            else:  # A local ID
-                is_static = False
-                class_name = obj_type.classname.name
-                code += obj_code
-        else:  # Self literal or expression
-            is_static = False
-            class_name = obj_type.classname.name
-            code += obj_code
+        if obj_code is None or obj_type is None:  # If it is not a local or expression --> A class name
+            class_name = ast.obj.name
+        else:
+            class_name = obj_type.classname.name  # Type of expression
 
-        # Find return type
+        # Find method
         method = o.env.find_method(class_name, ast.method.name)
         if method is None:
             raise IllegalRuntimeException("Cannot find method!")
@@ -842,15 +809,15 @@ class CodeGenVisitor(BaseVisitor):
                 and type(method.type.partype[i]) is FloatType
             ):
                 code += self.emitter.emitI2F(o.frame)
-        code += (
-            self.emitter.emitINVOKESTATIC(
+        
+        if method.is_static:
+            code += self.emitter.emitINVOKESTATIC(
                 class_name + "/" + ast.method.name, method.type, o.frame
             )
-            if is_static
-            else self.emitter.emitINVOKEVIRTUAL(
+        else:
+            code = obj_code + code + self.emitter.emitINVOKEVIRTUAL(
                 class_name + "/" + ast.method.name, method.type, o.frame
             )
-        )
         if type(method.type.rettype) is not VoidType:
             code += self.emitter.emitPOP(o.frame)
         return code
