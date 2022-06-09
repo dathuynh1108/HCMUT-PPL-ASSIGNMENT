@@ -4,12 +4,12 @@
                     Var true: Boolean = True;
                     Var false: Boolean = False;
 
-                    io.putBool(true && false);
-                    io.putBool(true && True);
-                    io.putBool(!true);
-                    io.putBool(!false);
-                    io.putBool(!True);
-                    io.putBool(!False);
+                    io.writeBool(true && false);
+                    io.writeBool(true && True);
+                    io.writeBool(!true);
+                    io.writeBool(!false);
+                    io.writeBool(!True);
+                    io.writeBool(!False);
                 }
             }
         

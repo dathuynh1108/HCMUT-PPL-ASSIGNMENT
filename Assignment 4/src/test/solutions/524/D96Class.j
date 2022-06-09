@@ -45,7 +45,7 @@ Label0:
 	fadd
 	ldc 0.1
 	fadd
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	iload_1
 	iload_2
 	iload_1
@@ -53,7 +53,7 @@ Label0:
 	iload_2
 	irem
 	iadd
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 Label1:
 	return
 .limit stack 3

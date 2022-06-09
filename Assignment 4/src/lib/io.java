@@ -3,7 +3,7 @@
 import java.io.*;
 import java.io.IOException;
 
-//import d96.codegeneration.IllegalRuntimeException;
+//import bkool.codegeneration.IllegalRuntimeException;
 
 
 public class io {
@@ -19,7 +19,7 @@ public class io {
 	/** reads and returns an integer value from the standard input
 	 *	@return int an integer number read from standard input
 	 */
-	public static int getInt()  {
+	public static int readInt()  {
         String tmp = ""; 
 		try {
 			tmp = input.readLine();
@@ -36,7 +36,7 @@ public class io {
     /** print out the value of the integer i to the standard output
      *	@param i the value is printed out
      */
-    public static void putInt(int i) {
+    public static void writeInt(int i) {
     	
         System.out.print(i+"");
     		
@@ -45,14 +45,14 @@ public class io {
     /** same as putInt except that it also prints a newline
      *	@param i the value is printed out
      */	
-    public static void putIntLn(int i)  {
+    public static void writeIntLn(int i)  {
     	System.out.println(i+"");
     }
     
     /** return a floating-point value read from the standard input
      *	@return float the floating-point value
      */
-    public static float getFloat()  {   
+    public static float readFloat()  {   
     	String tmp ="";
         try {
             tmp = input.readLine();
@@ -70,21 +70,21 @@ public class io {
     /** print out the value of the float f to the standard output
      *	@param f the floating-point value is printed out
      */
-    public static void putFloat(float f)  {
+    public static void writeFloat(float f)  {
     	System.out.print(f+"");
     }
     
     /** same as putFloat except that it also prints a newline
      *	@param f the floating-point value is printed out
      */
-    public static void putFloatLn(float f)  {
+    public static void writeFloatLn(float f)  {
     	System.out.println(f+"");
     }
     
 	/** reads and returns a boolean value from the standard input
 	 *	@return int a boolean value read from standard input
 	 */
-	public static boolean getBool() {
+	public static boolean readBool() {
         String tmp = "";
 		try {
             tmp = input.readLine();
@@ -102,14 +102,14 @@ public class io {
     /** print out the value of the boolean b to the standard output
      *	@param b the boolean value is printed out
      */
-    public static void putBool(boolean b)  {
+    public static void writeBool(boolean b)  {
     	System.out.print(b+"");
     }
     
     /** same as putBoolLn except that it also prints a new line
      *	@param b the boolean value is printed out
      */
-    public static void putBoolLn(boolean b) {
+    public static void writeBoolLn(boolean b) {
     	System.out.println(b+"");
     }
     /** reads and returns a boolean value from the standard input
@@ -129,20 +129,31 @@ public class io {
     /** prints the value of the string to the standard output
      *	@param a the string is printed out
      */
-     public static void putString(String a ) {
-    	 System.out.print(a);
+     public static String readStr() {
+    	 String tmp ="";
+        try {
+            tmp = input.readLine();
+            return tmp;
+        } 
+        catch (IOException e) {
+            e.printStackTrace();;
+        }
+        catch (NumberFormatException e) {
+            e.printStackTrace();;
+        }
+        return tmp;
     }
     
     /** same as putString except that it also prints a new line
      *	@param a the string is printed out
      */
-    public static void putStringLn(String a)  {
-    	System.out.println(a);
+    public static void writeStr(String a)  {
+    	System.out.print(a);
     }
     /** print out an empty line
      **/
-    public static void putLn()  {
-    	System.out.println();
+    public static void writeStrLn(String a)  {
+    	System.out.println(a);
     }
     
     public static void close() {
@@ -153,4 +164,3 @@ public class io {
 		}
     }
 }
-

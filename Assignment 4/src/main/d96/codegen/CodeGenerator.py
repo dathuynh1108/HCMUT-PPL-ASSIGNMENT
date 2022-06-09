@@ -49,13 +49,16 @@ class Enviroment:
     def __init__(self, global_env={}, local_env=[{}]):
         self.global_env = global_env
         self.local_env = local_env
+        self.parent = {}
+
+    def set_inheritance(self, current_class, parent_class):
+        self.parent[current_class] = parent_class
 
     def enter_class(self, class_name):
         self.global_env[class_name] = Class_scope()
 
     def enter_scope(self):
-        self.local_env = [{}] + \
-            self.local_env if self.local_env is not None else [{}]
+        self.local_env = [{}] + self.local_env if self.local_env is not None else [{}]
 
     def exit_scope(self):
         self.local_env.pop(0)
@@ -78,10 +81,18 @@ class Enviroment:
         return None
 
     def find_attribute(self, class_name, attribute_name):
-        return self.global_env[class_name].find_attribute(attribute_name)
+        while class_name is not None:
+            attribute = self.global_env[class_name].find_attribute(attribute_name)
+            if attribute is not None: return attribute
+            class_name = self.parent[class_name]
+        return None
 
     def find_method(self, class_name, method_name):
-        return self.global_env[class_name].find_method(method_name)
+        while class_name is not None:
+            method = self.global_env[class_name].find_method(method_name)
+            if method is not None: return method
+            class_name = self.parent[class_name]
+        return None
 
     def copy(self):
         return Enviroment(self.global_env, self.local_env.copy())
@@ -122,11 +133,12 @@ class Scope:
 
 
 class Access:
-    def __init__(self, frame, env, is_left, is_first):
+    def __init__(self, frame, env, is_left, is_first, type = None):
         self.frame = frame
         self.env = env
         self.is_left = is_left
         self.is_first = is_first
+        self.type = type
 
 
 class Val(ABC):
@@ -160,18 +172,19 @@ class CodeGenerator:
             "io": Class_scope(
                 {},
                 {
-                    "getInt":       Method("getInt", MType([], IntType()), True),
-                    "putInt":       Method("putInt", MType([IntType()], VoidType()), True),
-                    "putIntLn":     Method("putIntLn", MType([IntType()], VoidType()), True),
-                    "getFloat":     Method("getFloat", MType([], FloatType()), True),
-                    "putFloat":     Method("putFloat", MType([FloatType()], VoidType()), True),
-                    "putFloatLn":   Method("putFloatLn", MType([FloatType()], VoidType()), True),
-                    "getBool":      Method("getBool", MType([], BoolType()), True),
-                    "putBool":      Method("putBool", MType([BoolType()], VoidType()), True),
-                    "putBoolLn":    Method("putBoolLn", MType([BoolType()], VoidType()), True),
-                    "putString":    Method("putString", MType([StringType()], VoidType()), True),
-                    "putStringLn":  Method("putStringLn", MType([StringType()], VoidType()), True),
-                    "putLn":        Method("putLn", MType([], VoidType()), True),
+                    "readInt":          Method("readInt", MType([], IntType()), True),
+                    "writeInt":         Method("writeInt", MType([IntType()], VoidType()), True),
+                    # "wtiteIntLn":       Method("writeIntLn", MType([IntType()], VoidType()), True),
+                    "readFloat":        Method("readFloat", MType([], FloatType()), True),
+                    "writeFloat":       Method("writeFloat", MType([FloatType()], VoidType()), True),
+                    # "writeFloatLn":     Method("writeFloatLn", MType([FloatType()], VoidType()), True),
+                    "readBool":         Method("readBool", MType([], BoolType()), True),
+                    "writeBool":        Method("writeBool", MType([BoolType()], VoidType()), True),
+                    # "writeBoolLn":      Method("writeBoolLn", MType([BoolType()], VoidType()), True),
+                    "readStr":          Method("readStr", MType([], StringType()), True),
+                    "writeStr":      Method("writeStr", MType([StringType()], VoidType()), True),
+                    # "writeStr":    Method("writeStr", MType([StringType()], VoidType()), True),
+                    # "writeLn":          Method("writeLn", MType([], VoidType()), True),
                 },
             )
         }
@@ -211,7 +224,9 @@ class CodeGenVisitor(BaseVisitor):
         self.parent_class_name = "java/lang/Object"
         if ast.parentname is not None:
             self.parent_class_name = ast.parentname.name
-
+            o.set_inheritance(ast.classname.name, ast.parentname.name)    
+        else:
+            o.set_inheritance(ast.classname.name, None)
         self.emitter.printout(
             self.emitter.emitPROLOG(self.class_name, self.parent_class_name)
         )
@@ -241,6 +256,7 @@ class CodeGenVisitor(BaseVisitor):
         if not has_default_init:
             self.gen_default_instance_constructor(o)
         self.gen_default_class_contructor(o)
+
 
         for method_decl in method_decl_list:
             self.visit(method_decl, o)
@@ -376,9 +392,9 @@ class CodeGenVisitor(BaseVisitor):
                 code += self.emitter.emitTHIS(frame)
                 init_code, init_type = self.visit(
                     instance_attribute.init_value, Access(
-                        frame, self.env, False, False)
+                        frame, o.env, False, False)
                 )
-                if type(instance_attribute.type) is FloatType and type(init_type) is IntType: 
+                if type(instance_attribute.type) is FloatType and type(init_type) is IntType:
                     init_code += self.emitter.emitI2F(o.frame)
                 code += init_code
                 code += self.emitter.emitPUTFIELD(
@@ -392,9 +408,9 @@ class CodeGenVisitor(BaseVisitor):
                     continue
                 init_code, init_type = self.visit(
                     static_attribute.init_value, Access(
-                        frame, self.env, False, False)
+                        frame, o.env, False, False)
                 )
-                if type(static_attribute.type) is FloatType and type(init_type) is IntType: 
+                if type(static_attribute.type) is FloatType and type(init_type) is IntType:
                     init_code += self.emitter.emitI2F(o.frame)
                 code += init_code
                 code += self.emitter.emitPUTSTATIC(
@@ -438,15 +454,10 @@ class CodeGenVisitor(BaseVisitor):
 
     def visitConstDecl(self, ast, o):
         index = o.frame.getNewIndex()
-        o.env.insert_local(ast.constant.name, Local(ast.constant.name, ast.constType, index))
-        code = self.emitter.emitVAR(
-            index,
-            ast.constant.name,
-            ast.constType,
-            o.frame.getStartLabel(),
-            o.frame.getEndLabel(),
-            o.frame,
-        )
+        o.env.insert_local(ast.constant.name, Local(
+            ast.constant.name, ast.constType, index))
+        code = self.emitter.emitVAR(index, ast.constant.name, ast.constType,
+                                    o.frame.getStartLabel(), o.frame.getEndLabel(), o.frame)
         if ast.value is not None:
             code += self.visit(Assign(ast.constant, ast.value), o)
         return code
@@ -461,30 +472,16 @@ class CodeGenVisitor(BaseVisitor):
         left_code, left_type = self.visit(ast.left, o)
         right_code, right_type = self.visit(ast.right, o)
         return_type = left_type
-        if (
-            type(left_type) is FloatType
-            or type(right_type) is FloatType
-            or ast.op == "/"
-        ):
+        if type(left_type) is FloatType or type(right_type) is FloatType or ast.op == "/":
             return_type = FloatType()
             if type(left_type) is IntType:
                 left_code += self.emitter.emitI2F(o.frame)
             if type(right_type) is IntType:
                 right_code += self.emitter.emitI2F(o.frame)
         if ast.op in ["+", "-"]:
-            return (
-                left_code
-                + right_code
-                + self.emitter.emitADDOP(ast.op, return_type, o.frame),
-                return_type,
-            )
+            return left_code + right_code + self.emitter.emitADDOP(ast.op, return_type, o.frame), return_type
         if ast.op in ["*", "/"]:
-            return (
-                left_code
-                + right_code
-                + self.emitter.emitMULOP(ast.op, return_type, o.frame),
-                return_type,
-            )
+            return left_code + right_code + self.emitter.emitMULOP(ast.op, return_type, o.frame), return_type
         if ast.op == "%":
             return left_code + right_code + self.emitter.emitMOD(o.frame), return_type
         if ast.op == "&&":
@@ -501,16 +498,7 @@ class CodeGenVisitor(BaseVisitor):
         if ast.op == "+.":
             #   invokedynamic 0:makeConcatWithConstants(Ljava/lang/String;)Ljava/lang/String;
             # 	invokevirtual java/lang/String/concat(Ljava/lang/String;)Ljava/lang/String;
-            return (
-                left_code
-                + right_code
-                + self.emitter.emitINVOKEVIRTUAL(
-                    "java/lang/String/concat",
-                    MType([StringType()], StringType()),
-                    o.frame,
-                ),
-                StringType(),
-            )
+            return left_code + right_code + self.emitter.emitINVOKEVIRTUAL("java/lang/String/concat", MType([StringType()], StringType()), o.frame), StringType()
 
     def visitNewExpr(self, ast, o):
         code = self.emitter.emitNEW(ast.classname.name, ast.param, o.frame)
@@ -549,11 +537,11 @@ class CodeGenVisitor(BaseVisitor):
         # Array cell is same as field access
         if type(ast.lhs) is ArrayCell:
             return self.visit(ast.lhs, (Access(o.frame, o.env, True, True), ast.exp))[0]
-        right_code, right_type = self.visit(
-            ast.exp, Access(o.frame, o.env, False, True)
-        )
-        left_code, left_type = self.visit(
-            ast.lhs, Access(o.frame, o.env, True, True))
+        
+        o.frame.push()
+        left_code, left_type = self.visit(ast.lhs, Access(o.frame, o.env, True, True))
+        right_code, right_type = self.visit(ast.exp, Access(o.frame, o.env, False, True, left_type))
+        o.frame.pop()
         code = right_code
         if type(right_type) is IntType and type(left_type) is FloatType:
             code += self.emitter.emitI2F(o.frame)
@@ -582,7 +570,9 @@ class CodeGenVisitor(BaseVisitor):
             value_code, value_type = self.visit(
                 value, Access(o.frame, o.env, False, True)
             )
-            if attribute.is_static:
+            if type(value_type) is IntType and type(attribute.type) is FloatType: 
+                value_code += self.emitter.emitI2F(o.frame)
+            if attribute.is_static: 
                 code = value_code + self.emitter.emitPUTSTATIC(
                     class_name + "/" + ast.fieldname.name, attribute.type, o.frame
                 )
@@ -616,16 +606,13 @@ class CodeGenVisitor(BaseVisitor):
             code += idx_code
             code += self.emitter.emitALOAD(arr_type, o.frame)
             arr_type = arr_type.eleType
-        idx_code, idx_type = self.visit(
-            ast.idx[-1], Access(o.frame, o.env, False, True)
-        )
+        idx_code, idx_type = self.visit(ast.idx[-1], Access(o.frame, o.env, False, True))
         if o.is_left:
-
-            value_code, value_type = self.visit(
-                value, Access(o.frame, o.env, False, True)
-            )
-            code += idx_code + value_code + \
-                self.emitter.emitASTORE(arr_type, o.frame)
+            value_code, value_type = self.visit(value, Access(o.frame, o.env, False, True))
+            if type(value_type) is IntType and type(arr_type) is FloatType:
+                code += idx_code + value_code + self.emitter.emitI2F(o.frame) + self.emitter.emitASTORE(arr_type, o.frame)
+            else: code += idx_code + value_code + self.emitter.emitASTORE(arr_type, o.frame)
+            
         else:
             code += idx_code + self.emitter.emitALOAD(arr_type, o.frame)
         return code, arr_type
@@ -654,14 +641,17 @@ class CodeGenVisitor(BaseVisitor):
 
     def visitFor(self, ast, o):
         code = ""
+        # Protect expr2 and expr3, use static Id to save because Id in foreach never be a static
+        code += self.visit(VarDecl(Id("$protect_expr2"),IntType()), o)
+        code += self.visit(VarDecl(Id("$protect_expr3"),IntType()), o)
+        code += self.visit(Assign(Id("$protect_expr2"), ast.expr2), o)
+        code += self.visit(Assign(Id("$protect_expr3"), ast.expr3), o)
+
         if ast.expr3 is None:
             ast.expr3 = IntLiteral(1)
-        expr1_code, _ = self.visit(
-            ast.expr1, Access(o.frame, o.env, False, True))
-        expr2_code, _ = self.visit(
-            ast.expr2, Access(o.frame, o.env, False, True))
-        expr3_code, _ = self.visit(
-            ast.expr3, Access(o.frame, o.env, False, True))
+        expr1_code, _ = self.visit(ast.expr1, Access(o.frame, o.env, False, True))
+        expr2_code, _ = self.visit(Id("$protect_expr2"), Access(o.frame, o.env, False, True))
+        expr3_code, _ = self.visit(Id("$protect_expr3"), Access(o.frame, o.env, False, True))
         id_write_code, _ = self.visit(ast.id, Access(
             o.frame, o.env, True, True))  # Write code
         id_read_code, _ = self.visit(ast.id, Access(
@@ -734,7 +724,7 @@ class CodeGenVisitor(BaseVisitor):
         code += id_write_code
         code += self.emitter.emitGOTO(label_start_loop, o.frame)
         code += self.emitter.emitLABEL(o.frame.getBreakLabel(), o.frame)
-        o.frame.exitLoop()
+        o.frame.exitLoop()        
         return code
 
     def visitBreak(self, ast, o):
@@ -767,7 +757,8 @@ class CodeGenVisitor(BaseVisitor):
         # Find method
         method = o.env.find_method(class_name, ast.method.name)
         if method is None:
-            raise IllegalRuntimeException("Cannot find method!")
+            raise IllegalRuntimeException(
+                "Cannot find method:", ast.method.name, "!")
 
         for i in range(len(ast.param)):
             argument_code, argument_type = self.visit(
@@ -779,7 +770,7 @@ class CodeGenVisitor(BaseVisitor):
                 and type(method.type.partype[i]) is FloatType
             ):
                 code += self.emitter.emitI2F(o.frame)
-        
+
         if method.is_static:
             code += self.emitter.emitINVOKESTATIC(
                 class_name + "/" + ast.method.name, method.type, o.frame
@@ -793,7 +784,8 @@ class CodeGenVisitor(BaseVisitor):
     def visitCallStmt(self, ast, o):
         code = ""
         class_name = None
-        obj_code, obj_type = self.visit(ast.obj, Access(o.frame, o.env, False, True))
+        obj_code, obj_type = self.visit(
+            ast.obj, Access(o.frame, o.env, False, True))
         if obj_code is None or obj_type is None:  # If it is not a local or expression --> A class name
             class_name = ast.obj.name
         else:
@@ -813,7 +805,7 @@ class CodeGenVisitor(BaseVisitor):
                 and type(method.type.partype[i]) is FloatType
             ):
                 code += self.emitter.emitI2F(o.frame)
-        
+
         if method.is_static:
             code += self.emitter.emitINVOKESTATIC(
                 class_name + "/" + ast.method.name, method.type, o.frame
@@ -834,17 +826,9 @@ class CodeGenVisitor(BaseVisitor):
             return None, None
         # Write
         if o.is_left:
-            return (
-                self.emitter.emitWRITEVAR(
-                    ast.name, local.type, local.index, o.frame),
-                local.type,
-            )
+            return self.emitter.emitWRITEVAR(ast.name, local.type, local.index, o.frame), local.type
         # Read
-        return (
-            self.emitter.emitREADVAR(
-                ast.name, local.type, local.index, o.frame),
-            local.type,
-        )
+        return self.emitter.emitREADVAR(ast.name, local.type, local.index, o.frame), local.type
 
     def visitIntLiteral(self, ast, o):
         return self.emitter.emitPUSHICONST(ast.value, o.frame), IntType()
@@ -869,15 +853,16 @@ class CodeGenVisitor(BaseVisitor):
     def visitArrayLiteral(self, ast, o):
         code = ""
         element_type = None
-        o.frame.push()  # Virtual emit array, need emit after because we don't know type of element at this line
+        o.frame.push()  # Virtual emit array, need emit after because we don't know type of element at this line   
         for i in range(len(ast.value)):
             code += self.emitter.emitDUP(o.frame)
             code += self.emitter.emitPUSHICONST(i, o.frame)
-            element_code, element_type = self.visit(ast.value[i], o)
+            element_code, element_type = self.visit(ast.value[i], Access(o.frame, o.env, o.is_left, o.is_first, o.type.eleType))
+            if type(element_type) is IntType and type(o.type.eleType) is FloatType: element_code += self.emitter.emitI2F(o.frame)
             code += element_code
-            code += self.emitter.emitASTORE(element_type, o.frame)
+            code += self.emitter.emitASTORE(o.type.eleType, o.frame)
         o.frame.pop()  # Reset frame
-        array_type = ArrayType(len(ast.value), element_type)
+        array_type = ArrayType(len(ast.value), o.type.eleType)
         code = self.emitter.emitARRAY(array_type, o.frame) + code
         return code, array_type
 

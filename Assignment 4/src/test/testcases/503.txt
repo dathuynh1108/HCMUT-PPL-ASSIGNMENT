@@ -1,40 +1,40 @@
 
             Class D96Class {
                 main() {
-                    io.putBool(True);
-                    io.putBoolLn(False);
-                    io.putBool(True);
-                    io.putBoolLn(False);
+                    io.writeBool(True);
+                    io.writeBool(False);
+                    io.writeBool(True);
+                    io.writeBool(False);
 
-                    io.putBool(True && True);
-                    io.putBool(True && False);
-                    io.putBool(False && True);
-                    io.putBool(False && False);
-                    io.putBool(True || True);
-                    io.putBool(True || False);
-                    io.putBool(False || True);
-                    io.putBool(False || False);
+                    io.writeBool(True && True);
+                    io.writeBool(True && False);
+                    io.writeBool(False && True);
+                    io.writeBool(False && False);
+                    io.writeBool(True || True);
+                    io.writeBool(True || False);
+                    io.writeBool(False || True);
+                    io.writeBool(False || False);
         
-                    io.putBool(1 > 2);
-                    io.putBool(1 >= 2);
-                    io.putBool(1 < 2);
-                    io.putBool(1 <= 2);
-                    io.putBool(1 == 2);
-                    io.putBool(1 != 2);
+                    io.writeBool(1 > 2);
+                    io.writeBool(1 >= 2);
+                    io.writeBool(1 < 2);
+                    io.writeBool(1 <= 2);
+                    io.writeBool(1 == 2);
+                    io.writeBool(1 != 2);
 
-                    io.putBool(1.1 > 2);
-                    io.putBool(1.1 >= 2);
-                    io.putBool(1.1 < 2);
-                    io.putBool(1.1 <= 2);
-                    io.putBool(1.1 == 2);
-                    io.putBool(1.1 != 2);    
+                    io.writeBool(1.1 > 2);
+                    io.writeBool(1.1 >= 2);
+                    io.writeBool(1.1 < 2);
+                    io.writeBool(1.1 <= 2);
+                    io.writeBool(1.1 == 2);
+                    io.writeBool(1.1 != 2);    
 
-                    io.putBool(1.1 > 2.1);
-                    io.putBool(1.1 >= 2.1);
-                    io.putBool(1.1 < 2.1);
-                    io.putBool(1.1 <= 2.1);
-                    io.putBool(1.1 == 2.1);
-                    io.putBool(1.1 != 2.1);    
+                    io.writeBool(1.1 > 2.1);
+                    io.writeBool(1.1 >= 2.1);
+                    io.writeBool(1.1 < 2.1);
+                    io.writeBool(1.1 <= 2.1);
+                    io.writeBool(1.1 == 2.1);
+                    io.writeBool(1.1 != 2.1);    
                 }
             }
         

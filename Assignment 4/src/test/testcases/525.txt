@@ -16,23 +16,23 @@
                     Var x: Float = 1;
                     Var y: Float = 2;
                     
-                    io.putInt(a + b);
-                    io.putInt(a + a);
-                    io.putInt(b + b);
-                    io.putInt(a + Self.a);
-                    io.putInt(a + Self.b);
+                    io.writeInt(a + b);
+                    io.writeInt(a + a);
+                    io.writeInt(b + b);
+                    io.writeInt(a + Self.a);
+                    io.writeInt(a + Self.b);
 
-                    io.putFloat(a + b);
-                    io.putFloat(a + a);
-                    io.putFloat(b + b);
-                    io.putFloat(a + Self.a);
-                    io.putFloat(a + Self.b);
-                    io.putFloat(Self. a + Self.b);
-                    io.putFloat(x + y);
-                    io.putFloat(a + x);
-                    io.putFloat(a + y);
-                    io.putFloat(a + Self.x);
-                    io.putFloat(a + Self.y);
+                    io.writeFloat(a + b);
+                    io.writeFloat(a + a);
+                    io.writeFloat(b + b);
+                    io.writeFloat(a + Self.a);
+                    io.writeFloat(a + Self.b);
+                    io.writeFloat(Self. a + Self.b);
+                    io.writeFloat(x + y);
+                    io.writeFloat(a + x);
+                    io.writeFloat(a + y);
+                    io.writeFloat(a + Self.x);
+                    io.writeFloat(a + Self.y);
                 }
                 main() {
                     Var d: D96Class = New D96Class();

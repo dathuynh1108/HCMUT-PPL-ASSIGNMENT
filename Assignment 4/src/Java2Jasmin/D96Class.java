@@ -7,10 +7,7 @@ public class D96Class  {
               return 1;
        }
        public static void main(String[] args) {
-              int x = 1;
-              int y = 1;
-
-              int a = x % y;
+              float a[] = {1,2,3};
        }
 
 }

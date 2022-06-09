@@ -33,7 +33,7 @@ Label0:
 	getstatic D96Class/$name Ljava/lang/String;
 	getstatic D96Class/$escapeSequence Ljava/lang/String;
 	invokevirtual java/lang/String/concat(Ljava/lang/String;)Ljava/lang/String;
-	invokestatic io/putString(Ljava/lang/String;)V
+	invokestatic io/writeStr(Ljava/lang/String;)V
 Label1:
 	return
 .limit stack 2

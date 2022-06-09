@@ -1,0 +1,21 @@
+
+            Class D96Class {
+                method_1() {
+                    Return Self;
+                }
+                main() {
+                    Var a: Array[Array[Int, 2], 5] = Array(
+                        Array(1,2,3,4,5),
+                        Array(1,2,3,4,5)
+                    );
+                    a[1] = Array(6,7,8,9,10);
+                    Var i: Int;
+                    Var j: Int;
+                    Foreach (i In 0 .. 1) {
+                        Foreach(j In 0 .. 4) {
+                            io.writeInt(a[i][j]);
+                        }
+                    }
+                }
+            }
+        

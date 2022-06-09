@@ -2,16 +2,16 @@
             Class D96Class {
                 main() {
                     If (1 > 2) {
-                        io.putString("False");
+                        io.writeStr("False");
                     }
                     Elseif (1 > 3) {
-                        io.putString("False");
+                        io.writeStr("False");
                     }
                     Elseif (1 > 4) {
-                        io.putString("False");
+                        io.writeStr("False");
                     }
                     Elseif (1 == 1) {
-                        io.putString("True");
+                        io.writeStr("True");
                     }
                 }
             }

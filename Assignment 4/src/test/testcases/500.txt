@@ -1,9 +1,8 @@
 
             Class D96Class {
                 main() {
-                    io.putStringLn("Huynh Thanh Dat");
-                    io.putString("1910110");
-                    io.putLn();
+                    io.writeStr("Huynh Thanh Dat\n");
+                    io.writeStr("1910110\n");
                 }
             }
         

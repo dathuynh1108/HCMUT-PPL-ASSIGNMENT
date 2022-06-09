@@ -32,7 +32,7 @@ Label0:
 	ldc "Huynh Thanh Dat"
 	astore_1
 	aload_1
-	invokestatic io/putStringLn(Ljava/lang/String;)V
+	invokestatic io/writeStr(Ljava/lang/String;)V
 .var 2 is d LD96Class; from Label0 to Label1
 	new D96Class
 	dup
@@ -40,7 +40,7 @@ Label0:
 	astore_2
 	aload_2
 	getfield D96Class/a Ljava/lang/String;
-	invokestatic io/putStringLn(Ljava/lang/String;)V
+	invokestatic io/writeStr(Ljava/lang/String;)V
 Label1:
 	return
 .limit stack 2

@@ -34,11 +34,17 @@ Label0:
 	bipush 10
 	istore_3
 .var 4 is temp I from Label0 to Label1
+.var 5 is $protect_expr2 I from Label0 to Label1
+.var 6 is $protect_expr3 I from Label0 to Label1
+	iload_3
+	istore 5
+	iconst_1
+	istore 6
 	iload_2
 	istore_1
 Label2:
 	iload_2
-	iload_3
+	iload 5
 	if_icmple Label8
 	iconst_1
 	goto Label9
@@ -47,7 +53,7 @@ Label8:
 Label9:
 	ifgt Label3
 	iload_1
-	iload_3
+	iload 5
 	if_icmple Label10
 	iconst_1
 	goto Label11
@@ -58,7 +64,7 @@ Label11:
 	goto Label4
 Label3:
 	iload_1
-	iload_3
+	iload 5
 	if_icmpge Label12
 	iconst_1
 	goto Label13
@@ -68,7 +74,7 @@ Label13:
 	ifgt Label7
 Label4:
 	iload_1
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	iload_2
 	istore 4
 	iload_3
@@ -77,7 +83,7 @@ Label4:
 	istore_3
 Label6:
 	iload_2
-	iload_3
+	iload 5
 	if_icmple Label14
 	iconst_1
 	goto Label15
@@ -86,13 +92,13 @@ Label14:
 Label15:
 	ifgt Label5
 	iload_1
-	iconst_1
+	iload 6
 	iadd
 	istore_1
 	goto Label2
 Label5:
 	iload_1
-	iconst_1
+	iload 6
 	isub
 	istore_1
 	goto Label2
@@ -100,5 +106,5 @@ Label7:
 Label1:
 	return
 .limit stack 3
-.limit locals 5
+.limit locals 7
 .end method

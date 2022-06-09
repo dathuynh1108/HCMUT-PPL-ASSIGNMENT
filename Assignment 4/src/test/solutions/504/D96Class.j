@@ -25,9 +25,9 @@ Label1:
 .var 0 is args [Ljava/lang/String; from Label0 to Label1
 Label0:
 	ldc "Dat"
-	ldc "Huynh"
+	ldc "Huynh\n"
 	invokevirtual java/lang/String/concat(Ljava/lang/String;)Ljava/lang/String;
-	invokestatic io/putStringLn(Ljava/lang/String;)V
+	invokestatic io/writeStr(Ljava/lang/String;)V
 	ldc "Dat"
 	ldc "Dat"
 	if_acmpne Label2
@@ -36,7 +36,7 @@ Label0:
 Label2:
 	iconst_0
 Label3:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	ldc "Dat"
 	ldc "Huynh"
 	if_acmpne Label4
@@ -45,7 +45,7 @@ Label3:
 Label4:
 	iconst_0
 Label5:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 Label1:
 	return
 .limit stack 2

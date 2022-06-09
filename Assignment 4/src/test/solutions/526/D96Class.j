@@ -53,47 +53,47 @@ Label0:
 	getstatic D96Class/$a I
 	iload_2
 	iadd
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	getstatic D96Class/$a I
 	iload_1
 	iadd
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	getstatic D96Class/$b I
 	iload_2
 	iadd
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	getstatic D96Class/$a I
 	iload_2
 	iadd
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	getstatic D96Class/$a I
 	getstatic D96Class/$b I
 	iadd
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	getstatic D96Class/$a I
 	i2f
 	fload_3
 	fadd
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	getstatic D96Class/$a I
 	i2f
 	fload 4
 	fadd
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	getstatic D96Class/$x F
 	iload_1
 	i2f
 	fadd
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	getstatic D96Class/$x F
 	iload_2
 	i2f
 	fadd
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	getstatic D96Class/$x F
 	getstatic D96Class/$y F
 	fadd
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 Label1:
 	return
 .limit stack 2

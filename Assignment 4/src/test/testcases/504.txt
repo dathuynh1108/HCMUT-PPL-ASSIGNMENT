@@ -1,9 +1,9 @@
 
             Class D96Class {
                 main() {
-                    io.putStringLn("Dat" +. "Huynh");
-                    io.putBool("Dat" ==. "Dat");
-                    io.putBool("Dat" ==. "Huynh");
+                    io.writeStr("Dat" +. "Huynh\n");
+                    io.writeBool("Dat" ==. "Dat");
+                    io.writeBool("Dat" ==. "Huynh");
                 }
             }
         

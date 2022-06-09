@@ -71,7 +71,7 @@ Label0:
 	invokespecial D96Class/<init>(I)V
 	astore_2
 	ldc "OK"
-	invokestatic io/putString(Ljava/lang/String;)V
+	invokestatic io/writeStr(Ljava/lang/String;)V
 Label1:
 	return
 .limit stack 3

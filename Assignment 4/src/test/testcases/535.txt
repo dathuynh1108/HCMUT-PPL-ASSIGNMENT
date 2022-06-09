@@ -1,0 +1,15 @@
+
+            Class D96Class {
+                method_1() {
+                    Return Self;
+                }
+                main() {
+                    Var a: Array[Int, 5] = Array(1,2,3,4,5);
+                    a = Array(-1,-2,-3,-4,-5);
+                    Var i: Int;
+                    Foreach (i In 0 .. 4) {
+                        io.writeInt(a[i]);
+                    }
+                }
+            }
+        

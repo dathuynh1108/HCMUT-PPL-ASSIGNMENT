@@ -97,7 +97,7 @@ Label0:
 	aaload
 	iconst_0
 	iaload
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	aload_1
 	iconst_0
 	aaload
@@ -113,7 +113,7 @@ Label0:
 	aaload
 	iconst_0
 	iaload
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 Label1:
 	return
 .limit stack 10

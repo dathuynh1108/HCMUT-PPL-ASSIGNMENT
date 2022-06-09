@@ -1,0 +1,18 @@
+
+            Class D96Class {
+                method_1() {
+                    Return Self;
+                }
+                main() {
+                    Var i: Int = 1;
+                    Foreach (i In 1 .. 10) {
+                        If (i % 2 == 0) {
+                            io.writeStr("even ");
+                        }
+                        Else {
+                            io.writeStr("odd ");
+                        }
+                    }
+                }
+            }
+        

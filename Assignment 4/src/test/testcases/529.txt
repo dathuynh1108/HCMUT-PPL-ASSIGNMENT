@@ -3,14 +3,14 @@
                 Var $true: Boolean = True;
                 Var $false: Boolean = False;
                 main() {
-                    io.putBool(D96Class::$true && D96Class::$false);
-                    io.putBool(D96Class::$true && True);
-                    io.putBool(!D96Class::$true && D96Class::$false);
-                    io.putBool(!D96Class::$true && True);
-                    io.putBool(!D96Class::$true);
-                    io.putBool(!D96Class::$false);
-                    io.putBool(!D96Class::$true);
-                    io.putBool(!D96Class::$false);
+                    io.writeBool(D96Class::$true && D96Class::$false);
+                    io.writeBool(D96Class::$true && True);
+                    io.writeBool(!D96Class::$true && D96Class::$false);
+                    io.writeBool(!D96Class::$true && True);
+                    io.writeBool(!D96Class::$true);
+                    io.writeBool(!D96Class::$false);
+                    io.writeBool(!D96Class::$true);
+                    io.writeBool(!D96Class::$false);
                 }
             }
         

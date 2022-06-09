@@ -14,7 +14,7 @@ Label0:
 	iconst_0
 	putfield D96Class.a I
 	ldc "<init>"
-	invokestatic io/putStringLn(Ljava/lang/String;)V
+	invokestatic io/writeStr(Ljava/lang/String;)V
 Label1:
 	return
 .limit stack 2

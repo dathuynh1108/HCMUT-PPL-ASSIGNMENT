@@ -5,7 +5,7 @@
                     Var a: Int = 1;
                     Var b: Int = 10;
                     Foreach (i In a .. b) {
-                        io.putInt(i);
+                        io.writeInt(i);
                         Continue;
                         Break;
                     }

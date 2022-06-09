@@ -7,7 +7,7 @@
                 Constructor(x: Int) {}
                 main() {
                     Var x, y: D96Class = New D96Class(), New D96Class(1);
-                    io.putString("OK");
+                    io.writeStr("OK");
                 }
             }
         

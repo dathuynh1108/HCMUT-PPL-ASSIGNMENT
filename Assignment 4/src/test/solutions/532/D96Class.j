@@ -80,7 +80,7 @@ Label0:
 	astore_1
 	aload_1
 	invokevirtual D96Class/method_3()I
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 Label1:
 	return
 .limit stack 2

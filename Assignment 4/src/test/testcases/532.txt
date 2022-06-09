@@ -15,7 +15,7 @@
                 }
                 main() {
                     Var x: D96Class = New D96Class();
-                    io.putInt(x.method_3());
+                    io.writeInt(x.method_3());
                 }
             }
         

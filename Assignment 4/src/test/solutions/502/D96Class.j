@@ -25,72 +25,72 @@ Label1:
 .var 0 is args [Ljava/lang/String; from Label0 to Label1
 Label0:
 	ldc 1.1
-	invokestatic io/putFloatLn(F)V
+	invokestatic io/writeFloat(F)V
 	ldc 1.1
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	ldc 1.1
 	ldc 1.1
 	fadd
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	ldc 1.1
 	ldc 1.1
 	fsub
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	ldc 1.1
 	ldc 1.1
 	fmul
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	ldc 1.1
 	ldc 1.1
 	fdiv
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	iconst_1
 	i2f
-	invokestatic io/putFloatLn(F)V
+	invokestatic io/writeFloat(F)V
 	iconst_1
 	i2f
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	iconst_1
 	iconst_1
 	iadd
 	i2f
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	iconst_1
 	iconst_1
 	isub
 	i2f
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	iconst_1
 	iconst_1
 	imul
 	i2f
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	iconst_1
 	i2f
 	iconst_1
 	i2f
 	fdiv
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	ldc 1.1
 	iconst_1
 	i2f
 	fadd
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	ldc 1.1
 	iconst_1
 	i2f
 	fsub
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	ldc 1.1
 	iconst_1
 	i2f
 	fmul
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	ldc 1.1
 	iconst_1
 	i2f
 	fdiv
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 Label1:
 	return
 .limit stack 2

@@ -1,0 +1,16 @@
+
+            Class D96Class {
+                Var x: Int = 123;
+                Var y: Float = 1;
+                Var $x: Int = 1;
+                Var $y: Float = 1;
+                method_1() {
+                    Return Self;
+                }
+                main() {
+                    Var x: D96Class = New D96Class();
+                    io.writeInt(x.method_1().x);
+                    io.writeFloat(x.method_1().method_1().method_1().y);
+                }
+            }
+        

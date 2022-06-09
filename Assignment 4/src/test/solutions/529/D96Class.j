@@ -33,11 +33,11 @@ Label0:
 	getstatic D96Class/$true Z
 	getstatic D96Class/$false Z
 	iand
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	getstatic D96Class/$true Z
 	iconst_1
 	iand
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	getstatic D96Class/$true Z
 	ifgt Label2
 	iconst_1
@@ -47,7 +47,7 @@ Label2:
 Label3:
 	getstatic D96Class/$false Z
 	iand
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	getstatic D96Class/$true Z
 	ifgt Label4
 	iconst_1
@@ -57,7 +57,7 @@ Label4:
 Label5:
 	iconst_1
 	iand
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	getstatic D96Class/$true Z
 	ifgt Label6
 	iconst_1
@@ -65,7 +65,7 @@ Label5:
 Label6:
 	iconst_0
 Label7:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	getstatic D96Class/$false Z
 	ifgt Label8
 	iconst_1
@@ -73,7 +73,7 @@ Label7:
 Label8:
 	iconst_0
 Label9:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	getstatic D96Class/$true Z
 	ifgt Label10
 	iconst_1
@@ -81,7 +81,7 @@ Label9:
 Label10:
 	iconst_0
 Label11:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	getstatic D96Class/$false Z
 	ifgt Label12
 	iconst_1
@@ -89,7 +89,7 @@ Label11:
 Label12:
 	iconst_0
 Label13:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 Label1:
 	return
 .limit stack 7

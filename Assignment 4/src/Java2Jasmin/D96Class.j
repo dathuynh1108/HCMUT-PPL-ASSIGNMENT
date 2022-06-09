@@ -1,6 +1,6 @@
 ;; Produced by JasminVisitor (BCEL)
 ;; http://bcel.sourceforge.net/
-;; Wed Jun 01 21:12:22 ICT 2022
+;; Tue Jun 07 11:09:26 ICT 2022
 
 .source D96Class.java
 .class public D96Class
@@ -43,24 +43,29 @@ Label1:
 .end method
 
 .method public static main([Ljava/lang/String;)V
-.limit stack 2
-.limit locals 4
+.limit stack 4
+.limit locals 2
 .var 0 is arg0 [Ljava/lang/String; from Label0 to Label1
 
 Label0:
 .line 10
+	iconst_3
+	newarray float
+	dup
+	iconst_0
+	fconst_1
+	fastore
+	dup
 	iconst_1
-	istore_1
-.line 11
-	iconst_1
-	istore_2
-.line 13
-	iload_1
-	iload_2
-	irem
-	istore_3
+	fconst_2
+	fastore
+	dup
+	iconst_2
+	ldc 3.0
+	fastore
+	astore_1
 Label1:
-.line 14
+.line 11
 	return
 
 .end method

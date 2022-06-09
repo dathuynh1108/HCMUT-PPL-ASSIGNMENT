@@ -3,7 +3,7 @@
                 main() {
                     Var i : Int = 1000;
                     Foreach (i In 1 .. 10) {
-                        io.putInt(i);
+                        io.writeInt(i);
                     }
                 }
             }

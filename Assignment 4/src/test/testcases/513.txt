@@ -2,10 +2,10 @@
             Class D96Class {
                 main() {
                     If (1 > 2) {
-                        io.putString("False");
+                        io.writeStr("False");
                     }
                     Else {
-                        io.putString("True");
+                        io.writeStr("True");
                     }
                 }
             }

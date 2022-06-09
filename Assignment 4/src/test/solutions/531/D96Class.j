@@ -75,10 +75,10 @@ Label0:
 	astore_2
 	aload_1
 	getfield D96Class/x I
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	aload_2
 	getfield D96Class/x I
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 Label1:
 	return
 .limit stack 3

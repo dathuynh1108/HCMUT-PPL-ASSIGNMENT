@@ -33,11 +33,11 @@ Label0:
 	iload_1
 	iload_2
 	iand
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iload_1
 	iconst_1
 	iand
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iload_1
 	ifgt Label2
 	iconst_1
@@ -45,7 +45,7 @@ Label0:
 Label2:
 	iconst_0
 Label3:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iload_2
 	ifgt Label4
 	iconst_1
@@ -53,7 +53,7 @@ Label3:
 Label4:
 	iconst_0
 Label5:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_1
 	ifgt Label6
 	iconst_1
@@ -61,7 +61,7 @@ Label5:
 Label6:
 	iconst_0
 Label7:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_0
 	ifgt Label8
 	iconst_1
@@ -69,7 +69,7 @@ Label7:
 Label8:
 	iconst_0
 Label9:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 Label1:
 	return
 .limit stack 5

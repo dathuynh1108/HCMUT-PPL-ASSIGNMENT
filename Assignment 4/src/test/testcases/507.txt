@@ -3,7 +3,7 @@
                 Var a: Int = 0;
                 Var $a: Int = 1;
                 Constructor(x: Int) {
-                    io.putStringLn("<init>");
+                    io.writeStr("<init>");
                 } 
                 main() {
                     Var x: D96Class = New D96Class();

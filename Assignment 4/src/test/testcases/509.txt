@@ -7,11 +7,11 @@
                     a[2] = 3;
                     a[3] = 2;
                     a[4] = 1;
-                    io.putInt(a[0]);
-                    io.putInt(a[1]);
-                    io.putInt(a[2]);
-                    io.putInt(a[3]);
-                    io.putInt(a[4]);
+                    io.writeInt(a[0]);
+                    io.writeInt(a[1]);
+                    io.writeInt(a[2]);
+                    io.writeInt(a[3]);
+                    io.writeInt(a[4]);
                 }
             }
         

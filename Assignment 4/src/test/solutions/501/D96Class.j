@@ -25,21 +25,21 @@ Label1:
 .var 0 is args [Ljava/lang/String; from Label0 to Label1
 Label0:
 	iconst_1
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	iconst_1
-	invokestatic io/putIntLn(I)V
+	invokestatic io/writeInt(I)V
 	iconst_1
 	iconst_1
 	iadd
-	invokestatic io/putIntLn(I)V
+	invokestatic io/writeInt(I)V
 	iconst_1
 	iconst_1
 	isub
-	invokestatic io/putIntLn(I)V
+	invokestatic io/writeInt(I)V
 	iconst_1
 	iconst_1
 	imul
-	invokestatic io/putIntLn(I)V
+	invokestatic io/writeInt(I)V
 Label1:
 	return
 .limit stack 2

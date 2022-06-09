@@ -34,11 +34,11 @@ Label2:
 Label3:
 	ifle Label4
 	ldc "False"
-	invokestatic io/putString(Ljava/lang/String;)V
+	invokestatic io/writeStr(Ljava/lang/String;)V
 	goto Label5
 Label4:
 	ldc "True"
-	invokestatic io/putString(Ljava/lang/String;)V
+	invokestatic io/writeStr(Ljava/lang/String;)V
 Label5:
 Label1:
 	return

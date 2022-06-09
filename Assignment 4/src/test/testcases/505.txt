@@ -3,9 +3,9 @@
                 Var a: String = "Huynh Thanh Dat";
                 main() {
                     Var a: String = "Huynh Thanh Dat";
-                    io.putStringLn(a);
+                    io.writeStr(a);
                     Var d: D96Class = New D96Class();
-                    io.putStringLn(d.a);
+                    io.writeStr(d.a);
                 }
             }
         

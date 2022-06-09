@@ -40,11 +40,11 @@ Label0:
 	astore_1
 	aload_1
 	getfield D96Class/a I
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	getstatic D96Class/$a I
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	iload_0
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	iconst_3
 	ireturn
 Label1:
@@ -56,7 +56,7 @@ Label1:
 .var 0 is args [Ljava/lang/String; from Label0 to Label1
 Label0:
 	invokestatic D96Class/$method()I
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 Label1:
 	return
 .limit stack 1

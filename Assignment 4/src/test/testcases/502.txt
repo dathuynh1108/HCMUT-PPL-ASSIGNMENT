@@ -1,24 +1,24 @@
 
             Class D96Class {
                 main() {
-                    io.putFloatLn(1.1);
-                    io.putFloat(1.1);
-                    io.putFloat(1.1 + 1.1);
-                    io.putFloat(1.1 - 1.1);
-                    io.putFloat(1.1 * 1.1);
-                    io.putFloat(1.1 / 1.1);
+                    io.writeFloat(1.1);
+                    io.writeFloat(1.1);
+                    io.writeFloat(1.1 + 1.1);
+                    io.writeFloat(1.1 - 1.1);
+                    io.writeFloat(1.1 * 1.1);
+                    io.writeFloat(1.1 / 1.1);
                     
-                    io.putFloatLn(1);
-                    io.putFloat(1);
-                    io.putFloat(1 + 1);
-                    io.putFloat(1 - 1);
-                    io.putFloat(1 * 1);
-                    io.putFloat(1 / 1);
+                    io.writeFloat(1);
+                    io.writeFloat(1);
+                    io.writeFloat(1 + 1);
+                    io.writeFloat(1 - 1);
+                    io.writeFloat(1 * 1);
+                    io.writeFloat(1 / 1);
 
-                    io.putFloat(1.1 + 1);
-                    io.putFloat(1.1 - 1);
-                    io.putFloat(1.1 * 1);
-                    io.putFloat(1.1 / 1);
+                    io.writeFloat(1.1 + 1);
+                    io.writeFloat(1.1 - 1);
+                    io.writeFloat(1.1 * 1);
+                    io.writeFloat(1.1 / 1);
                 }
             }
         

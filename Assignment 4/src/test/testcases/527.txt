@@ -4,7 +4,7 @@
                 Var $escapeSequence: String = "\n1910110";
             
                 main() {
-                    io.putString(D96Class::$name +. D96Class::$escapeSequence);
+                    io.writeStr(D96Class::$name +. D96Class::$escapeSequence);
                 }
             }
         

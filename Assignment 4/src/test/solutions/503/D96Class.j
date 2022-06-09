@@ -25,45 +25,45 @@ Label1:
 .var 0 is args [Ljava/lang/String; from Label0 to Label1
 Label0:
 	iconst_1
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_0
-	invokestatic io/putBoolLn(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_1
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_0
-	invokestatic io/putBoolLn(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_1
 	iconst_1
 	iand
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_1
 	iconst_0
 	iand
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_0
 	iconst_1
 	iand
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_0
 	iconst_0
 	iand
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_1
 	iconst_1
 	ior
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_1
 	iconst_0
 	ior
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_0
 	iconst_1
 	ior
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_0
 	iconst_0
 	ior
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_1
 	iconst_2
 	if_icmple Label2
@@ -72,7 +72,7 @@ Label0:
 Label2:
 	iconst_0
 Label3:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_1
 	iconst_2
 	if_icmplt Label4
@@ -81,7 +81,7 @@ Label3:
 Label4:
 	iconst_0
 Label5:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_1
 	iconst_2
 	if_icmpge Label6
@@ -90,7 +90,7 @@ Label5:
 Label6:
 	iconst_0
 Label7:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_1
 	iconst_2
 	if_icmpgt Label8
@@ -99,7 +99,7 @@ Label7:
 Label8:
 	iconst_0
 Label9:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_1
 	iconst_2
 	if_icmpne Label10
@@ -108,7 +108,7 @@ Label9:
 Label10:
 	iconst_0
 Label11:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	iconst_1
 	iconst_2
 	if_icmpeq Label12
@@ -117,7 +117,7 @@ Label11:
 Label12:
 	iconst_0
 Label13:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	ldc 1.1
 	iconst_2
 	i2f
@@ -128,7 +128,7 @@ Label13:
 Label14:
 	iconst_0
 Label15:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	ldc 1.1
 	iconst_2
 	i2f
@@ -139,7 +139,7 @@ Label15:
 Label16:
 	iconst_0
 Label17:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	ldc 1.1
 	iconst_2
 	i2f
@@ -150,7 +150,7 @@ Label17:
 Label18:
 	iconst_0
 Label19:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	ldc 1.1
 	iconst_2
 	i2f
@@ -161,7 +161,7 @@ Label19:
 Label20:
 	iconst_0
 Label21:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	ldc 1.1
 	iconst_2
 	i2f
@@ -172,7 +172,7 @@ Label21:
 Label22:
 	iconst_0
 Label23:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	ldc 1.1
 	iconst_2
 	i2f
@@ -183,7 +183,7 @@ Label23:
 Label24:
 	iconst_0
 Label25:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	ldc 1.1
 	ldc 2.1
 	fcmpl
@@ -193,7 +193,7 @@ Label25:
 Label26:
 	iconst_0
 Label27:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	ldc 1.1
 	ldc 2.1
 	fcmpl
@@ -203,7 +203,7 @@ Label27:
 Label28:
 	iconst_0
 Label29:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	ldc 1.1
 	ldc 2.1
 	fcmpl
@@ -213,7 +213,7 @@ Label29:
 Label30:
 	iconst_0
 Label31:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	ldc 1.1
 	ldc 2.1
 	fcmpl
@@ -223,7 +223,7 @@ Label31:
 Label32:
 	iconst_0
 Label33:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	ldc 1.1
 	ldc 2.1
 	fcmpl
@@ -233,7 +233,7 @@ Label33:
 Label34:
 	iconst_0
 Label35:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 	ldc 1.1
 	ldc 2.1
 	fcmpl
@@ -243,7 +243,7 @@ Label35:
 Label36:
 	iconst_0
 Label37:
-	invokestatic io/putBool(Z)V
+	invokestatic io/writeBool(Z)V
 Label1:
 	return
 .limit stack 2

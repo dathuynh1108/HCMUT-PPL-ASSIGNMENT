@@ -34,7 +34,7 @@ Label2:
 Label3:
 	ifle Label4
 	ldc "False"
-	invokestatic io/putString(Ljava/lang/String;)V
+	invokestatic io/writeStr(Ljava/lang/String;)V
 	goto Label5
 Label4:
 	iconst_1
@@ -47,11 +47,11 @@ Label6:
 Label7:
 	ifle Label8
 	ldc "True"
-	invokestatic io/putString(Ljava/lang/String;)V
+	invokestatic io/writeStr(Ljava/lang/String;)V
 	goto Label9
 Label8:
 	ldc "False"
-	invokestatic io/putString(Ljava/lang/String;)V
+	invokestatic io/writeStr(Ljava/lang/String;)V
 Label9:
 Label5:
 Label1:

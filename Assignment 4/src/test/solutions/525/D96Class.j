@@ -62,85 +62,85 @@ Label0:
 	iload_1
 	iload_2
 	iadd
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	iload_1
 	iload_1
 	iadd
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	iload_2
 	iload_2
 	iadd
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	iload_1
 	aload_0
 	getfield D96Class/a I
 	iadd
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	iload_1
 	aload_0
 	getfield D96Class/b I
 	iadd
-	invokestatic io/putInt(I)V
+	invokestatic io/writeInt(I)V
 	iload_1
 	iload_2
 	iadd
 	i2f
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	iload_1
 	iload_1
 	iadd
 	i2f
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	iload_2
 	iload_2
 	iadd
 	i2f
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	iload_1
 	aload_0
 	getfield D96Class/a I
 	iadd
 	i2f
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	iload_1
 	aload_0
 	getfield D96Class/b I
 	iadd
 	i2f
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	aload_0
 	getfield D96Class/a I
 	aload_0
 	getfield D96Class/b I
 	iadd
 	i2f
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	fload_3
 	fload 4
 	fadd
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	iload_1
 	i2f
 	fload_3
 	fadd
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	iload_1
 	i2f
 	fload 4
 	fadd
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	iload_1
 	i2f
 	aload_0
 	getfield D96Class/x F
 	fadd
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 	iload_1
 	i2f
 	aload_0
 	getfield D96Class/y F
 	fadd
-	invokestatic io/putFloat(F)V
+	invokestatic io/writeFloat(F)V
 Label1:
 	return
 .limit stack 2

@@ -24,11 +24,10 @@ Label1:
 .method public static main([Ljava/lang/String;)V
 .var 0 is args [Ljava/lang/String; from Label0 to Label1
 Label0:
-	ldc "Huynh Thanh Dat"
-	invokestatic io/putStringLn(Ljava/lang/String;)V
-	ldc "1910110"
-	invokestatic io/putString(Ljava/lang/String;)V
-	invokestatic io/putLn()V
+	ldc "Huynh Thanh Dat\n"
+	invokestatic io/writeStr(Ljava/lang/String;)V
+	ldc "1910110\n"
+	invokestatic io/writeStr(Ljava/lang/String;)V
 Label1:
 	return
 .limit stack 1
