@@ -9,7 +9,7 @@
                     Return Object::$a;
                 }
             }
-            Class D96Class : Object {
+            Class Program : Object {
                 Var a: Int = 2;
                 Var $a: Int = 2;
                 method() {
@@ -19,11 +19,11 @@
                     Return 2;
                 }
                 main() {
-                    Var o: D96Class = New D96Class();
+                    Var o: Program = New Program();
                     io.writeInt(o.a);
-                    io.writeInt(D96Class::$a);
+                    io.writeInt(Program::$a);
                     io.writeInt(o.method());
-                    io.writeInt(D96Class::$method());
+                    io.writeInt(Program::$method());
                 }
             }
         

@@ -9,7 +9,7 @@
                     Return Object::$a;
                 }
             }
-            Class D96Class {
+            Class Program {
                 main() {
                     Var o: Object = New Object();
                     io.writeInt(o.a);

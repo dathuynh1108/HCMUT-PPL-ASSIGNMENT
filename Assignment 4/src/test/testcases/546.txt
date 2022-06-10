@@ -1,9 +1,9 @@
 
-            Class D96Class {
+            Class Program {
                 Var $a: Float = 1;
                 Var a: Float = 1;
                 main() {
-                    Var d: D96Class = New D96Class();
+                    Var d: Program = New Program();
                     d.a = 2;
                     io.writeFloat(d.a);
                 }

@@ -1,5 +1,5 @@
 
-            Class D96Class {
+            Class Program {
                 Var x: Int = 123;
                 Var y: Float = 1;
                 Var $x: Int = 1;
@@ -14,7 +14,7 @@
                     Return Self.method_2();
                 }
                 main() {
-                    Var x: D96Class = New D96Class();
+                    Var x: Program = New Program();
                     io.writeInt(x.method_3());
                 }
             }

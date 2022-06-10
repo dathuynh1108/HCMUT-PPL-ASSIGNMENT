@@ -1,5 +1,5 @@
 
-            Class D96Class {
+            Class Program {
                 main() {
                     Var true: Boolean = True;
                     Var false: Boolean = False;

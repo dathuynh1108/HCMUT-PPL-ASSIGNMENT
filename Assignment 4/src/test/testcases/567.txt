@@ -1,5 +1,5 @@
 
-            Class D96Class {
+            Class Program {
                 main() {    
                     io.writeInt(
                         Array(
@@ -14,8 +14,7 @@
                                 Array(1,2,3)
                             )
                         )[0][0][0]
-                    )
-                    
+                    );
                 }
             }
         

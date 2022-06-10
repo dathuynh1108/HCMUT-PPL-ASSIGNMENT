@@ -1,10 +1,10 @@
 
-            Class D96Class {
+            Class Program {
                 method(a: Array[Int, 5]) {
                     Return a;
                 }
                 main() {    
-                    Var d: D96Class = New D96Class();
+                    Var d: Program = New Program();
                     io.writeInt(d.method(d.method(Array(1,2,3,4,5)))[0]);
                     
                 }

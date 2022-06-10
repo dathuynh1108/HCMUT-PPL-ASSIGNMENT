@@ -1,5 +1,5 @@
 
-            Class D96Class {
+            Class Program {
                 main() {
                     Var a: Array[Array[Int, 3], 3] = Array(
                         Array(1, 2, 3),

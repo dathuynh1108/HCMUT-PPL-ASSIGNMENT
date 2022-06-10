@@ -2,7 +2,7 @@
             Class Animal {}
             Class Dog : Animal {}
 
-            Class D96Class {
+            Class Program {
                 $method(a: Array[Array[Int, 5], 2]) {
                     Return a[0][0];
                 }
@@ -11,8 +11,8 @@
                         Array(1,2,3,4,5), 
                         Array(6,7,8,9,10)
                     );
-                    io.writeInt(D96Class::$method(a));
-                    io.writeInt(D96Class::$method(Array(
+                    io.writeInt(Program::$method(a));
+                    io.writeInt(Program::$method(Array(
                         Array(1,2,3,4,5), 
                         Array(6,7,8,9,10)
                     )));

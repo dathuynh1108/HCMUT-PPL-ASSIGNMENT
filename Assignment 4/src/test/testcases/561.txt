@@ -1,5 +1,5 @@
 
-            Class D96Class {
+            Class Program {
                 Var a: Array[Array[Float,5], 2] = Array(
                     Array(9,9,9,9,9),
                     Array(9,9,9,9,9)
@@ -21,7 +21,7 @@
                         Array(11.1,2,3,4,5),
                         Array(6.0,7.5,8.1,9,10.2)
                     );
-                    D96Class::$a = Array(
+                    Program::$a = Array(
                         Array(11.1,2,3,4,5),
                         Array(6.0,7.5,8.1,9,10.2)
                     );
@@ -29,10 +29,10 @@
                     io.writeFloat(a[0][0]);
                     io.writeFloat(b[0][0]);
                     io.writeFloat(Self.a[0][0]);
-                    io.writeFloat(D96Class::$a[0][0]);
+                    io.writeFloat(Program::$a[0][0]);
                 }
                 main() {    
-                    Var d: D96Class = New D96Class();
+                    Var d: Program = New Program();
                     d.method(Array(
                         Array(11.1,2,3,4,5),
                         Array(6.0,7.5,8.1,9,10.2)

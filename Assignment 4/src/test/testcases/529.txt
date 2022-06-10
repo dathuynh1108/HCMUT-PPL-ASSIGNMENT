@@ -1,16 +1,16 @@
 
-            Class D96Class {
+            Class Program {
                 Var $true: Boolean = True;
                 Var $false: Boolean = False;
                 main() {
-                    io.writeBool(D96Class::$true && D96Class::$false);
-                    io.writeBool(D96Class::$true && True);
-                    io.writeBool(!D96Class::$true && D96Class::$false);
-                    io.writeBool(!D96Class::$true && True);
-                    io.writeBool(!D96Class::$true);
-                    io.writeBool(!D96Class::$false);
-                    io.writeBool(!D96Class::$true);
-                    io.writeBool(!D96Class::$false);
+                    io.writeBool(Program::$true && Program::$false);
+                    io.writeBool(Program::$true && True);
+                    io.writeBool(!Program::$true && Program::$false);
+                    io.writeBool(!Program::$true && True);
+                    io.writeBool(!Program::$true);
+                    io.writeBool(!Program::$false);
+                    io.writeBool(!Program::$true);
+                    io.writeBool(!Program::$false);
                 }
             }
         

@@ -1,5 +1,5 @@
 
-            Class D96Class {
+            Class Program {
                 main() {
                     Var a: Array[Float, 4] = Array(1,2,3,4);
                     io.writeFloat(a[0]);

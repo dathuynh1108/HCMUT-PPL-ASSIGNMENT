@@ -16,7 +16,7 @@
                     Return 3;
                 }
             }
-            Class D96Class : Object {
+            Class Program : Object {
                 Var a: Object = New Object();
                 some_method() {
                     Var a: Object = New Object();
@@ -27,7 +27,7 @@
                     io.writeInt(a.method());
                 }
                 main() {
-                    Var o: Object = New D96Class();
+                    Var o: Object = New Program();
                     o.some_method();
                 }
             }

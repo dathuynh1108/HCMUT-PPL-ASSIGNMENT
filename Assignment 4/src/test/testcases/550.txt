@@ -10,11 +10,11 @@
             Class Object_1 : Object {}
             Class Object_2 : Object_1 {}
             
-            Class D96Class : Object_2 {
+            Class Program : Object_2 {
                 main() {
-                    Var o: D96Class = New D96Class();
+                    Var o: Program = New Program();
                     io.writeFloat(o.method());
-                    io.writeFloat(D96Class::$method());
+                    io.writeFloat(Program::$method());
                 }
             }
         

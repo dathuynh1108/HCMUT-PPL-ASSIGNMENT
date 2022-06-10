@@ -1,5 +1,5 @@
 
-            Class D96Class {
+            Class Program {
                 Var $a: Int = 1;
                 Val $b: Int = 1;
 
@@ -12,20 +12,20 @@
                     Var x: Float = 1;
                     Val y: Float = 1.0;
 
-                    io.writeInt(D96Class::$a + b);
-                    io.writeInt(D96Class::$a  + a);
-                    io.writeInt(D96Class::$b  + b);
-                    io.writeInt(D96Class::$a  + b);
-                    io.writeInt(D96Class::$a  + D96Class::$b);
+                    io.writeInt(Program::$a + b);
+                    io.writeInt(Program::$a  + a);
+                    io.writeInt(Program::$b  + b);
+                    io.writeInt(Program::$a  + b);
+                    io.writeInt(Program::$a  + Program::$b);
 
-                    io.writeFloat(D96Class::$a + x);
-                    io.writeFloat(D96Class::$a  + y);
-                    io.writeFloat(D96Class::$x  + a);
-                    io.writeFloat(D96Class::$x  + b);
-                    io.writeFloat(D96Class::$x  + D96Class::$y);
+                    io.writeFloat(Program::$a + x);
+                    io.writeFloat(Program::$a  + y);
+                    io.writeFloat(Program::$x  + a);
+                    io.writeFloat(Program::$x  + b);
+                    io.writeFloat(Program::$x  + Program::$y);
                 }
                 main() {
-                    Var d: D96Class = New D96Class();
+                    Var d: Program = New Program();
                     d.method();
                 }
             }

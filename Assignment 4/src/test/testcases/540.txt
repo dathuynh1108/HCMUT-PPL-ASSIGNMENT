@@ -1,5 +1,5 @@
 
-            Class D96Class {
+            Class Program {
                 main() {
                     Var a: Array[Float, 4] = Array(1, 2.0, 3, 4.0); ## Different type ##
                     io.writeFloat(a[0]);

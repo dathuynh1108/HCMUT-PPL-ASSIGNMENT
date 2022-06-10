@@ -8,7 +8,7 @@
                 }
             }
             
-            Class D96Class : Object {
+            Class Program : Object {
                 method() {
                     Return "Child";
                 }
@@ -16,9 +16,9 @@
                     Return "Child";
                 }
                 main() {
-                    Var o: Object = New D96Class();
+                    Var o: Object = New Program();
                     io.writeStr(o.method());
-                    io.writeStr(D96Class::$method());
+                    io.writeStr(Program::$method());
                 }
             }
         

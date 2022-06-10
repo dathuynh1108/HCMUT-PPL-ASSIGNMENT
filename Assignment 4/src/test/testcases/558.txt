@@ -1,5 +1,5 @@
 
-            Class D96Class {
+            Class Program {
                 Var a: Array[Float, 5] = Array(9,9,9,9,9);
                 Var $a: Array[Float, 5] = Array(9,9,9,9,9);
                 
@@ -7,15 +7,15 @@
                     Var a: Array[Float, 5] = Array(1,2,3,4,5);
                     Val b: Array[Float, 5] = Array(1,2,3,4,5);
                     Self.a = Array(1,2,3,4,5);
-                    D96Class::$a = Array(1,2,3,4,5);
+                    Program::$a = Array(1,2,3,4,5);
                     io.writeFloat(x[0]);
                     io.writeFloat(a[0]);
                     io.writeFloat(b[0]);
                     io.writeFloat(Self.a[0]);
-                    io.writeFloat(D96Class::$a[0]);
+                    io.writeFloat(Program::$a[0]);
                 }
                 main() {    
-                    Var d: D96Class = New D96Class();
+                    Var d: Program = New Program();
                     d.method(Array(1,2,3,4,5));
                 }
             }

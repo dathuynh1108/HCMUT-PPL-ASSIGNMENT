@@ -1,10 +1,10 @@
 
-            Class D96Class {
+            Class Program {
                 Var $name: String = "Huynh Thanh Dat";
                 Var $escapeSequence: String = "\n1910110";
             
                 main() {
-                    io.writeStr(D96Class::$name +. D96Class::$escapeSequence);
+                    io.writeStr(Program::$name +. Program::$escapeSequence);
                 }
             }
         

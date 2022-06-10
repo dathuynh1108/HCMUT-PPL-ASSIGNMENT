@@ -2,7 +2,7 @@
             Class Animal {}
             Class Dog : Animal {}
 
-            Class D96Class {
+            Class Program {
                 $method(a: Animal) {
                     io.writeStr("OK");
                 }
@@ -10,11 +10,11 @@
                     Var a: Animal   = New Animal();
                     Var b: Animal   = New Dog();
                     Var c: Dog      = New Dog();
-                    D96Class::$method(a);
-                    D96Class::$method(b);
-                    D96Class::$method(c);
-                    D96Class::$method(New Animal());
-                    D96Class::$method(New Dog());
+                    Program::$method(a);
+                    Program::$method(b);
+                    Program::$method(c);
+                    Program::$method(New Animal());
+                    Program::$method(New Dog());
                 }
             }
         

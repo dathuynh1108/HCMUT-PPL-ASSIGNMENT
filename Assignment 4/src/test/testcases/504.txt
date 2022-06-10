@@ -1,5 +1,5 @@
 
-            Class D96Class {
+            Class Program {
                 main() {
                     io.writeStr("Dat" +. "Huynh\n");
                     io.writeBool("Dat" ==. "Dat");

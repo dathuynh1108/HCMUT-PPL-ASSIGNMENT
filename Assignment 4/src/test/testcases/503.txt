@@ -1,5 +1,5 @@
 
-            Class D96Class {
+            Class Program {
                 main() {
                     io.writeBool(True);
                     io.writeBool(False);

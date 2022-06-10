@@ -1,5 +1,5 @@
 
-            Class D96Class {
+            Class Program {
                 method() {
                     Return Array(
                         Array(9,8,7,6,5),
@@ -7,7 +7,7 @@
                     );
                 }
                 main() {    
-                    Var d: D96Class = New D96Class();
+                    Var d: Program = New Program();
                     io.writeInt(d.method()[0][0]);
                     io.writeFloat(d.method()[0][0]);
                     Var a: Array[Int, 5] = d.method()[0];

@@ -178,7 +178,7 @@ class CodeGenerator:
                 {
                     "readInt":          Method("readInt", MType([], IntType()), True),
                     "writeInt":         Method("writeInt", MType([IntType()], VoidType()), True),
-                    "wtiteIntLn":       Method("writeIntLn", MType([IntType()], VoidType()), True),
+                    "writeIntLn":       Method("writeIntLn", MType([IntType()], VoidType()), True),
                     "readFloat":        Method("readFloat", MType([], FloatType()), True),
                     "writeFloat":       Method("writeFloat", MType([FloatType()], VoidType()), True),
                     "writeFloatLn":     Method("writeFloatLn", MType([FloatType()], VoidType()), True),
@@ -221,7 +221,7 @@ class CodeGenerator:
                     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
                     "$readInt":         Method("$readInt", MType([], IntType()), True),
                     "$writeInt":        Method("$writeInt", MType([IntType()], VoidType()), True),
-                    "$wtiteIntLn":      Method("$writeIntLn", MType([IntType()], VoidType()), True),
+                    "$writeIntLn":      Method("$writeIntLn", MType([IntType()], VoidType()), True),
                     "$readFloat":       Method("$readFloat", MType([], FloatType()), True),
                     "$writeFloat":      Method("$writeFloat", MType([FloatType()], VoidType()), True),
                     "$writeFloatLn":    Method("$writeFloatLn", MType([FloatType()], VoidType()), True),

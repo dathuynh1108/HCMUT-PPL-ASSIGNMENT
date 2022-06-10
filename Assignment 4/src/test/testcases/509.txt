@@ -1,5 +1,5 @@
 
-            Class D96Class {
+            Class Program {
                 main() {
                     Var a: Array[Int, 5] = Array(1,2,3,4,5); 
                     a[0] = 5;

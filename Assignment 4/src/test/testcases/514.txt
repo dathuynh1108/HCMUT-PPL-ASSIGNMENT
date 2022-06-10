@@ -1,5 +1,5 @@
 
-            Class D96Class {
+            Class Program {
                 main() {
                     If (1 > 2) {
                         io.writeStr("False");
