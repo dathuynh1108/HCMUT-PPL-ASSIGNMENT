@@ -1,0 +1,22 @@
+
+            Class Program {
+                Var a: Array[Int, 5] = Array(1,2,3,4,5);
+                Var $a: Array[Int, 5] = Array(1,2,3,4,5);
+                method() {
+                    Var a: Array[Int, 5] = Array(1,2,3,4,5);
+                    Var i: Int;
+                    Foreach (i In 0 .. 4) {
+                        a[i] = a[i] * Self.a[i] + Program::$a[i];
+                        Self.a[i] = Self.a[i] * 2;
+                        Program::$a[i] = Program::$a[i] % 2;
+                        io.writeInt(a[i]);
+                        io.writeInt(Self.a[i]);
+                        io.writeInt(Program::$a[i]);
+                    }
+                }
+                main() {    
+                    Var o: Program = New Program();
+                    o.method();
+                }
+            }
+        
