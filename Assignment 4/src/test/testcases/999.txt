@@ -1,12 +1,7 @@
 
             Class D96Class {
-                method(a: Array[Int, 5]) {
-                    Return a;
-                }
                 main() {    
-                    Var d: D96Class = New D96Class();
-                    io.writeInt(d.method(d.method(Array(1,2,3,4,5)))[0]);
-                    
+                    io.printStr("abc");
                 }
             }
         

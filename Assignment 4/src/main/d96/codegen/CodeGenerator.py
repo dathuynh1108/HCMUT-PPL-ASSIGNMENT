@@ -48,7 +48,7 @@ class Enviroment:
     def __init__(self, global_env={}, local_env=[{}]):
         self.global_env = global_env
         self.local_env = local_env
-        self.parent = {}
+        self.parent = {"io": None}
 
     def set_inheritance(self, current_class, parent_class):
         self.parent[current_class] = parent_class
@@ -178,17 +178,19 @@ class CodeGenerator:
                 {
                     "readInt":          Method("readInt", MType([], IntType()), True),
                     "writeInt":         Method("writeInt", MType([IntType()], VoidType()), True),
-                    # "wtiteIntLn":     Method("writeIntLn", MType([IntType()], VoidType()), True),
+                    "wtiteIntLn":       Method("writeIntLn", MType([IntType()], VoidType()), True),
                     "readFloat":        Method("readFloat", MType([], FloatType()), True),
                     "writeFloat":       Method("writeFloat", MType([FloatType()], VoidType()), True),
-                    # "writeFloatLn":   Method("writeFloatLn", MType([FloatType()], VoidType()), True),
+                    "writeFloatLn":     Method("writeFloatLn", MType([FloatType()], VoidType()), True),
                     "readBool":         Method("readBool", MType([], BoolType()), True),
                     "writeBool":        Method("writeBool", MType([BoolType()], VoidType()), True),
-                    # "writeBoolLn":    Method("writeBoolLn", MType([BoolType()], VoidType()), True),
+                    "writeBoolLn":      Method("writeBoolLn", MType([BoolType()], VoidType()), True),
                     "readStr":          Method("readStr", MType([], StringType()), True),
                     "writeStr":         Method("writeStr", MType([StringType()], VoidType()), True),
-                    # "writeStrLn":     Method("writeStrLn", MType([StringType()], VoidType()), True),
-                    # "writeLn":        Method("writeLn", MType([], VoidType()), True),
+                    "writeStrLn":       Method("writeStrLn", MType([StringType()], VoidType()), True),
+                    "writeString":      Method("writeString", MType([StringType()], VoidType()), True),
+                    "writeStringLn":    Method("writeStringLn", MType([StringType()], VoidType()), True),
+                    "writeLn":          Method("writeLn", MType([], VoidType()), True),
                     #########################################################################
                     "getInt":           Method("getInt", MType([], IntType()), True),
                     "putInt":           Method("putInt", MType([IntType()], VoidType()), True),
@@ -201,7 +203,64 @@ class CodeGenerator:
                     "putBoolLn":        Method("putBoolLn", MType([BoolType()], VoidType()), True),
                     "putString":        Method("putString", MType([StringType()], VoidType()), True),
                     "putStringLn":      Method("putStringLn", MType([StringType()], VoidType()), True),
+                    "putStr":           Method("putStr", MType([StringType()], VoidType()), True),
+                    "putStrLn":         Method("putStrLn", MType([StringType()], VoidType()), True),
                     "putLn":            Method("putLn", MType([], VoidType()), True),
+                    #########################################################################
+                    "printInt":         Method("printInt", MType([IntType()], VoidType()), True),
+                    "printIntLn":       Method("printIntLn", MType([IntType()], VoidType()), True),
+                    "printFloat":       Method("printFloat", MType([FloatType()], VoidType()), True),
+                    "printFloatLn":     Method("printloatLn", MType([FloatType()], VoidType()), True),
+                    "printBool":        Method("printBool", MType([BoolType()], VoidType()), True),
+                    "printBoolLn":      Method("printBoolLn", MType([BoolType()], VoidType()), True),
+                    "printString":      Method("printString", MType([StringType()], VoidType()), True),
+                    "printStringLn":    Method("printStringLn", MType([StringType()], VoidType()), True),
+                    "printStr":         Method("printStr", MType([StringType()], VoidType()), True),
+                    "printStrLn":       Method("printStrLn", MType([StringType()], VoidType()), True),
+                    "printLn":          Method("printLn", MType([], VoidType()), True),
+                    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+                    "$readInt":         Method("$readInt", MType([], IntType()), True),
+                    "$writeInt":        Method("$writeInt", MType([IntType()], VoidType()), True),
+                    "$wtiteIntLn":      Method("$writeIntLn", MType([IntType()], VoidType()), True),
+                    "$readFloat":       Method("$readFloat", MType([], FloatType()), True),
+                    "$writeFloat":      Method("$writeFloat", MType([FloatType()], VoidType()), True),
+                    "$writeFloatLn":    Method("$writeFloatLn", MType([FloatType()], VoidType()), True),
+                    "$readBool":        Method("$readBool", MType([], BoolType()), True),
+                    "$writeBool":       Method("$writeBool", MType([BoolType()], VoidType()), True),
+                    "$writeBoolLn":     Method("$writeBoolLn", MType([BoolType()], VoidType()), True),
+                    "$readStr":         Method("$readStr", MType([], StringType()), True),
+                    "$writeStr":        Method("$writeStr", MType([StringType()], VoidType()), True),
+                    "$writeStrLn":      Method("$writeStrLn", MType([StringType()], VoidType()), True),
+                    "$writeString":     Method("$writeString", MType([StringType()], VoidType()), True),
+                    "$writeStringLn":   Method("$writeStringLn", MType([StringType()], VoidType()), True),
+                    "$writeLn":         Method("$writeLn", MType([], VoidType()), True),
+                    #########################################################################
+                    "$getInt":          Method("$getInt", MType([], IntType()), True),
+                    "$putInt":          Method("$putInt", MType([IntType()], VoidType()), True),
+                    "$putIntLn":        Method("$putIntLn", MType([IntType()], VoidType()), True),
+                    "$getFloat":        Method("$getFloat", MType([], FloatType()), True),
+                    "$putFloat":        Method("$putFloat", MType([FloatType()], VoidType()), True),
+                    "$putFloatLn":      Method("$putFloatLn", MType([FloatType()], VoidType()), True),
+                    "$getBool":         Method("$getBool", MType([], BoolType()), True),
+                    "$putBool":         Method("$putBool", MType([BoolType()], VoidType()), True),
+                    "$putBoolLn":       Method("$putBoolLn", MType([BoolType()], VoidType()), True),
+                    "$putString":       Method("$putString", MType([StringType()], VoidType()), True),
+                    "$putStringLn":     Method("$putStringLn", MType([StringType()], VoidType()), True),
+                    "$putStr":          Method("$putStr", MType([StringType()], VoidType()), True),
+                    "$putStrLn":        Method("$putStrLn", MType([StringType()], VoidType()), True),
+                    "$putLn":           Method("$putLn", MType([], VoidType()), True),
+                    #########################################################################
+                    "$printInt":        Method("$printInt", MType([IntType()], VoidType()), True),
+                    "$printIntLn":      Method("$printIntLn", MType([IntType()], VoidType()), True),
+                    "$printFloat":      Method("$printFloat", MType([FloatType()], VoidType()), True),
+                    "$printFloatLn":    Method("$printloatLn", MType([FloatType()], VoidType()), True),
+                    "$printBool":       Method("$printBool", MType([BoolType()], VoidType()), True),
+                    "$printBoolLn":     Method("$printBoolLn", MType([BoolType()], VoidType()), True),
+                    "$printString":     Method("$printString", MType([StringType()], VoidType()), True),
+                    "$printStringLn":   Method("$printStringLn", MType([StringType()], VoidType()), True),
+                    "$printStr":        Method("$printStr", MType([StringType()], VoidType()), True),
+                    "$printStrLn":      Method("$printStrLn", MType([StringType()], VoidType()), True),
+                    "$printLn":         Method("$printLn", MType([], VoidType()), True),
                 },
             )
         }

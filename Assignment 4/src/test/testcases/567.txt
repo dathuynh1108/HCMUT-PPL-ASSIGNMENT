@@ -1,0 +1,21 @@
+
+            Class D96Class {
+                main() {    
+                    io.writeInt(
+                        Array(
+                            Array(
+                                Array(1,2,3),
+                                Array(1,2,3),
+                                Array(1,2,3)
+                            ),
+                            Array(
+                                Array(1,2,3),
+                                Array(1,2,3),
+                                Array(1,2,3)
+                            )
+                        )[0][0][0]
+                    )
+                    
+                }
+            }
+        

@@ -150,6 +150,9 @@ public class io {
     public static void writeStr(String a)  {
     	System.out.print(a);
     }
+    public static void printStr(String a)  {
+    	System.out.print(a);
+    }
     /** print out an empty line
      **/
     public static void writeStrLn(String a)  {
