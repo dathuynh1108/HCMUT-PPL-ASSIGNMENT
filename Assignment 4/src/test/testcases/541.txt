@@ -1,0 +1,9 @@
+
+            Class D96Class {
+                main() {
+                    Var a: Array[Float, 4] = Array(1, 2.0, 3, 4.0); ## Different type ##
+                    a[0] = 10; 
+                    io.writeFloat(a[0]);
+                }
+            }
+        

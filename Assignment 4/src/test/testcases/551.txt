@@ -1,0 +1,24 @@
+
+            Class Object {
+                method() {
+                    Return "Parent";
+                }
+                $method() {
+                    Return "Parent";
+                }
+            }
+            
+            Class D96Class : Object {
+                method() {
+                    Return "Child";
+                }
+                $method() {
+                    Return "Child";
+                }
+                main() {
+                    Var o: Object = New D96Class();
+                    io.writeStr(o.method());
+                    io.writeStr(D96Class::$method());
+                }
+            }
+        

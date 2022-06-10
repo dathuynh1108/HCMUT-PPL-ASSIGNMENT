@@ -4,7 +4,7 @@
                     Return Self;
                 }
                 main() {
-                    Var a: Array[Array[Int, 2], 5] = Array(
+                    Var a: Array[Array[Int, 5], 2] = Array(
                         Array(1,2,3,4,5),
                         Array(1,2,3,4,5)
                     );

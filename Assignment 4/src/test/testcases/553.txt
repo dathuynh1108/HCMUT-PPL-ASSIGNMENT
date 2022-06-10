@@ -1,0 +1,34 @@
+
+            Class Object {
+                method() {
+                    Return 1;
+                }
+                some_method() {}
+            }
+
+            Class Object_2 : Object {
+                method() {
+                    Return 2;
+                }
+            }
+            Class Object_3 : Object {
+                method() {
+                    Return 3;
+                }
+            }
+            Class D96Class : Object {
+                Var a: Object = New Object();
+                some_method() {
+                    Var a: Object = New Object();
+                    io.writeInt(a.method());
+                    a = New Object_2();
+                    io.writeInt(a.method());
+                    a = New Object_3();
+                    io.writeInt(a.method());
+                }
+                main() {
+                    Var o: Object = New D96Class();
+                    o.some_method();
+                }
+            }
+        

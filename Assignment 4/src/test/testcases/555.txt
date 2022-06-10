@@ -1,0 +1,15 @@
+
+            Class Animal {}
+            Class Dog : Animal {}
+
+            Class D96Class {
+                $method(a: Array[Int, 5]) {
+                    Return a[0];
+                }
+                main() {
+                    Var a: Array[Int, 5] = Array(1,2,3,4,5);
+                    io.writeInt(D96Class::$method(a));
+                    io.writeInt(D96Class::$method(Array(1,2,3,4,5)));
+                }
+            }
+        

@@ -1,0 +1,19 @@
+
+            Class Object {
+                Var a: Int = 1;
+                method(o: Object) {
+                    Return Self.a;
+                }
+            }
+            
+            Class D96Class : Object {
+                Var a: Int = 2;
+                method(o: Object) {
+                    Return Self.a;
+                }
+                main() {
+                    Var o: Object = New D96Class();
+                    io.writeInt(o.method(o));
+                }
+            }
+        

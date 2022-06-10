@@ -1,0 +1,14 @@
+
+            Class D96Class {
+                method() {
+                    Return Array(1,2,3,4,5);
+                }
+                main() {    
+                    Var d: D96Class = New D96Class();
+                    io.writeInt(d.method()[0]);
+                    io.writeFloat(d.method()[0]);
+                    Var a: Array[Int, 5] = d.method();
+                    io.writeInt(a[0]);
+                }
+            }
+        

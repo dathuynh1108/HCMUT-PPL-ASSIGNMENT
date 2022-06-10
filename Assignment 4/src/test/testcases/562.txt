@@ -1,0 +1,8 @@
+
+            Class D96Class {
+                main() {    
+                    io.writeInt(Array(1,2,3,4)[0]);
+                    io.writeFloat(Array(1,2,3,4)[0]);
+                }
+            }
+        

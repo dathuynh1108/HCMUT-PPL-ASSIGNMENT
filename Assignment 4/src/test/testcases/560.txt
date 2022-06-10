@@ -1,0 +1,42 @@
+
+            Class D96Class {
+                Var a: Array[Array[Float,5], 2] = Array(
+                    Array(9,9,9,9,9),
+                    Array(9,9,9,9,9)
+                );
+                Var $a: Array[Array[Float,5], 2] = Array(
+                    Array(9,9,9,9,9),
+                    Array(9,9,9,9,9)
+                );
+                method(x: Array[Array[Float,5], 2]) {
+                    Var a: Array[Array[Float,5], 2] = Array(
+                        Array(1,2,3,4,5),
+                        Array(6,7,8,9,10)
+                    );
+                    Val b: Array[Array[Float,5], 2] = Array(
+                        Array(1,2,3,4,5),
+                        Array(6,7,8,9,10)
+                    );
+                    Self.a = Array(
+                        Array(1,2,3,4,5),
+                        Array(6,7,8,9,10)
+                    );
+                    D96Class::$a = Array(
+                        Array(1,2,3,4,5),
+                        Array(6,7,8,9,10)
+                    );
+                    io.writeFloat(x[0][0]);
+                    io.writeFloat(a[0][0]);
+                    io.writeFloat(b[0][0]);
+                    io.writeFloat(Self.a[0][0]);
+                    io.writeFloat(D96Class::$a[0][0]);
+                }
+                main() {    
+                    Var d: D96Class = New D96Class();
+                    d.method(Array(
+                        Array(1,2,3,4,5),
+                        Array(6,7,8,9,10)
+                    ));
+                }
+            }
+        

@@ -1,0 +1,19 @@
+
+            Class D96Class {
+                method() {
+                    Return Array(
+                        Array(9,8,7,6,5),
+                        Array(4,3,2,1,0)
+                    );
+                }
+                main() {    
+                    Var d: D96Class = New D96Class();
+                    io.writeInt(d.method()[0][0]);
+                    io.writeFloat(d.method()[0][0]);
+                    Var a: Array[Int, 5] = d.method()[0];
+                    io.writeInt(a[0]);
+                    Var b: Array[Int, 5] = d.method()[1];
+                    io.writeInt(b[0]);
+                }
+            }
+        

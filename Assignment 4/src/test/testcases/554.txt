@@ -1,0 +1,20 @@
+
+            Class Animal {}
+            Class Dog : Animal {}
+
+            Class D96Class {
+                $method(a: Animal) {
+                    io.writeStr("OK");
+                }
+                main() {
+                    Var a: Animal   = New Animal();
+                    Var b: Animal   = New Dog();
+                    Var c: Dog      = New Dog();
+                    D96Class::$method(a);
+                    D96Class::$method(b);
+                    D96Class::$method(c);
+                    D96Class::$method(New Animal());
+                    D96Class::$method(New Dog());
+                }
+            }
+        

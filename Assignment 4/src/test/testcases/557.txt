@@ -1,0 +1,22 @@
+
+            Class D96Class {
+                Var a: Array[Int, 5] = Array(9,9,9,9,9);
+                Var $a: Array[Int, 5] = Array(9,9,9,9,9);
+                
+                method(x: Array[Int, 5]) {
+                    Var a: Array[Int, 5] = Array(1,2,3,4,5);
+                    Val b: Array[Int, 5] = Array(1,2,3,4,5);
+                    Self.a = Array(1,2,3,4,5);
+                    D96Class::$a = Array(1,2,3,4,5);
+                    io.writeInt(x[0]);
+                    io.writeInt(a[0]);
+                    io.writeInt(b[0]);
+                    io.writeInt(Self.a[0]);
+                    io.writeInt(D96Class::$a[0]);
+                }
+                main() {    
+                    Var d: D96Class = New D96Class();
+                    d.method(Array(1,2,3,4,5));
+                }
+            }
+        

@@ -1,16 +1,20 @@
 
-public class D96Class  {
-       public static int a = 100;
-       public int b = 1;
-       private int c = 1;
-       static int method() {
-              return 1;
-       }
+public class D96Class {
        public static void main(String[] args) {
-              float a[] = {1,2,3};
+              Animal a = new Dog();  
+              a.eat();  
        }
 
 }
-class Parent {}
-class Child extends Parent {}
 
+class Animal {
+       public void eat() {
+              System.out.println("animal is eating...");
+       }
+}
+
+class Dog extends Animal {
+       public void eat() {
+              System.out.println("dog is eating...");
+       }
+}

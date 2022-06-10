@@ -1,0 +1,21 @@
+
+            Class Object {
+                Var a: Int = 1;
+                Var $a: Int = 1;
+                method() {
+                    Return Self.a;
+                }
+                $method() {
+                    Return Object::$a;
+                }
+            }
+            Class D96Class {
+                main() {
+                    Var o: Object = New Object();
+                    io.writeInt(o.a);
+                    io.writeInt(Object::$a);
+                    io.writeInt(o.method());
+                    io.writeInt(Object::$method());
+                }
+            }
+        

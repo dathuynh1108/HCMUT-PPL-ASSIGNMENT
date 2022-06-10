@@ -25,97 +25,35 @@ Label1:
 .var 0 is args [Ljava/lang/String; from Label0 to Label1
 Label0:
 .var 1 is a [F from Label0 to Label1
-	iconst_5
-	newarray int
+	iconst_4
+	newarray float
 	dup
 	iconst_0
 	iconst_1
-	iastore
+	i2f
+	fastore
 	dup
 	iconst_1
 	iconst_2
-	iastore
+	i2f
+	fastore
 	dup
 	iconst_2
 	iconst_3
-	iastore
+	i2f
+	fastore
 	dup
 	iconst_3
 	iconst_4
-	iastore
-	dup
-	iconst_4
-	iconst_5
-	iastore
+	i2f
+	fastore
 	astore_1
-.var 2 is i I from Label0 to Label1
-.var 3 is $protect_expr2 I from Label0 to Label1
-.var 4 is $protect_expr3 I from Label0 to Label1
-	iconst_4
-	istore_3
-	iconst_1
-	istore 4
-	iconst_0
-	istore_2
-Label2:
-	iconst_0
-	iload_3
-	if_icmple Label8
-	iconst_1
-	goto Label9
-Label8:
-	iconst_0
-Label9:
-	ifgt Label3
-	iload_2
-	iload_3
-	if_icmple Label10
-	iconst_1
-	goto Label11
-Label10:
-	iconst_0
-Label11:
-	ifgt Label7
-	goto Label4
-Label3:
-	iload_2
-	iload_3
-	if_icmpge Label12
-	iconst_1
-	goto Label13
-Label12:
-	iconst_0
-Label13:
-	ifgt Label7
-Label4:
 	aload_1
-	iload_2
+	iconst_0
 	faload
 	invokestatic io/writeFloat(F)V
-Label6:
-	iconst_0
-	iload_3
-	if_icmple Label14
-	iconst_1
-	goto Label15
-Label14:
-	iconst_0
-Label15:
-	ifgt Label5
-	iload_2
-	iload 4
-	iadd
-	istore_2
-	goto Label2
-Label5:
-	iload_2
-	iload 4
-	isub
-	istore_2
-	goto Label2
-Label7:
 Label1:
 	return
 .limit stack 4
-.limit locals 5
+.limit locals 2
 .end method
