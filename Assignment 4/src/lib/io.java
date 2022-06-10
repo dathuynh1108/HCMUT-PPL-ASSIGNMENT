@@ -41,6 +41,32 @@ public class io {
         System.out.print(i+"");
     		
     }
+    public static void putInt(int i) {
+    	
+        System.out.print(i+"");
+    		
+    }
+    public static void printInt(int i) {
+    	
+        System.out.print(i+"");
+    		
+    }
+    public static void $writeInt(int i) {
+    	
+        System.out.print(i+"");
+    		
+    }
+    public static void $putInt(int i) {
+    	
+        System.out.print(i+"");
+    		
+    }
+    public static void $printInt(int i) {
+    	
+        System.out.print(i+"");
+    		
+    }
+   
    
     /** same as putInt except that it also prints a newline
      *	@param i the value is printed out
@@ -48,7 +74,31 @@ public class io {
     public static void writeIntLn(int i)  {
     	System.out.println(i+"");
     }
-    
+    public static void putIntLn(int i) {
+    	
+        System.out.println(i+"");
+    		
+    }
+    public static void printIntLn(int i) {
+    	
+        System.out.println(i+"");
+    		
+    }
+    public static void $writeIntLn(int i) {
+    	
+        System.out.println(i+"");
+    		
+    }
+    public static void $putIntLn(int i) {
+    	
+        System.out.println(i+"");
+    		
+    }
+    public static void $printIntLn(int i) {
+    	
+        System.out.println(i+"");
+    		
+    }
     /** return a floating-point value read from the standard input
      *	@return float the floating-point value
      */

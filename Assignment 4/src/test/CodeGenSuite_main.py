@@ -1676,5 +1676,618 @@ class CheckCodeGenSuite(unittest.TestCase):
         expect = """1234567891011121314151617181920"""
         self.assertTrue(TestCodeGen.test(input, expect, 572))
     
+    def test_073(self):
+        input = r"""
+            Class Node {
+                Var next: Node = Null;
+                Var data: Int = 0;
+                Constructor(next: Node; data: Int) {
+                    Self.next = next;
+                    Self.data = data;
+                }
+            }
+            Class Linked_list {
+                Var head: Node = Null;
+                Var tail: Node = Null;
+                Var size: Int = 0;
+                insert(node: Node) {
+                    If (Self.size == 0) {
+                        Self.head = node;
+                        Self.tail = node;
+                        Self.size = Self.size + 1;
+                    }
+                    Else {
+                        Self.tail.next = node;
+                        Self.tail = node;
+                        Self.size = Self.size + 1;
+                    }
+                }
+                delete(data: Int) {
+                    Var i: Int;
+                    Var current : Node = Self.head;
+                    If (current.data == data) {
+                        Self.head = Self.head.next;
+                        Self.size = Self.size - 1;
+                        Return;
+                    }
+                    Foreach(i In 1 .. Self.size - 1) {
+                        If (current.next.data == data) {
+                            current.next = current.next.next;
+                            Self.size = Self.size - 1;
+                            If (i == Self.size - 1) {
+                                Self.tail = current;
+                            }
+                            Return;
+                        }
+                        Else {
+                            current = current.next;
+                        }
+                    }
+                }
+                traverse() {
+                    Var i: Int;
+                    Var current: Node = Self.head;
+                    Foreach (i In 1 .. Self.size) {
+                        io.writeInt(current.data);
+                        current = current.next;
+                    }
+                }
+            }
+            Class Program {
+                main() {    
+                    Var linked_list : Linked_list = New Linked_list();
+                    Var i: Int;
+                    Foreach (i In  1 .. 20) {
+                        linked_list.insert(New Node(Null, i));
+                    }
+                    linked_list.traverse();
+                    linked_list.delete(1);
+                    linked_list.delete(20);
+                    linked_list.delete(10);
+                    linked_list.traverse();
+                }
+            }
+        """
+        expect = """123456789101112131415161718192023456789111213141516171819"""
+        self.assertTrue(TestCodeGen.test(input, expect, 573))
     
+    
+    def test_074(self):
+        input = r"""
+            Class Program {
+                main() {    
+                    io.writeInt(1);
+                    io.putInt(1);
+                    io.printInt(1);
+
+                    io.writeIntLn(1);
+                    io.putIntLn(1);
+                    io.printIntLn(1);
+
+                    io::$writeInt(1);
+                    io::$putInt(1);
+                    io::$printInt(1);
+
+                    io::$writeIntLn(1);
+                    io::$putIntLn(1);
+                    io::$printIntLn(1);
+                }
+            }
+        """
+        expect = """1111\n1\n1\n1111\n1\n1\n"""
+        self.assertTrue(TestCodeGen.test(input, expect, 574))
+    
+    def test_075(self):
+        input = r"""
+            Class Program {
+                sort(a: Array[Int, 10000]; size: Int) {
+                    Var i,j: Int;
+                    Foreach (i In 0 .. size - 2) {
+                        Var min_index : Int = i;
+                        Var min :Int = a[i];
+                        Foreach (j In i + 1 .. size - 1) {
+                            If (a[j] < a[min_index]) {
+                                min_index = j;
+                                min = a[j];
+                            }
+                        }
+                        Var temp :Int = a[i];
+                        a[i] = a[min_index];
+                        a[min_index] = temp;
+                    }
+                    Foreach (i In 0 .. size - 1) {
+                        io.writeInt(a[i]);
+                    }
+                }
+                main() {    
+                    Var o: Program = New Program();
+                    o.sort(Array(10,9,8,7,6,5,4,3,2,1), 10);
+                    
+                }   
+            }
+        """
+        expect = """12345678910"""
+        self.assertTrue(TestCodeGen.test(input, expect, 575))
+    
+    
+    ######################################################
+    def test_076(self):
+        input = r"""
+            Class Program {
+                main() {
+                    io.writeStr("Huynh Thanh Dat\n");
+                    io.writeStr("1910110\n");
+                }
+            }
+        """
+        expect = """Huynh Thanh Dat\n1910110\n"""
+        self.assertTrue(TestCodeGen.test(input, expect, 576))
+
+    def test_077(self):
+        input = r"""
+            Class Program {
+                main() {
+                    io.writeInt(1);
+                    io.writeInt(1);
+                    io.writeInt(1 + 1);
+                    io.writeInt(1 - 1);
+                    io.writeInt(1 * 1);
+                }
+            }
+        """
+        expect = """11201"""
+        self.assertTrue(TestCodeGen.test(input, expect, 577))
+    
+    def test_078(self):
+        input = r"""
+            Class Program {
+                main() {
+                    io.writeFloat(1.1);
+                    io.writeFloat(1.1);
+                    io.writeFloat(1.1 + 1.1);
+                    io.writeFloat(1.1 - 1.1);
+                    io.writeFloat(1.1 * 1.1);
+                    io.writeFloat(1.1 / 1.1);
+                    
+                    io.writeFloat(1);
+                    io.writeFloat(1);
+                    io.writeFloat(1 + 1);
+                    io.writeFloat(1 - 1);
+                    io.writeFloat(1 * 1);
+                    io.writeFloat(1 / 1);
+
+                    io.writeFloat(1.1 + 1);
+                    io.writeFloat(1.1 - 1);
+                    io.writeFloat(1.1 * 1);
+                    io.writeFloat(1.1 / 1);
+                }
+            }
+        """
+        expect = """1.11.12.20.01.211.01.01.02.00.01.01.02.10.1000000241.11.1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 578))
+    
+    def test_079(self):
+        input = r"""
+            Class Program {
+                main() {
+                    io.writeBool(True);
+                    io.writeBool(False);
+                    io.writeBool(True);
+                    io.writeBool(False);
+
+                    io.writeBool(True && True);
+                    io.writeBool(True && False);
+                    io.writeBool(False && True);
+                    io.writeBool(False && False);
+                    io.writeBool(True || True);
+                    io.writeBool(True || False);
+                    io.writeBool(False || True);
+                    io.writeBool(False || False);
+        
+                    io.writeBool(1 > 2);
+                    io.writeBool(1 >= 2);
+                    io.writeBool(1 < 2);
+                    io.writeBool(1 <= 2);
+                    io.writeBool(1 == 2);
+                    io.writeBool(1 != 2);
+
+                    io.writeBool(1.1 > 2);
+                    io.writeBool(1.1 >= 2);
+                    io.writeBool(1.1 < 2);
+                    io.writeBool(1.1 <= 2);
+                    io.writeBool(1.1 == 2);
+                    io.writeBool(1.1 != 2);    
+
+                    io.writeBool(1.1 > 2.1);
+                    io.writeBool(1.1 >= 2.1);
+                    io.writeBool(1.1 < 2.1);
+                    io.writeBool(1.1 <= 2.1);
+                    io.writeBool(1.1 == 2.1);
+                    io.writeBool(1.1 != 2.1);    
+                }
+            }
+        """
+        expect = """truefalsetruefalsetruefalsefalsefalsetruetruetruefalsefalsefalsetruetruefalsetruefalsefalsetruetruefalsetruefalsefalsetruetruefalsetrue"""
+        self.assertTrue(TestCodeGen.test(input, expect, 579))
+
+    def test_080(self):
+        input = r"""
+            Class Program {
+                main() {
+                    io.writeStr("Dat" +. "Huynh\n");
+                    io.writeBool("Dat" ==. "Dat");
+                    io.writeBool("Dat" ==. "Huynh");
+                }
+            }
+        """
+        expect = """DatHuynh\ntruefalse"""
+        self.assertTrue(TestCodeGen.test(input, expect, 580))
+
+    def test_081(self):
+        input = r"""
+            Class Program {
+                Var a: String = "Huynh Thanh Dat";
+                main() {
+                    Var a: String = "Huynh Thanh Dat";
+                    io.writeStr(a);
+                    Var d: Program = New Program();
+                    io.writeStr(d.a);
+                }
+            }
+        """
+        expect = """Huynh Thanh DatHuynh Thanh Dat"""
+        self.assertTrue(TestCodeGen.test(input, expect, 581))   
+
+    def test_082(self):
+        input = r"""
+            Class Program {
+                Var a: Int = 0;
+                Var $a: Int = 1;
+                $method() {
+                    Var a: Int = 2;
+                    Var d: Program = New Program();
+                    io.writeInt(d.a);
+                    io.writeInt(Program::$a);
+                    io.writeInt(a);
+                    Return 3;
+                }
+                main() {
+                    io.writeInt(Program::$method()); 
+                }
+            }
+        """
+        expect = """0123"""
+        self.assertTrue(TestCodeGen.test(input, expect, 582)) 
+    
+    def test_083(self):
+        input = r"""
+            Class Program {
+                Var a: Int = 0;
+                Var $a: Int = 1;
+                Constructor(x: Int) {
+                    io.writeStr("<init>");
+                } 
+                main() {
+                    Var x: Program = New Program();
+                    Var y: Program = New Program(1);
+                }
+            }
+        """
+        expect = """<init>"""
+        self.assertTrue(TestCodeGen.test(input, expect, 583))
+
+    def test_084(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var a: Array[Int, 5] = Array(1,2,3,4,5);
+                    io.writeInt(a[0]);
+                    io.writeInt(a[1]);
+                    io.writeInt(a[2]);
+                    io.writeInt(a[3]);
+                    io.writeInt(a[4]);
+                }
+            }
+        """
+        expect = """12345"""
+        self.assertTrue(TestCodeGen.test(input, expect, 584))
+    
+    def test_085(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var a: Array[Int, 5] = Array(1,2,3,4,5); 
+                    a[0] = 5;
+                    a[1] = 4;
+                    a[2] = 3;
+                    a[3] = 2;
+                    a[4] = 1;
+                    io.writeInt(a[0]);
+                    io.writeInt(a[1]);
+                    io.writeInt(a[2]);
+                    io.writeInt(a[3]);
+                    io.writeInt(a[4]);
+                }
+            }
+        """
+        expect = """54321"""
+        self.assertTrue(TestCodeGen.test(input, expect, 585))
+
+    def test_086(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var a: Array[Array[Int, 3], 3] = Array(
+                        Array(1, 2, 3),
+                        Array(4, 5, 6),
+                        Array(7, 8, 9)
+                    );
+                    io.writeInt(a[0][0]);
+                    io.writeInt(a[0][1]);
+                    io.writeInt(a[0][2]);
+
+                    io.writeInt(a[1][0]);
+                    io.writeInt(a[1][1]);
+                    io.writeInt(a[1][2]);
+
+                    io.writeInt(a[2][0]);
+                    io.writeInt(a[2][1]);
+                    io.writeInt(a[2][2]);
+                }
+            }
+        """
+        expect = """123456789"""
+        self.assertTrue(TestCodeGen.test(input, expect, 586))
+    
+    def test_087(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var a: Array[Array[Int, 3], 3] = Array(
+                        Array(1, 2, 3),
+                        Array(4, 5, 6),
+                        Array(7, 8, 9)
+                    );
+                    
+                    a[0][0] = 9;
+                    a[0][1] = 8;
+                    a[0][2] = 7;
+                    a[1][0] = 6;
+                    a[1][1] = 5;
+                    a[1][2] = 4;
+                    a[2][0] = 3;
+                    a[2][1] = 2;
+                    a[2][2] = 1;
+                    
+                    
+                    io.writeInt(a[0][0]);
+                    io.writeInt(a[0][1]);
+                    io.writeInt(a[0][2]);
+
+                    io.writeInt(a[1][0]);
+                    io.writeInt(a[1][1]);
+                    io.writeInt(a[1][2]);
+
+                    io.writeInt(a[2][0]);
+                    io.writeInt(a[2][1]);
+                    io.writeInt(a[2][2]);
+                }
+            }
+        """
+        expect = """987654321"""
+        self.assertTrue(TestCodeGen.test(input, expect, 587))
+    
+    
+    def test_088(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var a: Array[Array[Array[Int, 2], 2], 2] = Array(
+                        Array(
+                            Array(1, 2),
+                            Array(3, 4)
+                        ),
+                        Array(
+                            Array(5, 6),
+                            Array(7, 8)
+                        )
+                    );
+                    io.writeInt(a[0][0][0]);
+                    a[0][0][0] = 1000;
+                    io.writeInt(a[0][0][0]);
+                }
+            }
+        """
+        expect = """11000"""
+        self.assertTrue(TestCodeGen.test(input, expect, 588))
+    
+    def test_089(self):
+        input = r"""
+            Class Program {
+                main() {
+                    If (1 > 2) {
+                        io.writeStr("False");
+                    }
+                    Else {
+                        io.writeStr("True");
+                    }
+                }
+            }
+        """
+        expect = """True"""
+        self.assertTrue(TestCodeGen.test(input, expect, 589))
+    
+    def test_090(self):
+        input = r"""
+            Class Program {
+                main() {
+                    If (1 > 2) {
+                        io.writeStr("False");
+                    }
+                    Elseif (1 < 3) {
+                        io.writeStr("True");
+                    }
+                    Else {
+                        io.writeStr("False");
+                    }
+                }
+            }
+        """
+        expect = """True"""
+        self.assertTrue(TestCodeGen.test(input, expect, 590))
+    
+    def test_091(self):
+        input = r"""
+            Class Program {
+                main() {
+                    If (1 > 2) {
+                        io.writeStr("False");
+                    }
+                    Elseif (1 > 3) {
+                        io.writeStr("False");
+                    }
+                    Elseif (1 > 4) {
+                        io.writeStr("False");
+                    }
+                    Elseif (1 == 1) {
+                        io.writeStr("True");
+                    }
+                }
+            }
+        """
+        expect = """True"""
+        self.assertTrue(TestCodeGen.test(input, expect, 591))
+    
+    def test_092(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var i : Int = 1000;
+                    Foreach (i In 1 .. 10) {
+                        io.writeInt(i);
+                    }
+                }
+            }
+        """
+        expect = """12345678910"""
+        self.assertTrue(TestCodeGen.test(input, expect, 592))
+    
+    def test_093(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var i : Int = 1000;
+                    Foreach (i In 10 .. 1) {
+                        io.writeInt(i);
+                    }
+                }
+            }
+        """
+        expect = """10987654321"""
+        self.assertTrue(TestCodeGen.test(input, expect, 593))
+    
+    def test_094(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var i : Int = 1000;
+                    Foreach (i In 1 .. 10 By 2) {
+                        io.writeInt(i);
+                    }
+                }
+            }
+        """
+        expect = """13579"""
+        self.assertTrue(TestCodeGen.test(input, expect, 594))
+    
+    def test_095(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var i : Int = 1000;
+                    Foreach (i In 10 .. 1 By 2) {
+                        io.writeInt(i);
+                    }
+                }
+            }
+        """
+        expect = """108642"""
+        self.assertTrue(TestCodeGen.test(input, expect, 595))
+    
+    def test_096(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var i : Int = 1000;
+                    Var a: Int = 1;
+                    Var b: Int = 10;
+                    Foreach (i In a .. b) {
+                        io.writeInt(i);
+                        a = a - 1;
+                        b = b - 1;
+                    }
+                }
+            }
+        """
+        expect = """12345678910"""
+        self.assertTrue(TestCodeGen.test(input, expect, 596))
+    
+    def test_097(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var i : Int = 1000;
+                    Var a: Int = 1;
+                    Var b: Int = 10;
+                    Var temp: Int;
+                    Foreach (i In a .. b) {
+                        io.writeInt(i);
+                        temp = a;
+                        a = b;
+                        b = temp;
+                    }
+                }
+            }
+        """
+        expect = """12345678910"""
+        self.assertTrue(TestCodeGen.test(input, expect, 597))
+    
+    def test_098(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var i : Int = 1000;
+                    Var a: Int = 1;
+                    Var b: Int = 10;
+                    Foreach (i In a .. b) {
+                        io.writeInt(i);
+                        If (i == 5) {
+                            Break;
+                        }
+                    }
+                }
+            }
+        """
+        expect = """12345"""
+        self.assertTrue(TestCodeGen.test(input, expect, 598))
+    
+    def test_099(self):
+        input = r"""
+            Class Program {
+                main() {
+                    Var i : Int = 1000;
+                    Var a: Int = 1;
+                    Var b: Int = 10;
+                    Foreach (i In a .. b) {
+                        io.writeInt(i);
+                        If (i > 5) {
+                            Continue;
+                        }
+                        io.writeInt(i);
+                    }
+                }
+            }
+        """
+        expect = """1122334455678910"""
+        self.assertTrue(TestCodeGen.test(input, expect, 599))
     
