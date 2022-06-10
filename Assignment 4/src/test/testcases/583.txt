@@ -1,0 +1,13 @@
+
+            Class Program {
+                Var a: Int = 0;
+                Var $a: Int = 1;
+                Constructor(x: Int) {
+                    io.writeStr("<init>");
+                } 
+                main() {
+                    Var x: Program = New Program();
+                    Var y: Program = New Program(1);
+                }
+            }
+        

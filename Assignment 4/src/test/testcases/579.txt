@@ -1,0 +1,40 @@
+
+            Class Program {
+                main() {
+                    io.writeBool(True);
+                    io.writeBool(False);
+                    io.writeBool(True);
+                    io.writeBool(False);
+
+                    io.writeBool(True && True);
+                    io.writeBool(True && False);
+                    io.writeBool(False && True);
+                    io.writeBool(False && False);
+                    io.writeBool(True || True);
+                    io.writeBool(True || False);
+                    io.writeBool(False || True);
+                    io.writeBool(False || False);
+        
+                    io.writeBool(1 > 2);
+                    io.writeBool(1 >= 2);
+                    io.writeBool(1 < 2);
+                    io.writeBool(1 <= 2);
+                    io.writeBool(1 == 2);
+                    io.writeBool(1 != 2);
+
+                    io.writeBool(1.1 > 2);
+                    io.writeBool(1.1 >= 2);
+                    io.writeBool(1.1 < 2);
+                    io.writeBool(1.1 <= 2);
+                    io.writeBool(1.1 == 2);
+                    io.writeBool(1.1 != 2);    
+
+                    io.writeBool(1.1 > 2.1);
+                    io.writeBool(1.1 >= 2.1);
+                    io.writeBool(1.1 < 2.1);
+                    io.writeBool(1.1 <= 2.1);
+                    io.writeBool(1.1 == 2.1);
+                    io.writeBool(1.1 != 2.1);    
+                }
+            }
+        

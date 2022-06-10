@@ -1,0 +1,21 @@
+
+            Class Program {
+                main() {    
+                    io.writeInt(1);
+                    io.putInt(1);
+                    io.printInt(1);
+
+                    io.writeIntLn(1);
+                    io.putIntLn(1);
+                    io.printIntLn(1);
+
+                    io::$writeInt(1);
+                    io::$putInt(1);
+                    io::$printInt(1);
+
+                    io::$writeIntLn(1);
+                    io::$putIntLn(1);
+                    io::$printIntLn(1);
+                }
+            }
+        

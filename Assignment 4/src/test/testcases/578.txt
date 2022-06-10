@@ -1,0 +1,24 @@
+
+            Class Program {
+                main() {
+                    io.writeFloat(1.1);
+                    io.writeFloat(1.1);
+                    io.writeFloat(1.1 + 1.1);
+                    io.writeFloat(1.1 - 1.1);
+                    io.writeFloat(1.1 * 1.1);
+                    io.writeFloat(1.1 / 1.1);
+                    
+                    io.writeFloat(1);
+                    io.writeFloat(1);
+                    io.writeFloat(1 + 1);
+                    io.writeFloat(1 - 1);
+                    io.writeFloat(1 * 1);
+                    io.writeFloat(1 / 1);
+
+                    io.writeFloat(1.1 + 1);
+                    io.writeFloat(1.1 - 1);
+                    io.writeFloat(1.1 * 1);
+                    io.writeFloat(1.1 / 1);
+                }
+            }
+        

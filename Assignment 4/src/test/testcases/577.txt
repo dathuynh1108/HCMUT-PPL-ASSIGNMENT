@@ -1,0 +1,11 @@
+
+            Class Program {
+                main() {
+                    io.writeInt(1);
+                    io.writeInt(1);
+                    io.writeInt(1 + 1);
+                    io.writeInt(1 - 1);
+                    io.writeInt(1 * 1);
+                }
+            }
+        

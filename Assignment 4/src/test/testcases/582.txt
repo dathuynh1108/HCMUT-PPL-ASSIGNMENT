@@ -1,0 +1,17 @@
+
+            Class Program {
+                Var a: Int = 0;
+                Var $a: Int = 1;
+                $method() {
+                    Var a: Int = 2;
+                    Var d: Program = New Program();
+                    io.writeInt(d.a);
+                    io.writeInt(Program::$a);
+                    io.writeInt(a);
+                    Return 3;
+                }
+                main() {
+                    io.writeInt(Program::$method()); 
+                }
+            }
+        

@@ -4,13 +4,13 @@
     Principle Of Program Language
     Assignment 4
 """
-# from StaticCheck import *
-# from StaticError import *
-########################################################################
-from main.d96.utils.AST import *
-from main.d96.checker.StaticCheck import *
-from main.d96.checker.StaticError import *
 
+from StaticCheck import *
+from StaticError import *
+########################################################################
+# from main.d96.utils.AST import *
+# from main.d96.checker.StaticCheck import *
+# from main.d96.checker.StaticError import *
 ########################################################################
 from Emitter import Emitter
 from Frame import Frame

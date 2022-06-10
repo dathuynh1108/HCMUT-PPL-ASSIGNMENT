@@ -1,0 +1,17 @@
+
+            Class Program {
+                main() {
+                    Var a: Array[Int, 5] = Array(1,2,3,4,5); 
+                    a[0] = 5;
+                    a[1] = 4;
+                    a[2] = 3;
+                    a[3] = 2;
+                    a[4] = 1;
+                    io.writeInt(a[0]);
+                    io.writeInt(a[1]);
+                    io.writeInt(a[2]);
+                    io.writeInt(a[3]);
+                    io.writeInt(a[4]);
+                }
+            }
+        

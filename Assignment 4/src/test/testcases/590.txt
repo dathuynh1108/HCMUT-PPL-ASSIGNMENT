@@ -1,0 +1,15 @@
+
+            Class Program {
+                main() {
+                    If (1 > 2) {
+                        io.writeStr("False");
+                    }
+                    Elseif (1 < 3) {
+                        io.writeStr("True");
+                    }
+                    Else {
+                        io.writeStr("False");
+                    }
+                }
+            }
+        

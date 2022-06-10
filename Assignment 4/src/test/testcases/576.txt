@@ -1,0 +1,8 @@
+
+            Class Program {
+                main() {
+                    io.writeStr("Huynh Thanh Dat\n");
+                    io.writeStr("1910110\n");
+                }
+            }
+        
