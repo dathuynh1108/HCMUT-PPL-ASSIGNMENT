@@ -1,2 +1,2 @@
-# PPL_Assignment
+# HCMUT CSE PPL Assignment
 ###### @author: Huynh Thanh Dat
